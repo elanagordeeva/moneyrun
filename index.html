@@ -256,14 +256,13 @@
     .vbox.tomato .deco-blob{background:var(--tx-tomato-soft)}
     .vbox .stage{position:relative;width:100%;max-width:440px;z-index:1}
 
-    /* step-track / step-xp — phone-screen cascades */
+    /* step-track / step-xp — phone-screen cascades (img напрямую, без обёртки) */
     #step-track .vbox .deco-blob,#step-xp .vbox .deco-blob{display:none}
     #step-track.block,#step-xp.block{align-items:stretch}
-    #step-track .v,#step-xp .v{display:flex}
-    #step-track .vbox,#step-xp .vbox{width:100%;min-height:420px;overflow:visible}
+    #step-track .v,#step-xp .v{display:flex;align-items:stretch}
+    #step-track .vbox,#step-xp .vbox{width:100%;min-height:420px}
     #step-track .vbox .stage,#step-xp .vbox .stage{position:absolute;inset:0;max-width:none}
-    #step-track .ph,#step-xp .ph{position:absolute;border-radius:28px;box-shadow:0 18px 40px -16px rgba(15,30,12,.22);transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease;overflow:hidden;cursor:pointer;line-height:0;font-size:0}
-    #step-track .ph img,#step-xp .ph img{display:block;height:100%;width:auto;border-radius:inherit}
+    #step-track .ph,#step-xp .ph{position:absolute;display:block;border-radius:28px;box-shadow:0 18px 40px -16px rgba(15,30,12,.22);transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease;cursor:pointer}
     #step-track .ph:hover,#step-xp .ph:hover{transform:rotate(0) translateY(-8px) scale(1.04);z-index:20;box-shadow:0 30px 60px -18px rgba(15,30,12,.32);animation:none}
 
     /* step-track positioning — variant D (dominant + satellite) */
@@ -587,8 +586,8 @@
     <div class="vbox">
       <div class="deco-blob"></div>
       <div class="stage">
-        <div class="ph ph-2"><img src="art/full_3.png.webp" alt="Пульсовые зоны"></div>
-        <div class="ph ph-1"><img src="art/full_1-2.png.webp" alt="Dubai Бег — детальная карточка тренировки"></div>
+        <img class="ph ph-2" src="art/full_3.png.webp" alt="Пульсовые зоны">
+        <img class="ph ph-1" src="art/full_1-2.png.webp" alt="Dubai Бег — детальная карточка тренировки">
       </div>
     </div>
   </div>
@@ -609,8 +608,8 @@
     <div class="vbox sky">
       <div class="deco-blob"></div>
       <div class="stage">
-        <div class="ph ph-1"><img src="art/full_4-2.png.webp" alt="Клуб Moneyrun — баланс и курс"></div>
-        <div class="ph ph-2"><img src="art/full_5-2.png.webp" alt="Клуб Moneyrun — тарифная сетка по Грейдам"></div>
+        <img class="ph ph-1" src="art/full_4-2.png.webp" alt="Клуб Moneyrun — баланс и курс">
+        <img class="ph ph-2" src="art/full_5-2.png.webp" alt="Клуб Moneyrun — тарифная сетка по Грейдам">
       </div>
     </div>
   </div>
