@@ -276,10 +276,10 @@
     #step-payout .ph-2{top:2%;right:2%;height:96%;z-index:3;transform:rotate(5deg);--rot:5deg;animation:payFloaty 9s ease-in-out -4s infinite}
     @keyframes payFloaty{0%,100%{transform:rotate(var(--rot)) translateY(0)}50%{transform:rotate(var(--rot)) translateY(-12px)}}
 
-    /* step-xp positioning — side-by-side with subtle tilt, small gap */
-    #step-xp .ph-1{top:2%;left:2%;height:96%;z-index:2;transform:rotate(-3deg);--rot:-3deg;animation:xpFloaty 9s ease-in-out infinite}
-    #step-xp .ph-2{top:2%;right:2%;height:96%;z-index:3;transform:rotate(3deg);--rot:3deg;animation:xpFloaty 9s ease-in-out -4s infinite}
-    @keyframes xpFloaty{0%,100%{transform:rotate(var(--rot)) translateY(0)}50%{transform:rotate(var(--rot)) translateY(-10px)}}
+    /* step-xp positioning — side-by-side, no rotation, no overlap */
+    #step-xp .ph-1{top:2%;left:2%;height:96%;z-index:2;animation:xpFloaty 9s ease-in-out infinite}
+    #step-xp .ph-2{top:2%;right:2%;height:96%;z-index:3;animation:xpFloaty 9s ease-in-out -4s infinite}
+    @keyframes xpFloaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 
     /* MOCKUP: connect tracker */
     .mk-connect{background:var(--surface);border-radius:var(--r-lg);padding:1.4rem;box-shadow:var(--sh-card);transform:rotate(-2deg)}
