@@ -1,6 +1,6 @@
 <svg viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Подключи трекер: часы и телефон">
   <!-- Lime background -->
-  <rect width="260" height="260" fill="#d5ffa8"/>
+  <rect width="260" height="260" fill="#bcdcff"/>
 
   <!-- Composition shifted to center, original 200×200 design inset by 30px -->
   <g transform="translate(30,30)">
@@ -9,21 +9,21 @@
     <!-- Phone body (silhouette) -->
     <rect x="100" y="34" width="82" height="142" rx="13" fill="#15182a"/>
     <!-- Phone speaker slot -->
-    <rect x="129" y="44" width="24" height="3.5" rx="1.5" fill="#d5ffa8"/>
+    <rect x="129" y="44" width="24" height="3.5" rx="1.5" fill="#bcdcff"/>
     <!-- Home button -->
-    <circle cx="141" cy="168" r="4" fill="#d5ffa8"/>
+    <circle cx="141" cy="168" r="4" fill="#bcdcff"/>
     <!-- Phone screen (lime cutout) -->
-    <rect x="108" y="55" width="66" height="104" rx="3" fill="#d5ffa8"/>
+    <rect x="108" y="55" width="66" height="104" rx="3" fill="#bcdcff"/>
 
     <!-- Map pin on screen -->
     <path d="M 130 68 C 123.5 68 119 72.5 119 79 C 119 86 130 100 130 100 C 130 100 141 86 141 79 C 141 72.5 136.5 68 130 68 Z" fill="#15182a"/>
-    <circle cx="130" cy="78.5" r="3.5" fill="#d5ffa8"/>
+    <circle cx="130" cy="78.5" r="3.5" fill="#bcdcff"/>
 
     <!-- Route path (wiggly) -->
     <path d="M 130 100 C 144 108 116 118 130 128 C 144 138 116 146 138 154" fill="none" stroke="#15182a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
     <!-- Route end -->
     <circle cx="138" cy="154" r="4.2" fill="#15182a"/>
-    <circle cx="138" cy="154" r="1.8" fill="#d5ffa8"/>
+    <circle cx="138" cy="154" r="1.8" fill="#bcdcff"/>
 
     <!-- ─── CENTER: dotted sync arc ─── -->
     <g fill="#15182a">
@@ -55,9 +55,9 @@
     <!-- Watch crown -->
     <rect x="54" y="98" width="3.5" height="10" rx="1" fill="#15182a"/>
     <!-- Watch screen -->
-    <rect x="12" y="81" width="36" height="44" rx="5" fill="#15182a" stroke="#d5ffa8" stroke-width="1.6"/>
+    <rect x="12" y="81" width="36" height="44" rx="5" fill="#15182a" stroke="#bcdcff" stroke-width="1.6"/>
     <!-- Pulse line on watch screen (lime on dark) -->
-    <path d="M 15 103 L 19 103 L 21.5 95 L 25 110 L 28 100 L 31 108 L 34 103 L 45 103" fill="none" stroke="#d5ffa8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M 15 103 L 19 103 L 21.5 95 L 25 110 L 28 100 L 31 108 L 34 103 L 45 103" fill="none" stroke="#bcdcff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
 
   </g>
 </svg>
