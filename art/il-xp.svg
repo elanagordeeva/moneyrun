@@ -1,0 +1,22 @@
+<svg viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="XP растёт">
+  <!-- Sky background -->
+  <rect width="260" height="260" fill="#bcdcff"/>
+
+  <g transform="translate(30,30)">
+    <!-- Coin (XP marker, top-left) -->
+    <circle cx="38" cy="50" r="26" fill="#15182a"/>
+    <circle cx="38" cy="50" r="18" fill="none" stroke="#bcdcff" stroke-width="2.4"/>
+    <text x="38" y="58" font-family="Inter, Arial, system-ui, sans-serif" font-weight="800" font-size="17" fill="#bcdcff" text-anchor="middle" letter-spacing="-0.5">XP</text>
+
+    <!-- 3 growing bars (right side) -->
+    <rect x="74" y="128" width="34" height="64" rx="6" fill="#15182a"/>
+    <rect x="116" y="98" width="34" height="94" rx="6" fill="#15182a"/>
+    <rect x="158" y="64" width="34" height="128" rx="6" fill="#15182a"/>
+
+    <!-- Curved arrow sweeping up and across the bars -->
+    <path d="M 64 96 Q 102 78 134 64 Q 162 52 178 36"
+          fill="none" stroke="#15182a" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Arrow head -->
+    <path d="M 178 36 L 166 18 L 192 22 Z" fill="#15182a"/>
+  </g>
+</svg>
