@@ -89,8 +89,8 @@
     #navbar.scrolled{background:rgba(238,242,236,.78);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);padding:.7rem clamp(1.25rem,4vw,3rem);box-shadow:0 1px 0 var(--border)}
     .nav-logo{display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0;color:var(--ink);transition:transform .25s}
     .nav-logo:hover{transform:translateY(-1px)}
-    .nav-logo svg{height:30px;width:auto;display:block;flex:none}
-    .nav-logo .wordmark{font-family:var(--fw);font-weight:800;font-style:italic;font-variation-settings:'slnt' -10;font-size:60px;line-height:1;letter-spacing:0;vertical-align:bottom;color:var(--ink)}
+    .nav-logo svg,.nav-logo img.logo-mark{height:28px;width:auto;display:block;flex:none}
+    .nav-logo .wordmark{font-family:var(--fw);font-weight:800;font-style:italic;font-variation-settings:'slnt' -10;font-size:22px;line-height:1;letter-spacing:0;vertical-align:bottom;color:var(--ink)}
     .nav-links{display:flex;gap:.05rem;list-style:none;align-items:center}
     .nav-links a{position:relative;color:var(--muted);text-decoration:none;font-family:var(--fb);font-size:.92rem;font-weight:500;padding:.55rem .85rem;border-radius:999px;transition:all .25s}
     .nav-links a:hover{color:var(--ink);background:rgba(15,20,15,.04)}
@@ -475,9 +475,7 @@
 
 <nav id="navbar">
   <a href="#hero" class="nav-logo" aria-label="Moneyrun">
-    <svg viewBox="0 0 200 160" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Moneyrun mark" style="color:var(--ink);height:32px">
-      <path d="M 50 28 C 12 32 4 100 28 138 C 58 168 105 158 128 144 C 138 140 144 140 150 148 C 165 162 188 154 192 132 C 195 112 178 100 162 102 C 172 93 184 76 178 56 C 172 38 150 34 132 46 C 122 52 114 60 108 65 C 94 36 76 24 50 28 Z"/>
-    </svg>
+    <img class="logo-mark" src="art/logo-mark.png" alt="Moneyrun mark" width="120" height="120">
     <span class="wordmark">Moneyrun</span>
   </a>
   <div class="nav-right">
@@ -749,7 +747,7 @@
     <div class="club-card reveal">
       <div class="club-head">
         <div class="club-logo">
-          <svg viewBox="0 0 200 160" style="color:var(--ink)"><use href="#ic-mr"/></svg>
+          <img src="art/logo-mark.png" alt="Moneyrun mark" style="width:60%;height:60%;object-fit:contain">
         </div>
         <div>
           <div class="club-name">Moneyrun · открытый</div>
