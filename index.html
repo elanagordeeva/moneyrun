@@ -13,7 +13,7 @@
   <meta property="og:image" content="https://static.tildacdn.com/tild6362-6335-4038-b032-613330353266/logovert_salat.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root{
       --bg:#eef2ec;--bg2:#f4f7f3;
@@ -57,6 +57,8 @@
       /* Border / Chart */
       --chart-border:rgba(15,30,12,.10);
       --fd:'Manrope',system-ui,sans-serif;--fb:'Inter',system-ui,sans-serif;--fm:'JetBrains Mono',ui-monospace,monospace;
+      /* brand wordmark — Bricolage Grotesque ExtraBold Italic, ближе всего к Moneyrun mark */
+      --fw:'Bricolage Grotesque','Manrope',system-ui,sans-serif;
       --maxw:1240px;
       --sh-sm:0 2px 6px rgba(15,20,15,.05),0 1px 2px rgba(15,20,15,.04);
       --sh-md:0 14px 30px -10px rgba(15,30,12,.10),0 8px 18px -6px rgba(15,30,12,.06);
@@ -88,7 +90,7 @@
     .nav-logo{display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0;color:var(--ink);transition:transform .25s}
     .nav-logo:hover{transform:translateY(-1px)}
     .nav-logo svg{height:30px;width:auto;display:block;flex:none}
-    .nav-logo .wordmark{font-family:var(--fd);font-weight:800;font-size:1.2rem;letter-spacing:-.03em;color:var(--ink)}
+    .nav-logo .wordmark{font-family:var(--fw);font-style:italic;font-weight:800;font-size:1.4rem;letter-spacing:-.03em;color:var(--ink)}
     .nav-links{display:flex;gap:.05rem;list-style:none;align-items:center}
     .nav-links a{position:relative;color:var(--muted);text-decoration:none;font-family:var(--fb);font-size:.92rem;font-weight:500;padding:.55rem .85rem;border-radius:999px;transition:all .25s}
     .nav-links a:hover{color:var(--ink);background:rgba(15,20,15,.04)}
@@ -466,17 +468,15 @@
   <symbol id="ic-rec" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3.5" fill="currentColor"/></symbol>
   <symbol id="ic-journal" viewBox="0 0 24 24"><path d="M3 17l5-5 4 4 9-9" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   <symbol id="ic-me" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="currentColor"/><path d="M4 21a8 8 0 0 1 16 0" fill="currentColor"/></symbol>
-  <symbol id="ic-mr" viewBox="0 0 60 40"><ellipse cx="13" cy="22" rx="11" ry="14" fill="#1b1b21"/><ellipse cx="29" cy="14" rx="9" ry="12" fill="#1b1b21"/><ellipse cx="45" cy="22" rx="11" ry="14" fill="#1b1b21"/></symbol>
+  <symbol id="ic-mr" viewBox="0 0 200 160"><path fill="currentColor" d="M 50 28 C 12 32 4 100 28 138 C 58 168 105 158 128 144 C 138 140 144 140 150 148 C 165 162 188 154 192 132 C 195 112 178 100 162 102 C 172 93 184 76 178 56 C 172 38 150 34 132 46 C 122 52 114 60 108 65 C 94 36 76 24 50 28 Z"/></symbol>
   <symbol id="ic-card" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3" fill="currentColor"/><rect x="2" y="8" width="20" height="3" fill="rgba(0,0,0,.4)"/></symbol>
   <symbol id="ic-sbp" viewBox="0 0 24 24"><path d="M5 12L12 4l7 8-7 8z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 4v16" stroke="currentColor" stroke-width="2"/></symbol>
 </svg>
 
 <nav id="navbar">
   <a href="#hero" class="nav-logo" aria-label="Moneyrun">
-    <svg viewBox="0 0 60 40" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Moneyrun mark">
-      <ellipse cx="13" cy="22" rx="11" ry="14" fill="#0e120e"/>
-      <ellipse cx="29" cy="14" rx="9" ry="12" fill="#0e120e"/>
-      <ellipse cx="45" cy="22" rx="11" ry="14" fill="#0e120e"/>
+    <svg viewBox="0 0 200 160" fill="currentColor" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Moneyrun mark" style="color:var(--ink);height:32px">
+      <path d="M 50 28 C 12 32 4 100 28 138 C 58 168 105 158 128 144 C 138 140 144 140 150 148 C 165 162 188 154 192 132 C 195 112 178 100 162 102 C 172 93 184 76 178 56 C 172 38 150 34 132 46 C 122 52 114 60 108 65 C 94 36 76 24 50 28 Z"/>
     </svg>
     <span class="wordmark">Moneyrun</span>
   </a>
@@ -749,7 +749,7 @@
     <div class="club-card reveal">
       <div class="club-head">
         <div class="club-logo">
-          <svg viewBox="0 0 60 40"><use href="#ic-mr"/></svg>
+          <svg viewBox="0 0 200 160" style="color:var(--ink)"><use href="#ic-mr"/></svg>
         </div>
         <div>
           <div class="club-name">Moneyrun · открытый</div>
