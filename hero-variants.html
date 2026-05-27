@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hero variants · Moneyrun</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,slnt,wght@8..144,-10..0,400..1000&family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#eef2ec;--bg2:#f4f7f3;
+    --surface:#ffffff;--surface2:#f9faf8;
+    --ink:#0e120e;--muted:#6b7068;--muted2:#9aa097;
+    --border:#e6eae3;--border2:#dadfd6;
+    --lime:#d0f85d;--lime2:#d5ffa8;--lime-deep:#bee14b;--lime-ink:#1f2a05;
+    --c-mint:#bff0c9;--c-mint-ink:#1a4d2a;
+    --c-blue:#bcdcff;--c-blue-ink:#143b6b;
+    --c-violet:#dbcbff;--c-violet-ink:#3d2a78;
+    --c-peach:#ffd2b5;--c-peach-ink:#6b2f0a;
+    --c-pink:#ffc4cc;--c-pink-ink:#7a1b2a;
+    --tx-salat-primary:#bee14b;
+    --tx-salat-soft:#d5ffa8;
+    --tx-sky-primary:#5b9bff;
+    --tx-sky-soft:#bcdcff;
+    --tx-tomato-primary:#ff6a5a;
+    --fd:'Manrope',system-ui,sans-serif;
+    --fb:'Inter',system-ui,sans-serif;
+    --fm:'JetBrains Mono',ui-monospace,monospace;
+    --fw:'Roboto Flex','Roboto',sans-serif;
+    --r-sm:12px;--r-md:18px;--r-lg:24px;--r-xl:32px;
+    --sh-sm:0 2px 6px rgba(15,20,15,.05),0 1px 2px rgba(15,20,15,.04);
+    --sh-md:0 14px 30px -10px rgba(15,30,12,.10),0 8px 18px -6px rgba(15,30,12,.06);
+    --sh-card:0 36px 88px -28px rgba(15,40,12,.22),0 22px 44px -20px rgba(15,40,12,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--fb);line-height:1.6;-webkit-font-smoothing:antialiased}
+  img{max-width:100%;display:block}
+
+  .lab-header{padding:3rem clamp(1rem,4vw,3rem) 1.5rem;max-width:1320px;margin:0 auto}
+  .lab-header h1{font-family:var(--fw);font-style:italic;font-variation-settings:'slnt' -10;font-weight:800;font-size:clamp(2rem,4vw,3rem);letter-spacing:-.03em;color:var(--ink);margin-bottom:.5rem}
+  .lab-header p{color:var(--muted);max-width:680px;font-size:1.02rem}
+  .lab-header a{color:var(--lime-ink);text-decoration:underline}
+
+  .variant{padding:3rem clamp(1rem,4vw,3rem);max-width:1320px;margin:0 auto;position:relative}
+  .variant + .variant{border-top:1px dashed var(--border2)}
+  .variant-tag{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .85rem;border-radius:999px;background:var(--surface);border:1px solid var(--border);font-family:var(--fm);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+  .variant-tag b{color:var(--ink)}
+  .variant h2{font-family:var(--fd);font-weight:800;font-size:clamp(1.3rem,2vw,1.7rem);letter-spacing:-.02em;margin-bottom:.4rem}
+  .variant .desc{color:var(--muted);max-width:680px;margin-bottom:2rem;font-size:.96rem}
+
+  /* shared hero shell */
+  .hero-shell{display:grid;grid-template-columns:1.05fr 1.05fr;gap:clamp(2rem,4vw,4rem);align-items:center;min-height:560px}
+  @media(max-width:960px){.hero-shell{grid-template-columns:1fr;gap:2rem}.hero-art{order:-1}}
+  .hero-eyebrow{display:inline-flex;align-items:center;gap:.55rem;background:var(--surface);border:1px solid var(--border);font-size:.85rem;font-weight:500;padding:.42rem .85rem;border-radius:999px;margin-bottom:1.5rem;box-shadow:var(--sh-sm)}
+  .hero-eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--lime-deep);box-shadow:0 0 0 4px rgba(190,225,75,.2)}
+  .hero-title{font-family:var(--fd);font-size:clamp(2.4rem,5.6vw,4.6rem);font-weight:800;line-height:.98;letter-spacing:-.04em;margin-bottom:1.3rem;color:var(--ink)}
+  .hero-title .lime-mark{position:relative;display:inline-block;color:var(--lime-ink);padding:0 .2em;z-index:1}
+  .hero-title .lime-mark::before{content:'';position:absolute;inset:.05em -.1em;background:var(--lime);border-radius:14px;z-index:-1;transform:rotate(-1.5deg)}
+  .hero-sub{font-size:1.05rem;color:var(--muted);max-width:520px;margin-bottom:1.8rem;line-height:1.65}
+  .actions{display:flex;gap:.6rem;flex-wrap:wrap}
+  .store{display:inline-flex;align-items:center;gap:.6rem;background:var(--ink);color:#fff;padding:.8rem 1.25rem;border-radius:14px;text-decoration:none;font-family:var(--fd);font-weight:700;font-size:.95rem}
+
+  /* ──────────── shared mock-screen styles ──────────── */
+  .ms{background:var(--surface);border-radius:24px;box-shadow:var(--sh-card);overflow:hidden;font-family:var(--fb);color:var(--ink)}
+  .ms-map{height:160px;background:linear-gradient(160deg,#bcdcff,#7eb9ff);position:relative;overflow:hidden}
+  .ms-map svg{position:absolute;inset:0;width:100%;height:100%}
+  .ms-map .roads{stroke:rgba(255,255,255,.5);stroke-width:1;fill:none}
+  .ms-map .island{fill:#eaf3d8;stroke:rgba(255,255,255,.6);stroke-width:1.5}
+  .ms-map .palm{fill:#eaf3d8}
+  .ms-map .route{stroke:#3461ff;stroke-width:3.5;fill:none;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 2px 4px rgba(0,30,90,.3))}
+  .ms-map .pin{fill:#3461ff;stroke:#fff;stroke-width:2}
+  .ms-body{padding:1rem 1.1rem 1.2rem}
+  .ms-user{display:flex;align-items:center;gap:.65rem;margin-bottom:.75rem}
+  .ms-user .av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#ffd2b5,#ffa07a);flex:none;font-family:var(--fd);font-weight:800;color:#6b2f0a;display:flex;align-items:center;justify-content:center;font-size:.85rem}
+  .ms-user .nm{font-family:var(--fd);font-weight:700;font-size:.95rem}
+  .ms-user .dt{font-size:.7rem;color:var(--muted);margin-top:.1rem}
+  .ms-user .heart{margin-left:auto;width:30px;height:30px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted)}
+  .ms-chips{display:flex;gap:.35rem;flex-wrap:wrap;margin-bottom:.85rem}
+  .ms-chip{display:inline-flex;align-items:center;gap:.3rem;padding:.32rem .6rem;border-radius:999px;font-family:var(--fd);font-weight:800;font-size:.72rem;letter-spacing:-.01em}
+  .ms-chip.xp{background:var(--c-mint);color:var(--c-mint-ink)}
+  .ms-chip.rub{background:var(--tx-salat-soft);color:var(--lime-ink)}
+  .ms-chip.neut{background:var(--surface2);color:var(--ink);border:1px solid var(--border);font-weight:600}
+  .ms-title{font-family:var(--fd);font-weight:800;font-size:1.05rem;margin-bottom:.1rem}
+  .ms-big{font-family:var(--fd);font-weight:800;font-size:2.1rem;letter-spacing:-.03em;line-height:1;display:flex;align-items:baseline;gap:.4rem}
+  .ms-big .pencil{font-size:.7rem;color:var(--muted2)}
+  .ms-big small{font-family:var(--fb);font-size:.65rem;font-weight:500;color:var(--muted);margin-top:.3rem}
+  .ms-big-sub{font-size:.7rem;color:var(--muted);margin-top:.25rem}
+  .ms-grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin-top:.9rem;padding-top:.85rem;border-top:1px solid var(--border)}
+  .ms-grid3 .v{font-family:var(--fd);font-weight:700;font-size:.9rem}
+  .ms-grid3 .l{font-size:.62rem;color:var(--muted);margin-top:.2rem;line-height:1.3}
+  .ms-tabbar{display:flex;justify-content:space-around;padding:.7rem 0 .9rem;border-top:1px solid var(--border);margin-top:.9rem}
+  .ms-tabbar div{display:flex;flex-direction:column;align-items:center;gap:.2rem;font-size:.62rem;color:var(--muted)}
+  .ms-tabbar div.act{color:var(--lime-ink)}
+  .ms-tabbar svg{width:16px;height:16px}
+
+  /* chart screen */
+  .ms-chart-head{padding:1rem 1.1rem .8rem}
+  .ms-chart-head h4{font-family:var(--fd);font-weight:800;font-size:1.02rem;margin-bottom:.2rem}
+  .ms-chart-head p{font-size:.74rem;color:var(--muted);line-height:1.4}
+  .ms-chart-area{position:relative;padding:0 .85rem 1rem}
+  .ms-chart-area svg{display:block;width:100%;height:170px}
+  .ms-chart-tip{position:absolute;background:var(--ink);color:#fff;font-size:.6rem;padding:.45rem .55rem;border-radius:8px;line-height:1.45;font-weight:500;top:35px;left:25%}
+  .ms-chart-tip b{color:var(--lime)}
+  .ms-chart-legend{display:flex;gap:.85rem;padding:0 1.1rem .8rem;font-size:.66rem;color:var(--muted)}
+  .ms-chart-legend i{display:inline-block;width:10px;height:10px;border-radius:50%;vertical-align:middle;margin-right:.3rem}
+
+  /* zones screen */
+  .ms-zones-head{padding:1rem 1.1rem .8rem}
+  .ms-zones-head h4{font-family:var(--fd);font-weight:800;font-size:1.02rem;margin-bottom:.2rem}
+  .ms-zones-head p{font-size:.7rem;color:var(--muted);line-height:1.45}
+  .ms-zones-nums{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;padding:.7rem 1.1rem 1rem}
+  .ms-zones-num .v{font-family:var(--fd);font-weight:800;font-size:1.8rem;letter-spacing:-.03em;line-height:1}
+  .ms-zones-num .l{font-size:.62rem;color:var(--muted);margin-top:.2rem}
+  .ms-zone-row{display:grid;grid-template-columns:1fr 60px;gap:.5rem;padding:.45rem 1.1rem;align-items:center}
+  .ms-zone-name{display:flex;align-items:center;gap:.45rem;font-family:var(--fd);font-weight:700;font-size:.78rem}
+  .ms-zone-name .fire{font-size:.75rem}
+  .ms-zone-range{font-family:var(--fm);font-size:.6rem;color:var(--muted);text-align:right}
+  .ms-zone-bar{grid-column:1/-1;height:24px;border-radius:8px;padding:0 .55rem;display:flex;align-items:center;justify-content:space-between;font-family:var(--fd);font-weight:700;font-size:.7rem;margin-bottom:.45rem}
+  .z-warm{background:var(--c-violet);color:var(--c-violet-ink)}
+  .z-rec{background:var(--c-blue);color:var(--c-blue-ink)}
+  .z-aer{background:var(--c-mint);color:var(--c-mint-ink)}
+  .z-an{background:var(--c-peach);color:var(--c-peach-ink)}
+  .z-max{background:var(--c-pink);color:var(--c-pink-ink)}
+
+  /* week-stat screen (variant) */
+  .ms-week-head{padding:1rem 1.1rem .6rem;display:flex;justify-content:space-between;align-items:baseline}
+  .ms-week-head .eyebrow{font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .ms-week-head .delta{color:var(--c-blue-ink);font-weight:700;font-family:var(--fd);font-size:.72rem}
+  .ms-week-big{padding:0 1.1rem .8rem;font-family:var(--fd);font-weight:800;font-size:1.8rem;letter-spacing:-.025em;line-height:1;display:flex;align-items:baseline;gap:.55rem}
+  .ms-week-big small{font-family:var(--fd);font-size:.65rem;background:var(--tx-salat-soft);color:var(--lime-ink);padding:.18rem .45rem;border-radius:999px;font-style:italic}
+  .ms-week-bars{display:flex;align-items:flex-end;gap:.4rem;height:90px;padding:0 1.1rem .25rem}
+  .ms-week-bars .b{flex:1;border-radius:5px 5px 0 0;background:var(--border)}
+  .ms-week-bars .b.on{background:var(--tx-salat-primary)}
+  .ms-week-bars .b.peak{background:var(--tx-sky-primary);position:relative}
+  .ms-week-bars .b.peak::after{content:'PR';position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-family:var(--fm);font-size:.5rem;color:var(--tx-sky-primary);font-weight:600}
+  .ms-week-days{display:flex;justify-content:space-between;padding:0 1.1rem 1rem;font-family:var(--fm);font-size:.55rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .ms-week-days span{flex:1;text-align:center}
+
+  /* ─── VARIANT A — Straight triptych ─── */
+  .v-a .hero-art{display:grid;grid-template-columns:repeat(3,1fr);gap:.85rem;align-items:start}
+  .v-a .ms{min-height:0}
+  @media(max-width:760px){.v-a .hero-art{grid-template-columns:1fr 1fr;gap:.6rem}.v-a .ms:nth-child(3){grid-column:1/-1}}
+
+  /* ─── VARIANT B — Cascade with subtle rotation ─── */
+  .v-b .hero-art{position:relative;min-height:600px}
+  .v-b .ms{position:absolute;width:60%;max-width:300px;transition:transform .4s ease}
+  .v-b .ms:hover{z-index:10;transform:translateY(-6px) rotate(0deg)!important}
+  .v-b .ms-1{top:0;left:0;transform:rotate(-3deg);z-index:2}
+  .v-b .ms-2{top:80px;right:0;transform:rotate(4deg);z-index:3}
+  .v-b .ms-3{bottom:0;left:18%;transform:rotate(-1deg);z-index:4;width:55%;max-width:280px}
+  @media(max-width:760px){.v-b .hero-art{display:grid;grid-template-columns:1fr;gap:1rem;min-height:auto}.v-b .ms{position:static;width:100%;max-width:none;transform:none!important}}
+
+  /* ─── VARIANT C — Big hero card + 2 small chips ─── */
+  .v-c .hero-art{position:relative;min-height:600px;display:flex;align-items:center;justify-content:center}
+  .v-c .ms-hero{width:78%;max-width:380px;position:relative;z-index:2}
+  .v-c .ms-side-1{position:absolute;width:35%;max-width:200px;top:6%;right:-2%;transform:rotate(5deg);z-index:3}
+  .v-c .ms-side-2{position:absolute;width:38%;max-width:220px;bottom:6%;left:-4%;transform:rotate(-4deg);z-index:3}
+  .v-c .float-tag{position:absolute;background:var(--lime);color:var(--lime-ink);font-family:var(--fd);font-style:italic;font-weight:800;font-size:.95rem;padding:.5rem .9rem;border-radius:999px;box-shadow:0 8px 22px -8px rgba(190,225,75,.6);z-index:5}
+  .v-c .float-tag.t1{top:48%;right:0;transform:rotate(-6deg)}
+  .v-c .float-tag.t2{bottom:14%;right:5%;transform:rotate(4deg);background:var(--lime2)}
+  @media(max-width:760px){.v-c .hero-art{display:grid;grid-template-columns:1fr;gap:1rem;min-height:auto}.v-c .ms-hero,.v-c .ms-side-1,.v-c .ms-side-2{position:static;width:100%;max-width:none;transform:none}.v-c .float-tag{display:none}}
+</style>
+</head>
+<body>
+
+<!-- Sample SVG: Palm island map (used in screens) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="palm-map" viewBox="0 0 340 160">
+    <rect width="340" height="160" fill="#a9d0ff"/>
+    <g class="roads" stroke="#fff" stroke-width=".8" fill="none">
+      <path d="M0 30 H340 M0 60 H340 M0 90 H340 M0 120 H340"/>
+      <path d="M40 0 V160 M100 0 V160 M170 0 V160 M240 0 V160 M300 0 V160"/>
+    </g>
+    <g class="palm" fill="#eaf3d8">
+      <circle cx="170" cy="80" r="48"/>
+      <ellipse cx="170" cy="80" rx="44" ry="14"/>
+      <ellipse cx="170" cy="80" rx="14" ry="44"/>
+      <ellipse cx="170" cy="80" rx="38" ry="14" transform="rotate(30 170 80)"/>
+      <ellipse cx="170" cy="80" rx="38" ry="14" transform="rotate(60 170 80)"/>
+      <ellipse cx="170" cy="80" rx="38" ry="14" transform="rotate(-30 170 80)"/>
+      <ellipse cx="170" cy="80" rx="38" ry="14" transform="rotate(-60 170 80)"/>
+    </g>
+    <ellipse cx="170" cy="80" rx="60" ry="55" fill="none" stroke="#3461ff" stroke-width="3.5" stroke-dasharray="4 0" stroke-linecap="round"/>
+    <circle cx="110" cy="80" r="6" fill="#3461ff" stroke="#fff" stroke-width="2"/>
+    <circle cx="230" cy="80" r="6" fill="#3461ff" stroke="#fff" stroke-width="2"/>
+  </symbol>
+</svg>
+
+<header class="lab-header">
+  <h1>Hero иллюстрация — варианты</h1>
+  <p>Контент во всех вариантах одинаковый (Dubai Бег / Темп / Пульсовые зоны), меняется только композиция. Текущий вариант на главной — <a href="/">/index.html</a>. Скажите, какой берём, или какой комбинировать.</p>
+</header>
+
+<!-- ════════════════ VARIANT A ════════════════ -->
+<section class="variant v-a">
+  <span class="variant-tag"><b>Вариант A</b> · Триптих прямой</span>
+  <h2>Три экрана рядом, без поворотов</h2>
+  <p class="desc">Самый близкий к референсу. Три карточки одинаковой ширины, выровнены по верху, без перекрытий. Спокойный, продуктовый, читается за полсекунды.</p>
+
+  <div class="hero-shell">
+    <div>
+      <div class="hero-eyebrow"><span class="dot"></span>25 000+ бегунов уже зарабатывают</div>
+      <h1 class="hero-title">Беги.<br><span class="lime-mark">Зарабатывай.</span><br>Повторяй.</h1>
+      <p class="hero-sub">Подключи трекер, копи XP за тренировки и обменивай на рубли. Бесплатно, без подписок. Выплаты покрывают клубы и спонсоры EF Moneyrun.</p>
+      <div class="actions">
+        <a href="#" class="store">App Store</a>
+        <a href="#" class="store">Google Play</a>
+      </div>
+    </div>
+
+    <div class="hero-art">
+      <!-- Screen 1: Dubai Бег detail -->
+      <div class="ms">
+        <div class="ms-map"><svg><use href="#palm-map"/></svg></div>
+        <div class="ms-body">
+          <div class="ms-user">
+            <div class="av">АП</div>
+            <div><div class="nm">Анна Петрова</div><div class="dt">21 янв · Dubai, UAE</div></div>
+            <div class="heart">♡</div>
+          </div>
+          <div class="ms-chips">
+            <span class="ms-chip xp">+7 XP</span>
+            <span class="ms-chip rub">+128 ₽</span>
+            <span class="ms-chip neut">▲ Garmin</span>
+          </div>
+          <div class="ms-title">Dubai Бег</div>
+          <div class="ms-big">12,3<small>расстояние, км</small></div>
+          <div class="ms-grid3">
+            <div><div class="v">5:50</div><div class="l">ср. темп</div></div>
+            <div><div class="v">1:12:05</div><div class="l">время</div></div>
+            <div><div class="v">140</div><div class="l">ср. пульс</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen 2: Темп в динамике -->
+      <div class="ms">
+        <div class="ms-chart-head">
+          <h4>Темп в динамике</h4>
+          <p>Зависимость пульса от темпа на протяжении тренировки</p>
+        </div>
+        <div class="ms-chart-area">
+          <svg viewBox="0 0 280 170" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="pa" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#bcdcff" stop-opacity=".6"/>
+                <stop offset="100%" stop-color="#bcdcff" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M0 90 L20 80 L40 95 L60 70 L80 85 L100 60 L120 75 L140 50 L160 70 L180 40 L200 55 L220 30 L240 45 L260 25 L280 35 L280 170 L0 170 Z" fill="url(#pa)"/>
+            <path d="M0 90 L20 80 L40 95 L60 70 L80 85 L100 60 L120 75 L140 50 L160 70 L180 40 L200 55 L220 30 L240 45 L260 25 L280 35" stroke="#3461ff" stroke-width="2" fill="none"/>
+            <path d="M0 130 C 30 125, 60 110, 90 115 S 140 100, 170 90 S 220 80, 250 70 L 280 65" stroke="#ed4f5e" stroke-width="2" fill="none"/>
+            <line x1="55" y1="20" x2="55" y2="160" stroke="#0e120e" stroke-width="1" stroke-dasharray="2 2"/>
+          </svg>
+          <div class="ms-chart-tip">2 км<br>Темп <b>9:00</b><br>Пульс <b>152</b></div>
+        </div>
+        <div class="ms-chart-legend"><span><i style="background:#3461ff"></i>темп, мин/км</span><span><i style="background:#ed4f5e"></i>пульс</span></div>
+      </div>
+
+      <!-- Screen 3: Пульсовые зоны -->
+      <div class="ms">
+        <div class="ms-zones-head">
+          <h4>Пульсовые зоны</h4>
+          <p>Процент от максимальной ЧСС</p>
+        </div>
+        <div class="ms-zones-nums">
+          <div class="ms-zones-num"><div class="v">120</div><div class="l">средний, уд/мин</div></div>
+          <div class="ms-zones-num"><div class="v">180</div><div class="l">максимальный</div></div>
+        </div>
+        <div class="ms-zone-row">
+          <div class="ms-zone-name"><span class="fire">🔥</span>Разминка</div>
+          <div class="ms-zone-range">0–50</div>
+        </div>
+        <div class="ms-zone-bar z-warm" style="width:30%"><span>5:02</span><span>12%</span></div>
+        <div class="ms-zone-row">
+          <div class="ms-zone-name"><span class="fire">🔥</span>Восст.</div>
+          <div class="ms-zone-range">51–70</div>
+        </div>
+        <div class="ms-zone-bar z-rec" style="width:78%"><span>31:27</span><span>39%</span></div>
+        <div class="ms-zone-row">
+          <div class="ms-zone-name"><span class="fire">🔥</span>Аэробная</div>
+          <div class="ms-zone-range">71–80</div>
+        </div>
+        <div class="ms-zone-bar z-aer" style="width:18%"><span>3:08</span><span>6%</span></div>
+        <div class="ms-zone-row">
+          <div class="ms-zone-name"><span class="fire">🔥</span>Анаэробн.</div>
+          <div class="ms-zone-range">81–90</div>
+        </div>
+        <div class="ms-zone-bar z-an" style="width:38%"><span>6:22</span><span>18%</span></div>
+        <div class="ms-zone-row">
+          <div class="ms-zone-name"><span class="fire">🔥</span>Макс.</div>
+          <div class="ms-zone-range">91–100</div>
+        </div>
+        <div class="ms-zone-bar z-max" style="width:52%;margin-bottom:1rem"><span>7:56</span><span>25%</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ VARIANT B ════════════════ -->
+<section class="variant v-b">
+  <span class="variant-tag"><b>Вариант B</b> · Каскад с лёгким наклоном</span>
+  <h2>Три экрана со смещением и поворотом</h2>
+  <p class="desc">Тот же контент, но композиция «свободная» — экраны висят с лёгким поворотом, перекрываются. Между текущим вариантом сайта и строгим триптихом A. При hover карточка выпрямляется.</p>
+
+  <div class="hero-shell">
+    <div>
+      <div class="hero-eyebrow"><span class="dot"></span>25 000+ бегунов уже зарабатывают</div>
+      <h1 class="hero-title">Беги.<br><span class="lime-mark">Зарабатывай.</span><br>Повторяй.</h1>
+      <p class="hero-sub">Подключи трекер, копи XP за тренировки и обменивай на рубли. Бесплатно, без подписок. Выплаты покрывают клубы и спонсоры EF Moneyrun.</p>
+      <div class="actions">
+        <a href="#" class="store">App Store</a>
+        <a href="#" class="store">Google Play</a>
+      </div>
+    </div>
+
+    <div class="hero-art">
+      <!-- Screen 1 -->
+      <div class="ms ms-1">
+        <div class="ms-map"><svg><use href="#palm-map"/></svg></div>
+        <div class="ms-body">
+          <div class="ms-user">
+            <div class="av">АП</div>
+            <div><div class="nm">Анна Петрова</div><div class="dt">21 янв · Dubai, UAE</div></div>
+          </div>
+          <div class="ms-chips">
+            <span class="ms-chip xp">+7 XP</span>
+            <span class="ms-chip rub">+128 ₽</span>
+          </div>
+          <div class="ms-title">Dubai Бег</div>
+          <div class="ms-big">12,3<small>расстояние, км</small></div>
+          <div class="ms-grid3">
+            <div><div class="v">5:50</div><div class="l">ср. темп</div></div>
+            <div><div class="v">1:12:05</div><div class="l">время</div></div>
+            <div><div class="v">140</div><div class="l">пульс</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Screen 2 -->
+      <div class="ms ms-2">
+        <div class="ms-chart-head">
+          <h4>Темп в динамике</h4>
+          <p>Темп и пульс на всей тренировке</p>
+        </div>
+        <div class="ms-chart-area">
+          <svg viewBox="0 0 280 130" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="pb" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#bcdcff" stop-opacity=".6"/>
+                <stop offset="100%" stop-color="#bcdcff" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M0 80 L40 65 L80 75 L120 50 L160 60 L200 35 L240 45 L280 25 L280 130 L0 130 Z" fill="url(#pb)"/>
+            <path d="M0 80 L40 65 L80 75 L120 50 L160 60 L200 35 L240 45 L280 25" stroke="#3461ff" stroke-width="2" fill="none"/>
+            <path d="M0 110 C 40 100, 80 95, 120 85 S 200 70, 280 55" stroke="#ed4f5e" stroke-width="2" fill="none"/>
+          </svg>
+        </div>
+        <div class="ms-chart-legend"><span><i style="background:#3461ff"></i>темп</span><span><i style="background:#ed4f5e"></i>пульс</span></div>
+      </div>
+
+      <!-- Screen 3 — WeekStat (вместо зон, чтобы 3 разных типа) -->
+      <div class="ms ms-3">
+        <div class="ms-week-head">
+          <span class="eyebrow">Эта неделя</span>
+          <span class="delta">+12% к прошлой</span>
+        </div>
+        <div class="ms-week-big">38,2 км <small>цель ✓</small></div>
+        <div class="ms-week-bars">
+          <div class="b on" style="height:42%"></div>
+          <div class="b on" style="height:60%"></div>
+          <div class="b" style="height:20%"></div>
+          <div class="b on" style="height:72%"></div>
+          <div class="b on" style="height:55%"></div>
+          <div class="b peak" style="height:95%"></div>
+          <div class="b" style="height:0%"></div>
+        </div>
+        <div class="ms-week-days"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ VARIANT C ════════════════ -->
+<section class="variant v-c">
+  <span class="variant-tag"><b>Вариант C</b> · Один большой + спутники</span>
+  <h2>Главный экран + два маленьких + плавающие чипы</h2>
+  <p class="desc">Один большой mock-up в центре (Dubai Бег с map), два меньших по краям (зоны, WeekStat) и яркие XP/₽ чипы — как badges. Похоже на ваши «achievement-маркеры» поверх скриншотов.</p>
+
+  <div class="hero-shell">
+    <div>
+      <div class="hero-eyebrow"><span class="dot"></span>25 000+ бегунов уже зарабатывают</div>
+      <h1 class="hero-title">Беги.<br><span class="lime-mark">Зарабатывай.</span><br>Повторяй.</h1>
+      <p class="hero-sub">Подключи трекер, копи XP за тренировки и обменивай на рубли. Бесплатно, без подписок. Выплаты покрывают клубы и спонсоры EF Moneyrun.</p>
+      <div class="actions">
+        <a href="#" class="store">App Store</a>
+        <a href="#" class="store">Google Play</a>
+      </div>
+    </div>
+
+    <div class="hero-art">
+      <!-- Big hero screen -->
+      <div class="ms ms-hero">
+        <div class="ms-map" style="height:200px"><svg><use href="#palm-map"/></svg></div>
+        <div class="ms-body">
+          <div class="ms-user">
+            <div class="av">АП</div>
+            <div><div class="nm">Анна Петрова</div><div class="dt">21 янв · Dubai, UAE</div></div>
+            <div class="heart">♡</div>
+          </div>
+          <div class="ms-chips">
+            <span class="ms-chip xp">+7 XP</span>
+            <span class="ms-chip rub">+128 ₽</span>
+            <span class="ms-chip neut">▲ Garmin</span>
+          </div>
+          <div class="ms-title">Dubai Бег</div>
+          <div class="ms-big">12,3<small>расстояние, км</small></div>
+          <div class="ms-grid3">
+            <div><div class="v">5:50</div><div class="l">ср. темп</div></div>
+            <div><div class="v">1:12:05</div><div class="l">время</div></div>
+            <div><div class="v">140</div><div class="l">пульс</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Small zones -->
+      <div class="ms ms-side-1">
+        <div class="ms-zones-head">
+          <h4 style="font-size:.9rem">Пульсовые зоны</h4>
+        </div>
+        <div class="ms-zone-bar z-warm" style="width:30%;margin:.4rem 1rem"><span>Разм.</span><span>12%</span></div>
+        <div class="ms-zone-bar z-rec" style="width:78%;margin:.4rem 1rem"><span>Восст.</span><span>39%</span></div>
+        <div class="ms-zone-bar z-an" style="width:38%;margin:.4rem 1rem"><span>Анаэр.</span><span>18%</span></div>
+        <div class="ms-zone-bar z-max" style="width:52%;margin:.4rem 1rem 1rem"><span>Макс.</span><span>25%</span></div>
+      </div>
+
+      <!-- Small WeekStat -->
+      <div class="ms ms-side-2">
+        <div class="ms-week-head">
+          <span class="eyebrow">Неделя</span>
+          <span class="delta">+12%</span>
+        </div>
+        <div class="ms-week-big" style="font-size:1.3rem">38,2 км <small style="font-size:.55rem">цель ✓</small></div>
+        <div class="ms-week-bars" style="height:50px">
+          <div class="b on" style="height:42%"></div>
+          <div class="b on" style="height:60%"></div>
+          <div class="b" style="height:20%"></div>
+          <div class="b on" style="height:72%"></div>
+          <div class="b on" style="height:55%"></div>
+          <div class="b peak" style="height:95%"></div>
+          <div class="b" style="height:0%"></div>
+        </div>
+        <div class="ms-week-days"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div>
+      </div>
+
+      <!-- Floating tags -->
+      <span class="float-tag t1">+ 142 XP</span>
+      <span class="float-tag t2">5.4 км · 27:18</span>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
