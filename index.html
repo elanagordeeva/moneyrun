@@ -276,12 +276,9 @@
     #step-payout .ph-2{top:2%;right:2%;height:96%;z-index:3;transform:rotate(5deg);--rot:5deg;animation:payFloaty 9s ease-in-out -4s infinite}
     @keyframes payFloaty{0%,100%{transform:rotate(var(--rot)) translateY(0)}50%{transform:rotate(var(--rot)) translateY(-12px)}}
 
-    /* step-xp — flex layout: 2 screens side-by-side, no overlap, left higher than right */
-    #step-xp .vbox .stage{display:flex;align-items:flex-start;justify-content:center;gap:30px;padding:1rem}
-    #step-xp .ph{position:relative;height:auto;max-height:96%;width:auto;min-width:0;flex:0 1 auto}
-    #step-xp .ph-2{margin-top:80px}
-    #step-xp .ph-1,#step-xp .ph-2{animation:xpFloaty 9s ease-in-out infinite}
-    #step-xp .ph-2{animation-delay:-4s}
+    /* step-xp — 2 screens equal width, left higher than right, small gap */
+    #step-xp .ph-1{position:absolute;left:8%;top:0;width:38%;height:auto;z-index:2;animation:xpFloaty 9s ease-in-out infinite}
+    #step-xp .ph-2{position:absolute;left:54%;top:80px;width:38%;height:auto;z-index:3;animation:xpFloaty 9s ease-in-out -4s infinite}
     @keyframes xpFloaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 
     /* MOCKUP: connect tracker */
