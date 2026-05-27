@@ -139,8 +139,19 @@
     .hero-trusted .brands span{font-family:var(--fd);font-weight:700;font-size:.95rem;letter-spacing:-.01em}
 
     /* hero mockup stack */
-    .hero-art{position:relative;min-height:560px}
+    .hero-art{position:relative;min-height:680px}
     .mk-card{position:absolute;background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--sh-card);overflow:hidden}
+
+    /* phone screenshots cascade (real app screens) */
+    .ph-shot{position:absolute;border-radius:32px;background:var(--surface);box-shadow:var(--sh-card),0 40px 80px -25px rgba(15,30,12,.22);display:block;width:46%;max-width:280px;transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease}
+    .ph-1{top:60px;left:-2%;z-index:2;animation:phf 9s ease-in-out -3s infinite;--rot:-5deg;transform:rotate(-5deg)}
+    .ph-2{top:0;left:24%;z-index:4;animation:phf 9s ease-in-out infinite;--rot:2deg;transform:rotate(2deg);width:52%;max-width:310px}
+    .ph-3{top:60px;right:-3%;z-index:3;animation:phf 9s ease-in-out -6s infinite;--rot:5deg;transform:rotate(5deg)}
+    @keyframes phf{
+      0%,100%{transform:rotate(var(--rot)) translateY(0)}
+      50%{transform:rotate(var(--rot)) translateY(-14px)}
+    }
+    .ph-shot:hover{transform:rotate(0deg) translateY(-12px) scale(1.05)!important;z-index:20;box-shadow:var(--sh-lg),0 60px 110px -20px rgba(15,30,12,.3);animation:none}
 
     /* mockup 1 — training (top) */
     .mk-training{width:80%;max-width:340px;top:0;right:0;transform:rotate(3deg);z-index:3}
@@ -525,100 +536,14 @@
   </div>
 
   <div class="hero-art" aria-hidden="true">
-    <!-- mockup: training card -->
-    <div class="mk-card mk-training">
-      <div class="mk-train-map">
-        <svg viewBox="0 0 340 170" preserveAspectRatio="xMidYMid slice">
-          <g class="city-grid">
-            <path d="M0 30 H340 M0 60 H340 M0 90 H340 M0 120 H340 M0 150 H340"/>
-            <path d="M30 0 V170 M80 0 V170 M140 0 V170 M200 0 V170 M260 0 V170 M310 0 V170"/>
-          </g>
-          <path class="route" d="M40 140 C 70 130, 90 80, 130 70 C 170 60, 200 100, 230 90 C 260 80, 280 50, 310 40"/>
-          <circle class="pin" cx="40" cy="140" r="6"/>
-          <circle class="pin" cx="310" cy="40" r="6"/>
-        </svg>
-      </div>
-      <div class="mk-train-body">
-        <div class="mk-train-head">
-          <div class="mk-avatar">АП</div>
-          <div>
-            <div class="nm">Анна Петрова</div>
-            <div class="dt">21 янв · Dubai, UAE</div>
-          </div>
-        </div>
-        <div class="mk-train-chips">
-          <span class="chip">+7 XP</span>
-          <span class="chip alt">+128 ₽</span>
-        </div>
-        <div class="mk-train-title">Dubai Бег</div>
-        <div class="mk-train-big">12,3<small>расстояние, км</small></div>
-        <div class="mk-train-stats">
-          <div class="stat"><div class="v">5:50</div><div class="l">мин/км</div></div>
-          <div class="stat"><div class="v">1:12:05</div><div class="l">время</div></div>
-          <div class="stat"><div class="v">140</div><div class="l">ср. пульс</div></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- mockup: pulse chart -->
-    <div class="mk-card mk-chart">
-      <div class="mk-chart-body">
-        <div class="mk-chart-title">Темп в динамике</div>
-        <div class="mk-chart-sub">Темп и пульс на всей тренировке</div>
-        <svg viewBox="0 0 220 100" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="paceFill" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#5b8def" stop-opacity=".22"/>
-              <stop offset="100%" stop-color="#5b8def" stop-opacity="0"/>
-            </linearGradient>
-          </defs>
-          <path d="M0 60 L10 55 L20 50 L30 65 L40 55 L50 48 L60 70 L70 60 L80 45 L90 55 L100 38 L110 52 L120 40 L130 58 L140 35 L150 48 L160 28 L170 42 L180 22 L190 35 L200 18 L210 10 L220 5 L220 100 L0 100 Z" fill="url(#paceFill)"/>
-          <path d="M0 60 L10 55 L20 50 L30 65 L40 55 L50 48 L60 70 L70 60 L80 45 L90 55 L100 38 L110 52 L120 40 L130 58 L140 35 L150 48 L160 28 L170 42 L180 22 L190 35 L200 18 L210 10 L220 5" fill="none" stroke="#5b8def" stroke-width="1.8" stroke-linejoin="round"/>
-          <path d="M0 75 C 20 72, 40 68, 60 70 S 100 60, 120 62 S 160 50, 180 45 S 210 32, 220 28" fill="none" stroke="#ed4f5e" stroke-width="1.8"/>
-          <line x1="92" y1="0" x2="92" y2="100" stroke="#0e120e" stroke-width="1" stroke-dasharray="2 2"/>
-        </svg>
-        <div class="mk-chart-legend"><span><i style="background:#5b8def"></i>темп</span><span><i style="background:#ed4f5e"></i>пульс</span></div>
-      </div>
-      <div class="tip" style="top:24%;left:42%"><b>2 км</b><br>темп 5:42<br>пульс 152</div>
-    </div>
-
-    <!-- mockup: XP balance card -->
-    <div class="mk-card mk-balance">
-      <div class="mk-bal-body">
-        <div class="mk-bal-top">Основной счёт</div>
-        <div class="mk-bal-big">8 420 ₽</div>
-        <div class="mk-bal-small">остаток на ноябрь</div>
-        <div class="mk-bal-foot">
-          <span>Грейд<br><b>A2</b></span>
-          <span>Курс<br><b>4 ₽/XP</b></span>
-        </div>
-      </div>
-    </div>
-
-    <!-- mockup: WeekSatistic (Figma component) -->
-    <div class="mk-card mk-week-card">
-      <div class="body">
-        <div class="head">
-          <span class="eb">Эта неделя</span>
-          <span class="eb plus">+12% к прошлой</span>
-        </div>
-        <div class="big">38,2 км <small>цель ✓</small></div>
-        <div class="bars">
-          <div class="b on" style="height:42%"></div>
-          <div class="b on" style="height:60%"></div>
-          <div class="b" style="height:20%"></div>
-          <div class="b on" style="height:72%"></div>
-          <div class="b on" style="height:55%"></div>
-          <div class="b peak" style="height:95%"></div>
-          <div class="b" style="height:0%"></div>
-        </div>
-        <div class="days"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div>
-      </div>
-    </div>
+    <!-- real app screenshots, cascade -->
+    <img class="ph-shot ph-1" src="art/full_9.png.webp" alt="Личные рекорды в Moneyrun" loading="eager">
+    <img class="ph-shot ph-2" src="art/full_7-2.png.webp" alt="Профиль атлета в Moneyrun" loading="eager">
+    <img class="ph-shot ph-3" src="art/full_8.png.webp" alt="Статистика и нагрузка в Moneyrun" loading="eager">
 
     <!-- floating chips -->
     <span class="chip float-chip f1" style="--rot:-6deg">+ 142 XP</span>
-    <span class="chip alt float-chip f2" style="--rot:5deg">5.4 км · 27:18</span>
+    <span class="chip alt float-chip f2" style="--rot:5deg">+ 128 ₽</span>
   </div>
 </section>
 
