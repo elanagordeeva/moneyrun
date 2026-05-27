@@ -268,6 +268,18 @@
     #step-track .ph:hover{transform:rotate(0) translateY(-8px) scale(1.04);z-index:20;box-shadow:var(--sh-lg),0 50px 100px -20px rgba(15,30,12,.3);animation:none}
     @keyframes trkFloaty{0%,100%{transform:rotate(var(--rot)) translateY(0)}50%{transform:rotate(var(--rot)) translateY(-10px)}}
 
+    /* step-xp — symmetric phone-screen cascade (вариант A) */
+    #step-xp.block{align-items:stretch}
+    #step-xp .v{display:flex}
+    #step-xp .vbox{width:100%;min-height:420px}
+    #step-xp .vbox .stage{position:absolute;inset:0;max-width:none}
+    #step-xp .ph{position:absolute;border-radius:28px;background:var(--surface);box-shadow:var(--sh-card);transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease;overflow:hidden;cursor:pointer}
+    #step-xp .ph img{display:block;height:100%;width:auto;border-radius:28px}
+    #step-xp .ph-1{top:2%;left:2%;height:96%;z-index:2;transform:rotate(-5deg);--rot:-5deg;animation:xpFloaty 9s ease-in-out infinite}
+    #step-xp .ph-2{top:2%;right:2%;height:96%;z-index:3;transform:rotate(5deg);--rot:5deg;animation:xpFloaty 9s ease-in-out -4s infinite}
+    #step-xp .ph:hover{transform:rotate(0) translateY(-8px) scale(1.04);z-index:20;box-shadow:var(--sh-lg),0 50px 100px -20px rgba(15,30,12,.3);animation:none}
+    @keyframes xpFloaty{0%,100%{transform:rotate(var(--rot)) translateY(0)}50%{transform:rotate(var(--rot)) translateY(-12px)}}
+
     /* MOCKUP: connect tracker */
     .mk-connect{background:var(--surface);border-radius:var(--r-lg);padding:1.4rem;box-shadow:var(--sh-card);transform:rotate(-2deg)}
     .mk-connect-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
@@ -601,26 +613,8 @@
     <div class="vbox sky">
       <div class="deco-blob"></div>
       <div class="stage">
-        <div class="mk-grade">
-          <div class="mk-grade-head">Грейд и XP</div>
-          <div class="mk-grade-sub">До следующей ступени осталось 1 580 XP</div>
-          <div class="mk-grade-big">
-            <span class="xpv">8 420</span>
-            <span class="xpd">+142 за сегодня</span>
-          </div>
-          <div class="mk-grade-bar-wrap">
-            <div class="mk-grade-bar-top"><span>D2</span><span>Следующая · C</span></div>
-            <div class="mk-grade-bar"><div class="mk-grade-fill"></div></div>
-          </div>
-          <div class="mk-grade-tiers">
-            <div class="gtier">D</div>
-            <div class="gtier">D1</div>
-            <div class="gtier active">D2</div>
-            <div class="gtier next">C</div>
-            <div class="gtier">C+</div>
-            <div class="gtier">B</div>
-          </div>
-        </div>
+        <div class="ph ph-1"><img src="art/full_4-2.png.webp" alt="Клуб Moneyrun — баланс и курс"></div>
+        <div class="ph ph-2"><img src="art/full_5-2.png.webp" alt="Клуб Moneyrun — тарифная сетка по Грейдам"></div>
       </div>
     </div>
   </div>
