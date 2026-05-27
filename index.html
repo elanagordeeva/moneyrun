@@ -256,6 +256,9 @@
     .vbox.tomato .deco-blob{background:var(--tx-tomato-soft)}
     .vbox .stage{position:relative;width:100%;max-width:440px;z-index:1}
 
+    /* Все скрины приложения — одинаковая ширина */
+    #hero .ph-shot,#step-track .ph,#step-xp .ph,#step-payout .ph{width:220px;max-width:220px;height:auto;max-height:none}
+
     /* step-track / step-xp / step-payout — phone-screen cascades (img напрямую, без обёртки) */
     #step-track .vbox .deco-blob,#step-xp .vbox .deco-blob,#step-payout .vbox .deco-blob{display:none}
     #step-track.block,#step-xp.block,#step-payout.block{align-items:stretch}
@@ -473,8 +476,10 @@
       .foot-inner{grid-template-columns:1fr;gap:2rem}
 
       /* step-track / step-xp / step-payout — центрируем композицию на узких экранах, сохраняя внутреннее расположение */
-      #step-track .vbox,#step-xp .vbox,#step-payout .vbox{min-height:480px}
-      #step-track .vbox .stage,#step-xp .vbox .stage,#step-payout .vbox .stage{transform:none;position:relative;inset:auto;width:100%;max-width:380px;height:100%;margin:0 auto}
+      #step-track .vbox,#step-xp .vbox,#step-payout .vbox{min-height:380px}
+      #step-track .vbox .stage,#step-xp .vbox .stage,#step-payout .vbox .stage{transform:none;position:relative;inset:auto;width:100%;max-width:340px;height:100%;margin:0 auto}
+      /* На мобиле уменьшаем единый размер скринов */
+      #hero .ph-shot,#step-track .ph,#step-xp .ph,#step-payout .ph{width:150px;max-width:150px}
     }
     @media(max-width:560px){
       .hero-title{font-size:clamp(2rem,11vw,3rem)}
