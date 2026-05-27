@@ -1,22 +1,38 @@
-<svg viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="XP растёт">
+<svg viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Прогресс бегуна">
   <!-- Sky background -->
   <rect width="260" height="260" fill="#bcdcff"/>
 
   <g transform="translate(30,30)">
-    <!-- Coin (XP marker, top-left) -->
-    <circle cx="38" cy="50" r="26" fill="#15182a"/>
-    <circle cx="38" cy="50" r="18" fill="none" stroke="#bcdcff" stroke-width="2.4"/>
-    <text x="38" y="58" font-family="Inter, Arial, system-ui, sans-serif" font-weight="800" font-size="17" fill="#bcdcff" text-anchor="middle" letter-spacing="-0.5">XP</text>
 
-    <!-- 3 growing bars (right side) -->
-    <rect x="74" y="128" width="34" height="64" rx="6" fill="#15182a"/>
-    <rect x="116" y="98" width="34" height="94" rx="6" fill="#15182a"/>
-    <rect x="158" y="64" width="34" height="128" rx="6" fill="#15182a"/>
+    <!-- Soft progress trajectory (background, low opacity) -->
+    <path d="M 8 168 Q 38 158 60 132 Q 85 108 108 86 Q 132 64 158 36"
+          fill="none" stroke="#15182a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.13"/>
 
-    <!-- Curved arrow sweeping up and across the bars -->
-    <path d="M 64 96 Q 102 78 134 64 Q 162 52 178 36"
-          fill="none" stroke="#15182a" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
-    <!-- Arrow head -->
-    <path d="M 178 36 L 166 18 L 192 22 Z" fill="#15182a"/>
+    <!-- Dashed progress line on top -->
+    <path d="M 8 168 Q 38 158 60 132 Q 85 108 108 86 Q 132 64 158 36"
+          fill="none" stroke="#15182a" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="6 6"/>
+
+    <!-- PR milestones along the curve (earlier → later) -->
+    <circle cx="8" cy="168" r="6" fill="#15182a"/>
+    <circle cx="60" cy="132" r="6" fill="#15182a"/>
+    <circle cx="108" cy="86" r="6" fill="#15182a"/>
+    <!-- Top milestone — current PR, ring highlight -->
+    <circle cx="158" cy="36" r="10" fill="#15182a"/>
+    <circle cx="158" cy="36" r="4" fill="#bcdcff"/>
+
+    <!-- Runner silhouette (front-right, mid-stride, lean forward) -->
+    <!-- Head -->
+    <circle cx="146" cy="108" r="11" fill="#15182a"/>
+    <!-- Torso — leaning forward -->
+    <path d="M 146 119 L 138 148" stroke="#15182a" stroke-width="14" stroke-linecap="round"/>
+    <!-- Front arm (extended forward, bent at elbow) -->
+    <path d="M 144 125 L 160 116 L 168 130" fill="none" stroke="#15182a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Back arm (swung back, bent at elbow) -->
+    <path d="M 141 124 L 124 132 L 116 120" fill="none" stroke="#15182a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Front leg — driving forward, knee high -->
+    <path d="M 138 152 L 156 168 L 170 184" fill="none" stroke="#15182a" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Back leg — push-off, bent -->
+    <path d="M 134 152 L 120 174 L 108 168" fill="none" stroke="#15182a" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+
   </g>
 </svg>
