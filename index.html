@@ -144,9 +144,9 @@
     .mk-card{position:absolute;background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--sh-card);overflow:hidden}
 
     /* phone screenshots cascade (real app screens) */
-    .ph-shot{position:absolute;border-radius:32px;background:var(--surface);box-shadow:var(--sh-card),0 40px 80px -25px rgba(15,30,12,.22);display:block;width:46%;max-width:280px;transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease}
+    .ph-shot{position:absolute;border-radius:32px;background:var(--surface);box-shadow:var(--sh-card),0 40px 80px -25px rgba(15,30,12,.22);display:block;transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease}
     .ph-1{top:60px;left:-2%;z-index:2;animation:phf 9s ease-in-out -3s infinite;--rot:-5deg;transform:rotate(-5deg)}
-    .ph-2{top:0;left:24%;z-index:4;animation:phf 9s ease-in-out infinite;--rot:2deg;transform:rotate(2deg);width:52%;max-width:310px}
+    .ph-2{top:0;left:24%;z-index:4;animation:phf 9s ease-in-out infinite;--rot:2deg;transform:rotate(2deg)}
     .ph-3{top:60px;right:-3%;z-index:3;animation:phf 9s ease-in-out -6s infinite;--rot:5deg;transform:rotate(5deg)}
     @keyframes phf{
       0%,100%{transform:rotate(var(--rot)) translateY(0)}
@@ -270,18 +270,18 @@
     #step-track .ph:hover,#step-xp .ph:hover,#step-payout .ph:hover{transform:rotate(0) translateY(-8px) scale(1.04);z-index:20;box-shadow:0 30px 60px -18px rgba(15,30,12,.32);animation:none}
 
     /* step-track positioning — variant D (dominant + satellite) */
-    #step-track .ph-1{right:0;top:0;height:100%;z-index:2;transform:rotate(3deg);--rot:3deg;animation:trkFloaty 9s ease-in-out infinite}
-    #step-track .ph-2{right:24%;top:14%;height:74%;z-index:3;transform:rotate(-7deg);--rot:-7deg;animation:trkFloaty 9s ease-in-out -3s infinite}
+    #step-track .ph-1{right:0;top:0;z-index:2;transform:rotate(3deg);--rot:3deg;animation:trkFloaty 9s ease-in-out infinite}
+    #step-track .ph-2{right:24%;top:14%;z-index:3;transform:rotate(-7deg);--rot:-7deg;animation:trkFloaty 9s ease-in-out -3s infinite}
     @keyframes trkFloaty{0%,100%{transform:rotate(var(--rot)) translateY(0)}50%{transform:rotate(var(--rot)) translateY(-10px)}}
 
     /* step-payout positioning — variant A (symmetric cascade) */
-    #step-payout .ph-1{top:2%;left:2%;height:96%;z-index:2;transform:rotate(-5deg);--rot:-5deg;animation:payFloaty 9s ease-in-out infinite}
-    #step-payout .ph-2{top:2%;right:2%;height:96%;z-index:3;transform:rotate(5deg);--rot:5deg;animation:payFloaty 9s ease-in-out -4s infinite}
+    #step-payout .ph-1{top:2%;left:2%;z-index:2;transform:rotate(-5deg);--rot:-5deg;animation:payFloaty 9s ease-in-out infinite}
+    #step-payout .ph-2{top:2%;right:2%;z-index:3;transform:rotate(5deg);--rot:5deg;animation:payFloaty 9s ease-in-out -4s infinite}
     @keyframes payFloaty{0%,100%{transform:rotate(var(--rot)) translateY(0)}50%{transform:rotate(var(--rot)) translateY(-12px)}}
 
-    /* step-xp — 2 screens equal width, left higher than right, small gap */
-    #step-xp .ph-1{position:absolute;left:8%;top:0;width:38%;height:auto;z-index:2;animation:xpFloaty 9s ease-in-out infinite}
-    #step-xp .ph-2{position:absolute;left:54%;top:80px;width:38%;height:auto;z-index:3;animation:xpFloaty 9s ease-in-out -4s infinite}
+    /* step-xp — 2 screens, left higher than right, small gap */
+    #step-xp .ph-1{position:absolute;left:8%;top:0;z-index:2;animation:xpFloaty 9s ease-in-out infinite}
+    #step-xp .ph-2{position:absolute;left:54%;top:80px;z-index:3;animation:xpFloaty 9s ease-in-out -4s infinite}
     @keyframes xpFloaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 
     /* MOCKUP: connect tracker */
