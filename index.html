@@ -256,6 +256,18 @@
     .vbox.tomato .deco-blob{background:var(--tx-tomato-soft)}
     .vbox .stage{position:relative;width:100%;max-width:440px;z-index:1}
 
+    /* step-track — phone-screen cascade (заменил .mk-connect) */
+    #step-track.block{align-items:stretch}
+    #step-track .v{display:flex}
+    #step-track .vbox{width:100%;min-height:420px}
+    #step-track .vbox .stage{position:absolute;inset:0;max-width:none}
+    #step-track .ph{position:absolute;border-radius:28px;background:var(--surface);box-shadow:var(--sh-card);transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease;overflow:hidden;cursor:pointer}
+    #step-track .ph img{display:block;height:100%;width:auto;border-radius:28px}
+    #step-track .ph-1{right:4%;top:0;height:100%;z-index:2;transform:rotate(3deg);--rot:3deg;animation:trkFloaty 9s ease-in-out infinite}
+    #step-track .ph-2{left:18%;top:14%;height:74%;z-index:3;transform:rotate(-7deg);--rot:-7deg;animation:trkFloaty 9s ease-in-out -3s infinite}
+    #step-track .ph:hover{transform:rotate(0) translateY(-8px) scale(1.04);z-index:20;box-shadow:var(--sh-lg),0 50px 100px -20px rgba(15,30,12,.3);animation:none}
+    @keyframes trkFloaty{0%,100%{transform:rotate(var(--rot)) translateY(0)}50%{transform:rotate(var(--rot)) translateY(-10px)}}
+
     /* MOCKUP: connect tracker */
     .mk-connect{background:var(--surface);border-radius:var(--r-lg);padding:1.4rem;box-shadow:var(--sh-card);transform:rotate(-2deg)}
     .mk-connect-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
