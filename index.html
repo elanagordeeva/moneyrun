@@ -13,7 +13,7 @@
   <meta property="og:image" content="https://static.tildacdn.com/tild6362-6335-4038-b032-613330353266/logovert_salat.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,slnt,wght@8..144,-10..0,400..1000&family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root{
       --bg:#eef2ec;--bg2:#f4f7f3;
@@ -57,8 +57,8 @@
       /* Border / Chart */
       --chart-border:rgba(15,30,12,.10);
       --fd:'Manrope',system-ui,sans-serif;--fb:'Inter',system-ui,sans-serif;--fm:'JetBrains Mono',ui-monospace,monospace;
-      /* brand wordmark — Bricolage Grotesque ExtraBold Italic, ближе всего к Moneyrun mark */
-      --fw:'Bricolage Grotesque','Manrope',system-ui,sans-serif;
+      /* brand wordmark — Roboto Flex (italic через slnt-axis) */
+      --fw:'Roboto Flex','Roboto',system-ui,sans-serif;
       --maxw:1240px;
       --sh-sm:0 2px 6px rgba(15,20,15,.05),0 1px 2px rgba(15,20,15,.04);
       --sh-md:0 14px 30px -10px rgba(15,30,12,.10),0 8px 18px -6px rgba(15,30,12,.06);
@@ -90,7 +90,7 @@
     .nav-logo{display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0;color:var(--ink);transition:transform .25s}
     .nav-logo:hover{transform:translateY(-1px)}
     .nav-logo svg{height:30px;width:auto;display:block;flex:none}
-    .nav-logo .wordmark{font-family:var(--fw);font-style:italic;font-weight:800;font-size:1.4rem;letter-spacing:-.03em;color:var(--ink)}
+    .nav-logo .wordmark{font-family:var(--fw);font-weight:800;font-style:italic;font-variation-settings:'slnt' -10;font-size:60px;line-height:1;letter-spacing:0;vertical-align:bottom;color:var(--ink)}
     .nav-links{display:flex;gap:.05rem;list-style:none;align-items:center}
     .nav-links a{position:relative;color:var(--muted);text-decoration:none;font-family:var(--fb);font-size:.92rem;font-weight:500;padding:.55rem .85rem;border-radius:999px;transition:all .25s}
     .nav-links a:hover{color:var(--ink);background:rgba(15,20,15,.04)}
