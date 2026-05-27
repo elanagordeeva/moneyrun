@@ -472,11 +472,9 @@
       .dl-inner{grid-template-columns:1fr;text-align:center}.dl-card p{margin-left:auto;margin-right:auto}.dl-stores{justify-content:center}.dl-phone{margin-top:1rem}
       .foot-inner{grid-template-columns:1fr;gap:2rem}
 
-      /* step-track / step-xp / step-payout — центрируем скрины на узких экранах */
-      #step-track .vbox .stage,#step-xp .vbox .stage,#step-payout .vbox .stage{transform:none;position:relative;inset:auto;width:100%;height:auto;display:flex;align-items:center;justify-content:center;gap:14px;padding:0}
-      #step-track .ph,#step-xp .ph,#step-payout .ph{position:relative;left:auto;right:auto;top:auto;bottom:auto;width:38%;max-width:220px;height:auto;max-height:none;margin:0;transform:none;animation:none}
-      #step-xp .ph-2{margin-top:40px}
-      #step-track .vbox,#step-xp .vbox,#step-payout .vbox{min-height:0;padding:1rem 0}
+      /* step-track / step-xp / step-payout — центрируем композицию на узких экранах, сохраняя внутреннее расположение */
+      #step-track .vbox,#step-xp .vbox,#step-payout .vbox{min-height:480px}
+      #step-track .vbox .stage,#step-xp .vbox .stage,#step-payout .vbox .stage{transform:none;position:relative;inset:auto;width:100%;max-width:380px;height:100%;margin:0 auto}
     }
     @media(max-width:560px){
       .hero-title{font-size:clamp(2rem,11vw,3rem)}
