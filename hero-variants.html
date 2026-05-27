@@ -151,6 +151,86 @@
   .v-b .ms-3{bottom:0;left:18%;transform:rotate(-1deg);z-index:4;width:55%;max-width:280px}
   @media(max-width:760px){.v-b .hero-art{display:grid;grid-template-columns:1fr;gap:1rem;min-height:auto}.v-b .ms{position:static;width:100%;max-width:none;transform:none!important}}
 
+  /* ─── extra elements for Variant D / E ─── */
+
+  /* live training screen */
+  .ms-city{height:240px;background:linear-gradient(160deg,#f4ede0,#ece1c8);position:relative;overflow:hidden}
+  .ms-city svg{position:absolute;inset:0;width:100%;height:100%}
+  .ms-city .roads{stroke:#fff;stroke-width:6;fill:none}
+  .ms-city .roads-narrow{stroke:#fff;stroke-width:2.5;fill:none}
+  .ms-city .park{fill:#d5e7c8}
+  .ms-city .block{fill:rgba(255,255,255,.4)}
+  .ms-city .route{stroke:#3461ff;stroke-width:3.5;fill:none;stroke-dasharray:7 4;stroke-linecap:round}
+  .ms-city .pin{fill:#3461ff;stroke:#fff;stroke-width:2.5}
+  .ms-city .heart-btn{position:absolute;right:14px;bottom:14px;width:46px;height:46px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-weight:700;font-size:.85rem;color:var(--ink);box-shadow:var(--sh-md);gap:.15rem}
+  .ms-city .gps{position:absolute;right:14px;top:14px;font-family:var(--fm);font-size:.65rem;color:var(--muted);background:rgba(255,255,255,.7);padding:.18rem .45rem;border-radius:8px}
+  .ms-city .status{position:absolute;left:14px;top:10px;font-family:var(--fm);font-size:.65rem;color:var(--ink);font-weight:600}
+  .ms-live-body{padding:1.1rem 1.2rem 1.4rem}
+  .ms-live-lbl{font-family:var(--fm);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:.5rem}
+  .ms-live-time{font-family:var(--fd);font-weight:800;font-size:2.6rem;letter-spacing:-.02em;text-align:center;font-variant-numeric:tabular-nums;line-height:1;margin-bottom:1.3rem}
+  .ms-live-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;padding:.85rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:1.1rem}
+  .ms-live-grid .cell{text-align:center}
+  .ms-live-grid .v{font-family:var(--fd);font-weight:800;font-size:1.15rem;letter-spacing:-.02em}
+  .ms-live-grid .l{font-size:.62rem;color:var(--muted);margin-top:.25rem;text-transform:lowercase}
+  .ms-live-btn{display:flex;align-items:center;justify-content:center;height:48px;border-radius:22px;background:var(--tx-salat-soft);color:var(--lime-ink);font-family:var(--fd);font-weight:800;font-size:1rem;letter-spacing:-.01em}
+
+  /* profile screen */
+  .ms-profile-hero{height:120px;background:linear-gradient(180deg,#dceeff,#f7faff);position:relative;border-bottom:1px solid var(--border)}
+  .ms-profile-av-wrap{position:absolute;left:50%;bottom:-32px;transform:translateX(-50%);width:78px;height:78px}
+  .ms-profile-av{width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#3a5378,#1f2f50);border:4px solid var(--surface);box-shadow:var(--sh-sm);display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--fd);font-weight:800;font-size:1.4rem}
+  .ms-profile-grade{position:absolute;left:-6px;bottom:-2px;width:30px;height:30px;border-radius:50%;background:var(--tx-salat-soft);border:3px solid var(--surface);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-weight:800;font-size:.65rem;color:var(--lime-ink)}
+  .ms-profile-verified{position:absolute;right:-2px;top:46%;width:20px;height:20px;border-radius:50%;background:var(--tx-salat-primary);border:2px solid var(--surface);color:var(--lime-ink);font-size:.65rem;display:flex;align-items:center;justify-content:center;font-weight:800}
+  .ms-profile-name{text-align:center;padding:2.4rem 1rem .15rem;display:flex;justify-content:center;align-items:center;gap:.35rem;font-family:var(--fd);font-weight:800;font-size:1.05rem}
+  .ms-profile-name .vt{width:14px;height:14px;border-radius:50%;background:var(--tx-salat-primary);color:var(--lime-ink);font-size:.55rem;display:flex;align-items:center;justify-content:center;font-weight:800}
+  .ms-profile-city{text-align:center;font-size:.78rem;color:var(--muted);padding-bottom:.95rem}
+  .ms-profile-city .more{color:var(--lime-ink);font-weight:600;margin-left:.25rem}
+  .ms-profile-cta{margin:0 .9rem .9rem;background:var(--surface2);border:1px solid var(--tx-salat-soft);border-radius:16px;padding:.75rem .85rem;display:flex;align-items:center;gap:.55rem}
+  .ms-profile-cta .txt{flex:1}
+  .ms-profile-cta .ti{font-family:var(--fd);font-weight:700;font-size:.85rem;line-height:1.2}
+  .ms-profile-cta .ts{font-size:.68rem;color:var(--muted);margin-top:.15rem;line-height:1.35}
+  .ms-profile-cta .arr{width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.75rem;flex:none}
+  .ms-profile-subs{display:grid;grid-template-columns:1fr 1fr;gap:.45rem;padding:0 .9rem .9rem}
+  .ms-profile-sub{background:var(--surface2);border-radius:14px;padding:.7rem .85rem;display:flex;flex-direction:column;justify-content:center;font-family:var(--fd)}
+  .ms-profile-sub .v{font-weight:800;font-size:.95rem}
+  .ms-profile-sub .l{font-size:.66rem;color:var(--muted);margin-top:.1rem;font-weight:500}
+  .ms-money-card{margin:0 .9rem .9rem;background:var(--tx-salat-soft);border-radius:16px;padding:.85rem 1rem;position:relative}
+  .ms-money-card .l{font-family:var(--fb);font-size:.74rem;color:var(--lime-ink);font-weight:600;margin-bottom:.2rem}
+  .ms-money-card .v{font-family:var(--fd);font-weight:800;font-style:italic;font-size:1.5rem;color:var(--lime-ink);letter-spacing:-.02em}
+  .ms-money-card .arr{position:absolute;right:1rem;top:.85rem;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--lime);display:flex;align-items:center;justify-content:center;font-size:.7rem}
+
+  /* week stats screen (long) */
+  .ms-stats-head{padding:1rem 1.1rem .7rem}
+  .ms-stats-head h4{font-family:var(--fd);font-weight:800;font-size:1rem;margin-bottom:.7rem}
+  .ms-stats-nums{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-bottom:.85rem}
+  .ms-stats-nums .v{font-family:var(--fd);font-weight:800;font-size:1.2rem;letter-spacing:-.02em}
+  .ms-stats-nums .l{font-size:.6rem;color:var(--muted);margin-top:.15rem}
+  .ms-stats-chart{height:80px;padding:0 1.1rem .85rem;position:relative}
+  .ms-stats-chart svg{display:block;width:100%;height:100%}
+  .ms-journal-head{padding:.9rem 1.1rem .25rem;display:flex;justify-content:space-between;align-items:baseline}
+  .ms-journal-head h4{font-family:var(--fd);font-weight:800;font-size:.95rem}
+  .ms-journal-head .km{font-family:var(--fm);font-size:.7rem;color:var(--muted)}
+  .ms-journal-week{padding:0 1.1rem 1rem;display:flex;gap:.3rem;justify-content:space-between;font-family:var(--fd)}
+  .ms-journal-week .day{flex:1;text-align:center}
+  .ms-journal-week .circ{width:34px;height:34px;border-radius:50%;background:var(--c-blue);color:var(--c-blue-ink);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.78rem;margin:0 auto .2rem;position:relative}
+  .ms-journal-week .circ.off{background:var(--surface2);color:var(--muted2)}
+  .ms-journal-week .circ.hi{background:var(--c-violet);color:var(--c-violet-ink)}
+  .ms-journal-week .circ.hi::after{content:'';position:absolute;top:-2px;right:-2px;width:8px;height:8px;border-radius:50%;background:var(--tx-tomato-primary);border:2px solid var(--surface)}
+  .ms-journal-week .dn{font-size:.55rem;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+
+  /* ─── VARIANT D — Live training (one big screen) ─── */
+  .v-d .hero-art{position:relative;min-height:640px;display:flex;align-items:center;justify-content:center}
+  .v-d .ms-main{width:75%;max-width:340px;z-index:2}
+  .v-d .ms-side{position:absolute;width:50%;max-width:240px;z-index:3}
+  .v-d .ms-stats-mini{top:8%;right:-3%;transform:rotate(4deg)}
+  .v-d .float-tag{position:absolute;background:var(--lime);color:var(--lime-ink);font-family:var(--fd);font-style:italic;font-weight:800;font-size:.95rem;padding:.5rem .9rem;border-radius:999px;box-shadow:0 8px 22px -8px rgba(190,225,75,.6);z-index:5}
+  .v-d .float-tag.t1{bottom:18%;left:-4%;transform:rotate(-7deg)}
+  .v-d .float-tag.t2{top:12%;left:-2%;transform:rotate(5deg);background:var(--c-mint);color:var(--c-mint-ink)}
+  @media(max-width:760px){.v-d .hero-art{display:grid;grid-template-columns:1fr;gap:1rem;min-height:auto}.v-d .ms-main,.v-d .ms-side{position:static;width:100%;max-width:none;transform:none}.v-d .float-tag{display:none}}
+
+  /* ─── VARIANT E — Triptych: live + profile + stats ─── */
+  .v-e .hero-art{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;align-items:start}
+  @media(max-width:760px){.v-e .hero-art{grid-template-columns:1fr 1fr;gap:.5rem}.v-e .ms:nth-child(3){grid-column:1/-1}}
+
   /* ─── VARIANT C — Big hero card + 2 small chips ─── */
   .v-c .hero-art{position:relative;min-height:600px;display:flex;align-items:center;justify-content:center}
   .v-c .ms-hero{width:78%;max-width:380px;position:relative;z-index:2}
@@ -184,6 +264,40 @@
     <ellipse cx="170" cy="80" rx="60" ry="55" fill="none" stroke="#3461ff" stroke-width="3.5" stroke-dasharray="4 0" stroke-linecap="round"/>
     <circle cx="110" cy="80" r="6" fill="#3461ff" stroke="#fff" stroke-width="2"/>
     <circle cx="230" cy="80" r="6" fill="#3461ff" stroke="#fff" stroke-width="2"/>
+  </symbol>
+  <!-- City map (stylized Moscow center) -->
+  <symbol id="city-map" viewBox="0 0 340 240">
+    <rect width="340" height="240" fill="#f0e8d4"/>
+    <!-- park blobs -->
+    <path class="park" fill="#d5e7c8" d="M30 150 Q60 110 110 130 Q130 180 90 200 Q40 195 30 150 Z"/>
+    <path class="park" fill="#d5e7c8" d="M220 30 Q280 25 290 70 Q270 100 230 90 Q205 70 220 30 Z"/>
+    <!-- block fills -->
+    <rect class="block" fill="rgba(255,255,255,.55)" x="120" y="50" width="80" height="50" rx="3"/>
+    <rect class="block" fill="rgba(255,255,255,.55)" x="155" y="115" width="55" height="40" rx="3"/>
+    <rect class="block" fill="rgba(255,255,255,.55)" x="225" y="120" width="50" height="55" rx="3"/>
+    <rect class="block" fill="rgba(255,255,255,.55)" x="290" y="140" width="40" height="55" rx="3"/>
+    <!-- roads -->
+    <g class="roads" stroke="#fff" stroke-width="7" fill="none" stroke-linecap="round">
+      <path d="M0 40 L340 60"/>
+      <path d="M0 120 L340 105"/>
+      <path d="M0 175 L340 185"/>
+      <path d="M115 0 L130 240"/>
+      <path d="M220 0 L210 240"/>
+      <path d="M285 0 L300 240"/>
+    </g>
+    <g class="roads-narrow" stroke="#fff" stroke-width="2.5" fill="none" opacity=".85">
+      <path d="M40 0 L55 240"/>
+      <path d="M70 0 L80 240"/>
+      <path d="M155 0 L165 240"/>
+      <path d="M260 0 L255 240"/>
+      <path d="M0 75 L340 85"/>
+      <path d="M0 150 L340 145"/>
+      <path d="M0 215 L340 220"/>
+    </g>
+    <!-- route -->
+    <path class="route" d="M70 195 Q90 165 130 160 Q170 155 175 130 Q180 110 165 95 Q150 80 175 70" stroke="#3461ff" stroke-width="4" fill="none" stroke-dasharray="7 4" stroke-linecap="round"/>
+    <circle class="pin" cx="70" cy="195" r="7" fill="#3461ff" stroke="#fff" stroke-width="2.5"/>
+    <circle class="pin" cx="175" cy="70" r="7" fill="#3461ff" stroke="#fff" stroke-width="2.5"/>
   </symbol>
 </svg>
 
@@ -457,6 +571,190 @@
       <!-- Floating tags -->
       <span class="float-tag t1">+ 142 XP</span>
       <span class="float-tag t2">5.4 км · 27:18</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ VARIANT D ════════════════ -->
+<section class="variant v-d">
+  <span class="variant-tag"><b>Вариант D</b> · Активная тренировка + бейджи</span>
+  <h2>Один большой экран «Тренировка идёт»</h2>
+  <p class="desc">Главный mock — экран активной тренировки с реальной картой города, длительностью 01:54:55 и большой лайм-кнопкой «Пауза». По бокам — компактная статистика и плавающие чипы. Самый «живой» вариант: продукт показан в действии.</p>
+
+  <div class="hero-shell">
+    <div>
+      <div class="hero-eyebrow"><span class="dot"></span>25 000+ бегунов уже зарабатывают</div>
+      <h1 class="hero-title">Беги.<br><span class="lime-mark">Зарабатывай.</span><br>Повторяй.</h1>
+      <p class="hero-sub">Подключи трекер, копи XP за тренировки и обменивай на рубли. Бесплатно, без подписок. Выплаты покрывают клубы и спонсоры EF Moneyrun.</p>
+      <div class="actions">
+        <a href="#" class="store">App Store</a>
+        <a href="#" class="store">Google Play</a>
+      </div>
+    </div>
+
+    <div class="hero-art">
+      <!-- Big live training screen -->
+      <div class="ms ms-main">
+        <div class="ms-city">
+          <span class="status">9:30</span>
+          <span class="gps">GPS ▮▮</span>
+          <svg><use href="#city-map"/></svg>
+          <div class="heart-btn">♥ 135</div>
+        </div>
+        <div class="ms-live-body">
+          <div class="ms-live-lbl">Длительность</div>
+          <div class="ms-live-time">01:54:55</div>
+          <div class="ms-live-grid">
+            <div class="cell"><div class="v">27,5</div><div class="l">км</div></div>
+            <div class="cell"><div class="v">789</div><div class="l">ккал</div></div>
+            <div class="cell"><div class="v">04:10</div><div class="l">мин/км</div></div>
+          </div>
+          <div class="ms-live-btn">Пауза</div>
+        </div>
+      </div>
+
+      <!-- Small side: week stats -->
+      <div class="ms ms-side ms-stats-mini">
+        <div class="ms-stats-head">
+          <h4>Статистика недели</h4>
+          <div class="ms-stats-nums">
+            <div><div class="v">20,0</div><div class="l">км</div></div>
+            <div><div class="v">2:30</div><div class="l">часов</div></div>
+            <div><div class="v">250</div><div class="l">м высота</div></div>
+          </div>
+        </div>
+        <div class="ms-stats-chart">
+          <svg viewBox="0 0 240 80" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="sg1" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#bcdcff" stop-opacity=".7"/>
+                <stop offset="100%" stop-color="#bcdcff" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M0 50 L30 25 L60 18 L90 40 L120 45 L150 55 L180 28 L210 18 L240 60 L240 80 L0 80 Z" fill="url(#sg1)"/>
+            <path d="M0 50 L30 25 L60 18 L90 40 L120 45 L150 55 L180 28 L210 18 L240 60" stroke="#3461ff" stroke-width="2" fill="none"/>
+            <circle cx="30" cy="25" r="3" fill="#3461ff"/>
+            <circle cx="180" cy="28" r="3" fill="#3461ff"/>
+            <circle cx="240" cy="60" r="4" fill="#3461ff"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Floating tags -->
+      <span class="float-tag t1">+ 142 XP</span>
+      <span class="float-tag t2">+ 128 ₽</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ VARIANT E ════════════════ -->
+<section class="variant v-e">
+  <span class="variant-tag"><b>Вариант E</b> · Триптих в духе референса 2</span>
+  <h2>Тренировка · Профиль · Статистика</h2>
+  <p class="desc">Полный продуктовый триптих как в втором референсе. Активная тренировка слева, профиль атлета с verified-галочкой и грейдом в центре, недельная статистика + журнал справа. Сухо и информативно.</p>
+
+  <div class="hero-shell">
+    <div>
+      <div class="hero-eyebrow"><span class="dot"></span>25 000+ бегунов уже зарабатывают</div>
+      <h1 class="hero-title">Беги.<br><span class="lime-mark">Зарабатывай.</span><br>Повторяй.</h1>
+      <p class="hero-sub">Подключи трекер, копи XP за тренировки и обменивай на рубли. Бесплатно, без подписок. Выплаты покрывают клубы и спонсоры EF Moneyrun.</p>
+      <div class="actions">
+        <a href="#" class="store">App Store</a>
+        <a href="#" class="store">Google Play</a>
+      </div>
+    </div>
+
+    <div class="hero-art">
+      <!-- Screen 1: Live training (compact) -->
+      <div class="ms">
+        <div class="ms-city" style="height:170px">
+          <span class="status">9:30</span>
+          <span class="gps" style="font-size:.55rem">GPS ▮▮</span>
+          <svg><use href="#city-map"/></svg>
+          <div class="heart-btn" style="width:36px;height:36px;font-size:.7rem">♥ 135</div>
+        </div>
+        <div class="ms-live-body" style="padding:.9rem 1rem 1rem">
+          <div class="ms-live-lbl" style="margin-bottom:.3rem">Длительность</div>
+          <div class="ms-live-time" style="font-size:1.7rem;margin-bottom:.7rem">01:54:55</div>
+          <div class="ms-live-grid" style="padding:.6rem 0;margin-bottom:.7rem">
+            <div class="cell"><div class="v" style="font-size:.95rem">27,5</div><div class="l">км</div></div>
+            <div class="cell"><div class="v" style="font-size:.95rem">789</div><div class="l">ккал</div></div>
+            <div class="cell"><div class="v" style="font-size:.95rem">04:10</div><div class="l">темп</div></div>
+          </div>
+          <div class="ms-live-btn" style="height:36px;font-size:.85rem;border-radius:18px">Пауза</div>
+        </div>
+      </div>
+
+      <!-- Screen 2: Profile -->
+      <div class="ms">
+        <div class="ms-profile-hero">
+          <div class="ms-profile-av-wrap">
+            <div class="ms-profile-grade">C+</div>
+            <div class="ms-profile-av">АП</div>
+            <div class="ms-profile-verified">✓</div>
+          </div>
+        </div>
+        <div class="ms-profile-name">Алексей Петров <span class="vt">✓</span></div>
+        <div class="ms-profile-city">Санкт-Петербург<span class="more">Подробнее…</span></div>
+        <div class="ms-profile-cta">
+          <div class="txt">
+            <div class="ti">Доступ к забегам</div>
+            <div class="ts">Пройди обязательную верификацию</div>
+          </div>
+          <div class="arr">→</div>
+        </div>
+        <div class="ms-profile-subs">
+          <div class="ms-profile-sub"><div class="v">12</div><div class="l">подписчики</div></div>
+          <div class="ms-profile-sub"><div class="v">456</div><div class="l">подписки</div></div>
+        </div>
+        <div class="ms-money-card">
+          <div class="l">Деньги</div>
+          <div class="v">122 ₽</div>
+          <div class="arr">↗</div>
+        </div>
+      </div>
+
+      <!-- Screen 3: Stats + journal -->
+      <div class="ms">
+        <div class="ms-stats-head">
+          <h4>Статистика по неделям</h4>
+          <div class="ms-stats-nums">
+            <div><div class="v">20,0</div><div class="l">км</div></div>
+            <div><div class="v">2:30:00</div><div class="l">ч</div></div>
+            <div><div class="v">250</div><div class="l">м</div></div>
+          </div>
+        </div>
+        <div class="ms-stats-chart">
+          <svg viewBox="0 0 280 80" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="sg2" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#bcdcff" stop-opacity=".6"/>
+                <stop offset="100%" stop-color="#bcdcff" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path d="M0 50 L40 25 L80 18 L120 45 L160 50 L200 28 L240 18 L280 60 L280 80 L0 80 Z" fill="url(#sg2)"/>
+            <path d="M0 50 L40 25 L80 18 L120 45 L160 50 L200 28 L240 18 L280 60" stroke="#3461ff" stroke-width="2" fill="none"/>
+            <circle cx="40" cy="25" r="3" fill="#3461ff"/>
+            <circle cx="80" cy="18" r="3" fill="#3461ff"/>
+            <circle cx="200" cy="28" r="3" fill="#3461ff"/>
+            <circle cx="240" cy="18" r="3" fill="#3461ff"/>
+            <circle cx="280" cy="60" r="4" fill="#3461ff"/>
+          </svg>
+        </div>
+        <div class="ms-journal-head">
+          <h4>Журнал тренировок</h4>
+          <span class="km">11–17 авг · 78 км</span>
+        </div>
+        <div class="ms-journal-week">
+          <div class="day"><div class="circ">12</div><div class="dn">пн</div></div>
+          <div class="day"><div class="circ">10</div><div class="dn">вт</div></div>
+          <div class="day"><div class="circ off">✕</div><div class="dn">ср</div></div>
+          <div class="day"><div class="circ">12</div><div class="dn">чт</div></div>
+          <div class="day"><div class="circ hi">24</div><div class="dn">пт</div></div>
+          <div class="day"><div class="circ">12</div><div class="dn">сб</div></div>
+          <div class="day"><div class="circ">8</div><div class="dn">вс</div></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
