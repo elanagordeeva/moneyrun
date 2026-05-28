@@ -28,6 +28,12 @@ H3 = {
 }
 SKIP = {'Button','Условия перехода','Доп. условия монетизации','Дополнительные возможности',
         'Мужчины','Женщины','Мужчины Женщины'}
+# пояснения к строкам Матрицы (Регистрация…Финвайт) -> аккордеон
+DEF_TERMS = {
+ 'Регистрация','Инфо Профиля','Подписка в Telegram','Running Level','Experience, XP',
+ 'Монетизация, ₽','Пульсовые данные','Верхние зоны (HPZ)','Беговые часы',
+ 'Минимальный темп, мин/км','Создание Клуба','Роль Забота в Клубе','Финвайт',
+}
 
 # --- Матрица Грейдов (захардкожена 1-в-1) ---
 GRADES = ['F','D','D1','D2','C','C+','B','B+','A','A+','Next']
@@ -309,6 +315,23 @@ while i<n:
         continue
     if ln in H2:
         body.append(f'<h2>{ln}</h2>'); i+=1; continue
+    # пояснения к Матрице (Регистрация…Финвайт) -> раскрывающийся аккордеон
+    if ln=='Регистрация':
+        pairs=[]; j=i
+        while j<n:
+            while j<n and not lines[j].strip(): j+=1
+            if j>=n or lines[j].strip() not in DEF_TERMS: break
+            term=lines[j].strip()
+            k=j+1
+            while k<n and not lines[k].strip(): k+=1
+            desc=lines[k].strip() if k<n else ''
+            pairs.append((term,desc)); j=k+1
+        acc=''
+        for term,desc in pairs:
+            acc+=(f'<details class="g-acc-item"><summary>{H.escape(term)}</summary>'
+                  f'<div class="g-acc-body"><p>{style(desc.rstrip(" ;"))}</p></div></details>')
+        body.append('<div class="g-acc">'+acc+'</div>')
+        i=j; continue
     if ln in H3:
         body.append(f'<h3>{ln}</h3>'); i+=1; continue
     # одиночная строка-формула
@@ -386,6 +409,17 @@ CSS = """
     .g-bullets{list-style:none;margin:.2rem 0 1.4rem;padding:0;display:grid;gap:.75rem}
     .g-bullets li{position:relative;padding-left:1.65rem;color:var(--ink2);line-height:1.7;font-size:1rem}
     .g-bullets li::before{content:'';position:absolute;left:.35rem;top:.66em;width:7px;height:7px;border-radius:50%;background:var(--lime-deep)}
+    .g-acc{display:grid;gap:.5rem;margin:1.4rem 0 2.2rem}
+    .g-acc-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);box-shadow:var(--sh-sm);overflow:hidden;transition:box-shadow .2s}
+    .g-acc-item[open]{box-shadow:var(--sh-md)}
+    .g-acc-item summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.85rem 1.2rem;font-family:var(--fd);font-weight:700;font-size:1rem;color:var(--ink)}
+    .g-acc-item summary::-webkit-details-marker{display:none}
+    .g-acc-item summary::after{content:'+';font-family:var(--fd);font-weight:700;font-size:1.35rem;line-height:1;color:var(--muted2);transition:color .2s}
+    .g-acc-item[open] summary::after{content:'−';color:var(--lime-deep)}
+    .g-acc-item summary:hover{background:var(--bg2)}
+    .g-acc-item[open] summary{color:var(--ink)}
+    .g-acc-body{padding:0 1.2rem 1.05rem;color:var(--ink2);line-height:1.7;font-size:.97rem}
+    .g-acc-body p{margin:0}
     .g-formula{font-family:var(--fm);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.5rem .8rem;margin:.3rem 0;font-size:.9rem;color:var(--ink);display:inline-block}
     .g-tablewrap{overflow-x:auto;margin:1.2rem 0 1.6rem;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);box-shadow:var(--sh-sm)}
     table.g-tbl,table.g-matrix{border-collapse:collapse;width:100%;font-size:.86rem}

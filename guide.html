@@ -72,6 +72,17 @@
     .g-bullets{list-style:none;margin:.2rem 0 1.4rem;padding:0;display:grid;gap:.75rem}
     .g-bullets li{position:relative;padding-left:1.65rem;color:var(--ink2);line-height:1.7;font-size:1rem}
     .g-bullets li::before{content:'';position:absolute;left:.35rem;top:.66em;width:7px;height:7px;border-radius:50%;background:var(--lime-deep)}
+    .g-acc{display:grid;gap:.5rem;margin:1.4rem 0 2.2rem}
+    .g-acc-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);box-shadow:var(--sh-sm);overflow:hidden;transition:box-shadow .2s}
+    .g-acc-item[open]{box-shadow:var(--sh-md)}
+    .g-acc-item summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.85rem 1.2rem;font-family:var(--fd);font-weight:700;font-size:1rem;color:var(--ink)}
+    .g-acc-item summary::-webkit-details-marker{display:none}
+    .g-acc-item summary::after{content:'+';font-family:var(--fd);font-weight:700;font-size:1.35rem;line-height:1;color:var(--muted2);transition:color .2s}
+    .g-acc-item[open] summary::after{content:'−';color:var(--lime-deep)}
+    .g-acc-item summary:hover{background:var(--bg2)}
+    .g-acc-item[open] summary{color:var(--ink)}
+    .g-acc-body{padding:0 1.2rem 1.05rem;color:var(--ink2);line-height:1.7;font-size:.97rem}
+    .g-acc-body p{margin:0}
     .g-formula{font-family:var(--fm);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.5rem .8rem;margin:.3rem 0;font-size:.9rem;color:var(--ink);display:inline-block}
     .g-tablewrap{overflow-x:auto;margin:1.2rem 0 1.6rem;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);box-shadow:var(--sh-sm)}
     table.g-tbl,table.g-matrix{border-collapse:collapse;width:100%;font-size:.86rem}
@@ -166,32 +177,7 @@
 <tr><th class="g-rowh">Финвайт</th><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-green">—</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td></tr>
 </tbody>
 </table></div>
-    <h3>Регистрация</h3>
-    <p>Наличие действующего аккаунта на платформе <b><i>Moneyrun</i></b>.</p>
-    <h3>Инфо Профиля</h3>
-    <p>Заполненные обязательные поля в аккаунте <b><i>Атлета</i></b>: Имя, Пол, День рождения, Вес.</p>
-    <h3>Подписка в Telegram</h3>
-    <p>Активная подписка <b><i><span class="g-term">на официальный <a class="g-link" href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram-канал</a> Moneyrun</span></i></b>, которая определяется ботом @Moneyrunbot. При отсутствии активной подписки на текущем <b><i>Грейде</i></b> новые тренировки не монетизируются.</p>
-    <h3>Running Level</h3>
-    <p>Верификация аккаунта в <b><i>Moneyrun</i></b> и наличие <b><i>Забегов</i></b> за последние 180 дней, на основании которых определяется <b><i>RL</i></b> из <b><i><span class="g-term">таблицы</span></i></b>.</p>
-    <h3>Experience, XP</h3>
-    <p>Количество баллов <b><i>XP</i></b>, заработанных за активности на платформе <b><i>Moneyrun</i></b>.</p>
-    <h3>Монетизация, ₽</h3>
-    <p>Размер финансового вознаграждения за <b><i>1 XP</i></b> в базовой тарифной сетке <b><i>Клуба Moneyrun</i></b>.</p>
-    <h3>Пульсовые данные</h3>
-    <p>Условие, где при наличии пульса рассчитывается <b><i>XP</i></b> за тренировку на основании <b><i>eTRIMP</i></b>, а при его отсутствии на «серых» <b><i>Грейдах</i></b>, подсчёт <b><i>XP</i></b> происходит по времени: длительность тренировки в минутах делится на 20.</p>
-    <h3>Верхние зоны (HPZ)</h3>
-    <p>High Perfomance Zones (Z3, Z4 и Z5) доступны для <b><i>Грейда D2</i></b> и выше, при <b><i>RL=1</i></b> наличии <b><i>IQ &gt;45%</i></b> (значение может быть пересмотрено).</p>
-    <h3>Беговые часы</h3>
-    <p>Необходимость записи трека через устройство брендов Garmin, Coros, Polar, Suunto или Apple, которые передают больше достоверных данных через API, в отличие от записи с помощью смартфона.</p>
-    <h3>Минимальный темп, мин/км</h3>
-    <p>Предел среднего темпа тренировки, ниже которого активность не считается беговой и не монетизируется по правилам платформы.</p>
-    <h3>Создание Клуба</h3>
-    <p>Возможность создать собственный <b><i>Клуб</i></b> на платформе <b><i>Moneyrun</i></b> и претендовать на его <b><i>Верификацию</i></b>.</p>
-    <h3>Роль Забота в Клубе</h3>
-    <p>Возможность участвовать в развитии <b><i>Верифицированного Клуба</i></b> и состоять в закрытом сообществе <b><i>MR Забота</i></b>.</p>
-    <h3>Финвайт</h3>
-    <p>Специальный код (не более 3 штук на каждом следующем <b><i>Грейде</i></b>) для подключения монетизации в аккаунте другого <b><i>Атлета</i></b>.</p>
+    <div class="g-acc"><details class="g-acc-item"><summary>Регистрация</summary><div class="g-acc-body"><p>Наличие действующего аккаунта на платформе <b><i>Moneyrun</i></b>.</p></div></details><details class="g-acc-item"><summary>Инфо Профиля</summary><div class="g-acc-body"><p>Заполненные обязательные поля в аккаунте <b><i>Атлета</i></b>: Имя, Пол, День рождения, Вес.</p></div></details><details class="g-acc-item"><summary>Подписка в Telegram</summary><div class="g-acc-body"><p>Активная подписка <b><i><span class="g-term">на официальный <a class="g-link" href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram-канал</a> Moneyrun</span></i></b>, которая определяется ботом @Moneyrunbot. При отсутствии активной подписки на текущем <b><i>Грейде</i></b> новые тренировки не монетизируются.</p></div></details><details class="g-acc-item"><summary>Running Level</summary><div class="g-acc-body"><p>Верификация аккаунта в <b><i>Moneyrun</i></b> и наличие <b><i>Забегов</i></b> за последние 180 дней, на основании которых определяется <b><i>RL</i></b> из <b><i><span class="g-term">таблицы</span></i></b>.</p></div></details><details class="g-acc-item"><summary>Experience, XP</summary><div class="g-acc-body"><p>Количество баллов <b><i>XP</i></b>, заработанных за активности на платформе <b><i>Moneyrun</i></b>.</p></div></details><details class="g-acc-item"><summary>Монетизация, ₽</summary><div class="g-acc-body"><p>Размер финансового вознаграждения за <b><i>1 XP</i></b> в базовой тарифной сетке <b><i>Клуба Moneyrun</i></b>.</p></div></details><details class="g-acc-item"><summary>Пульсовые данные</summary><div class="g-acc-body"><p>Условие, где при наличии пульса рассчитывается <b><i>XP</i></b> за тренировку на основании <b><i>eTRIMP</i></b>, а при его отсутствии на «серых» <b><i>Грейдах</i></b>, подсчёт <b><i>XP</i></b> происходит по времени: длительность тренировки в минутах делится на 20.</p></div></details><details class="g-acc-item"><summary>Верхние зоны (HPZ)</summary><div class="g-acc-body"><p>High Perfomance Zones (Z3, Z4 и Z5) доступны для <b><i>Грейда D2</i></b> и выше, при <b><i>RL=1</i></b> наличии <b><i>IQ &gt;45%</i></b> (значение может быть пересмотрено).</p></div></details><details class="g-acc-item"><summary>Беговые часы</summary><div class="g-acc-body"><p>Необходимость записи трека через устройство брендов Garmin, Coros, Polar, Suunto или Apple, которые передают больше достоверных данных через API, в отличие от записи с помощью смартфона.</p></div></details><details class="g-acc-item"><summary>Минимальный темп, мин/км</summary><div class="g-acc-body"><p>Предел среднего темпа тренировки, ниже которого активность не считается беговой и не монетизируется по правилам платформы.</p></div></details><details class="g-acc-item"><summary>Создание Клуба</summary><div class="g-acc-body"><p>Возможность создать собственный <b><i>Клуб</i></b> на платформе <b><i>Moneyrun</i></b> и претендовать на его <b><i>Верификацию</i></b>.</p></div></details><details class="g-acc-item"><summary>Роль Забота в Клубе</summary><div class="g-acc-body"><p>Возможность участвовать в развитии <b><i>Верифицированного Клуба</i></b> и состоять в закрытом сообществе <b><i>MR Забота</i></b>.</p></div></details><details class="g-acc-item"><summary>Финвайт</summary><div class="g-acc-body"><p>Специальный код (не более 3 штук на каждом следующем <b><i>Грейде</i></b>) для подключения монетизации в аккаунте другого <b><i>Атлета</i></b>.</p></div></details></div>
     <h2>ИМ.Experience (XP) детализация</h2>
     <p>Размер начисляемого <b><i>XP</i></b> зависит преимущественно от следующих факторов:</p>
     <p><b><i><span class="g-term">Пульсовые данные</span></i></b>, указанные <b><i>Атлетом</i></b> (в том числе <b><i>ЧССМ</i></b>)</p>
