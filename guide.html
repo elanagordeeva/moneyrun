@@ -72,16 +72,17 @@
     .g-bullets{list-style:none;margin:.2rem 0 1.4rem;padding:0;display:grid;gap:.75rem}
     .g-bullets li{position:relative;padding-left:1.65rem;color:var(--ink2);line-height:1.7;font-size:1rem}
     .g-bullets li::before{content:'';position:absolute;left:.35rem;top:.66em;width:7px;height:7px;border-radius:50%;background:var(--lime-deep)}
-    .g-acc{display:grid;gap:.5rem;margin:1.4rem 0 2.2rem}
+    .g-acc{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem;align-items:start;margin:1.4rem 0 2.2rem}
+    @media(max-width:680px){.g-acc{grid-template-columns:1fr}}
     .g-acc-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);box-shadow:var(--sh-sm);overflow:hidden;transition:box-shadow .2s}
     .g-acc-item[open]{box-shadow:var(--sh-md)}
-    .g-acc-item summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.85rem 1.2rem;font-family:var(--fd);font-weight:700;font-size:1rem;color:var(--ink)}
+    .g-acc-item summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:.7rem;padding:.6rem .9rem;font-family:var(--fd);font-weight:700;font-size:.76rem;color:var(--ink)}
     .g-acc-item summary::-webkit-details-marker{display:none}
-    .g-acc-item summary::after{content:'+';font-family:var(--fd);font-weight:700;font-size:1.35rem;line-height:1;color:var(--muted2);transition:color .2s}
+    .g-acc-item summary::after{content:'+';font-family:var(--fd);font-weight:700;font-size:1.1rem;line-height:1;color:var(--muted2);transition:color .2s}
     .g-acc-item[open] summary::after{content:'−';color:var(--lime-deep)}
     .g-acc-item summary:hover{background:var(--bg2)}
     .g-acc-item[open] summary{color:var(--ink)}
-    .g-acc-body{padding:0 1.2rem 1.05rem;color:var(--ink2);line-height:1.7;font-size:.97rem}
+    .g-acc-body{padding:0 .9rem .8rem;color:var(--ink2);line-height:1.6;font-size:.74rem}
     .g-acc-body p{margin:0}
     .g-formula{font-family:var(--fm);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.5rem .8rem;margin:.3rem 0;font-size:.9rem;color:var(--ink);display:inline-block}
     .g-tablewrap{overflow-x:auto;margin:1.2rem 0 1.6rem;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);box-shadow:var(--sh-sm)}
