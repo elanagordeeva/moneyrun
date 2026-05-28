@@ -217,6 +217,27 @@ while i<n:
                   f'<span class="g-el-text">{style(it.rstrip(" ;"))}</span></li>')
         body.append('<ol class="g-elements">'+lis+'</ol>')
         i=j; continue
+    # три типа Грейдов (Серый/Зелёный/Синий) -> цветные карточки
+    if ln.replace('\xa0',' ').startswith('Серый ('):
+        col=[]; j=i
+        while j<n and len(col)<6:
+            s=lines[j].strip().replace('\xa0',' ')
+            if s: col.append(s)
+            j+=1
+        kinds=['grey','green','blue']
+        cards=''
+        for k in range(3):
+            name=col[2*k]; desc=col[2*k+1]
+            mt=re.match(r'^(.*?)\s*(\(.*\))\s*$', name)
+            if mt:
+                title=f'{H.escape(mt.group(1))} <span class="g-type-range">{H.escape(mt.group(2))}</span>'
+            else:
+                title=H.escape(name)
+            cards+=(f'<div class="g-type g-type-{kinds[k]}">'
+                    f'<h4 class="g-type-name">{title}</h4>'
+                    f'<p class="g-type-desc">{H.escape(desc)}</p></div>')
+        body.append('<div class="g-types">'+cards+'</div>')
+        i=j; continue
     # Матрица: вставляем после h2 и проглатываем строки до 'Регистрация' (первое определение)
     if ln=='Матрица Грейдов':
         body.append('<h2>Матрица Грейдов</h2>')
@@ -321,6 +342,17 @@ CSS = """
     .g-num-1{background:var(--c-blue);color:var(--c-blue-ink)}
     .g-num-2{background:var(--lime);color:var(--lime-ink)}
     .g-el-text{color:var(--ink2);line-height:1.65;font-size:1rem;align-self:center}
+    .g-types{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.4rem 0 2rem}
+    .g-type{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:1.2rem 1.3rem 1.3rem;box-shadow:var(--sh-sm);overflow:hidden}
+    .g-type::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--g-accent)}
+    .g-type-grey{--g-accent:#aab0a6}
+    .g-type-green{--g-accent:var(--lime-deep)}
+    .g-type-blue{--g-accent:#5b9bff}
+    .g-type-name{font-family:var(--fd);font-weight:800;font-size:1.12rem;color:var(--ink);margin:.5rem 0 .5rem;display:flex;align-items:baseline;gap:.45rem;flex-wrap:wrap}
+    .g-type-name::before{content:'';width:11px;height:11px;border-radius:50%;background:var(--g-accent);align-self:center}
+    .g-type-range{font-family:var(--fm);font-weight:600;font-size:.82rem;color:var(--muted);letter-spacing:.01em}
+    .g-type-desc{color:var(--ink2);font-size:.95rem;line-height:1.55;margin:0}
+    @media(max-width:680px){.g-types{grid-template-columns:1fr}}
     .g-formula{font-family:var(--fm);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.5rem .8rem;margin:.3rem 0;font-size:.9rem;color:var(--ink);display:inline-block}
     .g-tablewrap{overflow-x:auto;margin:1.2rem 0 1.6rem;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);box-shadow:var(--sh-sm)}
     table.g-tbl,table.g-matrix{border-collapse:collapse;width:100%;font-size:.86rem}
