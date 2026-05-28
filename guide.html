@@ -37,13 +37,12 @@
     .g-hero-eyebrow{display:inline-block;font-family:var(--fm);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--c-blue-ink);background:#fff;border:1px solid var(--c-blue);border-radius:999px;padding:.34rem .8rem;margin-bottom:1.1rem}
     .g-hero h1{font-family:var(--fd);font-weight:800;font-size:clamp(2rem,4.6vw,3.1rem);letter-spacing:-.03em;line-height:1.04;margin:0 0 .9rem;color:var(--ink)}
     .g-hero-sub{color:#2c466f;font-size:clamp(1rem,1.4vw,1.12rem);line-height:1.6;max-width:34ch;margin:0}
-    .g-hero-art{position:relative;z-index:1;align-self:end;justify-self:center;padding:1.6rem 1rem 0}
-    .g-hero-art img{display:block;width:100%;max-width:230px;border-radius:26px 26px 0 0;box-shadow:0 30px 60px -22px rgba(20,45,90,.45),0 8px 20px -8px rgba(20,45,90,.25);transform:translateY(10px) rotate(-2.5deg);transform-origin:bottom center;border:1px solid rgba(255,255,255,.7)}
+    .g-hero-art{position:relative;z-index:1;align-self:center;justify-self:center;padding:clamp(1.2rem,3vw,2.2rem) clamp(1rem,2.5vw,1.8rem)}
+    .g-hero-art img{display:block;width:100%;max-width:330px;height:auto}
     @media(max-width:680px){
       .g-hero{grid-template-columns:1fr}
-      .g-hero::after{background:linear-gradient(180deg,rgba(252,253,254,.92) 0%,rgba(252,253,254,.5) 60%,rgba(252,253,254,0) 100%)}
-      .g-hero-art{justify-self:center;padding-top:.5rem;max-width:260px;margin:0 auto}
-      .g-hero-art img{transform:translateY(10px) rotate(0)}
+      .g-hero::after{background:linear-gradient(180deg,rgba(252,253,254,.92) 0%,rgba(252,253,254,.55) 62%,rgba(252,253,254,.35) 100%)}
+      .g-hero-art{justify-self:center;padding-top:0;max-width:300px;margin:0 auto}
     }
     .legal h2{font-family:var(--fd);font-weight:800;font-size:clamp(1.3rem,2.4vw,1.7rem);letter-spacing:-.02em;line-height:1.2;margin:2.8rem 0 1rem;padding-top:.4rem}
     .legal h3{font-family:var(--fd);font-weight:700;font-size:1.1rem;letter-spacing:-.01em;margin:1.8rem 0 .5rem;color:var(--ink)}
@@ -91,7 +90,7 @@
         <p class="g-hero-sub">Платформа Moneyrun — социально-благотворительный проект по развитию бегового движения.</p>
       </div>
       <div class="g-hero-art" aria-hidden="true">
-        <img src="art/full_7-2.png.webp" alt="Профиль Атлета в Moneyrun" loading="eager">
+        <img src="art/guide-hero.svg" alt="Прогресс по Грейдам" loading="eager">
       </div>
     </header>
     <p>Платформа <b><i>Moneyrun</i></b> — это социально-благотворительный проект по развитию бегового движения</p>

@@ -1,0 +1,40 @@
+<svg width="440" height="360" viewBox="0 0 440 360" fill="none" xmlns="http://www.w3.org/2000/svg" font-family="Manrope, system-ui, sans-serif">
+  <!-- ground line -->
+  <line x1="28" y1="321" x2="412" y2="321" stroke="#0e120e" stroke-opacity="0.12" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- bars (рост по Грейдам) -->
+  <g>
+    <rect x="40"  y="250" width="56" height="71"  rx="16" fill="#cfe0fb"/>
+    <rect x="114" y="210" width="56" height="111" rx="16" fill="#bcdcff"/>
+    <rect x="188" y="170" width="56" height="151" rx="16" fill="#d0f85d"/>
+    <rect x="262" y="125" width="56" height="196" rx="16" fill="#bee14b"/>
+    <rect x="336" y="78"  width="56" height="243" rx="16" fill="#0e120e"/>
+  </g>
+
+  <!-- grade labels -->
+  <g font-weight="800" text-anchor="middle">
+    <text x="68"  y="288" font-size="22" fill="#143b6b">D</text>
+    <text x="142" y="252" font-size="22" fill="#143b6b">C</text>
+    <text x="216" y="212" font-size="22" fill="#1f2a05">B</text>
+    <text x="290" y="170" font-size="22" fill="#1f2a05">A</text>
+    <text x="364" y="120" font-size="20" fill="#d0f85d">A+</text>
+  </g>
+
+  <!-- восходящая пунктирная линия прогресса -->
+  <polyline points="68,234 142,194 216,154 290,109 358,64"
+            fill="none" stroke="#f0563f" stroke-width="3"
+            stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="2 9"/>
+  <!-- стрелка вверх -->
+  <path d="M348 58 L360 50 L366 64" fill="none" stroke="#f0563f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- бейдж-монета XP/₽ -->
+  <g>
+    <circle cx="392" cy="40" r="28" fill="#d0f85d" stroke="#0e120e" stroke-width="2.5"/>
+    <text x="392" y="51" font-size="30" font-weight="800" text-anchor="middle" fill="#0e120e">₽</text>
+  </g>
+
+  <!-- точки-искры XP -->
+  <circle cx="44"  cy="60" r="4"   fill="#bee14b"/>
+  <circle cx="150" cy="92" r="3"   fill="#5b9bff"/>
+  <circle cx="318" cy="190" r="3.5" fill="#f0563f" fill-opacity="0.8"/>
+</svg>
