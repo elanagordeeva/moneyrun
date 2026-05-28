@@ -55,6 +55,9 @@ MATRIX = {
 def _grp(idx):
     # F D D1 D2 -> grey | C C+ B B+ -> green | A A+ Next -> blue
     return 'grey' if idx<=3 else ('green' if idx<=7 else 'blue')
+def _spaced(v):
+    # отделяем тире пробелами в диапазонах (64—75, 22 289—∞ и т.п.); одиночное «—» не трогаем
+    return re.sub(r'(?<=\S)—(?=\S)', ' — ', v)
 def matrix_html():
     out=['<div class="g-tablewrap"><table class="g-matrix">']
     # строка-группировка по типам Грейдов
@@ -68,7 +71,7 @@ def matrix_html():
     for sub, rows in MATRIX.items():
         out.append(f'<tbody><tr class="g-sub"><td colspan="{len(GRADES)+1}">{sub}</td></tr>')
         for label, vals in rows:
-            cells=''.join(f'<td class="g-c-{_grp(k)}">{v}</td>' for k,v in enumerate(vals))
+            cells=''.join(f'<td class="g-c-{_grp(k)}">{_spaced(v)}</td>' for k,v in enumerate(vals))
             out.append(f'<tr><th class="g-rowh">{label}</th>'+cells+'</tr>')
         out.append('</tbody>')
     out.append('</table></div>')
@@ -240,7 +243,7 @@ while i<n:
             name=col[2*k]; desc=col[2*k+1]
             mt=re.match(r'^(.*?)\s*(\(.*\))\s*$', name)
             if mt:
-                title=f'{H.escape(mt.group(1))} <span class="g-type-range">{H.escape(mt.group(2))}</span>'
+                title=f'{H.escape(mt.group(1))} <span class="g-type-range">{H.escape(_spaced(mt.group(2)))}</span>'
             else:
                 title=H.escape(name)
             cards+=(f'<div class="g-type g-type-{kinds[k]}">'
@@ -385,7 +388,7 @@ CSS = """
     .g-matrix th{background:var(--bg2);font-family:var(--fd);font-weight:700}
     .g-matrix .g-rowh{text-align:left;font-family:var(--fb);font-weight:600;color:var(--ink);background:var(--surface);position:sticky;left:0;min-width:200px}
     .g-matrix td{text-align:center;color:var(--ink2)}
-    .g-matrix tr.g-sub td{background:var(--lime2);color:var(--lime-ink);font-family:var(--fd);font-weight:800;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;text-align:left}
+    .g-matrix tr.g-sub td{background:#e7ebf1;color:#3a4150;font-family:var(--fd);font-weight:800;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;text-align:left;border-top:1px solid #d8dee8;border-bottom:1px solid #d8dee8}
     /* раскраска столбцов по типам Грейдов */
     .g-matrix .g-grp th{font-family:var(--fd);font-weight:800;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;text-align:center;padding:.45rem .4rem;border:2px solid #fff;border-bottom:none}
     .g-matrix .g-grp .g-c-grey{background:#9aa097;color:#fff}
