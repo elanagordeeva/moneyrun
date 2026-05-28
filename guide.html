@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Правила сервиса — Moneyrun</title>
+  <meta name="description" content="Правила сервиса Moneyrun: игровой Грейдовый модуль, начисление XP, монетизация и финансирование.">
+  <meta name="theme-color" content="#eef2ec">
+  <link rel="icon" type="image/png" href="https://static.tildacdn.com/tild6335-6462-4965-b561-643434616164/Logo_32x32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,slnt,wght@8..144,-10..0,400..1000&family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#eef2ec;--bg2:#f4f7f3;--surface:#ffffff;--ink:#0e120e;--ink2:#1b1b21;--muted:#6b7068;--muted2:#9aa097;--border:#e6eae3;--border2:#dadfd6;--lime:#d0f85d;--lime2:#d5ffa8;--lime-deep:#bee14b;--lime-ink:#1f2a05;--c-blue:#bcdcff;--c-blue-ink:#143b6b;--fd:'Manrope',system-ui,sans-serif;--fb:'Inter',system-ui,sans-serif;--fm:'JetBrains Mono',ui-monospace,monospace;--fw:'Roboto Flex','Roboto',system-ui,sans-serif;--maxw:1240px;--sh-sm:0 2px 6px rgba(15,20,15,.05),0 1px 2px rgba(15,20,15,.04);--sh-md:0 14px 30px -10px rgba(15,30,12,.10),0 8px 18px -6px rgba(15,30,12,.06);--r-sm:12px;--r-md:18px;--r-lg:24px}
+    *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--ink);font-family:var(--fb);line-height:1.65;-webkit-font-smoothing:antialiased}
+    ::selection{background:var(--lime);color:var(--lime-ink)}img{max-width:100%;display:block}a{color:inherit}
+    #navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(238,242,236,.82);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);border-bottom:1px solid var(--border)}
+    #navbar .nav-inner{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:.85rem clamp(1.25rem,5vw,4rem)}
+    .nav-logo{display:flex;align-items:center;gap:.55rem;text-decoration:none;color:var(--ink)}
+    .nav-logo img{height:28px;width:auto;display:block}
+    .nav-logo .wordmark{font-family:var(--fw);font-weight:800;font-style:italic;font-variation-settings:'slnt' -10;font-size:22px;line-height:1;color:var(--ink)}
+    .nav-links{display:flex;gap:.05rem;list-style:none;align-items:center}
+    .nav-links a{color:var(--muted);text-decoration:none;font-size:.92rem;font-weight:500;padding:.55rem .85rem;border-radius:999px}
+    .nav-links a:hover{color:var(--ink);background:rgba(15,20,15,.04)}
+    .nav-cta{display:none;align-items:center;gap:.35rem;background:var(--ink);color:#fff;font-family:var(--fd);font-weight:700;font-size:.92rem;padding:.6rem 1.1rem;border-radius:999px;text-decoration:none}
+    @media(min-width:1100px){.nav-cta{display:inline-flex}}
+    @media(max-width:1080px){.nav-links{display:none}}
+    .legal{max-width:var(--maxw);margin:0 auto;padding:7.5rem clamp(1.25rem,5vw,4rem) 4rem}
+    .legal-wrap{max-width:860px;margin:0 auto}
+    .legal-back{display:inline-flex;gap:.4rem;font-size:.9rem;color:var(--muted);text-decoration:none;margin-bottom:1.6rem}
+    .legal-back:hover{color:var(--ink)}
+    .legal h1{font-family:var(--fd);font-weight:800;font-size:clamp(1.9rem,4vw,2.8rem);letter-spacing:-.03em;line-height:1.1;margin-bottom:1rem}
+    .legal-meta{color:var(--muted);font-size:.95rem;line-height:1.6;margin-bottom:1.8rem;padding-bottom:1.6rem;border-bottom:1px solid var(--border)}
+    .legal h2{font-family:var(--fd);font-weight:800;font-size:clamp(1.3rem,2.4vw,1.7rem);letter-spacing:-.02em;line-height:1.2;margin:2.8rem 0 1rem;padding-top:.4rem}
+    .legal h3{font-family:var(--fd);font-weight:700;font-size:1.1rem;letter-spacing:-.01em;margin:1.8rem 0 .5rem;color:var(--ink)}
+    .legal p{color:var(--ink2);line-height:1.72;margin-bottom:.9rem;font-size:1rem}
+    .legal b{font-weight:600;color:var(--ink)}
+    .g-formula{font-family:var(--fm);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.5rem .8rem;margin:.3rem 0;font-size:.9rem;color:var(--ink);display:inline-block}
+    .g-tablewrap{overflow-x:auto;margin:1.2rem 0 1.6rem;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);box-shadow:var(--sh-sm)}
+    table.g-tbl,table.g-matrix{border-collapse:collapse;width:100%;font-size:.86rem}
+    table.g-tbl th,table.g-tbl td,table.g-matrix th,table.g-matrix td{padding:.6rem .75rem;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+    table.g-tbl thead th,table.g-tbl tr:first-child th{background:var(--bg2);font-family:var(--fd);font-weight:700;color:var(--ink);position:sticky;top:0}
+    .g-matrix th{background:var(--bg2);font-family:var(--fd);font-weight:700}
+    .g-matrix .g-rowh{text-align:left;font-family:var(--fb);font-weight:600;color:var(--ink);background:var(--surface);position:sticky;left:0;min-width:200px}
+    .g-matrix td{text-align:center;color:var(--ink2)}
+    .g-matrix tr.g-sub td{background:var(--lime2);color:var(--lime-ink);font-family:var(--fd);font-weight:800;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;text-align:left}
+    .g-rl table{font-size:.82rem}
+    .g-rl{max-height:560px;overflow:auto}
+    .g-tabs{display:flex;gap:.4rem;margin:1.2rem 0 .2rem}
+    .g-tab{font-family:var(--fd);font-weight:700;font-size:.9rem;padding:.5rem 1.1rem;border-radius:999px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer}
+    .g-tab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+    footer{padding:4rem 0 2rem;margin-top:3rem;background:var(--surface);border-top:1px solid var(--border)}
+    .foot-inner{max-width:var(--maxw);margin:0 auto;padding:0 clamp(1.25rem,5vw,4rem);display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:2rem}
+    .foot-c{display:flex;flex-direction:column;gap:.6rem}
+    .foot-c .label{font-family:var(--fm);font-size:.66rem;letter-spacing:.24em;color:var(--muted);text-transform:uppercase;margin-bottom:.5rem}
+    .foot-c a{color:var(--ink);text-decoration:none;font-size:.95rem}.foot-c a:hover{color:var(--lime-ink)}
+    .foot-c .tagline{color:var(--muted);font-size:.92rem;line-height:1.6;max-width:340px}
+    .foot-bottom{max-width:var(--maxw);margin:2.5rem auto 0;padding:1.5rem clamp(1.25rem,5vw,4rem) 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;color:var(--muted);font-size:.85rem;font-family:var(--fm)}
+    .foot-bottom a{color:var(--muted);text-decoration:none}.foot-bottom a:hover{color:var(--ink)}
+    @media(max-width:880px){.foot-inner{grid-template-columns:1fr;gap:2rem}}
+</style>
+</head>
+<body>
+<nav id="navbar"><div class="nav-inner">
+  <a href="index.html" class="nav-logo" aria-label="Moneyrun"><img class="logo-mark" src="art/logo-mark.png" alt="Moneyrun mark" width="120" height="120"><span class="wordmark">Moneyrun</span></a>
+  <div class="nav-right" style="display:flex;align-items:center;gap:.65rem">
+    <ul class="nav-links"><li><a href="index.html#howto">Как работает</a></li><li><a href="index.html#rules">Правила</a></li><li><a href="index.html#clubs">Клубы</a></li><li><a href="index.html#principles">Принципы</a></li></ul>
+    <a href="index.html#download" class="nav-cta">Скачать →</a>
+  </div></div></nav>
+<main class="legal"><div class="legal-wrap">
+    <a href="index.html" class="legal-back">← На главную</a>
+    <h1>Правила сервиса</h1>
+    <p class="legal-meta">Платформа Moneyrun — социально-благотворительный проект по развитию бегового движения. Версия от 16.02.26.</p>
+    <p>Платформа Moneyrun — это социально-благотворительный проект по развитию бегового движения</p>
+    <p>Состоит из двух основных элементов:</p>
+    <p>Тематическая социальная сеть и сервис с бесплатными инструментами для ведения беговой статистики, тренировочных планов и клубных сообществ.</p>
+    <p>Игровой Грейдовый модуль ( ИМ ), основанный на личном и любительском прогрессе в беге с мотивационным финансовым подкреплением за счёт целевого благотворительного Эндаумент фонда (EF) .</p>
+    <h2>Игровой модуль (ИМ)</h2>
+    <p>Общая концепция: за каждую тренировку Атлет получает баллы ( Experience, XP ), по мере набора которых поднимается по  Грейдам от D до A+ и выше. В Матрице Грейдов заложено три типа:</p>
+    <p>Серый (D—D2)</p>
+    <p>Начинающие пользователи</p>
+    <p>Зелёный (C — B+)</p>
+    <p>Любители, работающие над результативностью</p>
+    <p>Синий (A — A+)</p>
+    <p>Продвинутые любители или профи с высокой результативностью</p>
+    <p>Для серых Грейдов условия доступа упрощены , делая их ознакомительными. Грейды зеленого типа и выше содержат оптимальный референс по результативности на оцениваемых дистанциях (5, 10, 21, 42 км), выраженный через таблицу Running Level (RL) , составленной по аналогии c  World Athletics Score Table . Если Атлет укладывается в референс или показывает результаты лучше, то далее за тренировки он получает повышенные XP , если нет, то начисление XP снижается.</p>
+    <p>Полученные XP монетизируются через обмен на деньги в  Клубах . Такая возможность активируется следующими способами:</p>
+    <p>На любом Грейде применить финансовый Инвайт , доступный для получения у другого Атлета с Грейдом С+ или выше, в  Верифицированном Клубе или  розыгрышах офиц. Telegram-канала .</p>
+    <p>На Грейде D2 и выше, при подтверждении минимального RL=1, монетизация активируется автоматически.</p>
+    <p>Курс обмена XP на деньги зависит от  Грейда : чем выше Грейд , тем более выгодный тариф в стандартной сетке. Курс определяет скорость выборки одобренного месячного лимита в  Клубах . Необходимое количество XP для конкретного Грейда , курс обмена, RL и др. можно посмотреть в  Матрице Грейдов .</p>
+    <h2>Матрица Грейдов</h2>
+    <div class="g-tablewrap"><table class="g-matrix">
+<thead><tr><th>Грейды</th><th>F</th><th>D</th><th>D1</th><th>D2</th><th>C</th><th>C+</th><th>B</th><th>B+</th><th>A</th><th>A+</th><th>Next</th></tr></thead>
+<tbody><tr class="g-sub"><td colspan="12">Условия перехода</td></tr>
+<tr><th class="g-rowh">Регистрация</th><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
+<tr><th class="g-rowh">Инфо профиля</th><td>—</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
+<tr><th class="g-rowh">Подписка в Telegram</th><td>—</td><td>—</td><td>—</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
+<tr><th class="g-rowh">Running Level</th><td>—</td><td>—</td><td>—</td><td>0</td><td>1—9</td><td>10—23</td><td>24—38</td><td>39—52</td><td>53—63</td><td>64—75</td><td>76—118</td></tr>
+<tr><th class="g-rowh">Experience, XP</th><td>—</td><td>0</td><td>200</td><td>700</td><td>1 500</td><td>3 500</td><td>7 000</td><td>11 200</td><td>16 240</td><td>22 288</td><td>22 289—∞</td></tr>
+<tr><th class="g-rowh">Монетизация, ₽</th><td>—</td><td>1</td><td>2</td><td>3</td><td>4</td><td>7</td><td>10</td><td>13</td><td>16</td><td>19</td><td>22—∞</td></tr>
+</tbody>
+<tbody><tr class="g-sub"><td colspan="12">Доп. условия монетизации</td></tr>
+<tr><th class="g-rowh">Пульсовые данные</th><td>20 мин</td><td>20 мин</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
+<tr><th class="g-rowh">Верхние зоны (HPZ)</th><td>—</td><td>—</td><td>—</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
+<tr><th class="g-rowh">Беговые часы</th><td>—</td><td>—</td><td>—</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
+<tr><th class="g-rowh">Минимальный темп, мин/км</th><td>10:00</td><td>10:00</td><td>8:00</td><td>8:00</td><td>8:00</td><td>8:00</td><td>8:00</td><td>8:00</td><td>8:00</td><td>8:00</td><td>8:00</td></tr>
+</tbody>
+<tbody><tr class="g-sub"><td colspan="12">Дополнительные возможности</td></tr>
+<tr><th class="g-rowh">Создание Клуба</th><td>—</td><td>—</td><td>—</td><td>—</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
+<tr><th class="g-rowh">Роль Забота в Клубе</th><td>—</td><td>—</td><td>—</td><td>—</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
+<tr><th class="g-rowh">Финвайт</th><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
+</tbody>
+</table></div>
+    <h3>Регистрация</h3>
+    <p>Наличие действующего аккаунта на платформе Moneyrun .</p>
+    <h3>Инфо Профиля</h3>
+    <p>Заполненные обязательные поля в аккаунте Атлета : Имя, Пол, День рождения, Вес.</p>
+    <h3>Подписка в Telegram</h3>
+    <p>Активная подписка на официальный Telegram-канал Moneyrun , которая определяется ботом @Moneyrunbot. При отсутствии активной подписки на текущем Грейде новые тренировки не монетизируются.</p>
+    <h3>Running Level</h3>
+    <p>Верификация аккаунта в  Moneyrun и наличие Забегов за последние 180 дней, на основании которых определяется RL из  таблицы .</p>
+    <h3>Experience, XP</h3>
+    <p>Количество баллов XP , заработанных за активности на платформе Moneyrun .</p>
+    <h3>Монетизация, ₽</h3>
+    <p>Размер финансового вознаграждения за  1 XP в базовой тарифной сетке Клуба Moneyrun .</p>
+    <h3>Пульсовые данные</h3>
+    <p>Условие, где при наличии пульса рассчитывается XP за тренировку на основании eTRIMP , а при его отсутствии на «серых» Грейдах , подсчёт XP происходит по времени: длительность тренировки в минутах делится на 20.</p>
+    <h3>Верхние зоны (HPZ)</h3>
+    <p>High Perfomance Zones (Z3, Z4 и Z5) доступны для  Грейда D2 и выше, при  RL=1 наличии IQ >45% (значение может быть пересмотрено).</p>
+    <h3>Беговые часы</h3>
+    <p>Необходимость записи трека через устройство брендов Garmin, Coros, Polar, Suunto или Apple, которые передают больше достоверных данных через API, в отличие от записи с помощью смартфона.</p>
+    <h3>Минимальный темп, мин/км</h3>
+    <p>Предел среднего темпа тренировки, ниже которого активность не считается беговой и не монетизируется по правилам платформы.</p>
+    <h3>Создание Клуба</h3>
+    <p>Возможность создать собственный Клуб на платформе Moneyrun и претендовать на его  Верификацию .</p>
+    <h3>Роль Забота в Клубе</h3>
+    <p>Возможность участвовать в развитии Верифицированного Клуба и состоять в закрытом сообществе MR Забота .</p>
+    <h3>Финвайт</h3>
+    <p>Специальный код (не более 3 штук на каждом следующем Грейде ) для подключения монетизации в аккаунте другого Атлета .</p>
+    <h2>ИМ.Experience (XP) детализация</h2>
+    <p>Размер начисляемого XP зависит преимущественно от следующих факторов:</p>
+    <p>Пульсовые данные , указанные Атлетом (в том числе ЧССМ )</p>
+    <p>Интенсивность и продолжительность тренировочной нагрузки ( eTRIMP )</p>
+    <p>Баланс тренировочной нагрузки ( Ch72 и ChT )</p>
+    <p>Любительская результативность ( RL и RQ )</p>
+    <h2>ИМ.XP. Пульсовые данные</h2>
+    <p>На странице личного профиля в разделе Пульс необходимо заполнить ЧССМ (максимальная частота сердечных сокращений), для корректного расчета тренировочной нагрузки, важные моменты:</p>
+    <p>ЧССМ должен быть указан максимально корректно (лучше с небольшим запасом, в большую сторону)</p>
+    <p>Данные пульса необходимо внести до перехода на Грейд D1 – затем, при отсутствии данных, XP  начисляться не будет</p>
+    <p>Изменение параметра ЧССМ допустимо не чаще, чем раз в 30 дней</p>
+    <h2>ИМ.XP. Тренировочная нагрузка</h2>
+    <p>Классический TRIMP — метод количественной оценки тренировочной нагрузки, разработанный Эриком Банистером, который объединяет продолжительность и интенсивность упражнения в единое числовое значение, используя частоту сердечных сокращений (ЧСС) для определения физиологического стресса.</p>
+    <p>eTRIMP  — доработанный небольшими модификациями под задачи нашей платформы (начисление измеряемой нагрузки усилено ростом по экспоненте для более высоких пульсовых зон).</p>
+    <p>Рассчитывается как время в минутах, проведённое в конкретной пульсовой зоне и умноженное на коэффициент её стоимости, согласно таблице ниже:</p>
+    <div class="g-tablewrap"><table class="g-tbl">
+<tr><th>HR Zone</th><th>QTrimp/min</th><th>HR Zone</th><th>QTrimp/min</th></tr>
+<tr><td><b>100%</b></td><td>5,45</td><td><b>74%</b></td><td>1,06</td></tr>
+<tr><td><b>97%</b></td><td>4,49</td><td><b>71%</b></td><td>0,90</td></tr>
+<tr><td><b>94%</b></td><td>3,82</td><td><b>69%</b></td><td>0,77</td></tr>
+<tr><td><b>92%</b></td><td>3,26</td><td><b>66%</b></td><td>0,65</td></tr>
+<tr><td><b>89%</b></td><td>2,77</td><td><b>64%</b></td><td>0,56</td></tr>
+<tr><td><b>87%</b></td><td>2,36</td><td><b>61%</b></td><td>0,47</td></tr>
+<tr><td><b>84%</b></td><td>2,01</td><td><b>59%</b></td><td>0,40</td></tr>
+<tr><td><b>82%</b></td><td>1,71</td><td><b>56%</b></td><td>0,34</td></tr>
+<tr><td><b>79%</b></td><td>1,46</td><td><b>54%</b></td><td>0,29</td></tr>
+<tr><td><b>77%</b></td><td>1,24</td><td><b>51%</b></td><td>0,25</td></tr>
+</table></div>
+    <h2>ИМ.XP. Лимиты нагрузки</h2>
+    <p>Полученные баллы eTRIMP конвертируются в  XP , а затем на них накладываются контрольные лимиты, определенные по исследованиям на контрольных группах:</p>
+    <p>Трехсуточный лимит (72 часа, Ch72 ) максимального накопленного значения eTRIMP = 360 баллов</p>
+    <p>Лимит на конкретную тренировку ( ChT ) = 260 eTRIMP</p>
+    <p>В случае если какой-либо лимит превышен, вычисление итогового eTRIMP к конвертации в  XP производится по формуле</p>
+    <pre class="g-formula">min(
+iif( (360-Ch72)&lt;40;40;360-Ch72)
+, ChT
+)</pre>
+    <p>К конвертации в  XP будет доступно минимум 40 eTRIMP , но в  Ch72 будет зачислено оригинальное количество баллов из тренировки.</p>
+    <p>Лимиты на пульсовые зоны , где 95-100% от ЧССМ = 100 eTRIMP и одновременно 90-95% от ЧССМ = 150 eTRIMP</p>
+    <p>Данные значения считаются максимальными для набора за 72 часа и в случае превышения возьмется максимальное значение для этих зон, а оригинальное количество баллов пойдет в  Ch72 .</p>
+    <h2>ИМ.XP. Любительская результативность</h2>
+    <p>Таблица Running Level определяет соответствует ли Атлет по уровню результативности конкретному Грейду и напрямую влияет на начисления XP в каждой тренировке, что дает ускорение/замедление в переходах по  Грейдам .</p>
+    <h3>Определение RL-интервала для Грейдов</h3>
+    <p>Для вычисления референсных значений результативности Грейдов , ежегодно используется протокол мужского забега Московского марафона на дистанции 10 км. Протокол ранжируется от большего к меньшему результату, принимается за 100% и делится на группы по убывающей экспоненте с коэффициентом 0,5. Выбирается время результата Ранга лежащего на границе групп.</p>
+    <h3>Пример действующего распределения:</h3>
+    <div class="g-tablewrap"><table class="g-tbl">
+<tr><th>Грейд</th><th>Интервал</th><th>Ранг</th><th>Результат</th><th>RL</th></tr>
+<tr><td></td><td>100,00%</td><td>10 740</td><td></td><td></td></tr>
+<tr><td>С</td><td>50,00%</td><td>5 370</td><td>53:02</td><td>01–09</td></tr>
+<tr><td>C+</td><td>25,00%</td><td>2 684</td><td>46:21</td><td>10–23</td></tr>
+<tr><td>B</td><td>12,50%</td><td>1 341</td><td>41:53</td><td>24–38</td></tr>
+<tr><td>B+</td><td>6,25%</td><td>670</td><td>38:38</td><td>39–52</td></tr>
+<tr><td>A</td><td>3,13%</td><td>335</td><td>36:12</td><td>53–63</td></tr>
+<tr><td>A+</td><td>1,56%</td><td>167</td><td>34:27</td><td>64–75</td></tr>
+<tr><td>Next</td><td><1,56%</td><td><167</td><td><34:27</td><td>76–∞</td></tr>
+</table></div>
+    <p>Согласно полученным значениям определяется RL -интервал для Грейдов и экстраполируется на все целевые дистанции и пол. На основе таблицы RL определяем коэффициент RL (RQ) , для расчета которого каждые 180 дней Атлету необходимо подтверждать результативность, сравнимую с его Грейдом , через привязанные протоколы Забегов на любой из целевых дистанций.</p>
+    <p>Если результативность выше , чем референс текущего Грейда, то  RQ  = 1,5</p>
+    <p>Если результативность соответствует референсу текущего Грейда , то  RQ  = от 1 до 1,5 пропорционально нахождению внутри RL -интервала</p>
+    <p>Если результативность ниже референса текущего Грейда , тогда определяется какому Грейду она соответствует и вычисляется дельта между порядковыми номерами Грейдов , чтобы потом экспоненциально дисконтировать 1 с коэффициентом экспоненты 0,7 в степени дельты между Грейдами . RQ  присваивается полученное значение (например, при разнице Грейдов в 1 ступень RQ  = 0,7, при разнице в 2 ступени RQ  = 0,49 и т.д.). После перехода на  Грейд синего типа минимальный  RQ  = 1</p>
+    <p>Если результативность не была показана за 180 дней (ни одного привязанного Забега с целевой дистанцией), тогда текущее значение RQ дисконтируется аналогично п.3 , где степенью коэффициента экспоненты выступает количество 180 дневных интервалов с момента последнего протокола с привязанной тренировкой.</p>
+    <p>Текущий Грейд ~ текущий RL</p>
+    <p>RL выше текущего Грейда</p>
+    <p>RL ниже текущего Грейда</p>
+    <p>Рассмотрим на примерах:</p>
+    <p>Атлет Иван с текущим Грейдом C и результатом на 10 км = 36:00, что соответствует RL = 53 и “потенциальному” Грейду A – в этом случае он будет за каждую тренировку получать RQ = 1,5 (за тренировку с усилием на 10 XP он получит 15 XP )</p>
+    <p>Атлет Мария с текущим Грейдом B и результатом на 10 км = 58:00, что соответствует RL = 18 и “потенциальному” Грейду C+ – в этом случае она будет за каждую тренировку получать RQ = 0,7 (за тренировку с усилием на 10 XP она получит 7 XP ).</p>
+    <p>Подтверждать свой RL необходимо минимум раз в 180 дней, чтобы не получить понижение  RQ . Улучшить свой  RL можно в любой момент, приняв участие в официальном Забеге , который размещается на платформе Moneyrun , а также привязать его к своей тренировке в приложении.</p>
+    <h2>Таблица Running Level</h2>
+    <div class="g-tabs"><button class="g-tab on" data-t="m">Мужчины</button><button class="g-tab" data-t="w">Женщины</button></div>
+    <div class="g-rlpane" data-pane="m"><div class="g-tablewrap g-rl"><table class="g-tbl">
+<thead><tr><th>RL</th><th>5 км</th><th>10 км</th><th>21 км</th><th>42 км</th><th>Грейд</th></tr></thead><tbody>
+<tr><td>NL Rus</td><td>13:11</td><td>27:40</td><td>59:51</td><td>2:09:07</td><td>Next</td></tr>
+<tr><td>117</td><td>13:14</td><td>27:48</td><td>1:00:10</td><td>2:09:28</td><td>Next</td></tr>
+<tr><td>116</td><td>13:16</td><td>27:55</td><td>1:00:25</td><td>2:10:02</td><td>Next</td></tr>
+<tr><td>115</td><td>13:19</td><td>28:01</td><td>1:00:40</td><td>2:10:35</td><td>Next</td></tr>
+<tr><td>114</td><td>13:22</td><td>28:07</td><td>1:00:55</td><td>2:11:08</td><td>Next</td></tr>
+<tr><td>113</td><td>13:25</td><td>28:14</td><td>1:01:10</td><td>2:11:42</td><td>Next</td></tr>
+<tr><td>112</td><td>13:28</td><td>28:21</td><td>1:01:25</td><td>2:12:15</td><td>Next</td></tr>
+<tr><td>111</td><td>13:31</td><td>28:28</td><td>1:01:40</td><td>2:12:49</td><td>Next</td></tr>
+<tr><td>110</td><td>13:34</td><td>28:34</td><td>1:01:56</td><td>2:13:23</td><td>Next</td></tr>
+<tr><td>109</td><td>13:36</td><td>28:41</td><td>1:02:11</td><td>2:13:58</td><td>Next</td></tr>
+<tr><td>108</td><td>13:39</td><td>28:47</td><td>1:02:27</td><td>2:14:32</td><td>Next</td></tr>
+<tr><td>107</td><td>13:42</td><td>28:54</td><td>1:02:42</td><td>2:15:06</td><td>Next</td></tr>
+<tr><td>106</td><td>13:45</td><td>29:01</td><td>1:02:58</td><td>2:15:41</td><td>Next</td></tr>
+<tr><td>105</td><td>13:48</td><td>29:08</td><td>1:03:14</td><td>2:16:16</td><td>Next</td></tr>
+<tr><td>104</td><td>13:51</td><td>29:15</td><td>1:03:30</td><td>2:16:51</td><td>Next</td></tr>
+<tr><td>103</td><td>13:54</td><td>29:21</td><td>1:03:46</td><td>2:17:26</td><td>Next</td></tr>
+<tr><td>102</td><td>13:57</td><td>29:28</td><td>1:04:02</td><td>2:18:01</td><td>Next</td></tr>
+<tr><td>101</td><td>14:00</td><td>29:35</td><td>1:04:18</td><td>2:18:37</td><td>Next</td></tr>
+<tr><td>100</td><td>14:03</td><td>29:42</td><td>1:04:34</td><td>2:19:13</td><td>Next</td></tr>
+<tr><td>99</td><td>14:06</td><td>29:49</td><td>1:04:50</td><td>2:19:49</td><td>Next</td></tr>
+<tr><td>98</td><td>14:09</td><td>29:56</td><td>1:05:06</td><td>2:20:25</td><td>Next</td></tr>
+<tr><td>97</td><td>14:12</td><td>30:03</td><td>1:05:23</td><td>2:21:01</td><td>Next</td></tr>
+<tr><td>96</td><td>14:15</td><td>30:10</td><td>1:05:39</td><td>2:21:37</td><td>Next</td></tr>
+<tr><td>95</td><td>14:18</td><td>30:18</td><td>1:05:56</td><td>2:22:14</td><td>Next</td></tr>
+<tr><td>94</td><td>14:21</td><td>30:24</td><td>1:06:12</td><td>2:22:51</td><td>Next</td></tr>
+<tr><td>93</td><td>14:24</td><td>30:32</td><td>1:06:29</td><td>2:23:28</td><td>Next</td></tr>
+<tr><td>92</td><td>14:27</td><td>30:39</td><td>1:06:46</td><td>2:24:05</td><td>Next</td></tr>
+<tr><td>91</td><td>14:31</td><td>30:47</td><td>1:07:03</td><td>2:24:43</td><td>Next</td></tr>
+<tr><td>90</td><td>14:34</td><td>30:54</td><td>1:07:20</td><td>2:25:20</td><td>Next</td></tr>
+<tr><td>89</td><td>14:37</td><td>31:01</td><td>1:07:37</td><td>2:25:58</td><td>Next</td></tr>
+<tr><td>88</td><td>14:40</td><td>31:08</td><td>1:07:54</td><td>2:26:37</td><td>Next</td></tr>
+<tr><td>87</td><td>14:43</td><td>31:16</td><td>1:08:11</td><td>2:27:15</td><td>Next</td></tr>
+<tr><td>86</td><td>14:47</td><td>31:23</td><td>1:08:29</td><td>2:27:53</td><td>Next</td></tr>
+<tr><td>85</td><td>14:50</td><td>31:31</td><td>1:08:46</td><td>2:28:32</td><td>Next</td></tr>
+<tr><td>84</td><td>14:53</td><td>31:39</td><td>1:09:04</td><td>2:29:11</td><td>Next</td></tr>
+<tr><td>83</td><td>14:57</td><td>31:47</td><td>1:09:21</td><td>2:29:51</td><td>Next</td></tr>
+<tr><td>82</td><td>15:01</td><td>31:54</td><td>1:09:39</td><td>2:30:30</td><td>Next</td></tr>
+<tr><td>81</td><td>15:03</td><td>32:01</td><td>1:09:57</td><td>2:31:10</td><td>Next</td></tr>
+<tr><td>80</td><td>15:06</td><td>32:09</td><td>1:10:15</td><td>2:31:50</td><td>Next</td></tr>
+<tr><td>79</td><td>15:09</td><td>32:17</td><td>1:10:33</td><td>2:32:30</td><td>Next</td></tr>
+<tr><td>78</td><td>15:13</td><td>32:25</td><td>1:10:51</td><td>2:33:11</td><td>Next</td></tr>
+<tr><td>77</td><td>15:16</td><td>32:33</td><td>1:11:10</td><td>2:33:52</td><td>Next</td></tr>
+<tr><td>76</td><td>15:20</td><td>32:41</td><td>1:11:28</td><td>2:34:33</td><td>Next</td></tr>
+<tr><td>75</td><td>15:24</td><td>32:49</td><td>1:11:47</td><td>2:35:14</td><td>A+</td></tr>
+<tr><td>74</td><td>15:27</td><td>32:57</td><td>1:12:05</td><td>2:35:56</td><td>A+</td></tr>
+<tr><td>73</td><td>15:30</td><td>33:06</td><td>1:12:24</td><td>2:36:38</td><td>A+</td></tr>
+<tr><td>72</td><td>15:34</td><td>33:14</td><td>1:12:43</td><td>2:37:20</td><td>A+</td></tr>
+<tr><td>71</td><td>15:38</td><td>33:22</td><td>1:13:02</td><td>2:38:03</td><td>A+</td></tr>
+<tr><td>70</td><td>15:41</td><td>33:30</td><td>1:13:21</td><td>2:38:46</td><td>A+</td></tr>
+<tr><td>69</td><td>15:45</td><td>33:39</td><td>1:13:41</td><td>2:39:29</td><td>A+</td></tr>
+<tr><td>68</td><td>15:49</td><td>33:47</td><td>1:14:00</td><td>2:40:13</td><td>A+</td></tr>
+<tr><td>67</td><td>15:52</td><td>33:56</td><td>1:14:20</td><td>2:40:57</td><td>A+</td></tr>
+<tr><td>66</td><td>15:56</td><td>34:04</td><td>1:14:40</td><td>2:41:41</td><td>A+</td></tr>
+<tr><td>65</td><td>16:00</td><td>34:13</td><td>1:15:00</td><td>2:42:26</td><td>A+</td></tr>
+<tr><td>64</td><td>16:03</td><td>34:22</td><td>1:15:20</td><td>2:43:11</td><td>A+</td></tr>
+<tr><td>63</td><td>16:07</td><td>34:31</td><td>1:15:40</td><td>2:43:56</td><td>A</td></tr>
+<tr><td>62</td><td>16:11</td><td>34:40</td><td>1:16:00</td><td>2:44:42</td><td>A</td></tr>
+<tr><td>61</td><td>16:15</td><td>34:48</td><td>1:16:21</td><td>2:45:28</td><td>A</td></tr>
+<tr><td>60</td><td>16:19</td><td>34:58</td><td>1:16:42</td><td>2:46:14</td><td>A</td></tr>
+<tr><td>59</td><td>16:23</td><td>35:07</td><td>1:17:02</td><td>2:47:01</td><td>A</td></tr>
+<tr><td>58</td><td>16:27</td><td>35:16</td><td>1:17:23</td><td>2:47:49</td><td>A</td></tr>
+<tr><td>57</td><td>16:31</td><td>35:25</td><td>1:17:45</td><td>2:48:36</td><td>A</td></tr>
+<tr><td>56</td><td>16:35</td><td>35:34</td><td>1:18:06</td><td>2:49:25</td><td>A</td></tr>
+<tr><td>55</td><td>16:39</td><td>35:44</td><td>1:18:28</td><td>2:50:13</td><td>A</td></tr>
+<tr><td>54</td><td>16:43</td><td>35:53</td><td>1:18:50</td><td>2:51:02</td><td>A</td></tr>
+<tr><td>53</td><td>16:47</td><td>36:03</td><td>1:19:12</td><td>2:51:52</td><td>A</td></tr>
+<tr><td>52</td><td>16:51</td><td>36:13</td><td>1:19:34</td><td>2:52:42</td><td>B+</td></tr>
+<tr><td>51</td><td>16:56</td><td>36:22</td><td>1:19:56</td><td>2:53:33</td><td>B+</td></tr>
+<tr><td>50</td><td>17:00</td><td>36:32</td><td>1:20:19</td><td>2:54:24</td><td>B+</td></tr>
+<tr><td>49</td><td>17:04</td><td>36:42</td><td>1:20:42</td><td>2:55:16</td><td>B+</td></tr>
+<tr><td>48</td><td>17:08</td><td>36:53</td><td>1:21:05</td><td>2:56:08</td><td>B+</td></tr>
+<tr><td>47</td><td>17:13</td><td>37:03</td><td>1:21:28</td><td>2:57:01</td><td>B+</td></tr>
+<tr><td>46</td><td>17:17</td><td>37:13</td><td>1:21:52</td><td>2:57:54</td><td>B+</td></tr>
+<tr><td>45</td><td>17:22</td><td>37:24</td><td>1:22:16</td><td>2:58:48</td><td>B+</td></tr>
+<tr><td>44</td><td>17:26</td><td>37:34</td><td>1:22:40</td><td>2:59:43</td><td>B+</td></tr>
+<tr><td>43</td><td>17:31</td><td>37:45</td><td>1:23:04</td><td>3:00:39</td><td>B+</td></tr>
+<tr><td>42</td><td>17:35</td><td>37:56</td><td>1:23:29</td><td>3:01:35</td><td>B+</td></tr>
+<tr><td>41</td><td>17:40</td><td>38:07</td><td>1:23:54</td><td>3:02:31</td><td>B+</td></tr>
+<tr><td>40</td><td>17:45</td><td>38:18</td><td>1:24:19</td><td>3:03:29</td><td>B+</td></tr>
+<tr><td>39</td><td>17:50</td><td>38:29</td><td>1:24:44</td><td>3:04:27</td><td>B+</td></tr>
+<tr><td>38</td><td>17:55</td><td>38:41</td><td>1:25:10</td><td>3:05:27</td><td>B</td></tr>
+<tr><td>37</td><td>18:00</td><td>38:52</td><td>1:25:36</td><td>3:06:27</td><td>B</td></tr>
+<tr><td>36</td><td>18:05</td><td>39:04</td><td>1:26:03</td><td>3:07:28</td><td>B</td></tr>
+<tr><td>35</td><td>18:10</td><td>39:16</td><td>1:26:30</td><td>3:08:29</td><td>B</td></tr>
+<tr><td>34</td><td>18:15</td><td>39:27</td><td>1:26:57</td><td>3:09:32</td><td>B</td></tr>
+<tr><td>33</td><td>18:20</td><td>39:39</td><td>1:27:25</td><td>3:10:36</td><td>B</td></tr>
+<tr><td>32</td><td>18:25</td><td>39:53</td><td>1:27:53</td><td>3:11:41</td><td>B</td></tr>
+<tr><td>31</td><td>18:31</td><td>40:06</td><td>1:28:21</td><td>3:12:47</td><td>B</td></tr>
+<tr><td>30</td><td>18:37</td><td>40:19</td><td>1:28:50</td><td>3:13:54</td><td>B</td></tr>
+<tr><td>29</td><td>18:42</td><td>40:32</td><td>1:29:20</td><td>3:15:03</td><td>B</td></tr>
+<tr><td>28</td><td>18:48</td><td>40:45</td><td>1:29:50</td><td>3:16:13</td><td>B</td></tr>
+<tr><td>27</td><td>18:54</td><td>40:59</td><td>1:30:20</td><td>3:17:24</td><td>B</td></tr>
+<tr><td>26</td><td>19:00</td><td>41:13</td><td>1:30:51</td><td>3:18:37</td><td>B</td></tr>
+<tr><td>25</td><td>19:06</td><td>41:27</td><td>1:31:23</td><td>3:19:51</td><td>B</td></tr>
+<tr><td>24</td><td>19:12</td><td>41:42</td><td>1:31:55</td><td>3:21:07</td><td>B</td></tr>
+<tr><td>23</td><td>19:18</td><td>41:56</td><td>1:32:28</td><td>3:22:25</td><td>C+</td></tr>
+<tr><td>22</td><td>19:25</td><td>42:12</td><td>1:33:01</td><td>3:23:45</td><td>C+</td></tr>
+<tr><td>21</td><td>19:31</td><td>42:27</td><td>1:33:35</td><td>3:25:07</td><td>C+</td></tr>
+<tr><td>20</td><td>19:38</td><td>42:43</td><td>1:34:10</td><td>3:26:31</td><td>C+</td></tr>
+<tr><td>19</td><td>19:45</td><td>43:00</td><td>1:34:46</td><td>3:27:58</td><td>C+</td></tr>
+<tr><td>18</td><td>19:52</td><td>43:17</td><td>1:35:23</td><td>3:29:28</td><td>C+</td></tr>
+<tr><td>17</td><td>20:00</td><td>43:34</td><td>1:36:01</td><td>3:31:00</td><td>C+</td></tr>
+<tr><td>16</td><td>20:07</td><td>43:53</td><td>1:36:40</td><td>3:32:36</td><td>C+</td></tr>
+<tr><td>15</td><td>20:15</td><td>44:11</td><td>1:37:20</td><td>3:34:16</td><td>C+</td></tr>
+<tr><td>14</td><td>20:23</td><td>44:31</td><td>1:38:01</td><td>3:36:00</td><td>C+</td></tr>
+<tr><td>13</td><td>20:32</td><td>44:51</td><td>1:38:44</td><td>3:37:49</td><td>C+</td></tr>
+<tr><td>12</td><td>20:41</td><td>45:13</td><td>1:39:28</td><td>3:39:43</td><td>C+</td></tr>
+<tr><td>11</td><td>20:50</td><td>45:35</td><td>1:40:14</td><td>3:41:44</td><td>C+</td></tr>
+<tr><td>10</td><td>21:00</td><td>45:59</td><td>1:41:02</td><td>3:43:53</td><td>C+</td></tr>
+<tr><td>9</td><td>21:10</td><td>46:24</td><td>1:41:52</td><td>3:46:12</td><td>C</td></tr>
+<tr><td>8</td><td>21:21</td><td>46:51</td><td>1:42:45</td><td>3:48:42</td><td>C</td></tr>
+<tr><td>7</td><td>21:33</td><td>47:21</td><td>1:43:40</td><td>3:51:29</td><td>C</td></tr>
+<tr><td>6</td><td>21:45</td><td>47:53</td><td>1:44:40</td><td>3:54:38</td><td>C</td></tr>
+<tr><td>5</td><td>22:00</td><td>48:30</td><td>1:45:44</td><td>3:58:22</td><td>C</td></tr>
+<tr><td>4</td><td>22:16</td><td>49:14</td><td>1:46:53</td><td>4:03:14</td><td>C</td></tr>
+<tr><td>3</td><td>22:35</td><td>50:11</td><td>1:48:10</td><td>4:08:33</td><td>C</td></tr>
+<tr><td>2</td><td>23:00</td><td>51:26</td><td>1:49:37</td><td>4:13:49</td><td>C</td></tr>
+<tr><td>1</td><td>23:30</td><td>53:00</td><td>1:51:00</td><td>4:30:00</td><td>C</td></tr>
+<tr><td>0</td><td colspan="4">Наличие верификации и любого забега за 180 дней</td><td>D2</td></tr>
+</tbody></table></div></div>
+    <div class="g-rlpane" data-pane="w" hidden><div class="g-tablewrap g-rl"><table class="g-tbl">
+<thead><tr><th>RL</th><th>5 км</th><th>10 км</th><th>21 км</th><th>42 км</th><th>Грейд</th></tr></thead><tbody>
+<tr><td>NL Rus</td><td>15:10</td><td>31:22</td><td>1:08:07</td><td>2:28:40</td><td>Next</td></tr>
+<tr><td>117</td><td>15:12</td><td>31:36</td><td>1:08:33</td><td>2:29:45</td><td>Next</td></tr>
+<tr><td>116</td><td>15:17</td><td>31:48</td><td>1:09:02</td><td>2:30:49</td><td>Next</td></tr>
+<tr><td>115</td><td>15:23</td><td>31:59</td><td>1:09:31</td><td>2:31:54</td><td>Next</td></tr>
+<tr><td>114</td><td>15:28</td><td>32:10</td><td>1:10:00</td><td>2:32:59</td><td>Next</td></tr>
+<tr><td>113</td><td>15:33</td><td>32:22</td><td>1:10:29</td><td>2:34:04</td><td>Next</td></tr>
+<tr><td>112</td><td>15:38</td><td>32:33</td><td>1:10:59</td><td>2:35:10</td><td>Next</td></tr>
+<tr><td>111</td><td>15:44</td><td>32:45</td><td>1:11:28</td><td>2:36:16</td><td>Next</td></tr>
+<tr><td>110</td><td>15:49</td><td>32:56</td><td>1:11:58</td><td>2:37:22</td><td>Next</td></tr>
+<tr><td>109</td><td>15:55</td><td>33:08</td><td>1:12:28</td><td>2:38:29</td><td>Next</td></tr>
+<tr><td>108</td><td>16:00</td><td>33:19</td><td>1:12:57</td><td>2:39:36</td><td>Next</td></tr>
+<tr><td>107</td><td>16:05</td><td>33:31</td><td>1:13:28</td><td>2:40:43</td><td>Next</td></tr>
+<tr><td>106</td><td>16:11</td><td>33:43</td><td>1:13:58</td><td>2:41:51</td><td>Next</td></tr>
+<tr><td>105</td><td>16:16</td><td>33:55</td><td>1:14:28</td><td>2:42:59</td><td>Next</td></tr>
+<tr><td>104</td><td>16:22</td><td>34:07</td><td>1:14:59</td><td>2:44:07</td><td>Next</td></tr>
+<tr><td>103</td><td>16:27</td><td>34:19</td><td>1:15:29</td><td>2:45:16</td><td>Next</td></tr>
+<tr><td>102</td><td>16:33</td><td>34:31</td><td>1:16:00</td><td>2:46:24</td><td>Next</td></tr>
+<tr><td>101</td><td>16:39</td><td>34:43</td><td>1:16:31</td><td>2:47:34</td><td>Next</td></tr>
+<tr><td>100</td><td>16:44</td><td>34:55</td><td>1:17:02</td><td>2:48:43</td><td>Next</td></tr>
+<tr><td>99</td><td>16:50</td><td>35:07</td><td>1:17:33</td><td>2:49:54</td><td>Next</td></tr>
+<tr><td>98</td><td>16:56</td><td>35:19</td><td>1:18:05</td><td>2:51:04</td><td>Next</td></tr>
+<tr><td>97</td><td>17:01</td><td>35:31</td><td>1:18:36</td><td>2:52:15</td><td>Next</td></tr>
+<tr><td>96</td><td>17:07</td><td>35:44</td><td>1:19:08</td><td>2:53:26</td><td>Next</td></tr>
+<tr><td>95</td><td>17:13</td><td>35:56</td><td>1:19:40</td><td>2:54:38</td><td>Next</td></tr>
+<tr><td>94</td><td>17:19</td><td>36:09</td><td>1:20:12</td><td>2:55:50</td><td>Next</td></tr>
+<tr><td>93</td><td>17:25</td><td>36:21</td><td>1:20:44</td><td>2:57:02</td><td>Next</td></tr>
+<tr><td>92</td><td>17:30</td><td>36:34</td><td>1:21:17</td><td>2:58:15</td><td>Next</td></tr>
+<tr><td>91</td><td>17:36</td><td>36:47</td><td>1:21:49</td><td>2:59:28</td><td>Next</td></tr>
+<tr><td>90</td><td>17:42</td><td>36:59</td><td>1:22:22</td><td>3:00:42</td><td>Next</td></tr>
+<tr><td>89</td><td>17:48</td><td>37:12</td><td>1:22:55</td><td>3:01:56</td><td>Next</td></tr>
+<tr><td>88</td><td>17:54</td><td>37:25</td><td>1:23:28</td><td>3:03:10</td><td>Next</td></tr>
+<tr><td>87</td><td>18:00</td><td>37:38</td><td>1:24:02</td><td>3:04:25</td><td>Next</td></tr>
+<tr><td>86</td><td>18:06</td><td>37:51</td><td>1:24:35</td><td>3:05:41</td><td>Next</td></tr>
+<tr><td>85</td><td>18:12</td><td>38:04</td><td>1:25:09</td><td>3:06:57</td><td>Next</td></tr>
+<tr><td>84</td><td>18:19</td><td>38:18</td><td>1:25:43</td><td>3:08:13</td><td>Next</td></tr>
+<tr><td>83</td><td>18:25</td><td>38:31</td><td>1:26:17</td><td>3:09:30</td><td>Next</td></tr>
+<tr><td>82</td><td>18:31</td><td>38:44</td><td>1:26:52</td><td>3:10:47</td><td>Next</td></tr>
+<tr><td>81</td><td>18:37</td><td>38:58</td><td>1:27:26</td><td>3:12:05</td><td>Next</td></tr>
+<tr><td>80</td><td>18:44</td><td>39:11</td><td>1:28:01</td><td>3:13:23</td><td>Next</td></tr>
+<tr><td>79</td><td>18:50</td><td>39:25</td><td>1:28:36</td><td>3:14:42</td><td>Next</td></tr>
+<tr><td>78</td><td>18:56</td><td>39:39</td><td>1:29:11</td><td>3:16:02</td><td>Next</td></tr>
+<tr><td>77</td><td>19:03</td><td>39:53</td><td>1:29:47</td><td>3:17:22</td><td>Next</td></tr>
+<tr><td>76</td><td>19:09</td><td>40:06</td><td>1:30:23</td><td>3:18:42</td><td>Next</td></tr>
+<tr><td>75</td><td>19:16</td><td>40:20</td><td>1:30:58</td><td>3:20:03</td><td>A+</td></tr>
+<tr><td>74</td><td>19:22</td><td>40:35</td><td>1:31:35</td><td>3:21:25</td><td>A+</td></tr>
+<tr><td>73</td><td>19:29</td><td>40:49</td><td>1:32:11</td><td>3:22:47</td><td>A+</td></tr>
+<tr><td>72</td><td>19:36</td><td>41:03</td><td>1:32:48</td><td>3:24:10</td><td>A+</td></tr>
+<tr><td>71</td><td>19:42</td><td>41:17</td><td>1:33:25</td><td>3:25:34</td><td>A+</td></tr>
+<tr><td>70</td><td>19:49</td><td>41:32</td><td>1:34:02</td><td>3:26:58</td><td>A+</td></tr>
+<tr><td>69</td><td>19:56</td><td>41:47</td><td>1:34:39</td><td>3:28:23</td><td>A+</td></tr>
+<tr><td>68</td><td>20:03</td><td>42:01</td><td>1:35:17</td><td>3:29:48</td><td>A+</td></tr>
+<tr><td>67</td><td>20:10</td><td>42:16</td><td>1:35:55</td><td>3:31:14</td><td>A+</td></tr>
+<tr><td>66</td><td>20:17</td><td>42:31</td><td>1:36:34</td><td>3:32:41</td><td>A+</td></tr>
+<tr><td>65</td><td>20:24</td><td>42:46</td><td>1:37:12</td><td>3:34:09</td><td>A+</td></tr>
+<tr><td>64</td><td>20:31</td><td>43:01</td><td>1:37:51</td><td>3:35:37</td><td>A+</td></tr>
+<tr><td>63</td><td>20:38</td><td>43:16</td><td>1:38:30</td><td>3:37:06</td><td>A</td></tr>
+<tr><td>62</td><td>20:45</td><td>43:32</td><td>1:39:10</td><td>3:38:36</td><td>A</td></tr>
+<tr><td>61</td><td>20:53</td><td>43:47</td><td>1:39:50</td><td>3:40:07</td><td>A</td></tr>
+<tr><td>60</td><td>21:00</td><td>44:03</td><td>1:40:30</td><td>3:41:38</td><td>A</td></tr>
+<tr><td>59</td><td>21:07</td><td>44:19</td><td>1:41:11</td><td>3:43:10</td><td>A</td></tr>
+<tr><td>58</td><td>21:15</td><td>44:35</td><td>1:41:52</td><td>3:44:43</td><td>A</td></tr>
+<tr><td>57</td><td>21:22</td><td>44:51</td><td>1:42:33</td><td>3:46:17</td><td>A</td></tr>
+<tr><td>56</td><td>21:30</td><td>45:07</td><td>1:43:15</td><td>3:47:52</td><td>A</td></tr>
+<tr><td>55</td><td>21:38</td><td>45:23</td><td>1:43:57</td><td>3:49:28</td><td>A</td></tr>
+<tr><td>54</td><td>21:45</td><td>45:40</td><td>1:44:39</td><td>3:51:05</td><td>A</td></tr>
+<tr><td>53</td><td>21:53</td><td>45:57</td><td>1:45:22</td><td>3:52:43</td><td>A</td></tr>
+<tr><td>52</td><td>22:01</td><td>46:14</td><td>1:46:05</td><td>3:54:21</td><td>B+</td></tr>
+<tr><td>51</td><td>22:09</td><td>46:31</td><td>1:46:49</td><td>3:56:01</td><td>B+</td></tr>
+<tr><td>50</td><td>22:17</td><td>46:48</td><td>1:47:33</td><td>3:57:42</td><td>B+</td></tr>
+<tr><td>49</td><td>22:25</td><td>47:05</td><td>1:48:18</td><td>3:59:24</td><td>B+</td></tr>
+<tr><td>48</td><td>22:33</td><td>47:23</td><td>1:49:03</td><td>4:01:08</td><td>B+</td></tr>
+<tr><td>47</td><td>22:42</td><td>47:40</td><td>1:49:48</td><td>4:02:52</td><td>B+</td></tr>
+<tr><td>46</td><td>22:50</td><td>47:58</td><td>1:50:34</td><td>4:04:38</td><td>B+</td></tr>
+<tr><td>45</td><td>22:59</td><td>48:16</td><td>1:51:21</td><td>4:06:25</td><td>B+</td></tr>
+<tr><td>44</td><td>23:07</td><td>48:35</td><td>1:52:08</td><td>4:08:13</td><td>B+</td></tr>
+<tr><td>43</td><td>23:16</td><td>48:53</td><td>1:52:55</td><td>4:10:03</td><td>B+</td></tr>
+<tr><td>42</td><td>23:25</td><td>49:12</td><td>1:53:43</td><td>4:11:54</td><td>B+</td></tr>
+<tr><td>41</td><td>23:34</td><td>49:31</td><td>1:54:32</td><td>4:13:47</td><td>B+</td></tr>
+<tr><td>40</td><td>23:43</td><td>49:50</td><td>1:55:22</td><td>4:15:41</td><td>B+</td></tr>
+<tr><td>39</td><td>23:52</td><td>50:10</td><td>1:56:12</td><td>4:17:37</td><td>B+</td></tr>
+<tr><td>38</td><td>24:01</td><td>50:29</td><td>1:57:02</td><td>4:19:35</td><td>B</td></tr>
+<tr><td>37</td><td>24:11</td><td>50:49</td><td>1:57:54</td><td>4:21:34</td><td>B</td></tr>
+<tr><td>36</td><td>24:20</td><td>51:10</td><td>1:58:46</td><td>4:23:36</td><td>B</td></tr>
+<tr><td>35</td><td>24:30</td><td>51:30</td><td>1:59:39</td><td>4:25:39</td><td>B</td></tr>
+<tr><td>34</td><td>24:40</td><td>51:51</td><td>2:00:32</td><td>4:27:44</td><td>B</td></tr>
+<tr><td>33</td><td>24:50</td><td>52:12</td><td>2:01:27</td><td>4:29:52</td><td>B</td></tr>
+<tr><td>32</td><td>25:00</td><td>52:34</td><td>2:02:22</td><td>4:32:02</td><td>B</td></tr>
+<tr><td>31</td><td>25:11</td><td>52:56</td><td>2:03:18</td><td>4:34:14</td><td>B</td></tr>
+<tr><td>30</td><td>25:21</td><td>53:18</td><td>2:04:15</td><td>4:36:29</td><td>B</td></tr>
+<tr><td>29</td><td>25:32</td><td>53:41</td><td>2:05:13</td><td>4:38:47</td><td>B</td></tr>
+<tr><td>28</td><td>25:43</td><td>54:04</td><td>2:06:13</td><td>4:41:07</td><td>B</td></tr>
+<tr><td>27</td><td>25:54</td><td>54:27</td><td>2:07:13</td><td>4:43:31</td><td>B</td></tr>
+<tr><td>26</td><td>26:06</td><td>54:51</td><td>2:08:14</td><td>4:45:58</td><td>B</td></tr>
+<tr><td>25</td><td>26:18</td><td>55:15</td><td>2:09:17</td><td>4:48:28</td><td>B</td></tr>
+<tr><td>24</td><td>26:30</td><td>55:40</td><td>2:10:21</td><td>4:51:02</td><td>B</td></tr>
+<tr><td>23</td><td>26:42</td><td>56:06</td><td>2:11:26</td><td>4:53:41</td><td>C+</td></tr>
+<tr><td>22</td><td>26:55</td><td>56:32</td><td>2:12:33</td><td>4:56:23</td><td>C+</td></tr>
+<tr><td>21</td><td>27:08</td><td>56:59</td><td>2:13:42</td><td>4:59:11</td><td>C+</td></tr>
+<tr><td>20</td><td>27:21</td><td>57:26</td><td>2:14:52</td><td>5:02:04</td><td>C+</td></tr>
+<tr><td>19</td><td>27:35</td><td>57:54</td><td>2:16:04</td><td>5:05:03</td><td>C+</td></tr>
+<tr><td>18</td><td>27:49</td><td>58:23</td><td>2:17:18</td><td>5:08:08</td><td>C+</td></tr>
+<tr><td>17</td><td>28:03</td><td>58:53</td><td>2:18:35</td><td>5:11:21</td><td>C+</td></tr>
+<tr><td>16</td><td>28:18</td><td>59:23</td><td>2:19:54</td><td>5:14:42</td><td>C+</td></tr>
+<tr><td>15</td><td>28:34</td><td>59:23</td><td>2:21:15</td><td>5:18:12</td><td>C+</td></tr>
+<tr><td>14</td><td>28:51</td><td>59:55</td><td>2:22:40</td><td>5:21:53</td><td>C+</td></tr>
+<tr><td>13</td><td>29:08</td><td>1:00:28</td><td>2:24:08</td><td>5:25:47</td><td>C+</td></tr>
+<tr><td>12</td><td>29:26</td><td>1:01:02</td><td>2:25:39</td><td>5:29:56</td><td>C+</td></tr>
+<tr><td>11</td><td>29:45</td><td>1:02:15</td><td>2:27:15</td><td>5:34:23</td><td>C+</td></tr>
+<tr><td>10</td><td>30:05</td><td>1:02:54</td><td>2:28:56</td><td>5:39:14</td><td>C+</td></tr>
+<tr><td>9</td><td>30:27</td><td>1:03:36</td><td>2:30:42</td><td>5:44:35</td><td>C</td></tr>
+<tr><td>8</td><td>30:51</td><td>1:04:20</td><td>2:32:35</td><td>5:50:40</td><td>C</td></tr>
+<tr><td>7</td><td>31:17</td><td>1:05:07</td><td>2:34:37</td><td>5:57:53</td><td>C</td></tr>
+<tr><td>6</td><td>31:47</td><td>1:05:59</td><td>2:36:50</td><td>6:06:17</td><td>C</td></tr>
+<tr><td>5</td><td>32:22</td><td>1:06:56</td><td>2:39:16</td><td>6:15:50</td><td>C</td></tr>
+<tr><td>4</td><td>33:08</td><td>1:08:01</td><td>2:42:03</td><td>6:25:12</td><td>C</td></tr>
+<tr><td>3</td><td>33:49</td><td>1:09:18</td><td>2:45:20</td><td>6:32:36</td><td>C</td></tr>
+<tr><td>2</td><td>34:00</td><td>1:10:58</td><td>2:49:37</td><td>6:45:14</td><td>C</td></tr>
+<tr><td>1</td><td>35:00</td><td>1:12:30</td><td>2:55:00</td><td>7:00:00</td><td>C</td></tr>
+<tr><td>0</td><td colspan="4">Наличие верификации и любого забега за 180 дней</td><td>D2</td></tr>
+</tbody></table></div></div>
+    <h2>ИМ.XP начисление</h2>
+    <p>Полученные финальные значения eTRIMP конвертируются в XP , в зависимости от пульсовый зоны где они были добыты, путем деления веса пульсовой зоны на соответствующие значения eTRIMP .</p>
+    <p>Текущие значения веса пульсовых зон (делители):</p>
+    <div class="g-tablewrap"><table class="g-tbl">
+<tr><th>Пульс. зона</th><th>% от ЧССМ</th><th>Делитель</th><th>Лимит (eTRIMP)</th></tr>
+<tr><td>Z5</td><td>95-100%</td><td><b>3</b></td><td>100</td></tr>
+<tr><td>Z4</td><td>90-95%</td><td><b>4,5</b></td><td>150</td></tr>
+<tr><td>Z3</td><td>80-90%</td><td><b>10</b></td><td>—</td></tr>
+<tr><td>Z2</td><td>65-80%</td><td><b>17</b></td><td>—</td></tr>
+<tr><td>Z1</td><td>0-65%</td><td><b>20</b></td><td>—</td></tr>
+</table></div>
+    <p>Полученное значение XP умножается на текущее значение RQ .</p>
+    <p>Финальное значение XP умножается на  IQ (Intensive Quotient) , который показывает соответствие тренировочной нагрузки (на основе предоставленных пульсовых данных) Атлета ожиданиям платформы. Этот параметр измеряется в процентах, где 100% – полное соответствие, а всё, что ниже 45% (значение может быть пересмотрено) приводит к отключению HPZ в последующих тренировках сроком на 30 дней (до получения новых валидных данных). В этом случае для расчёта  XP будет использоваться делитель зоны Z2 (равен 17).</p>
+    <h2>ИМ.XP дополнительные условия</h2>
+    <p>Для начисления XP действуют следующие условия (они отражены визуально в Матрице Грейдов ), которые зависят от конкретного Грейда :</p>
+    <p>На приветственном Грейде F монетизация отключена (после регистрации требуется заполнение аккаунта)</p>
+    <p>Для  Грейдов F и  D начисление XP происходит по времени: длительность тренировки в минутах делится на 20 (например, 40 минут бега = 2 XP , 1 час бега = 3 XP и т.д.). Одновременно с этим действует лимит: не более 10 XP за 3 дня ( Ch72)</p>
+    <p>Начиная с Грейда D2 начисление XP происходит только за тренировки, записанные через устройства брендов Garmin, Coros, Polar, Suunto или Apple Watch, которые передают больше достоверных данных через API (в отличие от трекинга с помощью смартфона)</p>
+    <p>Также существуют дополнительные условия по монетизации темпа:</p>
+    <p>– для Грейдов F  и  D — тренировки со средним темпом меньше, чем 10:00 мин/км не получают  XP</p>
+    <p>– для  Грейда D1 и выше — тренировки со средним темпом меньше, чем 8:00 мин/км не получают  XP</p>
+    <p>Любая тренировка, после прохождения проверки Советом Экспертов , может быть отклонена по таким причинам как подозрительная или небеговая активность, некорректная запись трека или несоответствие философии платформы.</p>
+    <p>Перечисленные выше тренировки не подходят под условия 2-го элемента платформы Moneyrun (для начисления XP ), но все активности доступны для личной статистики профиля в рамках 1-го элемента платформы.</p>
+    <p>Также существуют условия переходов между Грейдами :</p>
+    <p>Переход на  Грейд D возможен после заполнения обязательных полей в аккаунте Атлета (Имя, Пол, День рождения, Вес)</p>
+    <p>Для перехода на  Грейд D2 требуется подписка на  официальный Telegram-канал Moneyrun</p>
+    <p>Начиная с  Грейда С , открываются доп. возможности — клубный инструментарий:</p>
+    <p>– роль Владелец — создание собственного Клуба на платформе Moneyrun и претендовать на его Верификацию</p>
+    <p>– роль Забота — участие в развитии Верифицированного Клуба и шанс состоять в закрытом сообществе MR Забота</p>
+    <p>При переходе на Грейд С+ для  Атлета распределяются Финвайты – специальные коды (не более 3 штук на каждом следующем Грейде ) для подключения монетизации в аккаунте другого Атлета .</p>
+    <h2>Финансирование</h2>
+    <p>Основу ежемесячного бюджета на распределение Атлетам составляют проценты, получаемые за размещение Эндаумент Фонда Маниран (EF Moneyrun) . Эндаумент фонд формируется за счет переводов Атлетов на платформе и добровольных взносов инвесторов разделяющих концепцию платформы.</p>
+    <p>Полученные проценты ежемесячно распределяются между клубом Moneyrun и Верифицированными Клубами на платформе. В зависимости от размера EF определяется месячный лимит обмена в клубе Moneyrun , а курс Грейда определяет скорость выборки денег из Клуба в рамках ежемесячного лимита. Верифицированные Клубы определяют лимит и алгоритм монетизации самостоятельно, но в соответствии c философией платформы .</p>
+    <h2>Философия</h2>
+    <p>EF Moneyrun — это капитал, безвозмездно переданный меценатами и инвесторами для сервиса Moneyrun и размещаемый на финансовой площадке для получения ежемесячного процентного дохода, который направляется на финансирование Атлетов .</p>
+    <p>Философию развития сервиса и критерии монетизации формирует группа меценатов (основатели и сотрудники платформы). На текущей стадии разработки основной идеей является развитие бега на результат, а все алгоритмы настроены на оценку показателей тренировок с точки зрения подготовки к классическим шоссейным дистанциям (от 5 до 42 км).</p>
+    <p>Тренировки с низким темпом или показателями ультрабега (чрезмерная дистанция/длительность) могут не пройти проверку Совета экспертов и не получить монетизацию как не входящие в сферу интересов EF Moneyrun . Это не говорит о негативном отношении к другим видам спорта — сервис уважает и ценит старания Атлетов , но готов монетизировать только тренировки, учитывающие специфику подготовки к бегу на результат, в рамках текущей концепции.</p>
+    <p>В будущем, когда алгоритмы по основному функционалу приложения в рамках первичной задумки будут реализованы, сервис сможет приступить к развитию механик для других видов спорта на выносливость.</p>
+    <p>Приложение Moneyrun создано для развития бегового сообщества и к монетизации разрешен только бег. Размещение тренировок из небеговых дисциплин (велосипед, роликовые коньки, лыжи и др.) не приветствуется – Атлету выносится предупреждение. При повторении ситуации сервис будет вынужден заблокировать аккаунт.</p>
+    <p>Все процессы выстроены максимально экономично, с опорой на труд волонтёров, меценатов и энтузиастов бега. Moneyrun — это некоммерческая организация (выплаты носят характер благотворительных поощрений) и не преследует цели заработка: платформа готова финансово поощрять Атлетов, нацеленных на результативность.</p>
+    <h2>Run, Earn, Enjoy!</h2>
+    <h2>Актуальная версия</h2>
+    <p>Версия от 16.02.26</p>
+    <p>© 2023–2026 Moneyrun</p>
+</div></main>
+<footer><div class="foot-inner">
+  <div class="foot-c"><a href="index.html" class="nav-logo" style="margin-bottom:.4rem"><img class="logo-mark" src="art/logo-mark.png" alt="Moneyrun" width="120" height="120"><span class="wordmark">Moneyrun</span></a><p class="tagline">Социально-благотворительный проект по развитию бегового движения.</p></div>
+  <div class="foot-c"><span class="label">Сервис</span><a href="index.html#howto">Как работает</a><a href="index.html#rules">Правила</a><a href="index.html#clubs">Клубы</a><a href="index.html#principles">Принципы</a></div>
+  <div class="foot-c"><span class="label">Связаться</span><a href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram · @moneyrun</a><a href="index.html#contact">Сотрудничество</a></div>
+</div><div class="foot-bottom"><span>© 2023 — 2026 Moneyrun</span><span style="display:flex;gap:1.5rem;flex-wrap:wrap"><a href="guide.html">Правила сервиса</a><a href="privacypolicy.html">Политика конфиденциальности</a></span></div></footer>
+<script>document.querySelectorAll('.g-tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.g-tab').forEach(x=>x.classList.remove('on'));b.classList.add('on');const t=b.dataset.t;document.querySelectorAll('.g-rlpane').forEach(p=>{p.hidden=(p.dataset.pane!==t)});}));</script>
+</body>
+</html>
