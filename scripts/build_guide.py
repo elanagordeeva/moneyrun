@@ -52,13 +52,23 @@ MATRIX = {
    ('Финвайт',            ['—','—','—','—','—','+','+','+','+','+','+']),
  ],
 }
+def _grp(idx):
+    # F D D1 D2 -> grey | C C+ B B+ -> green | A A+ Next -> blue
+    return 'grey' if idx<=3 else ('green' if idx<=7 else 'blue')
 def matrix_html():
     out=['<div class="g-tablewrap"><table class="g-matrix">']
-    out.append('<thead><tr><th>Грейды</th>'+''.join(f'<th>{g}</th>' for g in GRADES)+'</tr></thead>')
+    # строка-группировка по типам Грейдов
+    out.append('<thead><tr class="g-grp"><th></th>'
+               '<th class="g-c-grey" colspan="4">Серый</th>'
+               '<th class="g-c-green" colspan="4">Зелёный</th>'
+               '<th class="g-c-blue" colspan="3">Синий</th></tr>')
+    # строка с буквами Грейдов
+    out.append('<tr><th>Грейды</th>'+''.join(
+        f'<th class="g-c-{_grp(k)}">{g}</th>' for k,g in enumerate(GRADES))+'</tr></thead>')
     for sub, rows in MATRIX.items():
         out.append(f'<tbody><tr class="g-sub"><td colspan="{len(GRADES)+1}">{sub}</td></tr>')
         for label, vals in rows:
-            cells=''.join(f'<td>{"" if v=="—" else v}{"—" if v=="—" else ""}</td>' for v in vals)
+            cells=''.join(f'<td class="g-c-{_grp(k)}">{v}</td>' for k,v in enumerate(vals))
             out.append(f'<tr><th class="g-rowh">{label}</th>'+cells+'</tr>')
         out.append('</tbody>')
     out.append('</table></div>')
@@ -376,6 +386,17 @@ CSS = """
     .g-matrix .g-rowh{text-align:left;font-family:var(--fb);font-weight:600;color:var(--ink);background:var(--surface);position:sticky;left:0;min-width:200px}
     .g-matrix td{text-align:center;color:var(--ink2)}
     .g-matrix tr.g-sub td{background:var(--lime2);color:var(--lime-ink);font-family:var(--fd);font-weight:800;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;text-align:left}
+    /* раскраска столбцов по типам Грейдов */
+    .g-matrix .g-grp th{font-family:var(--fd);font-weight:800;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;text-align:center;padding:.45rem .4rem;border:2px solid #fff;border-bottom:none}
+    .g-matrix .g-grp .g-c-grey{background:#9aa097;color:#fff}
+    .g-matrix .g-grp .g-c-green{background:var(--lime-deep);color:var(--lime-ink)}
+    .g-matrix .g-grp .g-c-blue{background:#5b9bff;color:#fff}
+    .g-matrix thead tr:not(.g-grp) .g-c-grey{background:#edefea}
+    .g-matrix thead tr:not(.g-grp) .g-c-green{background:#e8f5c5}
+    .g-matrix thead tr:not(.g-grp) .g-c-blue{background:#dcebff}
+    .g-matrix tbody .g-c-grey{background:rgba(154,160,151,.08)}
+    .g-matrix tbody .g-c-green{background:rgba(190,225,75,.14)}
+    .g-matrix tbody .g-c-blue{background:rgba(91,155,255,.10)}
     .g-rl table{font-size:.82rem}
     .g-rl{max-height:560px;overflow:auto}
     .g-tabs{display:flex;gap:.4rem;margin:1.2rem 0 .2rem}

@@ -79,6 +79,17 @@
     .g-matrix .g-rowh{text-align:left;font-family:var(--fb);font-weight:600;color:var(--ink);background:var(--surface);position:sticky;left:0;min-width:200px}
     .g-matrix td{text-align:center;color:var(--ink2)}
     .g-matrix tr.g-sub td{background:var(--lime2);color:var(--lime-ink);font-family:var(--fd);font-weight:800;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;text-align:left}
+    /* раскраска столбцов по типам Грейдов */
+    .g-matrix .g-grp th{font-family:var(--fd);font-weight:800;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;text-align:center;padding:.45rem .4rem;border:2px solid #fff;border-bottom:none}
+    .g-matrix .g-grp .g-c-grey{background:#9aa097;color:#fff}
+    .g-matrix .g-grp .g-c-green{background:var(--lime-deep);color:var(--lime-ink)}
+    .g-matrix .g-grp .g-c-blue{background:#5b9bff;color:#fff}
+    .g-matrix thead tr:not(.g-grp) .g-c-grey{background:#edefea}
+    .g-matrix thead tr:not(.g-grp) .g-c-green{background:#e8f5c5}
+    .g-matrix thead tr:not(.g-grp) .g-c-blue{background:#dcebff}
+    .g-matrix tbody .g-c-grey{background:rgba(154,160,151,.08)}
+    .g-matrix tbody .g-c-green{background:rgba(190,225,75,.14)}
+    .g-matrix tbody .g-c-blue{background:rgba(91,155,255,.10)}
     .g-rl table{font-size:.82rem}
     .g-rl{max-height:560px;overflow:auto}
     .g-tabs{display:flex;gap:.4rem;margin:1.2rem 0 .2rem}
@@ -125,25 +136,26 @@
     <p>Курс обмена <b><i>XP</i></b> на деньги зависит от <b><i>Грейда</i></b>: чем выше <b><i>Грейд</i></b>, тем более выгодный тариф в стандартной сетке. Курс определяет скорость выборки одобренного месячного лимита в <b><i>Клубах</i></b>. Необходимое количество <b><i>XP</i></b> для конкретного <b><i>Грейда</i></b>, курс обмена, <b><i>RL</i></b> и др. можно посмотреть в <b><i><span class="g-term">Матрице Грейдов</span></i></b>.</p>
     <h2>Матрица Грейдов</h2>
     <div class="g-tablewrap"><table class="g-matrix">
-<thead><tr><th>Грейды</th><th>F</th><th>D</th><th>D1</th><th>D2</th><th>C</th><th>C+</th><th>B</th><th>B+</th><th>A</th><th>A+</th><th>Next</th></tr></thead>
+<thead><tr class="g-grp"><th></th><th class="g-c-grey" colspan="4">Серый</th><th class="g-c-green" colspan="4">Зелёный</th><th class="g-c-blue" colspan="3">Синий</th></tr>
+<tr><th>Грейды</th><th class="g-c-grey">F</th><th class="g-c-grey">D</th><th class="g-c-grey">D1</th><th class="g-c-grey">D2</th><th class="g-c-green">C</th><th class="g-c-green">C+</th><th class="g-c-green">B</th><th class="g-c-green">B+</th><th class="g-c-blue">A</th><th class="g-c-blue">A+</th><th class="g-c-blue">Next</th></tr></thead>
 <tbody><tr class="g-sub"><td colspan="12">Условия перехода</td></tr>
-<tr><th class="g-rowh">Регистрация</th><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
-<tr><th class="g-rowh">Инфо профиля</th><td>—</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
-<tr><th class="g-rowh">Подписка в Telegram</th><td>—</td><td>—</td><td>—</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
-<tr><th class="g-rowh">Running Level</th><td>—</td><td>—</td><td>—</td><td>0</td><td>1—9</td><td>10—23</td><td>24—38</td><td>39—52</td><td>53—63</td><td>64—75</td><td>76—118</td></tr>
-<tr><th class="g-rowh">Experience, XP</th><td>—</td><td>0</td><td>200</td><td>700</td><td>1 500</td><td>3 500</td><td>7 000</td><td>11 200</td><td>16 240</td><td>22 288</td><td>22 289—∞</td></tr>
-<tr><th class="g-rowh">Монетизация, ₽</th><td>—</td><td>1</td><td>2</td><td>3</td><td>4</td><td>7</td><td>10</td><td>13</td><td>16</td><td>19</td><td>22—∞</td></tr>
+<tr><th class="g-rowh">Регистрация</th><td class="g-c-grey">+</td><td class="g-c-grey">+</td><td class="g-c-grey">+</td><td class="g-c-grey">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td></tr>
+<tr><th class="g-rowh">Инфо профиля</th><td class="g-c-grey">—</td><td class="g-c-grey">+</td><td class="g-c-grey">+</td><td class="g-c-grey">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td></tr>
+<tr><th class="g-rowh">Подписка в Telegram</th><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td></tr>
+<tr><th class="g-rowh">Running Level</th><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">0</td><td class="g-c-green">1—9</td><td class="g-c-green">10—23</td><td class="g-c-green">24—38</td><td class="g-c-green">39—52</td><td class="g-c-blue">53—63</td><td class="g-c-blue">64—75</td><td class="g-c-blue">76—118</td></tr>
+<tr><th class="g-rowh">Experience, XP</th><td class="g-c-grey">—</td><td class="g-c-grey">0</td><td class="g-c-grey">200</td><td class="g-c-grey">700</td><td class="g-c-green">1 500</td><td class="g-c-green">3 500</td><td class="g-c-green">7 000</td><td class="g-c-green">11 200</td><td class="g-c-blue">16 240</td><td class="g-c-blue">22 288</td><td class="g-c-blue">22 289—∞</td></tr>
+<tr><th class="g-rowh">Монетизация, ₽</th><td class="g-c-grey">—</td><td class="g-c-grey">1</td><td class="g-c-grey">2</td><td class="g-c-grey">3</td><td class="g-c-green">4</td><td class="g-c-green">7</td><td class="g-c-green">10</td><td class="g-c-green">13</td><td class="g-c-blue">16</td><td class="g-c-blue">19</td><td class="g-c-blue">22—∞</td></tr>
 </tbody>
 <tbody><tr class="g-sub"><td colspan="12">Доп. условия монетизации</td></tr>
-<tr><th class="g-rowh">Пульсовые данные</th><td>20 мин</td><td>20 мин</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
-<tr><th class="g-rowh">Верхние зоны (HPZ)</th><td>—</td><td>—</td><td>—</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
-<tr><th class="g-rowh">Беговые часы</th><td>—</td><td>—</td><td>—</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
-<tr><th class="g-rowh">Минимальный темп, мин/км</th><td>10:00</td><td>10:00</td><td>8:00</td><td>8:00</td><td>8:00</td><td>8:00</td><td>8:00</td><td>8:00</td><td>8:00</td><td>8:00</td><td>8:00</td></tr>
+<tr><th class="g-rowh">Пульсовые данные</th><td class="g-c-grey">20 мин</td><td class="g-c-grey">20 мин</td><td class="g-c-grey">+</td><td class="g-c-grey">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td></tr>
+<tr><th class="g-rowh">Верхние зоны (HPZ)</th><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td></tr>
+<tr><th class="g-rowh">Беговые часы</th><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td></tr>
+<tr><th class="g-rowh">Минимальный темп, мин/км</th><td class="g-c-grey">10:00</td><td class="g-c-grey">10:00</td><td class="g-c-grey">8:00</td><td class="g-c-grey">8:00</td><td class="g-c-green">8:00</td><td class="g-c-green">8:00</td><td class="g-c-green">8:00</td><td class="g-c-green">8:00</td><td class="g-c-blue">8:00</td><td class="g-c-blue">8:00</td><td class="g-c-blue">8:00</td></tr>
 </tbody>
 <tbody><tr class="g-sub"><td colspan="12">Дополнительные возможности</td></tr>
-<tr><th class="g-rowh">Создание Клуба</th><td>—</td><td>—</td><td>—</td><td>—</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
-<tr><th class="g-rowh">Роль Забота в Клубе</th><td>—</td><td>—</td><td>—</td><td>—</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
-<tr><th class="g-rowh">Финвайт</th><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td><td>+</td></tr>
+<tr><th class="g-rowh">Создание Клуба</th><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td></tr>
+<tr><th class="g-rowh">Роль Забота в Клубе</th><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td></tr>
+<tr><th class="g-rowh">Финвайт</th><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-green">—</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td></tr>
 </tbody>
 </table></div>
     <h3>Регистрация</h3>
