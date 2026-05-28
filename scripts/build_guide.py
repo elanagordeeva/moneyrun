@@ -108,6 +108,51 @@ def rl_table(rows, head):
     out.append('</tbody></table></div>')
     return '\n'.join(out)
 
+# --- выделение терминов (как в оригинале: жирным + цветом) ---
+# Цветные (tomato) фразы-кросс-ссылки в оригинале — рендерим цветом + жирным
+COLOR_TERMS = [
+ 'Интенсивность и продолжительность тренировочной нагрузки',
+ 'официальный Telegram-канал Moneyrun','розыгрышах офиц. Telegram-канала',
+ 'Баланс тренировочной нагрузки','Любительская результативность',
+ 'World Athletics Score Table','Running Level (RL)','Таблица Running Level',
+ 'Эндаумент фонда (EF)','Московского марафона','условия доступа упрощены',
+ 'философией платформы','Матрице Грейдов','пульсовые зоны','Пульсовые данные',
+]
+# Жирные доменные термины (все встречающиеся словоформы)
+BOLD_TERMS = [
+ 'Игровой Грейдовый модуль','IQ (Intensive Quotient)','Маниран (EF Moneyrun)',
+ 'Верифицированными Клубами','Верифицированного Клуба','Верифицированном Клубе',
+ 'Верифицированные Клубы','Совета экспертов','Советом Экспертов','MR Забота',
+ 'Клуба Moneyrun','EF Moneyrun','ЧССМ = 150 eTRIMP','ЧССМ = 100 eTRIMP',
+ 'eTRIMP = 360 баллов','Ch72 и ChT','Experience, XP','RL и RQ','RL (RQ)',
+ 'IQ >45%','RQ = 1,5','RQ = 0,7','40 eTRIMP','95-100%','90-95%',
+ 'Грейда D1','Грейда D2','Грейда С','Грейде D2','Грейде F','Грейдов F',
+ 'Грейдом С+','Грейдом B','Грейдом C','Грейду C+','Грейду A',
+ 'Грейд D1','Грейд D2','Грейд С+','Грейд D',
+ 'Грейдами','Грейдах','Грейдов','Грейдом','Грейдам','Грейды','Грейде','Грейда','Грейду','Грейд',
+ 'Атлетам','Атлетов','Атлетом','Атлету','Атлета','Атлет',
+ 'Клубах','Клуба','Клуб','Забегов','Забеге','Забега',
+ 'Финвайты','Инвайт','Верификацию','Владелец','Забота',
+ '10 XP','15 XP','1 XP','2 XP','3 XP','7 XP',
+ 'eTRIMP','TRIMP','Moneyrun','ЧССМ','HPZ','Ch72','ChT','RL=1','RQ','RL','XP','ИМ','EF','Z2',
+]
+def _alt(terms):
+    s=sorted(set(terms), key=len, reverse=True)
+    # пробелы в терминах могут быть обычными или неразрывными (\xa0)
+    pats=[re.escape(t).replace('\\ ', r'\s+').replace(' ', r'\s+') for t in s]
+    return '(?<![\\w])(?:'+'|'.join(pats)+')(?![\\w])'
+COLOR_RE = re.compile(_alt(COLOR_TERMS))
+BOLD_RE  = re.compile(_alt(BOLD_TERMS))
+def style(text):
+    holds=[]
+    def col(m):
+        holds.append(f'<span class="g-term">{m.group(0)}</span>'); return f'\x00{len(holds)-1}\x00'
+    def bld(m):
+        holds.append(f'<b>{m.group(0)}</b>'); return f'\x00{len(holds)-1}\x00'
+    text=COLOR_RE.sub(col,text)
+    text=BOLD_RE.sub(bld,text)
+    return re.sub(r'\x00(\d+)\x00', lambda m:holds[int(m.group(1))], text)
+
 # --- основной проход ---
 body=[]
 i=0
@@ -170,13 +215,13 @@ while i<n:
     # одиночная строка-формула
     if re.fullmatch(r'[\w().,<>=\-∞ ]{1,40}', ln) and re.match(r'^(min|max|iif)\(', ln):
         body.append(f'<pre class="g-formula">{ln}</pre>'); i+=1; continue
-    # абзац; убираем висячую разделительную ';' из исходной вёрстки
-    body.append(f'<p>{ln.rstrip(" ;")}</p>'); i+=1
+    # абзац; убираем висячую разделительную ';' из исходной вёрстки + выделяем термины
+    body.append(f'<p>{style(ln.rstrip(" ;"))}</p>'); i+=1
 
 content='\n    '.join(body)
 
 CSS = """
-    :root{--bg:#eef2ec;--bg2:#f4f7f3;--surface:#ffffff;--ink:#0e120e;--ink2:#1b1b21;--muted:#6b7068;--muted2:#9aa097;--border:#e6eae3;--border2:#dadfd6;--lime:#d0f85d;--lime2:#d5ffa8;--lime-deep:#bee14b;--lime-ink:#1f2a05;--c-blue:#bcdcff;--c-blue-ink:#143b6b;--fd:'Manrope',system-ui,sans-serif;--fb:'Inter',system-ui,sans-serif;--fm:'JetBrains Mono',ui-monospace,monospace;--fw:'Roboto Flex','Roboto',system-ui,sans-serif;--maxw:1240px;--sh-sm:0 2px 6px rgba(15,20,15,.05),0 1px 2px rgba(15,20,15,.04);--sh-md:0 14px 30px -10px rgba(15,30,12,.10),0 8px 18px -6px rgba(15,30,12,.06);--r-sm:12px;--r-md:18px;--r-lg:24px}
+    :root{--bg:#eef2ec;--bg2:#f4f7f3;--surface:#ffffff;--ink:#0e120e;--ink2:#1b1b21;--muted:#6b7068;--muted2:#9aa097;--border:#e6eae3;--border2:#dadfd6;--lime:#d0f85d;--lime2:#d5ffa8;--lime-deep:#bee14b;--lime-ink:#1f2a05;--c-blue:#bcdcff;--c-blue-ink:#143b6b;--c-tomato:#f0563f;--fd:'Manrope',system-ui,sans-serif;--fb:'Inter',system-ui,sans-serif;--fm:'JetBrains Mono',ui-monospace,monospace;--fw:'Roboto Flex','Roboto',system-ui,sans-serif;--maxw:1240px;--sh-sm:0 2px 6px rgba(15,20,15,.05),0 1px 2px rgba(15,20,15,.04);--sh-md:0 14px 30px -10px rgba(15,30,12,.10),0 8px 18px -6px rgba(15,30,12,.06);--r-sm:12px;--r-md:18px;--r-lg:24px}
     *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
     body{background:var(--bg);color:var(--ink);font-family:var(--fb);line-height:1.65;-webkit-font-smoothing:antialiased}
     ::selection{background:var(--lime);color:var(--lime-ink)}img{max-width:100%;display:block}a{color:inherit}
@@ -201,6 +246,7 @@ CSS = """
     .legal h3{font-family:var(--fd);font-weight:700;font-size:1.1rem;letter-spacing:-.01em;margin:1.8rem 0 .5rem;color:var(--ink)}
     .legal p{color:var(--ink2);line-height:1.72;margin-bottom:.9rem;font-size:1rem}
     .legal b{font-weight:600;color:var(--ink)}
+    .legal .g-term{color:var(--c-tomato);font-weight:600}
     .g-formula{font-family:var(--fm);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.5rem .8rem;margin:.3rem 0;font-size:.9rem;color:var(--ink);display:inline-block}
     .g-tablewrap{overflow-x:auto;margin:1.2rem 0 1.6rem;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);box-shadow:var(--sh-sm)}
     table.g-tbl,table.g-matrix{border-collapse:collapse;width:100%;font-size:.86rem}
