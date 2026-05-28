@@ -27,10 +27,24 @@
     @media(max-width:1080px){.nav-links{display:none}}
     .legal{max-width:var(--maxw);margin:0 auto;padding:7.5rem clamp(1.25rem,5vw,4rem) 4rem}
     .legal-wrap{max-width:860px;margin:0 auto}
-    .legal-back{display:inline-flex;gap:.4rem;font-size:.9rem;color:var(--muted);text-decoration:none;margin-bottom:1.6rem}
+    .legal-back{display:inline-flex;gap:.4rem;font-size:.9rem;color:var(--muted);text-decoration:none;margin-bottom:1.2rem}
     .legal-back:hover{color:var(--ink)}
-    .legal h1{font-family:var(--fd);font-weight:800;font-size:clamp(1.9rem,4vw,2.8rem);letter-spacing:-.03em;line-height:1.1;margin-bottom:1rem}
-    .legal-meta{color:var(--muted);font-size:.95rem;line-height:1.6;margin-bottom:1.8rem;padding-bottom:1.6rem;border-bottom:1px solid var(--border)}
+    /* hero-блок страницы */
+    .g-hero{position:relative;overflow:hidden;border-radius:var(--r-lg);background:#deeafd;box-shadow:var(--sh-md);margin:0 0 2.8rem;display:grid;grid-template-columns:1fr minmax(190px,40%);gap:1rem;align-items:end;isolation:isolate}
+    .g-hero::before{content:'';position:absolute;inset:0;z-index:0;background:url('art/electric-2-sky.svg') center/cover no-repeat}
+    .g-hero::after{content:'';position:absolute;inset:0;z-index:0;background:linear-gradient(105deg,rgba(252,253,254,.92) 0%,rgba(252,253,254,.55) 46%,rgba(252,253,254,0) 72%)}
+    .g-hero-text{position:relative;z-index:2;padding:clamp(1.8rem,4vw,2.8rem) clamp(1.4rem,4vw,2.6rem)}
+    .g-hero-eyebrow{display:inline-block;font-family:var(--fm);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--c-blue-ink);background:#fff;border:1px solid var(--c-blue);border-radius:999px;padding:.34rem .8rem;margin-bottom:1.1rem}
+    .g-hero h1{font-family:var(--fd);font-weight:800;font-size:clamp(2rem,4.6vw,3.1rem);letter-spacing:-.03em;line-height:1.04;margin:0 0 .9rem;color:var(--ink)}
+    .g-hero-sub{color:#2c466f;font-size:clamp(1rem,1.4vw,1.12rem);line-height:1.6;max-width:34ch;margin:0}
+    .g-hero-art{position:relative;z-index:1;align-self:end;justify-self:center;padding:1.6rem 1rem 0}
+    .g-hero-art img{display:block;width:100%;max-width:230px;border-radius:26px 26px 0 0;box-shadow:0 30px 60px -22px rgba(20,45,90,.45),0 8px 20px -8px rgba(20,45,90,.25);transform:translateY(10px) rotate(-2.5deg);transform-origin:bottom center;border:1px solid rgba(255,255,255,.7)}
+    @media(max-width:680px){
+      .g-hero{grid-template-columns:1fr}
+      .g-hero::after{background:linear-gradient(180deg,rgba(252,253,254,.92) 0%,rgba(252,253,254,.5) 60%,rgba(252,253,254,0) 100%)}
+      .g-hero-art{justify-self:center;padding-top:.5rem;max-width:260px;margin:0 auto}
+      .g-hero-art img{transform:translateY(10px) rotate(0)}
+    }
     .legal h2{font-family:var(--fd);font-weight:800;font-size:clamp(1.3rem,2.4vw,1.7rem);letter-spacing:-.02em;line-height:1.2;margin:2.8rem 0 1rem;padding-top:.4rem}
     .legal h3{font-family:var(--fd);font-weight:700;font-size:1.1rem;letter-spacing:-.01em;margin:1.8rem 0 .5rem;color:var(--ink)}
     .legal p{color:var(--ink2);line-height:1.72;margin-bottom:.9rem;font-size:1rem}
@@ -70,8 +84,16 @@
   </div></div></nav>
 <main class="legal"><div class="legal-wrap">
     <a href="index.html" class="legal-back">← На главную</a>
-    <h1>Правила сервиса</h1>
-    <p class="legal-meta">Платформа Moneyrun — социально-благотворительный проект по развитию бегового движения. Версия от 16.02.26.</p>
+    <header class="g-hero">
+      <div class="g-hero-text">
+        <span class="g-hero-eyebrow">Документация</span>
+        <h1>Правила сервиса</h1>
+        <p class="g-hero-sub">Платформа Moneyrun — социально-благотворительный проект по развитию бегового движения.</p>
+      </div>
+      <div class="g-hero-art" aria-hidden="true">
+        <img src="art/full_7-2.png.webp" alt="Профиль Атлета в Moneyrun" loading="eager">
+      </div>
+    </header>
     <p>Платформа <b><i>Moneyrun</i></b> — это социально-благотворительный проект по развитию бегового движения</p>
     <p>Состоит из двух основных элементов:</p>
     <p>Тематическая социальная сеть и сервис с бесплатными инструментами для ведения беговой статистики, тренировочных планов и клубных сообществ.</p>
