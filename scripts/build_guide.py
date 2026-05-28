@@ -35,6 +35,23 @@ DEF_TERMS = {
  'Минимальный темп, мин/км','Создание Клуба','Роль Забота в Клубе','Финвайт',
 }
 
+# --- якорные ссылки на заголовки + оглавление ---
+_TR = {'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'e','ж':'zh','з':'z','и':'i',
+ 'й':'y','к':'k','л':'l','м':'m','н':'n','о':'o','п':'p','р':'r','с':'s','т':'t','у':'u',
+ 'ф':'f','х':'h','ц':'c','ч':'ch','ш':'sh','щ':'sch','ъ':'','ы':'y','ь':'','э':'e','ю':'yu','я':'ya'}
+toc=[]; _ids=set()
+def slug(text):
+    s=''.join(_TR.get(ch,ch) for ch in text.lower())
+    s=re.sub(r'[^a-z0-9]+','-',s).strip('-') or 'sec'
+    base=s; k=2
+    while s in _ids: s=f'{base}-{k}'; k+=1
+    _ids.add(s); return s
+def hd(level,text):
+    sid=slug(text); toc.append((level,text,sid))
+    return (f'<h{level} id="{sid}" class="g-h">'
+            f'<a class="g-anchor" href="#{sid}" aria-hidden="true" tabindex="-1">#</a>'
+            f'{H.escape(text)}</h{level}>')
+
 # --- Матрица Грейдов (захардкожена 1-в-1) ---
 GRADES = ['F','D','D1','D2','C','C+','B','B+','A','A+','Next']
 MATRIX = {
@@ -213,6 +230,12 @@ def style(text):
 body=[]
 i=0
 n=len(lines)
+TOC_PH='@@TOC@@'; _toc_added=[False]
+def add_h2(text):
+    if not _toc_added[0]: body.append(TOC_PH); _toc_added[0]=True
+    body.append(hd(2,text))
+def add_h3(text):
+    body.append(hd(3,text))
 def esc(s): return s  # текст уже из источника; <b> сохраняем
 while i<n:
     ln=lines[i].strip()
@@ -270,7 +293,7 @@ while i<n:
         i=j; continue
     # Матрица: вставляем после h2 и проглатываем строки до 'Регистрация' (первое определение)
     if ln=='Матрица Грейдов':
-        body.append('<h2>Матрица Грейдов</h2>')
+        add_h2('Матрица Грейдов')
         body.append(matrix_html())
         i+=1
         # пропустить строки матрицы (заглавные таблицы) до первого определения 'Регистрация'
@@ -279,7 +302,7 @@ while i<n:
         continue
     # RL таблица: заголовок "Таблица Running Level"
     if ln=='Таблица Running Level':
-        body.append('<h2>Таблица Running Level</h2>')
+        add_h2('Таблица Running Level')
         body.append('<div class="g-tabs"><button class="g-tab on" data-t="m">Мужчины</button><button class="g-tab" data-t="w">Женщины</button></div>')
         # собрать мужские строки: после "RL (M) ..." до "RL (Ж) ..."
         # найти заголовки
@@ -314,7 +337,7 @@ while i<n:
         body.append(semi_table(block))
         continue
     if ln in H2:
-        body.append(f'<h2>{ln}</h2>'); i+=1; continue
+        add_h2(ln); i+=1; continue
     # пояснения к Матрице (Регистрация…Финвайт) -> раскрывающийся аккордеон
     if ln=='Регистрация':
         pairs=[]; j=i
@@ -333,7 +356,7 @@ while i<n:
         body.append('<div class="g-acc">'+acc+'</div>')
         i=j; continue
     if ln in H3:
-        body.append(f'<h3>{ln}</h3>'); i+=1; continue
+        add_h3(ln); i+=1; continue
     # одиночная строка-формула
     if re.fullmatch(r'[\w().,<>=\-∞ ]{1,40}', ln) and re.match(r'^(min|max|iif)\(', ln):
         body.append(f'<pre class="g-formula">{ln}</pre>'); i+=1; continue
@@ -341,6 +364,12 @@ while i<n:
     body.append(f'<p>{style(ln.rstrip(" ;"))}</p>'); i+=1
 
 content='\n    '.join(body)
+# оглавление (по разделам h2)
+toc_items=''.join(f'<li><a href="#{sid}">{H.escape(text)}</a></li>'
+                  for lvl,text,sid in toc if lvl==2)
+toc_html=('<nav class="g-toc" aria-label="Содержание"><p class="g-toc-title">Содержание</p>'
+          f'<ol>{toc_items}</ol></nav>')
+content=content.replace(TOC_PH, toc_html)
 # упоминания «Telegram-канал(а)» -> гиперссылка на канал
 content=re.sub(r'Telegram-канал[а-яё]*',
                lambda m:f'<a class="g-link" href="https://t.me/moneyrun" target="_blank" rel="noopener">{m.group(0)}</a>',
@@ -383,6 +412,19 @@ CSS = """
     }
     .legal h2{font-family:var(--fd);font-weight:800;font-size:clamp(1.3rem,2.4vw,1.7rem);letter-spacing:-.02em;line-height:1.2;margin:2.8rem 0 1rem;padding-top:.4rem}
     .legal h3{font-family:var(--fd);font-weight:700;font-size:1.1rem;letter-spacing:-.01em;margin:1.8rem 0 .5rem;color:var(--ink)}
+    .g-h{position:relative;scroll-margin-top:84px}
+    .g-h .g-anchor{position:absolute;left:-1.05em;top:.16em;font-size:.78em;font-weight:700;color:var(--muted2);text-decoration:none;opacity:0;transition:opacity .15s}
+    .g-h:hover .g-anchor,.g-h .g-anchor:focus{opacity:1}
+    .g-h .g-anchor:hover{color:var(--c-tomato)}
+    @media(hover:none){.g-h .g-anchor{display:none}}
+    .g-toc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);box-shadow:var(--sh-sm);padding:1.1rem 1.35rem 1.2rem;margin:1.6rem 0 2.6rem}
+    .g-toc-title{font-family:var(--fm);font-weight:500;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:0 0 .8rem}
+    .g-toc ol{list-style:none;margin:0;padding:0;columns:2;column-gap:1.8rem;counter-reset:toc}
+    .g-toc li{counter-increment:toc;margin:0 0 .5rem;break-inside:avoid}
+    .g-toc a{display:flex;gap:.55rem;align-items:baseline;color:var(--ink2);text-decoration:none;font-size:.86rem;line-height:1.35}
+    .g-toc a::before{content:counter(toc);font-family:var(--fm);font-size:.74rem;color:var(--muted2);min-width:1.5em;text-align:right}
+    .g-toc a:hover{color:var(--c-tomato)}
+    @media(max-width:560px){.g-toc ol{columns:1}}
     .legal p{color:var(--ink2);line-height:1.72;margin-bottom:.9rem;font-size:1rem}
     .legal b{font-weight:600;color:var(--ink)}
     .legal .g-term{color:var(--c-tomato);font-weight:600}
@@ -419,8 +461,8 @@ CSS = """
     .g-acc-item[open] summary::after{content:'−';color:var(--lime-deep)}
     .g-acc-item summary:hover{background:var(--bg2)}
     .g-acc-item[open] summary{color:var(--ink)}
-    .g-acc-body{padding:0 .9rem .8rem;color:var(--ink2);line-height:1.6;font-size:.74rem}
-    .g-acc-body p{margin:0}
+    .g-acc-body{padding:0 .9rem .8rem;color:var(--ink2);line-height:1.6}
+    .g-acc-body p{margin:0;font-size:.74rem;line-height:1.6}
     .g-formula{font-family:var(--fm);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.5rem .8rem;margin:.3rem 0;font-size:.9rem;color:var(--ink);display:inline-block}
     .g-tablewrap{overflow-x:auto;margin:1.2rem 0 1.6rem;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);box-shadow:var(--sh-sm)}
     table.g-tbl,table.g-matrix{border-collapse:collapse;width:100%;font-size:.86rem}
