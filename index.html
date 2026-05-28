@@ -85,8 +85,10 @@
     #progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:1100;background:linear-gradient(90deg,var(--lime-deep),var(--lime));box-shadow:0 0 14px rgba(190,225,75,.55);transition:width .1s linear}
 
     /* nav */
-    #navbar{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:1.1rem clamp(1.25rem,4vw,3rem);transition:all .35s}
-    #navbar.scrolled{background:rgba(238,242,236,.78);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);padding:.7rem clamp(1.25rem,4vw,3rem);box-shadow:0 1px 0 var(--border)}
+    #navbar{position:fixed;top:0;left:0;right:0;z-index:1000;transition:all .35s}
+    #navbar.scrolled{background:rgba(238,242,236,.78);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);box-shadow:0 1px 0 var(--border)}
+    #navbar .nav-inner{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:1.1rem clamp(1.25rem,5vw,4rem);transition:padding .35s}
+    #navbar.scrolled .nav-inner{padding:.7rem clamp(1.25rem,5vw,4rem)}
     .nav-logo{display:flex;align-items:center;gap:.55rem;text-decoration:none;flex-shrink:0;color:var(--ink);transition:transform .25s}
     .nav-logo:hover{transform:translateY(-1px)}
     .nav-logo svg,.nav-logo img.logo-mark{height:28px;width:auto;display:block;flex:none}
@@ -518,20 +520,22 @@
 </svg>
 
 <nav id="navbar">
-  <a href="#hero" class="nav-logo" aria-label="Moneyrun">
-    <img class="logo-mark" src="art/logo-mark.png" alt="Moneyrun mark" width="120" height="120">
-    <span class="wordmark">Moneyrun</span>
-  </a>
-  <div class="nav-right">
-    <ul class="nav-links">
-      <li><a href="#howto" data-sec="howto">Как работает</a></li>
-      <li><a href="#clubs" data-sec="clubs">Клубы</a></li>
-      <li><a href="#principles" data-sec="principles">Принципы</a></li>
-      <li><a href="#community" data-sec="community">Сообщество</a></li>
-    </ul>
-    <a href="https://t.me/moneyrun" target="_blank" rel="noopener" class="tg-pill"><svg><use href="#ic-tg"/></svg>Telegram</a>
-    <a href="#download" class="nav-cta">Скачать <span class="arr">→</span></a>
-    <button class="hamburger" id="hamburger" aria-label="Меню"><span></span><span></span><span></span></button>
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo" aria-label="Moneyrun">
+      <img class="logo-mark" src="art/logo-mark.png" alt="Moneyrun mark" width="120" height="120">
+      <span class="wordmark">Moneyrun</span>
+    </a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#howto" data-sec="howto">Как работает</a></li>
+        <li><a href="#clubs" data-sec="clubs">Клубы</a></li>
+        <li><a href="#principles" data-sec="principles">Принципы</a></li>
+        <li><a href="#community" data-sec="community">Сообщество</a></li>
+      </ul>
+      <a href="https://t.me/moneyrun" target="_blank" rel="noopener" class="tg-pill"><svg><use href="#ic-tg"/></svg>Telegram</a>
+      <a href="#download" class="nav-cta">Скачать <span class="arr">→</span></a>
+      <button class="hamburger" id="hamburger" aria-label="Меню"><span></span><span></span><span></span></button>
+    </div>
   </div>
 </nav>
 
