@@ -456,6 +456,31 @@
     .rules-btn{display:inline-flex;align-items:center;gap:.4rem;background:var(--ink);color:#fff;font-family:var(--fd);font-weight:700;font-size:.95rem;padding:.7rem 1.2rem;border-radius:999px;text-decoration:none;margin-top:1.5rem;transition:transform .2s,background .25s,box-shadow .25s;box-shadow:var(--sh-sm)}
     .rules-btn:hover{transform:translateY(-1px);box-shadow:var(--sh-md);background:#000}
     .rules-btn .arr{transition:transform .25s}.rules-btn:hover .arr{transform:translateX(3px)}
+
+    /* contact form */
+    #contact{padding:clamp(3.5rem,7vw,6rem) 0}
+    .contact-grid{max-width:var(--maxw);margin:0 auto;padding:0 clamp(1.25rem,5vw,4rem);display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4rem);align-items:start}
+    .contact-left{padding-top:.5rem}
+    .contact-left .label{margin-bottom:1.2rem}
+    .contact-left .title{margin-bottom:1.8rem}
+    .tg-big{display:inline-flex;align-items:center;gap:.85rem;background:var(--surface);border:1px solid var(--border);padding:.85rem 1.3rem;border-radius:18px;text-decoration:none;color:var(--ink);box-shadow:var(--sh-sm);transition:all .25s}
+    .tg-big:hover{border-color:var(--ink);transform:translateY(-2px);box-shadow:var(--sh-md)}
+    .tg-big svg{width:24px;height:24px;fill:#0088cc;flex:none}
+    .tg-big .t{font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block}
+    .tg-big .u{font-family:var(--fd);font-weight:700;font-size:1rem;color:var(--ink);display:block;margin-top:.1rem}
+    .contact-form{background:var(--surface);border-radius:var(--r-xl);padding:clamp(1.5rem,2.5vw,2.2rem);box-shadow:var(--sh-card);display:flex;flex-direction:column;gap:1rem;border:1px solid var(--border)}
+    .cf-row{display:flex;flex-direction:column;gap:.45rem}
+    .cf-label{font-family:var(--fb);font-size:.85rem;color:var(--ink);font-weight:500;line-height:1.4}
+    .cf-label em{color:var(--lime-deep);font-style:normal;font-weight:700;margin-left:.15em}
+    .cf-row input,.cf-row select,.cf-row textarea{font-family:var(--fb);font-size:.95rem;color:var(--ink);background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:.8rem 1rem;width:100%;transition:border-color .2s,box-shadow .2s;outline:none}
+    .cf-row input:focus,.cf-row select:focus,.cf-row textarea:focus{border-color:var(--ink);box-shadow:0 0 0 3px rgba(190,225,75,.25)}
+    .cf-row textarea{resize:vertical;min-height:90px;line-height:1.55;font-family:var(--fb)}
+    .cf-row select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M6 9l6 6 6-6' fill='none' stroke='%230e120e' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>");background-repeat:no-repeat;background-position:right 1rem center;background-size:18px;padding-right:2.8rem;cursor:pointer}
+    .cf-submit{margin-top:.4rem;background:var(--ink);color:#fff;font-family:var(--fd);font-weight:700;font-size:1rem;padding:.95rem 1.4rem;border:none;border-radius:14px;cursor:pointer;transition:transform .2s,background .25s,box-shadow .25s;box-shadow:var(--sh-sm)}
+    .cf-submit:hover{transform:translateY(-2px);box-shadow:var(--sh-md);background:#000}
+    .cf-disclaimer{font-family:var(--fb);font-size:.78rem;color:var(--muted);line-height:1.5;margin-top:.3rem}
+    .cf-disclaimer a{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
+    .cf-disclaimer a:hover{color:var(--lime-ink)}
     .foot-c .tagline{color:var(--muted);font-size:.92rem;line-height:1.6;max-width:340px}
     .foot-bottom{max-width:var(--maxw);margin:2.5rem auto 0;padding:1.5rem clamp(1.25rem,5vw,4rem) 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;color:var(--muted);font-size:.85rem;font-family:var(--fm)}
     .foot-bottom a{color:var(--muted);text-decoration:none;transition:color .2s}.foot-bottom a:hover{color:var(--ink)}
@@ -817,8 +842,51 @@
   </div>
 </section>
 
+<!-- CONTACT / COOPERATION FORM -->
+<section id="contact">
+  <div class="contact-grid">
+    <div class="contact-left reveal">
+      <span class="label">Сотрудничество</span>
+      <h2 class="title">По вопросам сотрудничества <span class="lime-mark">свяжись</span> через форму или в Telegram</h2>
+      <a href="https://t.me/moneyrun" target="_blank" rel="noopener" class="tg-big">
+        <svg viewBox="0 0 24 24"><use href="#ic-tg"/></svg>
+        <span>
+          <span class="t">Telegram</span>
+          <span class="u">@moneyrun</span>
+        </span>
+      </a>
+    </div>
+    <form class="contact-form reveal" novalidate action="#" method="post">
+      <label class="cf-row">
+        <span class="cf-label">По какому вопросу хочешь с нами связаться?<em>*</em></span>
+        <select name="topic" required>
+          <option value="" disabled selected>Выбери вариант</option>
+          <option value="support">Хочу поддержать проект</option>
+          <option value="partner">Есть предложение по сотрудничеству</option>
+          <option value="feedback">Есть предложение по улучшению сервиса Moneyrun</option>
+          <option value="other">Другой вопрос</option>
+        </select>
+      </label>
+      <label class="cf-row">
+        <span class="cf-label">ФИО<em>*</em></span>
+        <input type="text" name="name" autocomplete="name" required>
+      </label>
+      <label class="cf-row">
+        <span class="cf-label">Номер телефона<em>*</em></span>
+        <input type="tel" name="phone" autocomplete="tel" required>
+      </label>
+      <label class="cf-row">
+        <span class="cf-label">Комментарий</span>
+        <textarea name="comment" rows="4"></textarea>
+      </label>
+      <button type="submit" class="cf-submit">Отправить заявку</button>
+      <p class="cf-disclaimer">Нажимая на кнопку, вы даёте согласие на обработку персональных данных и соглашаетесь с <a href="https://moneyrun.tech/privacypolicy" target="_blank" rel="noopener">политикой конфиденциальности</a>.</p>
+    </form>
+  </div>
+</section>
+
 <!-- FOOTER -->
-<footer id="contact">
+<footer id="site-footer">
   <div class="foot-inner">
     <div class="foot-c">
       <a href="#hero" class="nav-logo" style="margin-bottom:.4rem" aria-label="Moneyrun">
