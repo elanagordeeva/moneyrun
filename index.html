@@ -452,6 +452,10 @@
     .foot-c{display:flex;flex-direction:column;gap:.6rem}
     .foot-c .label{margin-bottom:.5rem;background:none;color:var(--muted);padding:0}
     .foot-c a{color:var(--ink);text-decoration:none;font-size:.95rem;transition:color .2s}.foot-c a:hover{color:var(--lime-ink)}
+    /* rules section CTA */
+    .rules-btn{display:inline-flex;align-items:center;gap:.4rem;background:var(--ink);color:#fff;font-family:var(--fd);font-weight:700;font-size:.95rem;padding:.7rem 1.2rem;border-radius:999px;text-decoration:none;margin-top:1.5rem;transition:transform .2s,background .25s,box-shadow .25s;box-shadow:var(--sh-sm)}
+    .rules-btn:hover{transform:translateY(-1px);box-shadow:var(--sh-md);background:#000}
+    .rules-btn .arr{transition:transform .25s}.rules-btn:hover .arr{transform:translateX(3px)}
     .foot-c .tagline{color:var(--muted);font-size:.92rem;line-height:1.6;max-width:340px}
     .foot-bottom{max-width:var(--maxw);margin:2.5rem auto 0;padding:1.5rem clamp(1.25rem,5vw,4rem) 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;color:var(--muted);font-size:.85rem;font-family:var(--fm)}
     .foot-bottom a{color:var(--muted);text-decoration:none;transition:color .2s}.foot-bottom a:hover{color:var(--ink)}
@@ -528,6 +532,7 @@
     <div class="nav-right">
       <ul class="nav-links">
         <li><a href="#howto" data-sec="howto">Как работает</a></li>
+        <li><a href="#rules" data-sec="rules">Правила</a></li>
         <li><a href="#clubs" data-sec="clubs">Клубы</a></li>
         <li><a href="#principles" data-sec="principles">Принципы</a></li>
       </ul>
@@ -540,6 +545,7 @@
 
 <div class="mobile-menu" id="mobileMenu">
   <a href="#howto">Как работает</a>
+  <a href="#rules">Правила</a>
   <a href="#clubs">Клубы</a>
   <a href="#principles">Принципы</a>
   <a href="#download">Скачать</a>
@@ -650,6 +656,16 @@
     </div>
   </div>
 </div>
+
+<!-- RULES -->
+<section id="rules" class="wrap">
+  <div class="reveal" style="max-width:820px">
+    <span class="label">Правила</span>
+    <h2 class="title">Правила <span class="lime-mark">сервиса</span></h2>
+    <p class="lede">Чтобы Moneyrun оставался прозрачным и безопасным для всех, мы открыто публикуем правила: как начисляются XP, как происходит обмен и вывод, какие условия для Клубов и Атлетов.</p>
+    <a href="#" target="_blank" rel="noopener" class="rules-btn">Читать полные правила <span class="arr">→</span></a>
+  </div>
+</section>
 
 <!-- CLUBS -->
 <section id="clubs" class="wrap">
@@ -814,6 +830,7 @@
     <div class="foot-c">
       <span class="label">Сервис</span>
       <a href="#howto">Как работает</a>
+      <a href="#rules">Правила</a>
       <a href="#clubs">Клубы</a>
       <a href="#principles">Принципы</a>
     </div>
