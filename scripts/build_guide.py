@@ -278,15 +278,15 @@ CSS = """
     .legal-back{display:inline-flex;gap:.4rem;font-size:.9rem;color:var(--muted);text-decoration:none;margin-bottom:1.2rem}
     .legal-back:hover{color:var(--ink)}
     /* hero-блок страницы */
-    .g-hero{position:relative;overflow:hidden;border-radius:var(--r-lg);background:#deeafd;box-shadow:var(--sh-md);margin:0 0 2.8rem;display:grid;grid-template-columns:1fr minmax(190px,40%);gap:1rem;align-items:end;isolation:isolate}
+    .g-hero{position:relative;overflow:hidden;border-radius:var(--r-lg);background:#deeafd;box-shadow:var(--sh-md);margin:0 0 2.8rem;display:grid;grid-template-columns:1fr minmax(240px,46%);gap:1rem;align-items:center;isolation:isolate}
     .g-hero::before{content:'';position:absolute;inset:0;z-index:0;background:url('art/electric-2-sky.svg') center/cover no-repeat}
     .g-hero::after{content:'';position:absolute;inset:0;z-index:0;background:linear-gradient(105deg,rgba(252,253,254,.92) 0%,rgba(252,253,254,.55) 46%,rgba(252,253,254,0) 72%)}
     .g-hero-text{position:relative;z-index:2;padding:clamp(1.8rem,4vw,2.8rem) clamp(1.4rem,4vw,2.6rem)}
     .g-hero-eyebrow{display:inline-block;font-family:var(--fm);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--c-blue-ink);background:#fff;border:1px solid var(--c-blue);border-radius:999px;padding:.34rem .8rem;margin-bottom:1.1rem}
     .g-hero h1{font-family:var(--fd);font-weight:800;font-size:clamp(2rem,4.6vw,3.1rem);letter-spacing:-.03em;line-height:1.04;margin:0 0 .9rem;color:var(--ink)}
     .g-hero-sub{color:#2c466f;font-size:clamp(1rem,1.4vw,1.12rem);line-height:1.6;max-width:34ch;margin:0}
-    .g-hero-art{position:relative;z-index:1;align-self:center;justify-self:center;padding:clamp(1.2rem,3vw,2.2rem) clamp(1rem,2.5vw,1.8rem)}
-    .g-hero-art img{display:block;width:100%;max-width:330px;height:auto}
+    .g-hero-art{position:relative;z-index:1;align-self:center;justify-self:center;padding:clamp(1.2rem,3vw,2rem) clamp(1rem,2.5vw,1.6rem)}
+    .g-hero-art img{display:block;width:100%;max-width:400px;height:auto;border-radius:22px;box-shadow:0 26px 50px -20px rgba(20,45,90,.4),0 8px 18px -10px rgba(20,45,90,.22);transform:rotate(-1.5deg)}
     @media(max-width:680px){
       .g-hero{grid-template-columns:1fr}
       .g-hero::after{background:linear-gradient(180deg,rgba(252,253,254,.92) 0%,rgba(252,253,254,.55) 62%,rgba(252,253,254,.35) 100%)}
