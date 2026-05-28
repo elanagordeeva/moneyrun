@@ -481,6 +481,8 @@
     .cf-disclaimer{font-family:var(--fb);font-size:.78rem;color:var(--muted);line-height:1.5;margin-top:.3rem}
     .cf-disclaimer a{color:var(--ink);text-decoration:underline;text-underline-offset:2px}
     .cf-disclaimer a:hover{color:var(--lime-ink)}
+    .cf-notice{font-family:var(--fb);font-size:.85rem;color:var(--ink);line-height:1.5;background:var(--lime2);border-radius:12px;padding:.75rem 1rem;display:flex;gap:.55rem;align-items:flex-start;margin-bottom:.2rem}
+    .cf-notice::before{content:'★';color:var(--lime-ink);font-size:.95rem;line-height:1.4;flex:none}
     .foot-c .tagline{color:var(--muted);font-size:.92rem;line-height:1.6;max-width:340px}
     .foot-bottom{max-width:var(--maxw);margin:2.5rem auto 0;padding:1.5rem clamp(1.25rem,5vw,4rem) 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;color:var(--muted);font-size:.85rem;font-family:var(--fm)}
     .foot-bottom a{color:var(--muted);text-decoration:none;transition:color .2s}.foot-bottom a:hover{color:var(--ink)}
@@ -857,6 +859,7 @@
       </a>
     </div>
     <form class="contact-form reveal" novalidate action="#" method="post">
+      <p class="cf-notice">Если нужен финвайт — попроси у друга, это единственный вариант.</p>
       <label class="cf-row">
         <span class="cf-label">По какому вопросу хочешь с нами связаться?<em>*</em></span>
         <select name="topic" required>
