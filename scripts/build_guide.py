@@ -108,50 +108,87 @@ def rl_table(rows, head):
     out.append('</tbody></table></div>')
     return '\n'.join(out)
 
-# --- выделение терминов (как в оригинале: жирным + цветом) ---
-# Цветные (tomato) фразы-кросс-ссылки в оригинале — рендерим цветом + жирным
-COLOR_TERMS = [
- 'Интенсивность и продолжительность тренировочной нагрузки',
- 'официальный Telegram-канал Moneyrun','розыгрышах офиц. Telegram-канала',
- 'Баланс тренировочной нагрузки','Любительская результативность',
- 'World Athletics Score Table','Running Level (RL)','Таблица Running Level',
- 'Эндаумент фонда (EF)','Московского марафона','условия доступа упрощены',
- 'философией платформы','Матрице Грейдов','пульсовые зоны','Пульсовые данные',
-]
-# Жирные доменные термины (все встречающиеся словоформы)
-BOLD_TERMS = [
- 'Игровой Грейдовый модуль','IQ (Intensive Quotient)','Маниран (EF Moneyrun)',
- 'Верифицированными Клубами','Верифицированного Клуба','Верифицированном Клубе',
- 'Верифицированные Клубы','Совета экспертов','Советом Экспертов','MR Забота',
- 'Клуба Moneyrun','EF Moneyrun','ЧССМ = 150 eTRIMP','ЧССМ = 100 eTRIMP',
- 'eTRIMP = 360 баллов','Ch72 и ChT','Experience, XP','RL и RQ','RL (RQ)',
- 'IQ >45%','RQ = 1,5','RQ = 0,7','40 eTRIMP','95-100%','90-95%',
- 'Грейда D1','Грейда D2','Грейда С','Грейде D2','Грейде F','Грейдов F',
- 'Грейдом С+','Грейдом B','Грейдом C','Грейду C+','Грейду A',
- 'Грейд D1','Грейд D2','Грейд С+','Грейд D',
- 'Грейдами','Грейдах','Грейдов','Грейдом','Грейдам','Грейды','Грейде','Грейда','Грейду','Грейд',
- 'Атлетам','Атлетов','Атлетом','Атлету','Атлета','Атлет',
- 'Клубах','Клуба','Клуб','Забегов','Забеге','Забега',
- 'Финвайты','Инвайт','Верификацию','Владелец','Забота',
- '10 XP','15 XP','1 XP','2 XP','3 XP','7 XP',
- 'eTRIMP','TRIMP','Moneyrun','ЧССМ','HPZ','Ch72','ChT','RL=1','RQ','RL','XP','ИМ','EF','Z2',
-]
-def _alt(terms):
-    s=sorted(set(terms), key=len, reverse=True)
-    # пробелы в терминах могут быть обычными или неразрывными (\xa0)
-    pats=[re.escape(t).replace('\\ ', r'\s+').replace(' ', r'\s+') for t in s]
-    return '(?<![\\w])(?:'+'|'.join(pats)+')(?![\\w])'
-COLOR_RE = re.compile(_alt(COLOR_TERMS))
-BOLD_RE  = re.compile(_alt(BOLD_TERMS))
+# --- инлайн-выделение 1-в-1 из исходного HTML (жирный/курсив/цвет) ---
+# Парсим /tmp/guide.html и для каждого абзаца переносим реальное оформление:
+#   <strong>/font-weight>=600 -> <b>; <em>/font-style:italic -> <i>;
+#   ссылка <a> или color rgb(255,133,98) -> <span class="g-term"> (цвет акцента)
+from html.parser import HTMLParser
+class _Rich(HTMLParser):
+    def __init__(s):
+        super().__init__(convert_charrefs=True); s.stack=[]; s.cells=[]
+    def _st(s):
+        b=i=c=False
+        for el in s.stack:
+            tag=el['tag']; style=el['style']
+            if tag in ('b','strong'): b=True
+            if tag in ('i','em'): i=True
+            if tag=='a': c=True
+            mw=re.search(r'font-weight:\s*(\d+)',style)
+            if mw and int(mw.group(1))>=600: b=True
+            if re.search(r'font-style:\s*italic',style): i=True
+            m=re.search(r'color:\s*([^;"]+)',style)
+            if m and '255, 133, 98' in m.group(1): c=True
+        return b,i,c
+    def handle_starttag(s,tag,attrs):
+        d=dict(attrs); s.stack.append({'tag':tag,'style':d.get('style') or ''})
+    def handle_startendtag(s,tag,attrs): pass
+    def handle_endtag(s,tag):
+        for k in range(len(s.stack)-1,-1,-1):
+            if s.stack[k]['tag']==tag: del s.stack[k]; break
+    def handle_data(s,data):
+        b,i,c=s._st()
+        for ch in data.replace('\xa0',' '):
+            s.cells.append((ch,b,i,c))
+
+CELLS=[]; NPLAIN=''; NIDX=[]
+try:
+    _src=Path('/tmp/guide.html').read_text(encoding='utf-8')
+    _a=_src.find('Платформа'); _a=_src.rfind('<div',0,_a) if _a>0 else 0
+    _b=_src.find('uc-footer'); _b=_b if _b>0 else len(_src)
+    _p=_Rich(); _p.feed(_src[_a:_b]); CELLS=_p.cells
+    _np=[];
+    for _j,(_ch,_x,_y,_z) in enumerate(CELLS):
+        if not _ch.isspace(): _np.append(_ch); NIDX.append(_j)
+    NPLAIN=''.join(_np)
+except FileNotFoundError:
+    pass
+
+_cursor=0
+def _render(a,bnd):
+    out=[]; buf=''; cb=ci=cc=None; prev=False
+    def flush():
+        nonlocal buf
+        if not buf: return
+        t=H.escape(buf,quote=False)
+        if cc: t=f'<span class="g-term">{t}</span>'
+        if ci: t=f'<i>{t}</i>'
+        if cb: t=f'<b>{t}</b>'
+        out.append(t); buf=''
+    for k in range(a,bnd+1):
+        ch,b,i,c=CELLS[k]
+        if ch.isspace():
+            ch=' '
+            if prev: continue
+            prev=True
+        else:
+            prev=False
+        if (b,i,c)!=(cb,ci,cc):
+            flush(); cb,ci,cc=b,i,c
+        buf+=ch
+    flush()
+    return ''.join(out).strip()
+
 def style(text):
-    holds=[]
-    def col(m):
-        holds.append(f'<span class="g-term">{m.group(0)}</span>'); return f'\x00{len(holds)-1}\x00'
-    def bld(m):
-        holds.append(f'<b>{m.group(0)}</b>'); return f'\x00{len(holds)-1}\x00'
-    text=COLOR_RE.sub(col,text)
-    text=BOLD_RE.sub(bld,text)
-    return re.sub(r'\x00(\d+)\x00', lambda m:holds[int(m.group(1))], text)
+    """Возвращает абзац с инлайн-оформлением, взятым 1-в-1 из исходного HTML."""
+    global _cursor
+    if not NPLAIN: return H.escape(text,quote=False)
+    key=''.join(c for c in text if not c.isspace())
+    if not key: return H.escape(text,quote=False)
+    pos=NPLAIN.find(key,_cursor)
+    if pos<0: pos=NPLAIN.find(key)
+    if pos<0: return H.escape(text,quote=False)
+    _cursor=pos+len(key)
+    return _render(NIDX[pos], NIDX[pos+len(key)-1])
 
 # --- основной проход ---
 body=[]
