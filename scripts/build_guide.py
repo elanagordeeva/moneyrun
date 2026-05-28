@@ -200,6 +200,23 @@ while i<n:
     if not ln: i+=1; continue
     if ln in SKIP: i+=1; continue
     if re.fullmatch(r'[1-4]', ln): i+=1; continue  # шаговые маркеры
+    # убрали вводный абзац по просьбе (в исходнике вокруг тире — неразрывные пробелы)
+    if 'это социально-благотворительный проект по развитию' in ln.replace('\xa0',' '):
+        i+=1; continue
+    # «Состоит из двух основных элементов» -> подзаголовок + нумерованные карточки
+    if ln.startswith('Состоит из двух основных элементов'):
+        body.append('<p class="g-lead">'+style(ln)+'</p>')
+        items=[]; j=i+1
+        while j<n and len(items)<2:
+            s=lines[j].strip()
+            if s: items.append(s)
+            j+=1
+        lis=''
+        for idx,it in enumerate(items, start=1):
+            lis+=(f'<li><span class="g-num g-num-{idx}">{idx}</span>'
+                  f'<span class="g-el-text">{style(it.rstrip(" ;"))}</span></li>')
+        body.append('<ol class="g-elements">'+lis+'</ol>')
+        i=j; continue
     # Матрица: вставляем после h2 и проглатываем строки до 'Регистрация' (первое определение)
     if ln=='Матрица Грейдов':
         body.append('<h2>Матрица Грейдов</h2>')
@@ -297,6 +314,13 @@ CSS = """
     .legal p{color:var(--ink2);line-height:1.72;margin-bottom:.9rem;font-size:1rem}
     .legal b{font-weight:600;color:var(--ink)}
     .legal .g-term{color:var(--c-tomato);font-weight:600}
+    .g-lead{font-family:var(--fd);font-weight:700;font-size:clamp(1.05rem,1.6vw,1.2rem);color:var(--ink);margin:.4rem 0 1.1rem}
+    .g-elements{list-style:none;margin:.2rem 0 2.4rem;padding:0;display:grid;gap:1rem}
+    .g-elements li{display:flex;gap:1.1rem;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:1.2rem 1.4rem;box-shadow:var(--sh-sm)}
+    .g-num{flex:0 0 auto;width:36px;height:36px;border-radius:11px;font-family:var(--fd);font-weight:800;font-size:1.1rem;display:flex;align-items:center;justify-content:center}
+    .g-num-1{background:var(--c-blue);color:var(--c-blue-ink)}
+    .g-num-2{background:var(--lime);color:var(--lime-ink)}
+    .g-el-text{color:var(--ink2);line-height:1.65;font-size:1rem;align-self:center}
     .g-formula{font-family:var(--fm);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.5rem .8rem;margin:.3rem 0;font-size:.9rem;color:var(--ink);display:inline-block}
     .g-tablewrap{overflow-x:auto;margin:1.2rem 0 1.6rem;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);box-shadow:var(--sh-sm)}
     table.g-tbl,table.g-matrix{border-collapse:collapse;width:100%;font-size:.86rem}

@@ -49,6 +49,13 @@
     .legal p{color:var(--ink2);line-height:1.72;margin-bottom:.9rem;font-size:1rem}
     .legal b{font-weight:600;color:var(--ink)}
     .legal .g-term{color:var(--c-tomato);font-weight:600}
+    .g-lead{font-family:var(--fd);font-weight:700;font-size:clamp(1.05rem,1.6vw,1.2rem);color:var(--ink);margin:.4rem 0 1.1rem}
+    .g-elements{list-style:none;margin:.2rem 0 2.4rem;padding:0;display:grid;gap:1rem}
+    .g-elements li{display:flex;gap:1.1rem;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:1.2rem 1.4rem;box-shadow:var(--sh-sm)}
+    .g-num{flex:0 0 auto;width:36px;height:36px;border-radius:11px;font-family:var(--fd);font-weight:800;font-size:1.1rem;display:flex;align-items:center;justify-content:center}
+    .g-num-1{background:var(--c-blue);color:var(--c-blue-ink)}
+    .g-num-2{background:var(--lime);color:var(--lime-ink)}
+    .g-el-text{color:var(--ink2);line-height:1.65;font-size:1rem;align-self:center}
     .g-formula{font-family:var(--fm);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.5rem .8rem;margin:.3rem 0;font-size:.9rem;color:var(--ink);display:inline-block}
     .g-tablewrap{overflow-x:auto;margin:1.2rem 0 1.6rem;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);box-shadow:var(--sh-sm)}
     table.g-tbl,table.g-matrix{border-collapse:collapse;width:100%;font-size:.86rem}
@@ -93,10 +100,8 @@
         <img src="art/guide-hero.svg" alt="Прогресс по Грейдам" loading="eager">
       </div>
     </header>
-    <p>Платформа <b><i>Moneyrun</i></b> — это социально-благотворительный проект по развитию бегового движения</p>
-    <p>Состоит из двух основных элементов:</p>
-    <p>Тематическая социальная сеть и сервис с бесплатными инструментами для ведения беговой статистики, тренировочных планов и клубных сообществ.</p>
-    <p><b><i>Игровой Грейдовый модуль</i></b> (<b><i>ИМ</i></b>), основанный на личном и любительском прогрессе в беге с мотивационным финансовым подкреплением за счёт целевого благотворительного <b><i><span class="g-term">Эндаумент фонда (EF)</span></i></b>.</p>
+    <p class="g-lead">Состоит из двух основных элементов:</p>
+    <ol class="g-elements"><li><span class="g-num g-num-1">1</span><span class="g-el-text">Тематическая социальная сеть и сервис с бесплатными инструментами для ведения беговой статистики, тренировочных планов и клубных сообществ.</span></li><li><span class="g-num g-num-2">2</span><span class="g-el-text"><b><i>Игровой Грейдовый модуль</i></b> (<b><i>ИМ</i></b>), основанный на личном и любительском прогрессе в беге с мотивационным финансовым подкреплением за счёт целевого благотворительного <b><i><span class="g-term">Эндаумент фонда (EF)</span></i></b>.</span></li></ol>
     <h2>Игровой модуль (ИМ)</h2>
     <p>Общая концепция: за каждую тренировку <b><i>Атлет</i></b> получает баллы (<b><i>Experience, XP</i></b>), по мере набора которых поднимается по <b><i>Грейдам</i></b> от <b><i>D</i></b> до <b><i>A+</i></b> и выше. В <b><i><span class="g-term">Матрице Грейдов</span></i></b> заложено три типа:</p>
     <p>Серый (D—D2)</p>
