@@ -263,22 +263,22 @@
     #step-track .vbox,#step-xp .vbox,#step-payout .vbox{width:100%;min-height:420px}
     #step-track .vbox .stage,#step-xp .vbox .stage,#step-payout .vbox .stage{position:absolute;inset:0;max-width:none}
     #step-track .vbox .stage{transform:translateX(20%)}
-    #step-track .ph,#step-xp .ph,#step-payout .ph{position:absolute;display:block;width:auto;max-width:none;border-radius:28px;box-shadow:0 18px 40px -16px rgba(15,30,12,.22);transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease;cursor:pointer}
+    #step-track .ph,#step-xp .ph,#step-payout .ph{position:absolute;display:block;width:38%;max-width:220px;height:auto;max-height:96%;border-radius:28px;box-shadow:0 18px 40px -16px rgba(15,30,12,.22);transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease;cursor:pointer}
     #step-track .ph:hover,#step-xp .ph:hover,#step-payout .ph:hover{transform:rotate(0) translateY(-8px) scale(1.04);z-index:20;box-shadow:0 30px 60px -18px rgba(15,30,12,.32);animation:none}
 
-    /* step-track positioning — variant D (dominant + satellite) */
-    #step-track .ph-1{right:0;top:0;height:100%;z-index:2;transform:rotate(3deg);--rot:3deg;animation:trkFloaty 9s ease-in-out infinite}
-    #step-track .ph-2{right:24%;top:14%;height:74%;z-index:3;transform:rotate(-7deg);--rot:-7deg;animation:trkFloaty 9s ease-in-out -3s infinite}
+    /* step-track positioning — variant D (dominant + satellite, but uniform size) */
+    #step-track .ph-1{right:0;top:0;z-index:2;transform:rotate(3deg);--rot:3deg;animation:trkFloaty 9s ease-in-out infinite}
+    #step-track .ph-2{right:42%;top:10%;z-index:3;transform:rotate(-7deg);--rot:-7deg;animation:trkFloaty 9s ease-in-out -3s infinite}
     @keyframes trkFloaty{0%,100%{transform:rotate(var(--rot)) translateY(0)}50%{transform:rotate(var(--rot)) translateY(-10px)}}
 
     /* step-payout positioning — variant A (symmetric cascade) */
-    #step-payout .ph-1{top:2%;left:2%;height:96%;z-index:2;transform:rotate(-5deg);--rot:-5deg;animation:payFloaty 9s ease-in-out infinite}
-    #step-payout .ph-2{top:2%;right:2%;height:96%;z-index:3;transform:rotate(5deg);--rot:5deg;animation:payFloaty 9s ease-in-out -4s infinite}
+    #step-payout .ph-1{top:0;left:8%;z-index:2;transform:rotate(-5deg);--rot:-5deg;animation:payFloaty 9s ease-in-out infinite}
+    #step-payout .ph-2{top:0;right:8%;z-index:3;transform:rotate(5deg);--rot:5deg;animation:payFloaty 9s ease-in-out -4s infinite}
     @keyframes payFloaty{0%,100%{transform:rotate(var(--rot)) translateY(0)}50%{transform:rotate(var(--rot)) translateY(-12px)}}
 
-    /* step-xp — 2 screens equal width, left higher than right, small gap */
-    #step-xp .ph-1{position:absolute;left:8%;top:0;width:38%;height:auto;z-index:2;animation:xpFloaty 9s ease-in-out infinite}
-    #step-xp .ph-2{position:absolute;left:54%;top:80px;width:38%;height:auto;z-index:3;animation:xpFloaty 9s ease-in-out -4s infinite}
+    /* step-xp — 2 screens side-by-side, left higher than right */
+    #step-xp .ph-1{left:8%;top:0;z-index:2;animation:xpFloaty 9s ease-in-out infinite}
+    #step-xp .ph-2{left:54%;top:80px;z-index:3;animation:xpFloaty 9s ease-in-out -4s infinite}
     @keyframes xpFloaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 
     /* MOCKUP: connect tracker */
