@@ -366,6 +366,27 @@
     .club-foot{margin-top:1.1rem;padding-top:1rem;border-top:1px solid var(--border);font-family:var(--fb);font-size:.9rem;color:var(--ink);line-height:1.55}
     .club-foot b{font-weight:600}
 
+    /* club cards v2 — cover photo + members + stats */
+    .club2{background:var(--surface);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-md);transition:transform .35s,box-shadow .35s;border:1px solid var(--border)}
+    .club2:hover{transform:translateY(-6px);box-shadow:var(--sh-lg)}
+    .club2-cover{aspect-ratio:16/8;background-size:cover;background-position:center;position:relative}
+    .club2-cover::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(15,20,15,.55))}
+    .club2-badge{position:absolute;top:14px;left:14px;z-index:1;font-family:var(--fd);font-weight:800;font-size:.7rem;padding:.32rem .7rem;border-radius:999px;text-transform:uppercase;letter-spacing:.04em}
+    .club2-badge.open{background:var(--lime);color:var(--lime-ink)}
+    .club2-badge.closed{background:var(--ink);color:var(--lime)}
+    .club2-name{position:absolute;left:16px;bottom:12px;z-index:1;font-family:var(--fd);font-weight:800;font-size:1.35rem;color:#fff;letter-spacing:-.01em}
+    .club2-body{padding:1.2rem 1.4rem 1.4rem}
+    .club2-members{display:flex;align-items:center;gap:.7rem;margin-bottom:1rem}
+    .club2-ava{display:flex}
+    .club2-ava span{width:30px;height:30px;border-radius:50%;border:2px solid var(--surface);margin-left:-8px;background-size:cover;background-position:center}
+    .club2-ava span:first-child{margin-left:0}
+    .club2-members .cnt{font-family:var(--fb);font-size:.85rem;color:var(--muted)}
+    .club2-members .cnt b{color:var(--ink);font-weight:600}
+    .club2-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.5rem;padding-top:1rem;border-top:1px solid var(--border)}
+    .club2-stat .v{font-family:var(--fd);font-weight:800;font-size:1.1rem;color:var(--ink);letter-spacing:-.02em}
+    .club2-stat .v.lime{color:var(--lime-ink);background:var(--lime);display:inline-block;padding:0 .35em;border-radius:6px}
+    .club2-stat .l{font-size:.66rem;color:var(--muted);margin-top:.2rem;text-transform:lowercase}
+
     /* club WeekStat — паттерн из Figma component WeekSatistic */
     .club-week{margin:0 0 1rem;padding:.85rem .95rem;border-radius:14px;background:var(--surface2);border:1px solid var(--border)}
     .club-week-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.55rem}
@@ -705,88 +726,51 @@
   </div>
 
   <div class="clubs-grid">
-    <div class="club-card reveal">
-      <div class="club-head">
-        <div class="club-logo">
-          <img src="art/logo-mark.png" alt="Moneyrun mark" style="width:60%;height:60%;object-fit:contain">
+    <article class="club2 reveal">
+      <div class="club2-cover" style="background-image:url('https://images.unsplash.com/photo-1486218119243-13883505764c?w=900&q=80&auto=format&fit=crop')">
+        <span class="club2-badge open">Открытый</span>
+        <span class="club2-name">Moneyrun · Москва</span>
+      </div>
+      <div class="club2-body">
+        <div class="club2-members">
+          <div class="club2-ava">
+            <span style="background-image:url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&q=80&auto=format&fit=crop')"></span>
+            <span style="background-image:url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&q=80&auto=format&fit=crop')"></span>
+            <span style="background-image:url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&q=80&auto=format&fit=crop')"></span>
+            <span style="background:var(--lime);color:var(--lime-ink);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-weight:800;font-size:.62rem">+10K</span>
+          </div>
+          <span class="cnt"><b>10 308</b> участников</span>
         </div>
-        <div>
-          <div class="club-name">Moneyrun · открытый</div>
-          <div class="club-meta"><span class="open-dot">Открытый</span><span>·</span><span>10 308 участников</span></div>
+        <div class="club2-stats">
+          <div class="club2-stat"><div class="v">3 / нед</div><div class="l">тренировки</div></div>
+          <div class="club2-stat"><div class="v">1 248 км</div><div class="l">за неделю</div></div>
+          <div class="club2-stat"><div class="v lime">4 ₽/XP</div><div class="l">курс</div></div>
         </div>
       </div>
-      <div class="club-tabs">
-        <div class="club-tab act"><svg><use href="#ic-rec"/></svg>Тренировки</div>
-        <div class="club-tab"><svg><use href="#ic-me"/></svg>Участники</div>
-        <div class="club-tab"><svg><use href="#ic-journal"/></svg>Записи</div>
-        <div class="club-tab"><svg><use href="#ic-clubs"/></svg>Рейтинг</div>
-        <div class="club-tab"><svg><use href="#ic-home"/></svg>Лидеры</div>
-      </div>
-      <div class="club-week" aria-label="Активность Клуба за неделю">
-        <div class="club-week-head">
-          <span class="club-week-title">Активность недели</span>
-          <span class="club-week-sum">1 248 км <small>+18%</small></span>
-        </div>
-        <div class="club-week-bars">
-          <div class="b on" style="height:42%"></div>
-          <div class="b on" style="height:60%"></div>
-          <div class="b" style="height:22%"></div>
-          <div class="b on" style="height:68%"></div>
-          <div class="b on" style="height:54%"></div>
-          <div class="b peak" style="height:92%"></div>
-          <div class="b" style="height:38%"></div>
-        </div>
-        <div class="club-week-days"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div>
-      </div>
-      <div class="club-rate">
-        <span class="l">Курс</span><span class="v"><b>4 ₽/XP</b></span>
-      </div>
-      <div class="club-foot">
-        Базовый Клуб. Никаких условий входа, заходишь в один тап. <b>Стартовая точка</b> для всех — поэтому курс базовый, но XP считается стабильно.
-      </div>
-    </div>
+    </article>
 
-    <div class="club-card is-private reveal">
-      <div class="club-head">
-        <div class="club-logo sky">
-          <svg viewBox="0 0 40 40"><rect x="6" y="6" width="28" height="28" rx="6" fill="#143b6b"/><path d="M14 20 L18 24 L26 16" stroke="#bcdcff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span class="badge">P</span>
+    <article class="club2 reveal">
+      <div class="club2-cover" style="background-image:url('https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=900&q=80&auto=format&fit=crop')">
+        <span class="club2-badge closed">Закрытый</span>
+        <span class="club2-name">Sub-3 Marathon</span>
+      </div>
+      <div class="club2-body">
+        <div class="club2-members">
+          <div class="club2-ava">
+            <span style="background-image:url('https://images.unsplash.com/photo-1502685104226-ee32379fefbe?w=80&q=80&auto=format&fit=crop')"></span>
+            <span style="background-image:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=80&auto=format&fit=crop')"></span>
+            <span style="background-image:url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&q=80&auto=format&fit=crop')"></span>
+            <span style="background:var(--c-blue);color:var(--c-blue-ink);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-weight:800;font-size:.62rem">+42</span>
+          </div>
+          <span class="cnt"><b>42</b> участника</span>
         </div>
-        <div>
-          <div class="club-name">Закрытые Клубы</div>
-          <div class="club-meta"><span>Корпоративные · спонсорские</span></div>
+        <div class="club2-stats">
+          <div class="club2-stat"><div class="v">5 / нед</div><div class="l">тренировки</div></div>
+          <div class="club2-stat"><div class="v">по Грейду</div><div class="l">вступление</div></div>
+          <div class="club2-stat"><div class="v lime">до 12 ₽/XP</div><div class="l">курс</div></div>
         </div>
       </div>
-      <div class="club-tabs">
-        <div class="club-tab"><svg><use href="#ic-rec"/></svg>Тренировки</div>
-        <div class="club-tab"><svg><use href="#ic-me"/></svg>Участники</div>
-        <div class="club-tab"><svg><use href="#ic-journal"/></svg>Записи</div>
-        <div class="club-tab act"><svg><use href="#ic-clubs"/></svg>Тариф</div>
-        <div class="club-tab"><svg><use href="#ic-home"/></svg>Лидеры</div>
-      </div>
-      <div class="club-week" aria-label="Активность закрытого Клуба за неделю">
-        <div class="club-week-head">
-          <span class="club-week-title">Активность недели</span>
-          <span class="club-week-sum">3 420 км <small>×2.1</small></span>
-        </div>
-        <div class="club-week-bars">
-          <div class="b on" style="height:55%"></div>
-          <div class="b on" style="height:72%"></div>
-          <div class="b on" style="height:38%"></div>
-          <div class="b on" style="height:80%"></div>
-          <div class="b peak" style="height:95%"></div>
-          <div class="b on" style="height:68%"></div>
-          <div class="b on" style="height:42%"></div>
-        </div>
-        <div class="club-week-days"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div>
-      </div>
-      <div class="club-rate">
-        <span class="l">Курс</span><span class="v"><b>до 12 ₽/XP</b></span>
-      </div>
-      <div class="club-foot">
-        От компаний и партнёров EF Moneyrun. Самый <b>выгодный курс</b>, эксклюзивные челленджи и бонусные XP за командные цели. Вход — по приглашению или домену почты.
-      </div>
-    </div>
+    </article>
   </div>
 </section>
 
