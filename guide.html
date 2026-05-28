@@ -67,6 +67,9 @@
     .g-type-range{font-family:var(--fm);font-weight:600;font-size:.82rem;color:var(--muted);letter-spacing:.01em}
     .g-type-desc{color:var(--ink2);font-size:.95rem;line-height:1.55;margin:0}
     @media(max-width:680px){.g-types{grid-template-columns:1fr}}
+    .g-bullets{list-style:none;margin:.2rem 0 1.4rem;padding:0;display:grid;gap:.75rem}
+    .g-bullets li{position:relative;padding-left:1.65rem;color:var(--ink2);line-height:1.7;font-size:1rem}
+    .g-bullets li::before{content:'';position:absolute;left:.35rem;top:.66em;width:7px;height:7px;border-radius:50%;background:var(--lime-deep)}
     .g-formula{font-family:var(--fm);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.5rem .8rem;margin:.3rem 0;font-size:.9rem;color:var(--ink);display:inline-block}
     .g-tablewrap{overflow-x:auto;margin:1.2rem 0 1.6rem;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);box-shadow:var(--sh-sm)}
     table.g-tbl,table.g-matrix{border-collapse:collapse;width:100%;font-size:.86rem}
@@ -118,8 +121,7 @@
     <div class="g-types"><div class="g-type g-type-grey"><h4 class="g-type-name">Серый <span class="g-type-range">(D—D2)</span></h4><p class="g-type-desc">Начинающие пользователи</p></div><div class="g-type g-type-green"><h4 class="g-type-name">Зелёный <span class="g-type-range">(C — B+)</span></h4><p class="g-type-desc">Любители, работающие над результативностью</p></div><div class="g-type g-type-blue"><h4 class="g-type-name">Синий <span class="g-type-range">(A — A+)</span></h4><p class="g-type-desc">Продвинутые любители или профи с высокой результативностью</p></div></div>
     <p>Для серых <b><i>Грейдов</i></b> <span class="g-term">условия доступа упрощены</span>, делая их ознакомительными. <b><i>Грейды</i></b> зеленого типа и выше содержат оптимальный референс по результативности на оцениваемых дистанциях (5, 10, 21, 42 км), выраженный через таблицу <b><i><span class="g-term">Running Level (RL)</span></i></b>, составленной по аналогии c <b><i><span class="g-term">World Athletics Score Table</span></i></b>. Если <b><i>Атлет</i></b> укладывается в референс или показывает результаты лучше, то далее за тренировки он получает повышенные <b><i>XP</i></b>, если нет, то начисление <b><i>XP</i></b> снижается.</p>
     <p>Полученные <b><i>XP</i></b> монетизируются через обмен на деньги в <b><i>Клубах</i></b>. Такая возможность активируется следующими способами:</p>
-    <p>На любом <b><i>Грейде</i></b> применить финансовый <b><i>Инвайт</i></b>, доступный для получения у другого <b><i>Атлета</i></b> с <b><i>Грейдом С+</i></b> или выше, в <b><i>Верифицированном Клубе</i></b> или <b><i><span class="g-term">розыгрышах офиц. Telegram-канала</span></i></b>.</p>
-    <p>На <b><i>Грейде D2 </i></b>и выше, при подтверждении минимального <b><i>RL=1,</i></b> монетизация активируется автоматически.</p>
+    <ul class="g-bullets"><li>На любом <b><i>Грейде</i></b> применить финансовый <b><i>Инвайт</i></b>, доступный для получения у другого <b><i>Атлета</i></b> с <b><i>Грейдом С+</i></b> или выше, в <b><i>Верифицированном Клубе</i></b> или <b><i><span class="g-term">розыгрышах офиц. Telegram-канала</span></i></b>.</li><li>На <b><i>Грейде D2 </i></b>и выше, при подтверждении минимального <b><i>RL=1,</i></b> монетизация активируется автоматически.</li></ul>
     <p>Курс обмена <b><i>XP</i></b> на деньги зависит от <b><i>Грейда</i></b>: чем выше <b><i>Грейд</i></b>, тем более выгодный тариф в стандартной сетке. Курс определяет скорость выборки одобренного месячного лимита в <b><i>Клубах</i></b>. Необходимое количество <b><i>XP</i></b> для конкретного <b><i>Грейда</i></b>, курс обмена, <b><i>RL</i></b> и др. можно посмотреть в <b><i><span class="g-term">Матрице Грейдов</span></i></b>.</p>
     <h2>Матрица Грейдов</h2>
     <div class="g-tablewrap"><table class="g-matrix">

@@ -238,6 +238,17 @@ while i<n:
                     f'<p class="g-type-desc">{H.escape(desc)}</p></div>')
         body.append('<div class="g-types">'+cards+'</div>')
         i=j; continue
+    # «...активируется следующими способами:» -> вводный абзац + два буллета
+    if ln.replace('\xa0',' ').rstrip().endswith('активируется следующими способами:'):
+        body.append('<p>'+style(ln)+'</p>')
+        items=[]; j=i+1
+        while j<n and len(items)<2:
+            s=lines[j].strip()
+            if s: items.append(s)
+            j+=1
+        lis=''.join(f'<li>{style(it.rstrip(" ;"))}</li>' for it in items)
+        body.append('<ul class="g-bullets">'+lis+'</ul>')
+        i=j; continue
     # Матрица: вставляем после h2 и проглатываем строки до 'Регистрация' (первое определение)
     if ln=='Матрица Грейдов':
         body.append('<h2>Матрица Грейдов</h2>')
@@ -353,6 +364,9 @@ CSS = """
     .g-type-range{font-family:var(--fm);font-weight:600;font-size:.82rem;color:var(--muted);letter-spacing:.01em}
     .g-type-desc{color:var(--ink2);font-size:.95rem;line-height:1.55;margin:0}
     @media(max-width:680px){.g-types{grid-template-columns:1fr}}
+    .g-bullets{list-style:none;margin:.2rem 0 1.4rem;padding:0;display:grid;gap:.75rem}
+    .g-bullets li{position:relative;padding-left:1.65rem;color:var(--ink2);line-height:1.7;font-size:1rem}
+    .g-bullets li::before{content:'';position:absolute;left:.35rem;top:.66em;width:7px;height:7px;border-radius:50%;background:var(--lime-deep)}
     .g-formula{font-family:var(--fm);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.5rem .8rem;margin:.3rem 0;font-size:.9rem;color:var(--ink);display:inline-block}
     .g-tablewrap{overflow-x:auto;margin:1.2rem 0 1.6rem;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);box-shadow:var(--sh-sm)}
     table.g-tbl,table.g-matrix{border-collapse:collapse;width:100%;font-size:.86rem}
