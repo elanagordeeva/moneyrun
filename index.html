@@ -406,16 +406,22 @@
     /* principles — colored cards */
     #principles{padding-top:clamp(4rem,7vw,6rem)}
     .principles-grid{max-width:var(--maxw);margin:2.5rem auto 0;display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
-    .principle-card{position:relative;padding:2rem;border-radius:var(--r-lg);background:var(--surface);box-shadow:var(--sh-md);overflow:hidden;transition:transform .35s,box-shadow .35s}
+    /* Banner/Electric_2 pattern — overlapping arc-peaks falling from the top, fading down */
+    .principle-card{position:relative;padding:2rem;border-radius:var(--r-lg);overflow:hidden;transition:transform .35s,box-shadow .35s;box-shadow:var(--sh-md);
+      background:
+        radial-gradient(ellipse 60% 58% at 86% -10%, var(--pat) 0%, transparent 60%),
+        radial-gradient(ellipse 44% 48% at 50% -16%, var(--pat) 0%, transparent 58%),
+        radial-gradient(ellipse 32% 40% at 16% -12%, var(--pat) 0%, transparent 56%),
+        var(--surface);}
     .principle-card:hover{transform:translateY(-4px);box-shadow:var(--sh-lg)}
-    .principle-card .pblob{position:absolute;width:200px;height:200px;border-radius:50%;filter:blur(30px);opacity:.55;top:-60px;right:-60px;z-index:0}
+    .principle-card .pblob{display:none}
     .principle-card .pic{position:relative;width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:1.1rem;font-family:var(--fd);font-weight:800;font-size:1.5rem;letter-spacing:-.02em;z-index:1}
     .principle-card h3{position:relative;font-family:var(--fd);font-weight:800;font-size:1.3rem;color:var(--ink);letter-spacing:-.01em;margin-bottom:.7rem;z-index:1}
     .principle-card p{position:relative;color:var(--muted);line-height:1.65;font-size:.98rem;z-index:1}
     .principle-card p b{color:var(--ink);font-weight:600}
-    .pc-1 .pblob{background:var(--tx-salat-primary)}.pc-1 .pic{background:var(--tx-salat-primary);color:var(--tx-on-primary)}
-    .pc-2 .pblob{background:var(--tx-sky-soft)}.pc-2 .pic{background:var(--tx-sky-soft);color:var(--c-blue-ink)}
-    .pc-3 .pblob{background:var(--tx-tomato-soft)}.pc-3 .pic{background:var(--tx-tomato-soft);color:var(--c-pink-ink)}
+    .pc-1{--pat:var(--lime2)}.pc-1 .pic{background:var(--tx-salat-primary);color:var(--tx-on-primary)}
+    .pc-2{--pat:var(--c-blue)}.pc-2 .pic{background:var(--tx-sky-soft);color:var(--c-blue-ink)}
+    .pc-3{--pat:var(--c-pink)}.pc-3 .pic{background:var(--tx-tomato-soft);color:var(--c-pink-ink)}
 
     /* community stats */
     .stats-grid{max-width:var(--maxw);margin:2.5rem auto 0;display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
