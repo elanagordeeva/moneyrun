@@ -318,6 +318,10 @@ while i<n:
     body.append(f'<p>{style(ln.rstrip(" ;"))}</p>'); i+=1
 
 content='\n    '.join(body)
+# упоминания «Telegram-канал(а)» -> гиперссылка на канал
+content=re.sub(r'Telegram-канал[а-яё]*',
+               lambda m:f'<a class="g-link" href="https://t.me/moneyrun" target="_blank" rel="noopener">{m.group(0)}</a>',
+               content)
 
 CSS = """
     :root{--bg:#eef2ec;--bg2:#f4f7f3;--surface:#ffffff;--ink:#0e120e;--ink2:#1b1b21;--muted:#6b7068;--muted2:#9aa097;--border:#e6eae3;--border2:#dadfd6;--lime:#d0f85d;--lime2:#d5ffa8;--lime-deep:#bee14b;--lime-ink:#1f2a05;--c-blue:#bcdcff;--c-blue-ink:#143b6b;--c-tomato:#f0563f;--fd:'Manrope',system-ui,sans-serif;--fb:'Inter',system-ui,sans-serif;--fm:'JetBrains Mono',ui-monospace,monospace;--fw:'Roboto Flex','Roboto',system-ui,sans-serif;--maxw:1240px;--sh-sm:0 2px 6px rgba(15,20,15,.05),0 1px 2px rgba(15,20,15,.04);--sh-md:0 14px 30px -10px rgba(15,30,12,.10),0 8px 18px -6px rgba(15,30,12,.06);--r-sm:12px;--r-md:18px;--r-lg:24px}
@@ -359,6 +363,8 @@ CSS = """
     .legal p{color:var(--ink2);line-height:1.72;margin-bottom:.9rem;font-size:1rem}
     .legal b{font-weight:600;color:var(--ink)}
     .legal .g-term{color:var(--c-tomato);font-weight:600}
+    .legal a.g-link{color:inherit;text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px}
+    .legal a.g-link:hover{opacity:.78}
     .g-lead{font-family:var(--fd);font-weight:700;font-size:clamp(1.05rem,1.6vw,1.2rem);color:var(--ink);margin:.4rem 0 1.1rem}
     .g-elements{list-style:none;margin:.2rem 0 2.4rem;padding:0;display:grid;gap:1rem}
     .g-elements li{display:flex;gap:1.1rem;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:1.2rem 1.4rem;box-shadow:var(--sh-sm)}

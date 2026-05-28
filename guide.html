@@ -49,6 +49,8 @@
     .legal p{color:var(--ink2);line-height:1.72;margin-bottom:.9rem;font-size:1rem}
     .legal b{font-weight:600;color:var(--ink)}
     .legal .g-term{color:var(--c-tomato);font-weight:600}
+    .legal a.g-link{color:inherit;text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px}
+    .legal a.g-link:hover{opacity:.78}
     .g-lead{font-family:var(--fd);font-weight:700;font-size:clamp(1.05rem,1.6vw,1.2rem);color:var(--ink);margin:.4rem 0 1.1rem}
     .g-elements{list-style:none;margin:.2rem 0 2.4rem;padding:0;display:grid;gap:1rem}
     .g-elements li{display:flex;gap:1.1rem;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:1.2rem 1.4rem;box-shadow:var(--sh-sm)}
@@ -138,7 +140,7 @@
     <div class="g-types"><div class="g-type g-type-grey"><h4 class="g-type-name">Серый <span class="g-type-range">(D — D2)</span></h4><p class="g-type-desc">Начинающие пользователи</p></div><div class="g-type g-type-green"><h4 class="g-type-name">Зелёный <span class="g-type-range">(C — B+)</span></h4><p class="g-type-desc">Любители, работающие над результативностью</p></div><div class="g-type g-type-blue"><h4 class="g-type-name">Синий <span class="g-type-range">(A — A+)</span></h4><p class="g-type-desc">Продвинутые любители или профи с высокой результативностью</p></div></div>
     <p>Для серых <b><i>Грейдов</i></b> <span class="g-term">условия доступа упрощены</span>, делая их ознакомительными. <b><i>Грейды</i></b> зеленого типа и выше содержат оптимальный референс по результативности на оцениваемых дистанциях (5, 10, 21, 42 км), выраженный через таблицу <b><i><span class="g-term">Running Level (RL)</span></i></b>, составленной по аналогии c <b><i><span class="g-term">World Athletics Score Table</span></i></b>. Если <b><i>Атлет</i></b> укладывается в референс или показывает результаты лучше, то далее за тренировки он получает повышенные <b><i>XP</i></b>, если нет, то начисление <b><i>XP</i></b> снижается.</p>
     <p>Полученные <b><i>XP</i></b> монетизируются через обмен на деньги в <b><i>Клубах</i></b>. Такая возможность активируется следующими способами:</p>
-    <ul class="g-bullets"><li>На любом <b><i>Грейде</i></b> применить финансовый <b><i>Инвайт</i></b>, доступный для получения у другого <b><i>Атлета</i></b> с <b><i>Грейдом С+</i></b> или выше, в <b><i>Верифицированном Клубе</i></b> или <b><i><span class="g-term">розыгрышах офиц. Telegram-канала</span></i></b>.</li><li>На <b><i>Грейде D2 </i></b>и выше, при подтверждении минимального <b><i>RL=1,</i></b> монетизация активируется автоматически.</li></ul>
+    <ul class="g-bullets"><li>На любом <b><i>Грейде</i></b> применить финансовый <b><i>Инвайт</i></b>, доступный для получения у другого <b><i>Атлета</i></b> с <b><i>Грейдом С+</i></b> или выше, в <b><i>Верифицированном Клубе</i></b> или <b><i><span class="g-term">розыгрышах офиц. <a class="g-link" href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram-канала</a></span></i></b>.</li><li>На <b><i>Грейде D2 </i></b>и выше, при подтверждении минимального <b><i>RL=1,</i></b> монетизация активируется автоматически.</li></ul>
     <p>Курс обмена <b><i>XP</i></b> на деньги зависит от <b><i>Грейда</i></b>: чем выше <b><i>Грейд</i></b>, тем более выгодный тариф в стандартной сетке. Курс определяет скорость выборки одобренного месячного лимита в <b><i>Клубах</i></b>. Необходимое количество <b><i>XP</i></b> для конкретного <b><i>Грейда</i></b>, курс обмена, <b><i>RL</i></b> и др. можно посмотреть в <b><i><span class="g-term">Матрице Грейдов</span></i></b>.</p>
     <h2>Матрица Грейдов</h2>
     <div class="g-tablewrap"><table class="g-matrix">
@@ -169,7 +171,7 @@
     <h3>Инфо Профиля</h3>
     <p>Заполненные обязательные поля в аккаунте <b><i>Атлета</i></b>: Имя, Пол, День рождения, Вес.</p>
     <h3>Подписка в Telegram</h3>
-    <p>Активная подписка <b><i><span class="g-term">на официальный Telegram-канал Moneyrun</span></i></b>, которая определяется ботом @Moneyrunbot. При отсутствии активной подписки на текущем <b><i>Грейде</i></b> новые тренировки не монетизируются.</p>
+    <p>Активная подписка <b><i><span class="g-term">на официальный <a class="g-link" href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram-канал</a> Moneyrun</span></i></b>, которая определяется ботом @Moneyrunbot. При отсутствии активной подписки на текущем <b><i>Грейде</i></b> новые тренировки не монетизируются.</p>
     <h3>Running Level</h3>
     <p>Верификация аккаунта в <b><i>Moneyrun</i></b> и наличие <b><i>Забегов</i></b> за последние 180 дней, на основании которых определяется <b><i>RL</i></b> из <b><i><span class="g-term">таблицы</span></i></b>.</p>
     <h3>Experience, XP</h3>
@@ -529,7 +531,7 @@ iif( (360-Ch72)&lt;40;40;360-Ch72)
     <p>Перечисленные выше тренировки не подходят под условия 2-го элемента платформы <b><i>Moneyrun</i></b> (для начисления <b><i>XP</i></b>), но все активности доступны для личной статистики профиля в рамках 1-го элемента платформы.</p>
     <p>Также существуют условия переходов между <b><i>Грейдами</i></b>:</p>
     <p>Переход на <b><i>Грейд D</i></b> возможен после заполнения обязательных полей в аккаунте <b><i>Атлета</i></b> (Имя, Пол, День рождения, Вес)</p>
-    <p>Для перехода на <b><i>Грейд D2</i></b> требуется подписка на <b><i><span class="g-term">официальный Telegram-канал Moneyrun</span></i></b></p>
+    <p>Для перехода на <b><i>Грейд D2</i></b> требуется подписка на <b><i><span class="g-term">официальный <a class="g-link" href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram-канал</a> Moneyrun</span></i></b></p>
     <p>Начиная с <b><i>Грейда С</i></b>, открываются доп. возможности — клубный инструментарий:</p>
     <p>– роль <b><i>Владелец</i></b> — создание собственного <b><i>Клуба</i></b> на платформе <b><i>Moneyrun</i></b> и претендовать на его <b><i>Верификацию</i></b></p>
     <p>– роль <b><i>Забота</i></b> — участие в развитии <b><i>Верифицированного Клуба</i></b> и шанс состоять в закрытом сообществе <b><i>MR Забота</i></b></p>
