@@ -245,6 +245,14 @@ while i<n:
     # убрали вводный абзац по просьбе (в исходнике вокруг тире — неразрывные пробелы)
     if 'это социально-благотворительный проект по развитию' in ln.replace('\xa0',' '):
         i+=1; continue
+    # убрали блок «Актуальная версия / Версия / ©»
+    if ln=='Актуальная версия' or ln.startswith('Версия от ') or ln.startswith('©'):
+        i+=1; continue
+    # «Run, Earn, Enjoy!» -> крупный заголовок как на главной (без якоря и оглавления)
+    if ln=='Run, Earn, Enjoy!':
+        body.append('<div class="g-final"><span class="g-final-title">Run, Earn, '
+                    '<span class="g-final-mark">Enjoy!</span></span></div>')
+        i+=1; continue
     # «Состоит из двух основных элементов» -> подзаголовок + нумерованные карточки
     if ln.startswith('Состоит из двух основных элементов'):
         body.append('<p class="g-lead">'+style(ln)+'</p>')
@@ -392,7 +400,7 @@ CSS = """
     @media(min-width:1100px){.nav-cta{display:inline-flex}}
     @media(max-width:1080px){.nav-links{display:none}}
     .legal{max-width:var(--maxw);margin:0 auto;padding:7.5rem clamp(1.25rem,5vw,4rem) 4rem}
-    .legal-wrap{max-width:860px;margin:0 auto}
+    .legal-wrap{max-width:none;margin:0}
     .legal-back{display:inline-flex;gap:.4rem;font-size:.9rem;color:var(--muted);text-decoration:none;margin-bottom:1.2rem}
     .legal-back:hover{color:var(--ink)}
     /* hero-блок страницы */
@@ -425,6 +433,10 @@ CSS = """
     .g-toc a::before{content:counter(toc);font-family:var(--fm);font-size:.74rem;color:var(--muted2);min-width:1.5em;text-align:right}
     .g-toc a:hover{color:var(--c-tomato)}
     @media(max-width:560px){.g-toc ol{columns:1}}
+    .g-final{margin:3.6rem 0 1rem}
+    .g-final-title{font-family:var(--fd);font-weight:800;font-size:clamp(2.2rem,6vw,4.6rem);line-height:1;letter-spacing:-.04em;color:var(--ink);display:inline-block}
+    .g-final-mark{position:relative;display:inline-block;color:var(--lime-ink);padding:0 .18em;z-index:1}
+    .g-final-mark::before{content:'';position:absolute;inset:.05em -.08em;background:var(--lime);border-radius:14px;z-index:-1;transform:rotate(-1.5deg);box-shadow:0 16px 40px -16px rgba(190,225,75,.6)}
     .legal p{color:var(--ink2);line-height:1.72;margin-bottom:.9rem;font-size:1rem}
     .legal b{font-weight:600;color:var(--ink)}
     .legal .g-term{color:var(--c-tomato);font-weight:600}

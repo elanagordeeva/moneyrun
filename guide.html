@@ -26,7 +26,7 @@
     @media(min-width:1100px){.nav-cta{display:inline-flex}}
     @media(max-width:1080px){.nav-links{display:none}}
     .legal{max-width:var(--maxw);margin:0 auto;padding:7.5rem clamp(1.25rem,5vw,4rem) 4rem}
-    .legal-wrap{max-width:860px;margin:0 auto}
+    .legal-wrap{max-width:none;margin:0}
     .legal-back{display:inline-flex;gap:.4rem;font-size:.9rem;color:var(--muted);text-decoration:none;margin-bottom:1.2rem}
     .legal-back:hover{color:var(--ink)}
     /* hero-блок страницы */
@@ -59,6 +59,10 @@
     .g-toc a::before{content:counter(toc);font-family:var(--fm);font-size:.74rem;color:var(--muted2);min-width:1.5em;text-align:right}
     .g-toc a:hover{color:var(--c-tomato)}
     @media(max-width:560px){.g-toc ol{columns:1}}
+    .g-final{margin:3.6rem 0 1rem}
+    .g-final-title{font-family:var(--fd);font-weight:800;font-size:clamp(2.2rem,6vw,4.6rem);line-height:1;letter-spacing:-.04em;color:var(--ink);display:inline-block}
+    .g-final-mark{position:relative;display:inline-block;color:var(--lime-ink);padding:0 .18em;z-index:1}
+    .g-final-mark::before{content:'';position:absolute;inset:.05em -.08em;background:var(--lime);border-radius:14px;z-index:-1;transform:rotate(-1.5deg);box-shadow:0 16px 40px -16px rgba(190,225,75,.6)}
     .legal p{color:var(--ink2);line-height:1.72;margin-bottom:.9rem;font-size:1rem}
     .legal b{font-weight:600;color:var(--ink)}
     .legal .g-term{color:var(--c-tomato);font-weight:600}
@@ -160,7 +164,7 @@
     </header>
     <p class="g-lead">Состоит из двух основных элементов:</p>
     <ol class="g-elements"><li><span class="g-num g-num-1">1</span><span class="g-el-text">Тематическая социальная сеть и сервис с бесплатными инструментами для ведения беговой статистики, тренировочных планов и клубных сообществ.</span></li><li><span class="g-num g-num-2">2</span><span class="g-el-text"><b><i>Игровой Грейдовый модуль</i></b> (<b><i>ИМ</i></b>), основанный на личном и любительском прогрессе в беге с мотивационным финансовым подкреплением за счёт целевого благотворительного <b><i><span class="g-term">Эндаумент фонда (EF)</span></i></b>.</span></li></ol>
-    <nav class="g-toc" aria-label="Содержание"><p class="g-toc-title">Содержание</p><ol><li><a href="#igrovoy-modul-im">Игровой модуль (ИМ)</a></li><li><a href="#matrica-greydov">Матрица Грейдов</a></li><li><a href="#im-experience-xp-detalizaciya">ИМ.Experience (XP) детализация</a></li><li><a href="#im-xp-pulsovye-dannye">ИМ.XP. Пульсовые данные</a></li><li><a href="#im-xp-trenirovochnaya-nagruzka">ИМ.XP. Тренировочная нагрузка</a></li><li><a href="#im-xp-limity-nagruzki">ИМ.XP. Лимиты нагрузки</a></li><li><a href="#im-xp-lyubitelskaya-rezultativnost">ИМ.XP. Любительская результативность</a></li><li><a href="#tablica-running-level">Таблица Running Level</a></li><li><a href="#im-xp-nachislenie">ИМ.XP начисление</a></li><li><a href="#im-xp-dopolnitelnye-usloviya">ИМ.XP дополнительные условия</a></li><li><a href="#finansirovanie">Финансирование</a></li><li><a href="#filosofiya">Философия</a></li><li><a href="#run-earn-enjoy">Run, Earn, Enjoy!</a></li><li><a href="#aktualnaya-versiya">Актуальная версия</a></li></ol></nav>
+    <nav class="g-toc" aria-label="Содержание"><p class="g-toc-title">Содержание</p><ol><li><a href="#igrovoy-modul-im">Игровой модуль (ИМ)</a></li><li><a href="#matrica-greydov">Матрица Грейдов</a></li><li><a href="#im-experience-xp-detalizaciya">ИМ.Experience (XP) детализация</a></li><li><a href="#im-xp-pulsovye-dannye">ИМ.XP. Пульсовые данные</a></li><li><a href="#im-xp-trenirovochnaya-nagruzka">ИМ.XP. Тренировочная нагрузка</a></li><li><a href="#im-xp-limity-nagruzki">ИМ.XP. Лимиты нагрузки</a></li><li><a href="#im-xp-lyubitelskaya-rezultativnost">ИМ.XP. Любительская результативность</a></li><li><a href="#tablica-running-level">Таблица Running Level</a></li><li><a href="#im-xp-nachislenie">ИМ.XP начисление</a></li><li><a href="#im-xp-dopolnitelnye-usloviya">ИМ.XP дополнительные условия</a></li><li><a href="#finansirovanie">Финансирование</a></li><li><a href="#filosofiya">Философия</a></li></ol></nav>
     <h2 id="igrovoy-modul-im" class="g-h"><a class="g-anchor" href="#igrovoy-modul-im" aria-hidden="true" tabindex="-1">#</a>Игровой модуль (ИМ)</h2>
     <p>Общая концепция: за каждую тренировку <b><i>Атлет</i></b> получает баллы (<b><i>Experience, XP</i></b>), по мере набора которых поднимается по <b><i>Грейдам</i></b> от <b><i>D</i></b> до <b><i>A+</i></b> и выше. В <b><i><span class="g-term">Матрице Грейдов</span></i></b> заложено три типа:</p>
     <div class="g-types"><div class="g-type g-type-grey"><h4 class="g-type-name">Серый <span class="g-type-range">(D — D2)</span></h4><p class="g-type-desc">Начинающие пользователи</p></div><div class="g-type g-type-green"><h4 class="g-type-name">Зелёный <span class="g-type-range">(C — B+)</span></h4><p class="g-type-desc">Любители, работающие над результативностью</p></div><div class="g-type g-type-blue"><h4 class="g-type-name">Синий <span class="g-type-range">(A — A+)</span></h4><p class="g-type-desc">Продвинутые любители или профи с высокой результативностью</p></div></div>
@@ -547,10 +551,7 @@ iif( (360-Ch72)&lt;40;40;360-Ch72)
     <p>В будущем, когда алгоритмы по основному функционалу приложения в рамках первичной задумки будут реализованы, сервис сможет приступить к развитию механик для других видов спорта на выносливость.</p>
     <p>Приложение <b><i>Moneyrun</i></b> создано для развития бегового сообщества и к монетизации разрешен только бег. Размещение тренировок из небеговых дисциплин (велосипед, роликовые коньки, лыжи и др.) не приветствуется – <b><i>Атлету</i></b> выносится предупреждение. При повторении ситуации сервис будет вынужден заблокировать аккаунт.</p>
     <p>Все процессы выстроены максимально экономично, с опорой на труд волонтёров, меценатов и энтузиастов бега. <b><i>Moneyrun</i></b> — это некоммерческая организация (выплаты носят характер благотворительных поощрений) и не преследует цели заработка: платформа готова финансово поощрять <b><i>Атлетов,</i></b> нацеленных на результативность.</p>
-    <h2 id="run-earn-enjoy" class="g-h"><a class="g-anchor" href="#run-earn-enjoy" aria-hidden="true" tabindex="-1">#</a>Run, Earn, Enjoy!</h2>
-    <h2 id="aktualnaya-versiya" class="g-h"><a class="g-anchor" href="#aktualnaya-versiya" aria-hidden="true" tabindex="-1">#</a>Актуальная версия</h2>
-    <p><span class="g-term">Версия от 16.02.26</span></p>
-    <p>© 2023–2026 Moneyrun</p>
+    <div class="g-final"><span class="g-final-title">Run, Earn, <span class="g-final-mark">Enjoy!</span></span></div>
 </div></main>
 <footer><div class="foot-inner">
   <div class="foot-c"><a href="index.html" class="nav-logo" style="margin-bottom:.4rem"><img class="logo-mark" src="art/logo-mark.png" alt="Moneyrun" width="120" height="120"><span class="wordmark">Moneyrun</span></a><p class="tagline">Социально-благотворительный проект по развитию бегового движения.</p></div>
