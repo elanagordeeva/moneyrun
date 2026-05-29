@@ -427,7 +427,7 @@ content=re.sub(r'Telegram-канал[а-яё]*',
                content)
 
 CSS = """
-    :root{--bg:#eef2ec;--bg2:#f4f7f3;--surface:#ffffff;--ink:#0e120e;--ink2:#1b1b21;--muted:#6b7068;--muted2:#9aa097;--border:#e6eae3;--border2:#dadfd6;--lime:#d0f85d;--lime2:#d5ffa8;--lime-deep:#bee14b;--lime-ink:#1f2a05;--c-blue:#bcdcff;--c-blue-ink:#143b6b;--c-tomato:#f0563f;--fd:'Manrope',system-ui,sans-serif;--fb:'Inter',system-ui,sans-serif;--fm:'JetBrains Mono',ui-monospace,monospace;--fw:'Roboto Flex','Roboto',system-ui,sans-serif;--maxw:1240px;--sh-sm:0 2px 6px rgba(15,20,15,.05),0 1px 2px rgba(15,20,15,.04);--sh-md:0 14px 30px -10px rgba(15,30,12,.10),0 8px 18px -6px rgba(15,30,12,.06);--r-sm:12px;--r-md:18px;--r-lg:24px}
+    :root{--bg:#eef2ec;--bg2:#f4f7f3;--surface:#ffffff;--ink:#0e120e;--ink2:#1b1b21;--muted:#6b7068;--muted2:#9aa097;--border:#e6eae3;--border2:#dadfd6;--lime:#d0f85d;--lime2:#d5ffa8;--lime-deep:#bee14b;--lime-ink:#1f2a05;--c-blue:#bcdcff;--c-blue-ink:#143b6b;--c-tomato:#f0563f;--fd:'Roboto Flex','Roboto',system-ui,sans-serif;--fb:'Roboto Flex','Roboto',system-ui,sans-serif;--fm:'Roboto Flex','Roboto',ui-monospace,monospace;--fw:'Roboto Flex','Roboto',system-ui,sans-serif;--maxw:1240px;--sh-sm:0 2px 6px rgba(15,20,15,.05),0 1px 2px rgba(15,20,15,.04);--sh-md:0 14px 30px -10px rgba(15,30,12,.10),0 8px 18px -6px rgba(15,30,12,.06);--r-sm:12px;--r-md:18px;--r-lg:24px}
     *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
     body{background:var(--bg);color:var(--ink);font-family:var(--fb);line-height:1.65;-webkit-font-smoothing:antialiased}
     ::selection{background:var(--lime);color:var(--lime-ink)}img{max-width:100%;display:block}a{color:inherit}
@@ -468,6 +468,10 @@ CSS = """
     .g-h-mark{display:inline;background:var(--lime);color:var(--lime-ink);-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:.04em .3em;border-radius:12px;box-shadow:0 10px 26px -14px rgba(190,225,75,.8)}
     .legal h2.g-h2,.legal h3.g-h3{line-height:1.32}
     .legal h3.g-h3 .g-h-mark{border-radius:9px;padding:.04em .28em}
+    /* ДС Roboto Flex: акцентные заголовки с наклоном (ось slnt), как логотип */
+    .g-hero h1,.legal h2.g-h2,.legal h3.g-h3,.g-final-title{font-style:italic;font-variation-settings:'slnt' -10}
+    /* числа — табличные цифры для ровных колонок (замена моноширинного) */
+    table.g-tbl,table.g-matrix,.g-toc a::before,.g-qt .g-zone,.g-qt .g-qtv{font-variant-numeric:tabular-nums}
     .g-h .g-anchor{position:absolute;left:-1.05em;top:.16em;font-size:.78em;font-weight:700;color:var(--muted2);text-decoration:none;opacity:0;transition:opacity .15s}
     .g-h:hover .g-anchor,.g-h .g-anchor:focus{opacity:1}
     .g-h .g-anchor:hover{color:var(--c-tomato)}
