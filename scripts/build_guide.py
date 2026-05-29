@@ -124,6 +124,34 @@ def semi_table(rows):
     out.append('</table></div>')
     return '\n'.join(out)
 
+def _lerp(a,b,t): return tuple(round(a[i]+(b[i]-a[i])*t) for i in range(3))
+def _heat(p):
+    # 51%..100% -> зелёный → янтарный → томатный (тёплый = интенсивнее)
+    t=max(0.0,min(1.0,(p-51)/49))
+    c=_lerp((86,166,40),(232,160,12),t/0.5) if t<0.5 else _lerp((232,160,12),(232,76,54),(t-0.5)/0.5)
+    c=_lerp(c,(255,255,255),0.7)  # светлый тинт
+    return f'rgb({c[0]},{c[1]},{c[2]})'
+def qtrimp_table(rows):
+    parsed=[semi_cells(r) for r in rows]
+    head=parsed[0]
+    out=['<div class="g-tablewrap"><table class="g-tbl g-qt">']
+    out.append('<thead><tr>'+''.join(f'<th>{c}</th>' for c in head)+'</tr></thead><tbody>')
+    for r in parsed[1:]:
+        cells=''
+        for idx,c in enumerate(r):
+            if idx%2==0:  # столбец зоны (%)
+                txt=re.sub(r'<[^>]+>','',c).strip()
+                m=re.search(r'(\d+)\s*%',txt)
+                if m:
+                    cells+=f'<td><span class="g-zone" style="background:{_heat(int(m.group(1)))}">{txt}</span></td>'
+                else:
+                    cells+=f'<td>{c}</td>'
+            else:
+                cells+=f'<td class="g-qtv">{c}</td>'
+        out.append('<tr>'+cells+'</tr>')
+    out.append('</tbody></table></div>')
+    return '\n'.join(out)
+
 def rl_table(rows, head):
     # head like "RL (M) 5 км 10 км 21 км 42 км Грейд"
     heads=['RL','5 км','10 км','21 км','42 км','Грейд']
@@ -357,7 +385,7 @@ while i<n:
         block=[]
         while i<n and is_semirow(lines[i]):
             block.append(lines[i].strip()); i+=1
-        body.append(semi_table(block))
+        body.append(qtrimp_table(block) if 'QTrimp' in block[0] else semi_table(block))
         continue
     if ln in H2:
         add_h2(ln); i+=1; continue
@@ -524,6 +552,9 @@ CSS = """
     .g-matrix .g-rowh{min-width:0;font-size:.76rem;padding-right:.7rem}
     .g-matrix .g-grp th{padding:.28rem .35rem;font-size:.64rem}
     .g-matrix tr.g-sub td{padding:.28rem .6rem;font-size:.62rem}
+    .g-qt td{vertical-align:middle}
+    .g-qt .g-zone{display:inline-block;min-width:3.6em;text-align:center;padding:.22em .6em;border-radius:999px;font-family:var(--fm);font-weight:600;font-size:.82rem;color:#22260f;border:1px solid rgba(15,20,15,.06)}
+    .g-qt .g-qtv{font-family:var(--fm);color:var(--ink2);font-weight:600}
     .g-rl table{font-size:.82rem}
     .g-rl{max-height:560px;overflow:auto}
     .g-tabs{display:flex;gap:.4rem;margin:1.2rem 0 .2rem}
