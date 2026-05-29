@@ -12,6 +12,10 @@
       <rect width="14" height="14" fill="#dfeaff"/>
       <rect width="7" height="14" fill="#bcdcff"/>
     </pattern>
+    <pattern id="hgBL" patternUnits="userSpaceOnUse" width="14" height="14" patternTransform="rotate(45)">
+      <rect width="14" height="14" fill="#eef4fc"/>
+      <rect width="7" height="14" fill="#d8e7f8"/>
+    </pattern>
   </defs>
 
   <line x1="60" y1="300" x2="1140" y2="300" stroke="#0e120e" stroke-opacity=".22" stroke-width="2"/>
@@ -19,66 +23,70 @@
 
   <!-- D -->
   <rect x="80" y="50" width="80" height="250" fill="url(#hgG)" rx="6"/>
-  <rect x="92" y="22" width="56" height="32" rx="9" fill="#d0f85d"/>
+  <rect x="80" y="22" width="80" height="32" rx="9" fill="#d0f85d"/>
   <text x="120" y="44" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2a05">×1.5</text>
-  <path d="M97 188 L113 170 M113 178 L113 170 L105 170" stroke="#5e8e1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M97 192 L113 175 M113 183 L113 175 L105 175" stroke="#5e8e1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="120" y="328" text-anchor="middle" font-size="20" font-weight="800" fill="#0e120e">D</text>
 
   <!-- D1 -->
   <rect x="200" y="50" width="80" height="250" fill="url(#hgG)" rx="6"/>
-  <rect x="212" y="22" width="56" height="32" rx="9" fill="#d0f85d"/>
+  <rect x="200" y="22" width="80" height="32" rx="9" fill="#d0f85d"/>
   <text x="240" y="44" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2a05">×1.5</text>
-  <path d="M217 188 L233 170 M233 178 L233 170 L225 170" stroke="#5e8e1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M217 192 L233 175 M233 183 L233 175 L225 175" stroke="#5e8e1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="240" y="328" text-anchor="middle" font-size="20" font-weight="800" fill="#0e120e">D1</text>
 
   <!-- D2 -->
   <rect x="320" y="50" width="80" height="250" fill="url(#hgG)" rx="6"/>
-  <rect x="332" y="22" width="56" height="32" rx="9" fill="#d0f85d"/>
+  <rect x="320" y="22" width="80" height="32" rx="9" fill="#d0f85d"/>
   <text x="360" y="44" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2a05">×1.5</text>
-  <path d="M337 188 L353 170 M353 178 L353 170 L345 170" stroke="#5e8e1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M337 192 L353 175 M353 183 L353 175 L345 175" stroke="#5e8e1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="360" y="328" text-anchor="middle" font-size="20" font-weight="800" fill="#0e120e">D2</text>
 
   <!-- C -->
   <rect x="440" y="50" width="80" height="250" fill="url(#hgG)" rx="6"/>
-  <rect x="452" y="22" width="56" height="32" rx="9" fill="#d0f85d"/>
+  <rect x="440" y="22" width="80" height="32" rx="9" fill="#d0f85d"/>
   <text x="480" y="44" text-anchor="middle" font-size="14" font-weight="700" fill="#1f2a05">×1.5</text>
-  <path d="M457 188 L473 170 M473 178 L473 170 L465 170" stroke="#5e8e1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M457 192 L473 175 M473 183 L473 175 L465 175" stroke="#5e8e1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="480" y="328" text-anchor="middle" font-size="20" font-weight="800" fill="#0e120e">C</text>
 
-  <!-- C+ transition -->
-  <rect x="560" y="50" width="80" height="125" fill="url(#hgGL)" rx="6" ry="6"/>
-  <rect x="560" y="175" width="80" height="125" fill="url(#hgG)"/>
-  <rect x="568" y="22" width="64" height="32" rx="9" fill="#d0f85d"/>
-  <text x="600" y="44" text-anchor="middle" font-size="12" font-weight="700" fill="#1f2a05">×1.5..1.0</text>
-  <path d="M577 188 L593 170 M593 178 L593 170 L585 170" stroke="#5e8e1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- C+ transition: top half light, bottom half full green -->
+  <rect x="560" y="50" width="80" height="250" fill="url(#hgGL)" rx="6"/>
+  <rect x="560" y="175" width="80" height="125" fill="url(#hgG)" rx="6"/>
+  <rect x="560" y="22" width="80" height="32" rx="9" fill="#d0f85d"/>
+  <text x="600" y="44" text-anchor="middle" font-size="13" font-weight="700" fill="#1f2a05">×1.5..1.0</text>
+  <path d="M577 192 L593 175 M593 183 L593 175 L585 175" stroke="#5e8e1a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="600" y="328" text-anchor="middle" font-size="20" font-weight="800" fill="#0e120e">C+</text>
 
-  <!-- B (0.7) -->
-  <rect x="680" y="180" width="80" height="120" fill="url(#hgB)" rx="6"/>
-  <rect x="692" y="152" width="56" height="32" rx="9" fill="#5b9bff"/>
-  <text x="720" y="174" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">×0.7</text>
-  <path d="M713 170 L697 188 M697 180 L697 188 L705 188" stroke="#1f4a8e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- B (0.7): container same size, solid fill from y=212 -->
+  <rect x="680" y="50" width="80" height="250" fill="url(#hgBL)" rx="6"/>
+  <rect x="680" y="212" width="80" height="88" fill="url(#hgB)" rx="6"/>
+  <rect x="680" y="22" width="80" height="32" rx="9" fill="#5b9bff"/>
+  <text x="720" y="44" text-anchor="middle" font-size="14" font-weight="700" fill="#fff">×0.7</text>
+  <path d="M713 222 L697 239 M697 231 L697 239 L705 239" stroke="#1f4a8e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="720" y="328" text-anchor="middle" font-size="20" font-weight="800" fill="#0e120e">B</text>
 
-  <!-- B+ (0.49) -->
-  <rect x="800" y="200" width="80" height="100" fill="url(#hgB)" rx="6"/>
-  <rect x="812" y="172" width="56" height="32" rx="9" fill="#5b9bff"/>
-  <text x="840" y="194" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">×0.49</text>
-  <path d="M833 170 L817 188 M817 180 L817 188 L825 188" stroke="#1f4a8e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- B+ (0.49): solid fill from y=239 -->
+  <rect x="800" y="50" width="80" height="250" fill="url(#hgBL)" rx="6"/>
+  <rect x="800" y="239" width="80" height="61" fill="url(#hgB)" rx="6"/>
+  <rect x="800" y="22" width="80" height="32" rx="9" fill="#5b9bff"/>
+  <text x="840" y="44" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">×0.49</text>
+  <path d="M833 247 L817 264 M817 256 L817 264 L825 264" stroke="#1f4a8e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="840" y="328" text-anchor="middle" font-size="20" font-weight="800" fill="#0e120e">B+</text>
 
-  <!-- A (0.34) -->
-  <rect x="920" y="215" width="80" height="85" fill="url(#hgB)" rx="6"/>
-  <rect x="932" y="187" width="56" height="32" rx="9" fill="#5b9bff"/>
-  <text x="960" y="209" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">×0.34</text>
-  <path d="M953 170 L937 188 M937 180 L937 188 L945 188" stroke="#1f4a8e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- A (0.34): solid fill from y=258 -->
+  <rect x="920" y="50" width="80" height="250" fill="url(#hgBL)" rx="6"/>
+  <rect x="920" y="258" width="80" height="42" fill="url(#hgB)" rx="6"/>
+  <rect x="920" y="22" width="80" height="32" rx="9" fill="#5b9bff"/>
+  <text x="960" y="44" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">×0.34</text>
+  <path d="M953 264 L937 281 M937 273 L937 281 L945 281" stroke="#1f4a8e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="960" y="328" text-anchor="middle" font-size="20" font-weight="800" fill="#0e120e">A</text>
 
-  <!-- A+ (0.24) -->
-  <rect x="1040" y="230" width="80" height="70" fill="url(#hgB)" rx="6"/>
-  <rect x="1052" y="202" width="56" height="32" rx="9" fill="#5b9bff"/>
-  <text x="1080" y="224" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">×0.24</text>
-  <path d="M1073 170 L1057 188 M1057 180 L1057 188 L1065 188" stroke="#1f4a8e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- A+ (0.24): solid fill from y=270 -->
+  <rect x="1040" y="50" width="80" height="250" fill="url(#hgBL)" rx="6"/>
+  <rect x="1040" y="270" width="80" height="30" fill="url(#hgB)" rx="6"/>
+  <rect x="1040" y="22" width="80" height="32" rx="9" fill="#5b9bff"/>
+  <text x="1080" y="44" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">×0.24</text>
+  <path d="M1073 274 L1057 289 M1057 282 L1057 289 L1064 289" stroke="#1f4a8e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="1080" y="328" text-anchor="middle" font-size="20" font-weight="800" fill="#0e120e">A+</text>
 
   <!-- Legend -->

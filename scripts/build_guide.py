@@ -341,7 +341,7 @@ while i<n:
         i=j; continue
     # «Текущий Грейд ~ текущий RL / RL выше / RL ниже» -> SVG-иллюстрация (заменяем 3 строки)
     if ln.replace('\xa0',' ').strip()=='Текущий Грейд ~ текущий RL':
-        body.append('<figure class="g-rl-vis"><img src="art/rq-grades.svg?v=2" alt="Зависимость RQ от соотношения RL и Грейда" loading="lazy"></figure>')
+        body.append('<figure class="g-rl-vis"><img src="art/rq-grades.svg?v=3" alt="Зависимость RQ от соотношения RL и Грейда" loading="lazy"></figure>')
         skipped=0; j=i+1
         while j<n and skipped<2:
             s=lines[j].strip(); j+=1
