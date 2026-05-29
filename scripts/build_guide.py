@@ -48,14 +48,10 @@ def slug(text):
     _ids.add(s); return s
 def hd(level,text):
     sid=slug(text); toc.append((level,text,sid))
-    if level==2:
-        ci=_h2n[0]%3+1; _h2n[0]+=1
-        cls=f'g-h g-h2 g-h-c{ci}'
-    else:
-        cls='g-h g-h3'
+    cls='g-h g-h2' if level==2 else 'g-h g-h3'
     return (f'<h{level} id="{sid}" class="{cls}">'
             f'<a class="g-anchor" href="#{sid}" aria-hidden="true" tabindex="-1">#</a>'
-            f'{H.escape(text)}</h{level}>')
+            f'<span class="g-h-mark">{H.escape(text)}</span></h{level}>')
 
 # --- Матрица Грейдов (захардкожена 1-в-1) ---
 GRADES = ['F','D','D1','D2','C','C+','B','B+','A','A+','Next']
@@ -426,12 +422,10 @@ CSS = """
     .legal h2{font-family:var(--fd);font-weight:800;font-size:clamp(1.3rem,2.4vw,1.7rem);letter-spacing:-.02em;line-height:1.2;margin:2.8rem 0 1rem;padding-top:.4rem}
     .legal h3{font-family:var(--fd);font-weight:700;font-size:1.1rem;letter-spacing:-.01em;margin:1.8rem 0 .5rem;color:var(--ink)}
     .g-h{position:relative;scroll-margin-top:84px}
-    /* салатовые, оформленные заголовки */
-    .g-h-c1,.g-h-c2,.g-h-c3{--hc:#5d9412}
-    .legal h2.g-h2{color:var(--hc);display:flex;flex-direction:column;align-items:flex-start;gap:.55rem}
-    .legal h2.g-h2::after{content:'';width:48px;height:4px;border-radius:3px;background:var(--lime-deep)}
-    .legal h3.g-h3{color:#5d9412;display:flex;align-items:center;gap:.55rem}
-    .legal h3.g-h3::before{content:'';flex:0 0 auto;width:16px;height:3px;border-radius:2px;background:var(--lime-deep)}
+    /* салатовые заголовки — фирменная подсветка (тёмный текст на лайме) */
+    .g-h-mark{display:inline;background:var(--lime);color:var(--lime-ink);-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:.04em .3em;border-radius:12px;box-shadow:0 10px 26px -14px rgba(190,225,75,.8)}
+    .legal h2.g-h2,.legal h3.g-h3{line-height:1.32}
+    .legal h3.g-h3 .g-h-mark{border-radius:9px;padding:.04em .28em}
     .g-h .g-anchor{position:absolute;left:-1.05em;top:.16em;font-size:.78em;font-weight:700;color:var(--muted2);text-decoration:none;opacity:0;transition:opacity .15s}
     .g-h:hover .g-anchor,.g-h .g-anchor:focus{opacity:1}
     .g-h .g-anchor:hover{color:var(--c-tomato)}
