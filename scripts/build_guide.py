@@ -328,6 +328,29 @@ while i<n:
         lis=''.join(f'<li>{style(it.rstrip(" ;"))}</li>' for it in items)
         body.append('<ul class="g-bullets">'+lis+'</ul>')
         i=j; continue
+    # условия RQ («Если результативность …») -> буллеты
+    if ln.startswith('Если результативность'):
+        items=[]; j=i
+        while j<n:
+            s=lines[j].strip()
+            if not s: j+=1; continue
+            if not s.startswith('Если результативность'): break
+            items.append(s); j+=1
+        lis=''.join(f'<li>{style(it.rstrip(" ;"))}</li>' for it in items)
+        body.append('<ul class="g-bullets">'+lis+'</ul>')
+        i=j; continue
+    # «Текущий Грейд ~ текущий RL / RL выше / RL ниже» -> SVG-иллюстрация (заменяем 3 строки)
+    if ln.replace('\xa0',' ').strip()=='Текущий Грейд ~ текущий RL':
+        body.append('<figure class="g-rl-vis"><img src="art/rq-grades.svg?v=1" alt="Зависимость RQ от соотношения RL и Грейда" loading="lazy"></figure>')
+        skipped=0; j=i+1
+        while j<n and skipped<2:
+            s=lines[j].strip(); j+=1
+            if s: skipped+=1
+        i=j; continue
+    # примеры с Иваном/Марией -> в рамку
+    if re.match(r'^Атлет (Иван|Мария) с', ln):
+        body.append('<div class="g-example"><p>'+style(ln.rstrip(" ;"))+'</p></div>')
+        i+=1; continue
     # «...зависит ... от следующих факторов:» -> вводный абзац + нумерованный список
     if ln.replace('\xa0',' ').rstrip().endswith('следующих факторов:'):
         body.append('<p>'+style(ln)+'</p>')
@@ -518,6 +541,10 @@ CSS = """
     .g-bullets{list-style:none;margin:.2rem 0 1.4rem;padding:0;display:grid;gap:.75rem}
     .g-bullets li{position:relative;padding-left:1.65rem;color:var(--ink2);line-height:1.7;font-size:1rem}
     .g-bullets li::before{content:'';position:absolute;left:.35rem;top:.66em;width:7px;height:7px;border-radius:50%;background:var(--lime-deep)}
+    .g-rl-vis{margin:1.4rem 0 1.8rem;text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:1rem 1.2rem;box-shadow:var(--sh-sm)}
+    .g-rl-vis img{display:block;width:100%;max-width:1080px;height:auto;margin:0 auto}
+    .g-example{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--lime-deep);border-radius:var(--r-md);padding:.95rem 1.2rem;margin:.7rem 0;box-shadow:var(--sh-sm)}
+    .g-example p{margin:0;color:var(--ink2);line-height:1.65;font-size:.95rem}
     .g-numlist{list-style:none;margin:1.2rem 0 2rem;padding:0;display:grid;gap:.7rem}
     .g-numlist li{display:flex;gap:.95rem;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:.85rem 1.15rem;box-shadow:var(--sh-sm)}
     .g-num-b{flex:0 0 auto;width:30px;height:30px;border-radius:9px;background:var(--lime);color:var(--lime-ink);font-family:var(--fd);font-weight:800;font-size:.95rem;display:flex;align-items:center;justify-content:center}

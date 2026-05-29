@@ -1,0 +1,83 @@
+<svg viewBox="0 0 1200 600" xmlns="http://www.w3.org/2000/svg" font-family="Manrope, 'Roboto Flex', system-ui, sans-serif" fill="none">
+  <defs>
+    <pattern id="hgG" patternUnits="userSpaceOnUse" width="14" height="14" patternTransform="rotate(45)">
+      <rect width="14" height="14" fill="#b6e88a"/>
+      <rect width="7" height="14" fill="#9fdf66"/>
+    </pattern>
+    <pattern id="hgGL" patternUnits="userSpaceOnUse" width="14" height="14" patternTransform="rotate(45)">
+      <rect width="14" height="14" fill="#edf6db"/>
+      <rect width="7" height="14" fill="#d6ecb4"/>
+    </pattern>
+    <pattern id="hgB" patternUnits="userSpaceOnUse" width="14" height="14" patternTransform="rotate(45)">
+      <rect width="14" height="14" fill="#ccdef5"/>
+      <rect width="7" height="14" fill="#a8c5ea"/>
+    </pattern>
+  </defs>
+
+  <line x1="60" y1="430" x2="1140" y2="430" stroke="#0e120e" stroke-opacity=".22" stroke-width="2"/>
+  <line x1="60" y1="260" x2="1140" y2="260" stroke="#5e6770" stroke-width="2" stroke-dasharray="9 6"/>
+
+  <rect x="80" y="100" width="80" height="330" fill="url(#hgG)" rx="6"/>
+  <rect x="92" y="80" width="56" height="36" rx="10" fill="#9be05f"/>
+  <text x="120" y="105" text-anchor="middle" font-size="15" font-weight="700" fill="#1f2a05">×1.5</text>
+  <path d="M97 268 L113 252 M113 260 L113 252 L105 252" stroke="#2c6f15" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="120" y="475" text-anchor="middle" font-size="22" font-weight="800" fill="#0e120e">D</text>
+
+  <rect x="200" y="100" width="80" height="330" fill="url(#hgG)" rx="6"/>
+  <rect x="212" y="80" width="56" height="36" rx="10" fill="#9be05f"/>
+  <text x="240" y="105" text-anchor="middle" font-size="15" font-weight="700" fill="#1f2a05">×1.5</text>
+  <path d="M217 268 L233 252 M233 260 L233 252 L225 252" stroke="#2c6f15" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="240" y="475" text-anchor="middle" font-size="22" font-weight="800" fill="#0e120e">D1</text>
+
+  <rect x="320" y="100" width="80" height="330" fill="url(#hgG)" rx="6"/>
+  <rect x="332" y="80" width="56" height="36" rx="10" fill="#9be05f"/>
+  <text x="360" y="105" text-anchor="middle" font-size="15" font-weight="700" fill="#1f2a05">×1.5</text>
+  <path d="M337 268 L353 252 M353 260 L353 252 L345 252" stroke="#2c6f15" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="360" y="475" text-anchor="middle" font-size="22" font-weight="800" fill="#0e120e">D2</text>
+
+  <rect x="440" y="100" width="80" height="330" fill="url(#hgG)" rx="6"/>
+  <rect x="452" y="80" width="56" height="36" rx="10" fill="#9be05f"/>
+  <text x="480" y="105" text-anchor="middle" font-size="15" font-weight="700" fill="#1f2a05">×1.5</text>
+  <path d="M457 268 L473 252 M473 260 L473 252 L465 252" stroke="#2c6f15" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="480" y="475" text-anchor="middle" font-size="22" font-weight="800" fill="#0e120e">C</text>
+
+  <rect x="560" y="100" width="80" height="160" fill="url(#hgGL)" rx="6" ry="6"/>
+  <rect x="560" y="260" width="80" height="170" fill="url(#hgG)"/>
+  <rect x="568" y="80" width="64" height="36" rx="10" fill="#9be05f"/>
+  <text x="600" y="105" text-anchor="middle" font-size="13" font-weight="700" fill="#1f2a05">×1.5..1.0</text>
+  <path d="M577 268 L593 252 M593 260 L593 252 L585 252" stroke="#2c6f15" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="600" y="475" text-anchor="middle" font-size="22" font-weight="800" fill="#0e120e">C+</text>
+
+  <rect x="680" y="225" width="80" height="205" fill="url(#hgB)" rx="6"/>
+  <rect x="692" y="205" width="56" height="36" rx="10" fill="#9bbfe8"/>
+  <text x="720" y="230" text-anchor="middle" font-size="15" font-weight="700" fill="#143b6b">×0.7</text>
+  <path d="M713 252 L697 268 M697 260 L697 268 L705 268" stroke="#1b568e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="720" y="475" text-anchor="middle" font-size="22" font-weight="800" fill="#0e120e">B</text>
+
+  <rect x="800" y="250" width="80" height="180" fill="url(#hgB)" rx="6"/>
+  <rect x="812" y="230" width="56" height="36" rx="10" fill="#9bbfe8"/>
+  <text x="840" y="255" text-anchor="middle" font-size="14" font-weight="700" fill="#143b6b">×0.49</text>
+  <path d="M833 252 L817 268 M817 260 L817 268 L825 268" stroke="#1b568e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="840" y="475" text-anchor="middle" font-size="22" font-weight="800" fill="#0e120e">B+</text>
+
+  <rect x="920" y="280" width="80" height="150" fill="url(#hgB)" rx="6"/>
+  <rect x="932" y="260" width="56" height="36" rx="10" fill="#9bbfe8"/>
+  <text x="960" y="285" text-anchor="middle" font-size="14" font-weight="700" fill="#143b6b">×0.34</text>
+  <path d="M953 252 L937 268 M937 260 L937 268 L945 268" stroke="#1b568e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="960" y="475" text-anchor="middle" font-size="22" font-weight="800" fill="#0e120e">A</text>
+
+  <rect x="1040" y="310" width="80" height="120" fill="url(#hgB)" rx="6"/>
+  <rect x="1052" y="290" width="56" height="36" rx="10" fill="#9bbfe8"/>
+  <text x="1080" y="315" text-anchor="middle" font-size="14" font-weight="700" fill="#143b6b">×0.24</text>
+  <path d="M1073 252 L1057 268 M1057 260 L1057 268 L1065 268" stroke="#1b568e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="1080" y="475" text-anchor="middle" font-size="22" font-weight="800" fill="#0e120e">A+</text>
+
+  <g transform="translate(140, 535)" font-family="Inter, system-ui, sans-serif">
+    <circle cx="14" cy="14" r="14" fill="none" stroke="#5e6770" stroke-width="2" stroke-dasharray="4 3"/>
+    <text x="40" y="22" font-size="17" font-weight="500" fill="#0e120e">Текущий Грейд ~ текущий RL</text>
+    <rect x="370" y="0" width="28" height="28" rx="6" fill="#9be05f"/>
+    <text x="408" y="22" font-size="17" font-weight="500" fill="#0e120e">RL выше текущего Грейда</text>
+    <rect x="720" y="0" width="28" height="28" rx="6" fill="#cfe0fb"/>
+    <text x="758" y="22" font-size="17" font-weight="500" fill="#0e120e">RL ниже текущего Грейда</text>
+  </g>
+</svg>
