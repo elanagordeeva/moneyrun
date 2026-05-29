@@ -423,6 +423,9 @@ toc_items=''.join(f'<li><a href="#{sid}">{H.escape(text)}</a></li>'
 toc_html=('<nav class="g-toc" aria-label="Содержание"><p class="g-toc-title">Содержание</p>'
           f'<ol>{toc_items}</ol></nav>')
 content=content.replace(TOC_PH, toc_html)
+# числовые диапазоны во всём контенте (не только таблицы): 95-100% -> 95 — 100%
+# срабатывает только между цифрами/%/∞, поэтому дефисы в словах и тире между словами не трогаются
+content=re.sub(r'(?<=[\d%∞])\s*[—–-]\s*(?=[\d%∞])', ' — ', content)
 # упоминания «Telegram-канал(а)» -> гиперссылка на канал
 content=re.sub(r'Telegram-канал[а-яё]*',
                lambda m:f'<a class="g-link" href="https://t.me/moneyrun" target="_blank" rel="noopener">{m.group(0)}</a>',
