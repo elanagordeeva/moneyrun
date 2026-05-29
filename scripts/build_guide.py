@@ -280,9 +280,7 @@ while i<n:
         i+=1; continue
     # «Run, Earn, Enjoy!» -> крупный заголовок как на главной (без якоря и оглавления)
     if ln=='Run, Earn, Enjoy!':
-        body.append('<div class="g-final"><span class="g-final-title">Run, '
-                    '<span class="g-final-mark">Earn,</span> Enjoy!</span></div>')
-        i+=1; continue
+        i+=1; continue  # «Run, Earn, Enjoy!» перенесён в футер
     # «Состоит из двух основных элементов» -> подзаголовок + нумерованные карточки
     if ln.startswith('Состоит из двух основных элементов'):
         body.append(hd(2,'Элементы платформы'))
@@ -422,6 +420,7 @@ toc_items=''.join(f'<li><a href="#{sid}">{H.escape(text)}</a></li>'
 toc_html=('<nav class="g-toc" aria-label="Содержание"><p class="g-toc-title">Содержание</p>'
           f'<ol>{toc_items}</ol></nav>')
 content=content.replace(TOC_PH, toc_html)
+content=content.replace('согласно таблице ниже','согласно таблице')
 # числовые диапазоны во всём контенте (не только таблицы): 95-100% -> 95 — 100%
 # срабатывает только между цифрами/%/∞, поэтому дефисы в словах и тире между словами не трогаются
 content=re.sub(r'(?<=[\d%∞])\s*[—–-]\s*(?=[\d%∞])', ' — ', content)
@@ -579,6 +578,8 @@ CSS = """
     .foot-c .label{font-family:var(--fm);font-size:.66rem;letter-spacing:.24em;color:var(--muted);text-transform:uppercase;margin-bottom:.5rem}
     .foot-c a{color:var(--ink);text-decoration:none;font-size:.95rem}.foot-c a:hover{color:var(--lime-ink)}
     .foot-c .tagline{color:var(--muted);font-size:.92rem;line-height:1.6;max-width:340px}
+    .foot-slogan{font-family:var(--fd);font-weight:800;font-style:italic;font-variation-settings:'slnt' -10;font-size:1.05rem;color:var(--ink);margin-top:.7rem;display:inline-block}
+    .foot-slogan span{background:var(--lime);color:var(--lime-ink);border-radius:6px;padding:0 .2em}
     .foot-bottom{max-width:var(--maxw);margin:2.5rem auto 0;padding:1.5rem clamp(1.25rem,5vw,4rem) 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;color:var(--muted);font-size:.85rem;font-family:var(--fm)}
     .foot-bottom a{color:var(--muted);text-decoration:none}.foot-bottom a:hover{color:var(--ink)}
     @media(max-width:880px){.foot-inner{grid-template-columns:1fr;gap:2rem}}
@@ -593,7 +594,7 @@ NAV = """<nav id="navbar"><div class="nav-inner">
   </div></div></nav>"""
 
 FOOT = """<footer><div class="foot-inner">
-  <div class="foot-c"><a href="index.html" class="nav-logo" style="margin-bottom:.4rem"><img class="logo-mark" src="art/logo-mark.png" alt="Moneyrun" width="120" height="120"><span class="wordmark">Moneyrun</span></a><p class="tagline">Социально-благотворительный проект по развитию бегового движения.</p></div>
+  <div class="foot-c"><a href="index.html" class="nav-logo" style="margin-bottom:.4rem"><img class="logo-mark" src="art/logo-mark.png" alt="Moneyrun" width="120" height="120"><span class="wordmark">Moneyrun</span></a><p class="tagline">Социально-благотворительный проект по развитию бегового движения.</p><p class="foot-slogan">Run, <span>Earn,</span> Enjoy!</p></div>
   <div class="foot-c"><span class="label">Сервис</span><a href="index.html#howto">Как работает</a><a href="index.html#rules">Правила</a><a href="index.html#clubs">Клубы</a><a href="index.html#principles">Принципы</a></div>
   <div class="foot-c"><span class="label">Связаться</span><a href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram · @moneyrun</a><a href="index.html#contact">Сотрудничество</a></div>
 </div><div class="foot-bottom"><span>© 2023 — 2026 Moneyrun</span><span style="display:flex;gap:1.5rem;flex-wrap:wrap"><a href="guide.html">Правила сервиса</a><a href="privacypolicy.html">Политика конфиденциальности</a></span></div></footer>"""

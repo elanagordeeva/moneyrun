@@ -158,6 +158,8 @@
     .foot-c .label{font-family:var(--fm);font-size:.66rem;letter-spacing:.24em;color:var(--muted);text-transform:uppercase;margin-bottom:.5rem}
     .foot-c a{color:var(--ink);text-decoration:none;font-size:.95rem}.foot-c a:hover{color:var(--lime-ink)}
     .foot-c .tagline{color:var(--muted);font-size:.92rem;line-height:1.6;max-width:340px}
+    .foot-slogan{font-family:var(--fd);font-weight:800;font-style:italic;font-variation-settings:'slnt' -10;font-size:1.05rem;color:var(--ink);margin-top:.7rem;display:inline-block}
+    .foot-slogan span{background:var(--lime);color:var(--lime-ink);border-radius:6px;padding:0 .2em}
     .foot-bottom{max-width:var(--maxw);margin:2.5rem auto 0;padding:1.5rem clamp(1.25rem,5vw,4rem) 0;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;color:var(--muted);font-size:.85rem;font-family:var(--fm)}
     .foot-bottom a{color:var(--muted);text-decoration:none}.foot-bottom a:hover{color:var(--ink)}
     @media(max-width:880px){.foot-inner{grid-template-columns:1fr;gap:2rem}}
@@ -229,7 +231,7 @@
     <h2 id="im-xp-trenirovochnaya-nagruzka" class="g-h g-h2"><a class="g-h-link" href="#im-xp-trenirovochnaya-nagruzka"><span class="g-h-mark">ИМ.XP. Тренировочная нагрузка</span></a></h2>
     <p>Классический <b><i>TRIMP</i></b> — метод количественной оценки тренировочной нагрузки, разработанный Эриком Банистером, который объединяет продолжительность и интенсивность упражнения в единое числовое значение, используя частоту сердечных сокращений (ЧСС) для определения физиологического стресса.</p>
     <p><b><i>eTRIMP</i></b> — доработанный небольшими модификациями под задачи нашей платформы (начисление измеряемой нагрузки усилено ростом по экспоненте для более высоких пульсовых зон).</p>
-    <p>Рассчитывается как время в минутах, проведённое в конкретной пульсовой зоне и умноженное на коэффициент её стоимости, согласно таблице ниже:</p>
+    <p>Рассчитывается как время в минутах, проведённое в конкретной пульсовой зоне и умноженное на коэффициент её стоимости, согласно таблице:</p>
     <div class="g-tablewrap"><table class="g-tbl g-qt">
 <thead><tr><th>HR Zone</th><th>QTrimp/min</th><th>HR Zone</th><th>QTrimp/min</th></tr></thead><tbody>
 <tr><td><span class="g-zone" style="background:rgb(248,201,195)">100%</span></td><td class="g-qtv">5,45</td><td><span class="g-zone" style="background:rgb(245,226,183)">74%</span></td><td class="g-qtv">1,06</td></tr>
@@ -569,10 +571,9 @@ iif( (360-Ch72)&lt;40;40;360-Ch72)
     <p>В будущем, когда алгоритмы по основному функционалу приложения в рамках первичной задумки будут реализованы, сервис сможет приступить к развитию механик для других видов спорта на выносливость.</p>
     <p>Приложение <b><i>Moneyrun</i></b> создано для развития бегового сообщества и к монетизации разрешен только бег. Размещение тренировок из небеговых дисциплин (велосипед, роликовые коньки, лыжи и др.) не приветствуется – <b><i>Атлету</i></b> выносится предупреждение. При повторении ситуации сервис будет вынужден заблокировать аккаунт.</p>
     <p>Все процессы выстроены максимально экономично, с опорой на труд волонтёров, меценатов и энтузиастов бега. <b><i>Moneyrun</i></b> — это некоммерческая организация (выплаты носят характер благотворительных поощрений) и не преследует цели заработка: платформа готова финансово поощрять <b><i>Атлетов,</i></b> нацеленных на результативность.</p>
-    <div class="g-final"><span class="g-final-title">Run, <span class="g-final-mark">Earn,</span> Enjoy!</span></div>
 </div></main>
 <footer><div class="foot-inner">
-  <div class="foot-c"><a href="index.html" class="nav-logo" style="margin-bottom:.4rem"><img class="logo-mark" src="art/logo-mark.png" alt="Moneyrun" width="120" height="120"><span class="wordmark">Moneyrun</span></a><p class="tagline">Социально-благотворительный проект по развитию бегового движения.</p></div>
+  <div class="foot-c"><a href="index.html" class="nav-logo" style="margin-bottom:.4rem"><img class="logo-mark" src="art/logo-mark.png" alt="Moneyrun" width="120" height="120"><span class="wordmark">Moneyrun</span></a><p class="tagline">Социально-благотворительный проект по развитию бегового движения.</p><p class="foot-slogan">Run, <span>Earn,</span> Enjoy!</p></div>
   <div class="foot-c"><span class="label">Сервис</span><a href="index.html#howto">Как работает</a><a href="index.html#rules">Правила</a><a href="index.html#clubs">Клубы</a><a href="index.html#principles">Принципы</a></div>
   <div class="foot-c"><span class="label">Связаться</span><a href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram · @moneyrun</a><a href="index.html#contact">Сотрудничество</a></div>
 </div><div class="foot-bottom"><span>© 2023 — 2026 Moneyrun</span><span style="display:flex;gap:1.5rem;flex-wrap:wrap"><a href="guide.html">Правила сервиса</a><a href="privacypolicy.html">Политика конфиденциальности</a></span></div></footer>
