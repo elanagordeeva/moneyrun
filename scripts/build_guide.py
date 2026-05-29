@@ -39,7 +39,7 @@ DEF_TERMS = {
 _TR = {'а':'a','б':'b','в':'v','г':'g','д':'d','е':'e','ё':'e','ж':'zh','з':'z','и':'i',
  'й':'y','к':'k','л':'l','м':'m','н':'n','о':'o','п':'p','р':'r','с':'s','т':'t','у':'u',
  'ф':'f','х':'h','ц':'c','ч':'ch','ш':'sh','щ':'sch','ъ':'','ы':'y','ь':'','э':'e','ю':'yu','я':'ya'}
-toc=[]; _ids=set()
+toc=[]; _ids=set(); _h2n=[0]
 def slug(text):
     s=''.join(_TR.get(ch,ch) for ch in text.lower())
     s=re.sub(r'[^a-z0-9]+','-',s).strip('-') or 'sec'
@@ -48,7 +48,12 @@ def slug(text):
     _ids.add(s); return s
 def hd(level,text):
     sid=slug(text); toc.append((level,text,sid))
-    return (f'<h{level} id="{sid}" class="g-h">'
+    if level==2:
+        ci=_h2n[0]%3+1; _h2n[0]+=1
+        cls=f'g-h g-h2 g-h-c{ci}'
+    else:
+        cls='g-h g-h3'
+    return (f'<h{level} id="{sid}" class="{cls}">'
             f'<a class="g-anchor" href="#{sid}" aria-hidden="true" tabindex="-1">#</a>'
             f'{H.escape(text)}</h{level}>')
 
@@ -255,7 +260,7 @@ while i<n:
         i+=1; continue
     # «Состоит из двух основных элементов» -> подзаголовок + нумерованные карточки
     if ln.startswith('Состоит из двух основных элементов'):
-        body.append('<p class="g-lead">'+style(ln)+'</p>')
+        body.append(hd(2,'Элементы платформы'))
         items=[]; j=i+1
         while j<n and len(items)<2:
             s=lines[j].strip()
@@ -421,6 +426,12 @@ CSS = """
     .legal h2{font-family:var(--fd);font-weight:800;font-size:clamp(1.3rem,2.4vw,1.7rem);letter-spacing:-.02em;line-height:1.2;margin:2.8rem 0 1rem;padding-top:.4rem}
     .legal h3{font-family:var(--fd);font-weight:700;font-size:1.1rem;letter-spacing:-.01em;margin:1.8rem 0 .5rem;color:var(--ink)}
     .g-h{position:relative;scroll-margin-top:84px}
+    /* цветные, оформленные заголовки */
+    .g-h-c1{--hc:#e8553f}.g-h-c2{--hc:#2f6df0}.g-h-c3{--hc:#3f9a2e}
+    .legal h2.g-h2{color:var(--hc);display:flex;flex-direction:column;align-items:flex-start;gap:.55rem}
+    .legal h2.g-h2::after{content:'';width:48px;height:4px;border-radius:3px;background:var(--hc)}
+    .legal h3.g-h3{color:#2f6df0;display:flex;align-items:center;gap:.55rem}
+    .legal h3.g-h3::before{content:'';flex:0 0 auto;width:16px;height:3px;border-radius:2px;background:currentColor}
     .g-h .g-anchor{position:absolute;left:-1.05em;top:.16em;font-size:.78em;font-weight:700;color:var(--muted2);text-decoration:none;opacity:0;transition:opacity .15s}
     .g-h:hover .g-anchor,.g-h .g-anchor:focus{opacity:1}
     .g-h .g-anchor:hover{color:var(--c-tomato)}
