@@ -80,8 +80,10 @@ def _grp(idx):
     # F D D1 D2 -> grey | C C+ B B+ -> green | A A+ Next -> blue
     return 'grey' if idx<=3 else ('green' if idx<=7 else 'blue')
 def _spaced(v):
-    # отделяем тире пробелами в диапазонах (64—75, 22 289—∞ и т.п.); одиночное «—» не трогаем
-    return re.sub(r'(?<=\S)—(?=\S)', ' — ', v)
+    # отделяем тире пробелами в диапазонах; одиночное «—» (пустая ячейка) не трогаем
+    v=re.sub(r'(?<=\S)—(?=\S)', ' — ', v)              # em-dash: 64—75, D—D2, C—B+
+    v=re.sub(r'(?<=[\d%∞])\s*[–-]\s*(?=[\d%∞])', ' — ', v)  # en-dash/дефис в числах: 01–09, 95-100%
+    return v
 def matrix_html():
     out=['<div class="g-tablewrap"><table class="g-matrix">']
     # строка-группировка по типам Грейдов
@@ -120,7 +122,7 @@ def semi_table(rows):
     for i,r in enumerate(parsed):
         r=r+['']*(ncol-len(r))
         tag='th' if i==0 else 'td'
-        out.append('<tr>'+''.join(f'<{tag}>{c}</{tag}>' for c in r)+'</tr>')
+        out.append('<tr>'+''.join(f'<{tag}>{_spaced(c)}</{tag}>' for c in r)+'</tr>')
     out.append('</table></div>')
     return '\n'.join(out)
 
