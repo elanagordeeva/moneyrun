@@ -541,6 +541,8 @@
       #step-track .ph,#step-xp .ph,#step-payout .ph{position:absolute;top:50%;left:50%;width:46%;max-width:200px;max-height:none;animation:none!important}
       #step-track .ph-1,#step-xp .ph-1,#step-payout .ph-1{transform:translate(-94%,-50%) rotate(-5deg)}
       #step-track .ph-2,#step-xp .ph-2,#step-payout .ph-2{transform:translate(-6%,-46%) rotate(5deg)}
+      /* на узких экранах скрины статичны — без реакции на наведение */
+      #step-track .ph,#step-xp .ph,#step-payout .ph,.hero-art .ph-shot{pointer-events:none}
     }
     @media(max-width:560px){
       .hero-title{font-size:clamp(2rem,11vw,3rem)}
@@ -773,7 +775,7 @@
         <div class="club2-stats">
           <div class="club2-stat"><div class="v">5 / нед</div><div class="l">тренировки</div></div>
           <div class="club2-stat"><div class="v">от С+</div><div class="l">вступление</div></div>
-          <div class="club2-stat"><div class="v lime">до 12 ₽/XP</div><div class="l">курс</div></div>
+          <div class="club2-stat"><div class="v lime">от 12 ₽/XP</div><div class="l">курс</div></div>
         </div>
       </div>
     </article>
