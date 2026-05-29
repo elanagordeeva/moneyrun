@@ -50,8 +50,7 @@ def hd(level,text):
     sid=slug(text); toc.append((level,text,sid))
     cls='g-h g-h2' if level==2 else 'g-h g-h3'
     return (f'<h{level} id="{sid}" class="{cls}">'
-            f'<a class="g-anchor" href="#{sid}" aria-hidden="true" tabindex="-1">#</a>'
-            f'<span class="g-h-mark">{H.escape(text)}</span></h{level}>')
+            f'<a class="g-h-link" href="#{sid}"><span class="g-h-mark">{H.escape(text)}</span></a></h{level}>')
 
 # --- Матрица Грейдов (захардкожена 1-в-1) ---
 GRADES = ['F','D','D1','D2','C','C+','B','B+','A','A+','Next']
@@ -452,13 +451,13 @@ CSS = """
     .legal-back{display:inline-flex;gap:.4rem;font-size:.9rem;color:var(--muted);text-decoration:none;margin-bottom:1.2rem}
     .legal-back:hover{color:var(--ink)}
     /* hero-блок страницы */
-    .g-hero{position:relative;overflow:hidden;border-radius:var(--r-lg);background:#deeafd;box-shadow:var(--sh-md);margin:0 0 2.8rem;display:grid;grid-template-columns:1fr minmax(240px,46%);gap:1rem;align-items:center;isolation:isolate}
+    .g-hero{position:relative;overflow:hidden;border-radius:var(--r-lg);background:#deeafd;box-shadow:var(--sh-md);margin:0 0 2.8rem;display:grid;grid-template-columns:1fr minmax(200px,40%);gap:1rem;align-items:center;isolation:isolate}
     .g-hero::before{content:'';position:absolute;inset:0;z-index:0;background:url('art/electric-2-sky.svg') center/cover no-repeat}
     .g-hero::after{content:'';position:absolute;inset:0;z-index:0;background:linear-gradient(105deg,rgba(252,253,254,.92) 0%,rgba(252,253,254,.55) 46%,rgba(252,253,254,0) 72%)}
     .g-hero-text{position:relative;z-index:2;padding:clamp(1.8rem,4vw,2.8rem) clamp(1.4rem,4vw,2.6rem)}
     .g-hero-eyebrow{display:inline-block;font-family:var(--fm);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--c-blue-ink);background:#fff;border:1px solid var(--c-blue);border-radius:999px;padding:.34rem .8rem;margin-bottom:1.1rem}
     .g-hero h1{font-family:var(--fd);font-weight:800;font-size:clamp(2rem,4.6vw,3.1rem);letter-spacing:-.03em;line-height:1.04;margin:0 0 .9rem;color:var(--ink)}
-    .g-hero-sub{color:#2c466f;font-size:clamp(1rem,1.4vw,1.12rem);line-height:1.6;max-width:34ch;margin:0}
+    .g-hero-sub{color:#2c466f;font-size:clamp(1rem,1.4vw,1.12rem);line-height:1.6;max-width:42rem;margin:0}
     .g-hero-art{position:relative;z-index:1;align-self:center;justify-self:center;padding:clamp(1.2rem,3vw,2rem) clamp(1rem,2.5vw,1.6rem)}
     .g-hero-art img{display:block;width:100%;max-width:400px;height:auto;border-radius:22px;box-shadow:0 26px 50px -20px rgba(20,45,90,.4),0 8px 18px -10px rgba(20,45,90,.22);transform:rotate(-1.5deg)}
     @media(max-width:680px){
@@ -477,10 +476,7 @@ CSS = """
     .g-hero h1,.legal h2.g-h2,.legal h3.g-h3,.g-final-title{font-style:italic;font-variation-settings:'slnt' -10}
     /* числа — табличные цифры для ровных колонок (замена моноширинного) */
     table.g-tbl,table.g-matrix,.g-toc a::before,.g-qt .g-zone,.g-qt .g-qtv{font-variant-numeric:tabular-nums}
-    .g-h .g-anchor{position:absolute;left:-1.05em;top:.16em;font-size:.78em;font-weight:700;color:var(--muted2);text-decoration:none;opacity:0;transition:opacity .15s}
-    .g-h:hover .g-anchor,.g-h .g-anchor:focus{opacity:1}
-    .g-h .g-anchor:hover{color:var(--c-tomato)}
-    @media(hover:none){.g-h .g-anchor{display:none}}
+    .g-h .g-h-link{color:inherit;text-decoration:none;cursor:pointer}
     .g-toc{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);box-shadow:var(--sh-sm);padding:1.1rem 1.35rem 1.2rem;margin:1.6rem 0 2.6rem}
     .g-toc-title{font-family:var(--fm);font-weight:500;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:0 0 .8rem}
     .g-toc ol{list-style:none;margin:0;padding:0;columns:2;column-gap:1.8rem;counter-reset:toc}
@@ -566,7 +562,10 @@ CSS = """
     .g-qt td{vertical-align:middle}
     .g-qt .g-zone{display:inline-block;min-width:3.6em;text-align:center;padding:.22em .6em;border-radius:999px;font-family:var(--fm);font-weight:600;font-size:.74rem;color:#22260f;border:1px solid rgba(15,20,15,.06)}
     .g-qt .g-qtv{font-family:var(--fm);color:var(--ink2);font-weight:600}
-    .g-rl table{font-size:.74rem}
+    .g-rl table{font-size:.74rem;table-layout:fixed;width:100%}
+    .g-rl table th,.g-rl table td{overflow:hidden;text-overflow:ellipsis}
+    .g-rl table th:first-child,.g-rl table td:first-child{width:14%}
+    .g-rl table th:last-child,.g-rl table td:last-child{width:13%}
     .g-rl{max-height:560px;overflow:auto}
     .g-tabs{display:flex;gap:.4rem;margin:1.2rem 0 .2rem}
     .g-tab{font-family:var(--fd);font-weight:700;font-size:.9rem;padding:.5rem 1.1rem;border-radius:999px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer}
