@@ -300,6 +300,20 @@ while i<n:
         lis=''.join(f'<li>{style(it.rstrip(" ;"))}</li>' for it in items)
         body.append('<ul class="g-bullets">'+lis+'</ul>')
         i=j; continue
+    # «...зависит ... от следующих факторов:» -> вводный абзац + нумерованный список
+    if ln.replace('\xa0',' ').rstrip().endswith('следующих факторов:'):
+        body.append('<p>'+style(ln)+'</p>')
+        items=[]; j=i+1
+        while j<n:
+            s=lines[j].strip()
+            if not s or re.fullmatch(r'[1-4]', s) or s in SKIP: j+=1; continue
+            if s in H2 or s in H3: break
+            items.append(s); j+=1
+        lis=''.join(f'<li><span class="g-num-b">{k}</span>'
+                    f'<span class="g-nl-text">{style(it.rstrip(" ;"))}</span></li>'
+                    for k,it in enumerate(items,1))
+        body.append('<ol class="g-numlist">'+lis+'</ol>')
+        i=j; continue
     # Матрица: вставляем после h2 и проглатываем строки до 'Регистрация' (первое определение)
     if ln=='Матрица Грейдов':
         add_h2('Матрица Грейдов')
@@ -468,6 +482,10 @@ CSS = """
     .g-bullets{list-style:none;margin:.2rem 0 1.4rem;padding:0;display:grid;gap:.75rem}
     .g-bullets li{position:relative;padding-left:1.65rem;color:var(--ink2);line-height:1.7;font-size:1rem}
     .g-bullets li::before{content:'';position:absolute;left:.35rem;top:.66em;width:7px;height:7px;border-radius:50%;background:var(--lime-deep)}
+    .g-numlist{list-style:none;margin:1.2rem 0 2rem;padding:0;display:grid;gap:.7rem}
+    .g-numlist li{display:flex;gap:.95rem;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:.85rem 1.15rem;box-shadow:var(--sh-sm)}
+    .g-num-b{flex:0 0 auto;width:30px;height:30px;border-radius:9px;background:var(--lime);color:var(--lime-ink);font-family:var(--fd);font-weight:800;font-size:.95rem;display:flex;align-items:center;justify-content:center}
+    .g-nl-text{color:var(--ink2);font-size:.97rem;line-height:1.5}
     .g-acc{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem;align-items:start;margin:1.4rem 0 2.2rem}
     @media(max-width:680px){.g-acc{grid-template-columns:1fr}}
     .g-acc-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);box-shadow:var(--sh-sm);overflow:hidden;transition:box-shadow .2s}
