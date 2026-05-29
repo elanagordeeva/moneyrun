@@ -127,14 +127,12 @@ def semi_table(rows):
 
 def _lerp(a,b,t): return tuple(round(a[i]+(b[i]-a[i])*t) for i in range(3))
 def _heat(p):
-    # цвета пульсовых зон из Pulse Zones Description.png
-    if   p>=96: base=(244,93,76)    # Максимальная — красный
-    elif p>=91: base=(247,160,70)   # Субмаксимальная — оранжевый
-    elif p>=76: base=(120,196,100)  # Анаэробная — зелёный
-    elif p>=66: base=(116,179,255)  # Аэробная — синий
-    else:       base=(165,163,255)  # Восстановительная — фиолетовый
-    c=_lerp(base,(255,255,255),0.6)  # светлый тинт для читаемости
-    return f'rgb({c[0]},{c[1]},{c[2]})'
+    # точные цвета пульсовых зон из zone.png
+    if   p>=96: return '#F9CDCC'  # Максимальная — красный
+    elif p>=91: return '#FBE3C9'  # Субмаксимальная — оранжевый
+    elif p>=76: return '#C2E1CB'  # Анаэробная — зелёный
+    elif p>=66: return '#74B3FF'  # Аэробная — синий
+    else:       return '#A5A3FF'  # Восстановительная — фиолетовый
 def qtrimp_table(rows):
     parsed=[semi_cells(r) for r in rows]
     head=parsed[0]
