@@ -598,7 +598,9 @@ FOOT = """<footer><div class="foot-inner">
   <div class="foot-c"><span class="label">Связаться</span><a href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram · @moneyrun</a><a href="index.html#contact">Сотрудничество</a></div>
 </div><div class="foot-bottom"><span>© 2023 — 2026 Moneyrun</span><span style="display:flex;gap:1.5rem;flex-wrap:wrap"><a href="guide.html">Правила сервиса</a><a href="privacypolicy.html">Политика конфиденциальности</a></span></div></footer>"""
 
-JS = """<script>document.querySelectorAll('.g-tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.g-tab').forEach(x=>x.classList.remove('on'));b.classList.add('on');const t=b.dataset.t;document.querySelectorAll('.g-rlpane').forEach(p=>{p.hidden=(p.dataset.pane!==t)});}));</script>"""
+JS = ("""<script>document.querySelectorAll('.g-tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.g-tab').forEach(x=>x.classList.remove('on'));b.classList.add('on');const t=b.dataset.t;document.querySelectorAll('.g-rlpane').forEach(p=>{p.hidden=(p.dataset.pane!==t)});}));</script>"""
+ + r"""<script>/* висячие предлоги */
+(function(){var NB=String.fromCharCode(160);var W='а|и|в|во|к|ко|с|со|о|об|обо|у|из|изо|от|ото|до|по|на|за|над|надо|под|подо|при|про|для|без|безо|не|ни|но|то|же|ли|бы|или|что|как|я';var re=new RegExp('(^|[\\s'+NB+'(«„])('+W+')[ \\t]+','gi');function bind(s){var p;do{p=s;s=s.replace(re,function(_,b,w){return b+w+NB;});}while(s!==p);return s;}function walk(){var skip={SCRIPT:1,STYLE:1,TEXTAREA:1,CODE:1,PRE:1,NOSCRIPT:1};var tw=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null),n,a=[];while(n=tw.nextNode()){if(n.parentNode&&!skip[n.parentNode.nodeName]&&n.nodeValue.indexOf(' ')>-1)a.push(n);}a.forEach(function(t){var v=t.nodeValue,x=bind(v);if(x!==v)t.nodeValue=x;});}if(document.readyState!=='loading')walk();else document.addEventListener('DOMContentLoaded',walk);})();</script>""")
 
 doc=f"""<!DOCTYPE html>
 <html lang="ru">

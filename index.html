@@ -952,5 +952,7 @@ if(!RM){
   },{passive:true});
 }
 </script>
+<script>/* висячие предлоги: предлог/союз приклеиваем к следующему слову неразрывным пробелом */
+(function(){var NB=String.fromCharCode(160);var W='а|и|в|во|к|ко|с|со|о|об|обо|у|из|изо|от|ото|до|по|на|за|над|надо|под|подо|при|про|для|без|безо|не|ни|но|то|же|ли|бы|или|что|как|я';var re=new RegExp('(^|[\\s'+NB+'(«„])('+W+')[ \\t]+','gi');function bind(s){var p;do{p=s;s=s.replace(re,function(_,b,w){return b+w+NB;});}while(s!==p);return s;}function walk(){var skip={SCRIPT:1,STYLE:1,TEXTAREA:1,CODE:1,PRE:1,NOSCRIPT:1};var tw=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null),n,a=[];while(n=tw.nextNode()){if(n.parentNode&&!skip[n.parentNode.nodeName]&&n.nodeValue.indexOf(' ')>-1)a.push(n);}a.forEach(function(t){var v=t.nodeValue,x=bind(v);if(x!==v)t.nodeValue=x;});}if(document.readyState!=='loading')walk();else document.addEventListener('DOMContentLoaded',walk);})();</script>
 </body>
 </html>
