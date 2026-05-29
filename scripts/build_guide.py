@@ -255,8 +255,8 @@ while i<n:
         i+=1; continue
     # «Run, Earn, Enjoy!» -> крупный заголовок как на главной (без якоря и оглавления)
     if ln=='Run, Earn, Enjoy!':
-        body.append('<div class="g-final"><span class="g-final-title">Run, Earn, '
-                    '<span class="g-final-mark">Enjoy!</span></span></div>')
+        body.append('<div class="g-final"><span class="g-final-title">Run, '
+                    '<span class="g-final-mark">Earn,</span> Enjoy!</span></div>')
         i+=1; continue
     # «Состоит из двух основных элементов» -> подзаголовок + нумерованные карточки
     if ln.startswith('Состоит из двух основных элементов'):
@@ -426,12 +426,12 @@ CSS = """
     .legal h2{font-family:var(--fd);font-weight:800;font-size:clamp(1.3rem,2.4vw,1.7rem);letter-spacing:-.02em;line-height:1.2;margin:2.8rem 0 1rem;padding-top:.4rem}
     .legal h3{font-family:var(--fd);font-weight:700;font-size:1.1rem;letter-spacing:-.01em;margin:1.8rem 0 .5rem;color:var(--ink)}
     .g-h{position:relative;scroll-margin-top:84px}
-    /* цветные, оформленные заголовки */
-    .g-h-c1{--hc:#e8553f}.g-h-c2{--hc:#2f6df0}.g-h-c3{--hc:#3f9a2e}
+    /* салатовые, оформленные заголовки */
+    .g-h-c1,.g-h-c2,.g-h-c3{--hc:#5d9412}
     .legal h2.g-h2{color:var(--hc);display:flex;flex-direction:column;align-items:flex-start;gap:.55rem}
-    .legal h2.g-h2::after{content:'';width:48px;height:4px;border-radius:3px;background:var(--hc)}
-    .legal h3.g-h3{color:#2f6df0;display:flex;align-items:center;gap:.55rem}
-    .legal h3.g-h3::before{content:'';flex:0 0 auto;width:16px;height:3px;border-radius:2px;background:currentColor}
+    .legal h2.g-h2::after{content:'';width:48px;height:4px;border-radius:3px;background:var(--lime-deep)}
+    .legal h3.g-h3{color:#5d9412;display:flex;align-items:center;gap:.55rem}
+    .legal h3.g-h3::before{content:'';flex:0 0 auto;width:16px;height:3px;border-radius:2px;background:var(--lime-deep)}
     .g-h .g-anchor{position:absolute;left:-1.05em;top:.16em;font-size:.78em;font-weight:700;color:var(--muted2);text-decoration:none;opacity:0;transition:opacity .15s}
     .g-h:hover .g-anchor,.g-h .g-anchor:focus{opacity:1}
     .g-h .g-anchor:hover{color:var(--c-tomato)}
