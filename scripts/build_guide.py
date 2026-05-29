@@ -93,7 +93,7 @@ def matrix_html():
     out.append('<tr><th>Грейды</th>'+''.join(
         f'<th class="g-c-{_grp(k)}">{g}</th>' for k,g in enumerate(GRADES))+'</tr></thead>')
     for sub, rows in MATRIX.items():
-        out.append(f'<tbody><tr class="g-sub"><td colspan="{len(GRADES)+1}">{sub}</td></tr>')
+        out.append(f'<tbody><tr class="g-sub"><td colspan="{len(GRADES)+1}"><span class="g-sub-t">{sub}</span></td></tr>')
         for label, vals in rows:
             cells=''.join(f'<td class="g-c-{_grp(k)}">{_spaced(v)}</td>' for k,v in enumerate(vals))
             out.append(f'<tr><th class="g-rowh">{label}</th>'+cells+'</tr>')
@@ -539,6 +539,8 @@ CSS = """
     .g-matrix .g-rowh{text-align:left;font-family:var(--fb);font-weight:600;color:var(--ink);background:var(--surface);position:sticky;left:0;min-width:200px}
     .g-matrix td{text-align:center;color:var(--ink2)}
     .g-matrix tr.g-sub td{background:#e7ebf1;color:#3a4150;font-family:var(--fd);font-weight:800;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;text-align:left;border-top:1px solid #d8dee8;border-bottom:1px solid #d8dee8}
+    /* подзаголовки секций закреплены слева — видны при горизонтальном скролле */
+    .g-matrix .g-sub-t{position:sticky;left:.5rem;display:inline-block}
     /* раскраска столбцов по типам Грейдов */
     .g-matrix .g-grp th{font-family:var(--fd);font-weight:800;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;text-align:center;padding:.45rem .4rem;border:2px solid #fff;border-bottom:none}
     .g-matrix .g-grp .g-c-grey{background:#9aa097;color:#fff}

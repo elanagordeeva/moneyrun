@@ -122,6 +122,8 @@
     .g-matrix .g-rowh{text-align:left;font-family:var(--fb);font-weight:600;color:var(--ink);background:var(--surface);position:sticky;left:0;min-width:200px}
     .g-matrix td{text-align:center;color:var(--ink2)}
     .g-matrix tr.g-sub td{background:#e7ebf1;color:#3a4150;font-family:var(--fd);font-weight:800;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;text-align:left;border-top:1px solid #d8dee8;border-bottom:1px solid #d8dee8}
+    /* подзаголовки секций закреплены слева — видны при горизонтальном скролле */
+    .g-matrix .g-sub-t{position:sticky;left:.5rem;display:inline-block}
     /* раскраска столбцов по типам Грейдов */
     .g-matrix .g-grp th{font-family:var(--fd);font-weight:800;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;text-align:center;padding:.45rem .4rem;border:2px solid #fff;border-bottom:none}
     .g-matrix .g-grp .g-c-grey{background:#9aa097;color:#fff}
@@ -191,7 +193,7 @@
     <div class="g-tablewrap"><table class="g-matrix">
 <thead><tr class="g-grp"><th></th><th class="g-c-grey" colspan="4">Серый</th><th class="g-c-green" colspan="4">Зелёный</th><th class="g-c-blue" colspan="3">Синий</th></tr>
 <tr><th>Грейды</th><th class="g-c-grey">F</th><th class="g-c-grey">D</th><th class="g-c-grey">D1</th><th class="g-c-grey">D2</th><th class="g-c-green">C</th><th class="g-c-green">C+</th><th class="g-c-green">B</th><th class="g-c-green">B+</th><th class="g-c-blue">A</th><th class="g-c-blue">A+</th><th class="g-c-blue">Next</th></tr></thead>
-<tbody><tr class="g-sub"><td colspan="12">Условия перехода</td></tr>
+<tbody><tr class="g-sub"><td colspan="12"><span class="g-sub-t">Условия перехода</span></td></tr>
 <tr><th class="g-rowh">Регистрация</th><td class="g-c-grey">+</td><td class="g-c-grey">+</td><td class="g-c-grey">+</td><td class="g-c-grey">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td></tr>
 <tr><th class="g-rowh">Инфо профиля</th><td class="g-c-grey">—</td><td class="g-c-grey">+</td><td class="g-c-grey">+</td><td class="g-c-grey">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td></tr>
 <tr><th class="g-rowh">Подписка в Telegram</th><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td></tr>
@@ -199,13 +201,13 @@
 <tr><th class="g-rowh">Experience, XP</th><td class="g-c-grey">—</td><td class="g-c-grey">0</td><td class="g-c-grey">200</td><td class="g-c-grey">700</td><td class="g-c-green">1 500</td><td class="g-c-green">3 500</td><td class="g-c-green">7 000</td><td class="g-c-green">11 200</td><td class="g-c-blue">16 240</td><td class="g-c-blue">22 288</td><td class="g-c-blue">22 289 — ∞</td></tr>
 <tr><th class="g-rowh">Монетизация, ₽</th><td class="g-c-grey">—</td><td class="g-c-grey">1</td><td class="g-c-grey">2</td><td class="g-c-grey">3</td><td class="g-c-green">4</td><td class="g-c-green">7</td><td class="g-c-green">10</td><td class="g-c-green">13</td><td class="g-c-blue">16</td><td class="g-c-blue">19</td><td class="g-c-blue">22 — ∞</td></tr>
 </tbody>
-<tbody><tr class="g-sub"><td colspan="12">Доп. условия монетизации</td></tr>
+<tbody><tr class="g-sub"><td colspan="12"><span class="g-sub-t">Доп. условия монетизации</span></td></tr>
 <tr><th class="g-rowh">Пульсовые данные</th><td class="g-c-grey">20 мин</td><td class="g-c-grey">20 мин</td><td class="g-c-grey">+</td><td class="g-c-grey">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td></tr>
 <tr><th class="g-rowh">Верхние зоны (HPZ)</th><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td></tr>
 <tr><th class="g-rowh">Беговые часы</th><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td></tr>
 <tr><th class="g-rowh">Минимальный темп, мин/км</th><td class="g-c-grey">10:00</td><td class="g-c-grey">10:00</td><td class="g-c-grey">8:00</td><td class="g-c-grey">8:00</td><td class="g-c-green">8:00</td><td class="g-c-green">8:00</td><td class="g-c-green">8:00</td><td class="g-c-green">8:00</td><td class="g-c-blue">8:00</td><td class="g-c-blue">8:00</td><td class="g-c-blue">8:00</td></tr>
 </tbody>
-<tbody><tr class="g-sub"><td colspan="12">Дополнительные возможности</td></tr>
+<tbody><tr class="g-sub"><td colspan="12"><span class="g-sub-t">Дополнительные возможности</span></td></tr>
 <tr><th class="g-rowh">Создание Клуба</th><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td></tr>
 <tr><th class="g-rowh">Роль Забота в Клубе</th><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td></tr>
 <tr><th class="g-rowh">Финвайт</th><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-grey">—</td><td class="g-c-green">—</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-green">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td><td class="g-c-blue">+</td></tr>
