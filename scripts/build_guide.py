@@ -343,6 +343,37 @@ while i<n:
         lis=''.join(f'<li>{style(it.rstrip(" ;"))}</li>' for it in items)
         body.append('<ul class="g-bullets">'+lis+'</ul>')
         i=j; continue
+    # «На приветственном Грейде F …» — буллеты (доп. условия начисления XP) с вложенными суб-пунктами
+    _g1=ln.replace('\xa0',' ').startswith('На приветственном Грейде F')
+    _g2=ln.replace('\xa0',' ').startswith('Переход на') and 'Грейд D возможен' in ln.replace('\xa0',' ')
+    if _g1 or _g2:
+        stops_g1=('Также существуют условия переходов','Перечисленные выше тренировки')
+        items=[]; j=i
+        while j<n:
+            s=lines[j].strip()
+            if not s: j+=1; continue
+            sn=s.replace('\xa0',' ')
+            if s in H2 or s in H3: break
+            if _g1 and any(sn.startswith(p) for p in stops_g1): break
+            if s.startswith('–') or s.startswith('—'):
+                sub=s.lstrip('–— ').strip()
+                if items: items[-1][1].append(sub)
+                else: items.append((sub,[]))
+            else:
+                items.append((s,[]))
+            j+=1
+        parts=['<ul class="g-bullets">']
+        for text,subs in items:
+            parts.append('<li>'+style(text.rstrip(' ;')))
+            if subs:
+                parts.append('<ul class="g-bullets-sub">')
+                for sub in subs:
+                    parts.append('<li>'+style(sub.rstrip(' ;'))+'</li>')
+                parts.append('</ul>')
+            parts.append('</li>')
+        parts.append('</ul>')
+        body.append(''.join(parts))
+        i=j; continue
     # «Текущий Грейд ~ текущий RL / RL выше / RL ниже» -> SVG-иллюстрация (заменяем 3 строки)
     if ln.replace('\xa0',' ').strip()=='Текущий Грейд ~ текущий RL':
         body.append('<figure class="g-rl-vis"><img src="art/rq-grades.svg?v=3" alt="Зависимость RQ от соотношения RL и Грейда" loading="lazy"></figure>')
@@ -545,6 +576,9 @@ CSS = """
     .g-bullets{list-style:none;margin:.2rem 0 1.4rem;padding:0;display:grid;gap:.75rem}
     .g-bullets li{position:relative;padding-left:1.65rem;color:var(--ink2);line-height:1.7;font-size:1rem}
     .g-bullets li::before{content:'';position:absolute;left:.35rem;top:.66em;width:7px;height:7px;border-radius:50%;background:var(--lime-deep)}
+    .g-bullets-sub{list-style:none;margin:.5rem 0 0;padding:0;display:grid;gap:.4rem}
+    .g-bullets-sub li{position:relative;padding-left:1.4rem;color:var(--ink2);line-height:1.6;font-size:.95rem}
+    .g-bullets-sub li::before{content:'';position:absolute;left:.55rem;top:.66em;width:5px;height:5px;border-radius:50%;background:var(--muted2)}
     .g-rl-vis{margin:1.4rem 0 1.8rem;text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:1rem 1.2rem;box-shadow:var(--sh-sm)}
     .g-rl-vis img{display:block;width:100%;max-width:1080px;height:auto;margin:0 auto}
     .g-example{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--lime-deep);border-radius:var(--r-md);padding:.95rem 1.2rem;margin:.7rem 0;box-shadow:var(--sh-sm)}
