@@ -154,24 +154,28 @@ def qtrimp_table(rows):
     out.append('</tbody></table></div>')
     return '\n'.join(out)
 
+RL_HIGHLIGHTS={'NL Rus','105','97','87','76','64','53','39','24','10','1'}
 def rl_table(rows, head):
     # head like "RL (M) 5 км 10 км 21 км 42 км Грейд"
     heads=['RL','5 км','10 км','21 км','42 км','Грейд']
     out=['<div class="g-tablewrap g-rl"><table class="g-tbl">']
     out.append('<thead><tr>'+''.join(f'<th>{h}</th>' for h in heads)+'</tr></thead><tbody>')
+    chunk=-1  # увеличивается на каждой выделенной строке
     for r in rows:
         parts=r.split()
         times=[p for p in parts if re.match(r'^\d+:\d',p)]
         grade=parts[-1]
         if not times:
-            # особая строка без результатов (напр. RL=0): описание на ширину дистанций
-            rl=parts[0]
-            desc=' '.join(parts[1:-1])
-            out.append(f'<tr><td>{rl}</td><td colspan="4">{desc}</td><td>{grade}</td></tr>')
+            rl=parts[0]; desc=' '.join(parts[1:-1])
+            if rl in RL_HIGHLIGHTS: chunk+=1; cls='g-rl-hl'
+            else: cls='g-rl-w' if chunk%2==0 else 'g-rl-g'
+            out.append(f'<tr class="{cls}"><td>{rl}</td><td colspan="4">{desc}</td><td>{grade}</td></tr>')
             continue
         rl=' '.join(parts[:len(parts)-len(times)-1])
+        if rl in RL_HIGHLIGHTS: chunk+=1; cls='g-rl-hl'
+        else: cls='g-rl-w' if chunk%2==0 else 'g-rl-g'
         cells=[rl]+times+[grade]
-        out.append('<tr>'+''.join(f'<td>{c}</td>' for c in cells)+'</tr>')
+        out.append(f'<tr class="{cls}">'+''.join(f'<td>{c}</td>' for c in cells)+'</tr>')
     out.append('</tbody></table></div>')
     return '\n'.join(out)
 
@@ -597,6 +601,10 @@ CSS = """
     .g-rl table th:first-child,.g-rl table td:first-child{width:14%}
     .g-rl table th:last-child,.g-rl table td:last-child{width:13%}
     .g-rl{max-height:560px;overflow:auto}
+    /* построчная подсветка таблицы Running Level (как в исходнике, но нашими цветами) */
+    .g-rl tbody tr.g-rl-hl td{background:var(--lime2)}
+    .g-rl tbody tr.g-rl-w td{background:var(--surface)}
+    .g-rl tbody tr.g-rl-g td{background:var(--bg)}
     .g-tabs{display:flex;gap:.4rem;margin:1.2rem 0 .2rem}
     .g-tab{font-family:var(--fd);font-weight:700;font-size:.9rem;padding:.5rem 1.1rem;border-radius:999px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer}
     .g-tab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
