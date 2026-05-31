@@ -490,7 +490,11 @@ content=re.sub(r'Telegram-канал[а-яё]*',
 
 CSS = """
     :root{--bg:#eef2ec;--bg2:#f4f7f3;--surface:#ffffff;--ink:#0e120e;--ink2:#1b1b21;--muted:#6b7068;--muted2:#9aa097;--border:#e6eae3;--border2:#dadfd6;--lime:#BDFF76;--lime2:#D5FFA8;--lime-deep:#9CD161;--lime-ink:#1f2a05;--c-blue:#B6D8FF;--c-blue-ink:#133C6F;--blue:#3363E9;--blue-ink:#214199;--c-tomato:#FF3F3F;--fd:'Roboto Flex','Roboto',system-ui,sans-serif;--fb:'Roboto Flex','Roboto',system-ui,sans-serif;--fm:'Roboto Flex','Roboto',ui-monospace,monospace;--fw:'Roboto Flex','Roboto',system-ui,sans-serif;--maxw:1240px;--sh-sm:0 2px 6px rgba(15,20,15,.05),0 1px 2px rgba(15,20,15,.04);--sh-md:0 14px 30px -10px rgba(15,30,12,.10),0 8px 18px -6px rgba(15,30,12,.06);--r-sm:12px;--r-md:18px;--r-lg:24px}
-    *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+    *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;font-size:16px}
+    @media(min-width:1600px){html{font-size:18px} :root{--maxw:1440px}}
+    @media(min-width:1920px){html{font-size:20px} :root{--maxw:1600px}}
+    @media(min-width:2400px){html{font-size:24px} :root{--maxw:1900px}}
+    @media(min-width:3200px){html{font-size:28px} :root{--maxw:2200px}}
     body{background:var(--bg);color:var(--ink);font-family:var(--fb);line-height:1.65;-webkit-font-smoothing:antialiased}
     ::selection{background:var(--lime);color:var(--lime-ink)}img{max-width:100%;display:block}a{color:inherit}
     #navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(238,242,236,.82);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);border-bottom:1px solid var(--border)}

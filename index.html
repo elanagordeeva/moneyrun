@@ -68,7 +68,11 @@
       --r-sm:12px;--r-md:18px;--r-lg:24px;--r-xl:32px;
     }
     *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth;overflow-x:hidden}
+    html{scroll-behavior:smooth;overflow-x:hidden;font-size:16px}
+    @media(min-width:1600px){html{font-size:18px} :root{--maxw:1440px}}
+    @media(min-width:1920px){html{font-size:20px} :root{--maxw:1600px}}
+    @media(min-width:2400px){html{font-size:24px} :root{--maxw:1900px}}
+    @media(min-width:3200px){html{font-size:28px} :root{--maxw:2200px}}
     body{background:var(--bg);color:var(--ink);font-family:var(--fb);line-height:1.65;overflow-x:hidden;max-width:100%;-webkit-font-smoothing:antialiased}
     ::selection{background:var(--lime);color:var(--lime-ink)}
     img{max-width:100%;display:block}
@@ -129,7 +133,7 @@
     .hero-title{font-family:var(--fd);font-size:clamp(2.4rem,6.6vw,5.4rem);font-weight:800;font-style:italic;font-variation-settings:'slnt' -10;line-height:.98;letter-spacing:-.04em;margin-bottom:1.5rem;color:var(--ink)}
     .hero-title .lime-mark{position:relative;display:inline-block;color:var(--lime-ink);padding:0 .2em;z-index:1}
     .hero-title .lime-mark::before{content:'';position:absolute;inset:.05em -.1em;background:var(--lime);border-radius:14px;z-index:-1;transform:rotate(-1.5deg);box-shadow:0 16px 40px -16px rgba(156,209,97,.65)}
-    .hero-sub{font-size:clamp(1rem,1.3vw,1.18rem);color:var(--muted);max-width:560px;margin:0 0 2.2rem;line-height:1.7}
+    .hero-sub{font-size:clamp(1rem,1.3vw,1.18rem);color:var(--muted);max-width:none;margin:0 0 2.2rem;line-height:1.7}
     .hero-actions{display:flex;gap:.7rem;flex-wrap:wrap;align-items:center}
     .store{display:inline-flex;align-items:center;gap:.7rem;background:var(--ink);color:#fff;padding:.7rem 1.25rem;border-radius:16px;text-decoration:none;transition:all .25s;box-shadow:var(--sh-md)}
     .store:hover{transform:translateY(-2px);box-shadow:var(--sh-lg);background:#000}
@@ -144,6 +148,10 @@
 
     /* hero mockup stack */
     .hero-art{position:relative;min-height:600px}
+    @media(min-width:1600px){
+      .hero-art{max-width:540px;width:100%;margin-left:auto;margin-right:auto}
+      #step-track .vbox,#step-xp .vbox,#step-payout .vbox{max-width:540px;margin-left:auto;margin-right:auto}
+    }
     .mk-card{position:absolute;background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--sh-card);overflow:hidden}
 
     /* phone screenshots cascade (real app screens) */
@@ -228,13 +236,13 @@
     /* sections */
     section[id],div[id]{scroll-margin-top:80px}
     .wrap{max-width:var(--maxw);margin:0 auto;padding:var(--sy) clamp(1.25rem,5vw,4rem)}
-    .sec-intro{max-width:840px;margin:0 auto;text-align:center;padding:var(--sy) clamp(1.25rem,5vw,4rem)}
+    .sec-intro{max-width:52.5rem;margin:0 auto;text-align:center;padding:var(--sy) clamp(1.25rem,5vw,4rem)}
     .label{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--fm);font-size:.66rem;letter-spacing:.24em;color:var(--lime-ink);text-transform:uppercase;background:var(--lime);padding:.45rem .85rem;border-radius:999px;font-weight:600}
     .title{font-family:var(--fd);font-weight:800;font-style:italic;font-variation-settings:'slnt' -10;letter-spacing:-.035em;font-size:clamp(2rem,4.6vw,3.6rem);line-height:1.05;color:var(--ink);margin:1.2rem 0 1.2rem}
     .title .lime-mark{position:relative;display:inline-block;color:var(--lime-ink);padding:0 .2em;z-index:1}
     .title .lime-mark::before{content:'';position:absolute;inset:.05em -.1em;background:var(--lime);border-radius:14px;z-index:-1;transform:rotate(-1deg);box-shadow:0 14px 32px -16px rgba(156,209,97,.55)}
-    .lede{font-size:1.08rem;color:var(--muted);line-height:1.7;max-width:660px}
-    .sec-intro .lede{margin:0 auto}
+    .lede{font-size:1.08rem;color:var(--muted);line-height:1.7;max-width:75rem}
+    .sec-intro .lede{margin:0 auto;max-width:100%;text-wrap:balance}
 
     /* step blocks */
     .block{max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:center;padding:var(--sy) clamp(1.25rem,5vw,4rem)}
@@ -413,7 +421,7 @@
     .principle-card:hover{transform:translateY(-4px);box-shadow:var(--sh-lg)}
     .principle-card .pblob{display:none}
     .principle-card .pic{position:relative;width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:1.1rem;font-family:var(--fd);font-weight:800;font-size:1.5rem;letter-spacing:-.02em;z-index:1}
-    .principle-card h3{position:relative;font-family:var(--fd);font-weight:800;font-size:1.15rem;line-height:1.2;color:var(--ink);letter-spacing:-.02em;margin-bottom:.7rem;z-index:1;text-wrap:balance;min-height:2.4em}
+    .principle-card h3{position:relative;font-family:var(--fd);font-weight:800;font-size:1.15rem;line-height:1.2;color:var(--ink);letter-spacing:-.02em;margin-bottom:.7rem;z-index:1}
     .principle-card p{position:relative;color:var(--muted);line-height:1.65;font-size:.98rem;z-index:1}
     .principle-card p b{color:var(--ink);font-weight:600}
     .pc-1{--pat-img:url('art/electric-2-lime.svg')}.pc-1 .pic{background:var(--tx-salat-primary);color:var(--tx-on-primary)}
@@ -475,8 +483,8 @@
     .foot-c .label{margin-bottom:.5rem;background:none;color:var(--muted);padding:0}
     .foot-c a{color:var(--ink);text-decoration:none;font-size:.95rem;transition:color .2s}.foot-c a:hover{color:var(--lime-ink)}
     /* rules section CTA */
-    .rules-btn{display:inline-flex;align-items:center;gap:.4rem;background:var(--ink);color:#fff;font-family:var(--fd);font-weight:700;font-size:.95rem;padding:.7rem 1.2rem;border-radius:999px;text-decoration:none;margin-top:1.5rem;transition:transform .2s,background .25s,box-shadow .25s;box-shadow:var(--sh-sm)}
-    .rules-btn:hover{transform:translateY(-1px);box-shadow:var(--sh-md);background:#000}
+    .rules-btn{display:inline-flex;align-items:center;gap:.5rem;background:var(--lime);color:var(--ink);font-family:var(--fd);font-weight:800;font-size:1.05rem;padding:.95rem 1.8rem;border-radius:999px;text-decoration:none;margin-top:1.5rem;transition:transform .2s,background .25s,box-shadow .25s;box-shadow:0 14px 32px -10px rgba(156,209,97,.7),0 4px 12px -4px rgba(156,209,97,.4)}
+    .rules-btn:hover{transform:translateY(-2px);box-shadow:0 22px 48px -12px rgba(156,209,97,.85),0 6px 16px -4px rgba(156,209,97,.5);background:var(--lime-deep)}
     .rules-btn .arr{transition:transform .25s}.rules-btn:hover .arr{transform:translateX(3px)}
 
     /* contact form */
@@ -505,7 +513,7 @@
     .cf-disclaimer a:hover{color:var(--lime-ink)}
     .cf-notice{font-family:var(--fb);font-size:.85rem;color:var(--ink);line-height:1.5;background:var(--lime2);border-radius:12px;padding:.75rem 1rem;display:flex;gap:.55rem;align-items:flex-start;margin-bottom:.2rem}
     .cf-notice::before{content:'★';color:var(--lime-ink);font-size:.95rem;line-height:1.4;flex:none}
-    .contact-care{max-width:760px;margin:2.5rem auto 0;padding:0 clamp(1.25rem,5vw,4rem);font-family:var(--fb);color:var(--ink);font-size:1.08rem;line-height:1.6;text-align:center}
+    .contact-care{max-width:60rem;margin:2.5rem auto 0;padding:0 clamp(1.25rem,5vw,4rem);font-family:var(--fb);color:var(--ink);font-size:1.08rem;line-height:1.6;text-align:center}
     .contact-care b{color:var(--lime-ink);background:var(--lime);padding:0 .35em;border-radius:6px;font-weight:700}
     @media(max-width:900px){.contact-grid{grid-template-columns:1fr;gap:2rem}.contact-form{width:100%}}
     .foot-c .tagline{color:var(--muted);font-size:.92rem;line-height:1.6;max-width:340px}
@@ -625,7 +633,7 @@
 <section id="hero">
   <div class="hero-inner">
     <h1 class="hero-title">Бегай.<br><span class="lime-mark">Зарабатывай.</span><br>Повторяй.</h1>
-    <p class="hero-sub">Подключи трекер, копи XP за тренировки и обменивай на рубли. Бесплатно, без подписок.</p>
+    <p class="hero-sub">Подключи трекер, копи XP за тренировки и обменивай на рубли.<br>Бесплатно, без подписок.</p>
     <div class="hero-actions">
       <a href="https://apps.apple.com/app/id6444129392" target="_blank" rel="noopener noreferrer" class="store">
         <svg viewBox="0 0 24 24" fill="currentColor"><use href="#ic-apple"/></svg>
@@ -663,10 +671,10 @@
 <div class="block" id="step-track">
   <div class="t reveal">
     <div class="step-num"><span class="n">1</span><span class="s">Шаг первый</span></div>
-    <h3 class="btitle">Подключи трекер и начни бегать</h3>
-    <p class="bdesc">Привязываешь свой трекер за 30 секунд. Тренировки попадают в Moneyrun автоматически — никаких ручных вводов и скриншотов.</p>
+    <h3 class="btitle">Подключи трекер<br>и начни бегать</h3>
+    <p class="bdesc">Привязываешь свой трекер за 30 секунд.<br>Тренировки попадают в Moneyrun автоматически —<br>никаких ручных вводов и скриншотов.</p>
     <ul class="facts">
-      <li><b>Strava, Garmin, Apple Watch, Suunto, Polar, Coros</b> — авторизация в один тап</li>
+      <li><b>Strava, Garmin, Apple Watch, Suunto, Polar, Coros</b><br>авторизация в один тап</li>
       <li>Учитываются только <span class="hl">беговые тренировки</span></li>
       <li>Анализируй активность, ставь новые беговые цели и <b>следи за прогрессом в динамике</b></li>
     </ul>
@@ -708,7 +716,7 @@
   <div class="t reveal">
     <div class="step-num"><span class="n">3</span><span class="s">Шаг третий</span></div>
     <h3 class="btitle">Обменивай XP на рубли</h3>
-    <p class="bdesc">Обменивай и выводи мгновенно. Без подписок, без «звёздочек» внизу страницы.</p>
+    <p class="bdesc">Обменивай и выводи мгновенно. Без подписок, без «звёздочек» внизу&nbsp;страницы.</p>
     <ul class="facts">
       <li>Вывод на <b>банковскую карту</b> и через <b>СБП</b></li>
       <li>Деньги платят <span class="hl">частные и корпоративные Клубы</span></li>
@@ -728,7 +736,7 @@
 
 <!-- RULES -->
 <section id="rules" class="wrap">
-  <div class="reveal" style="max-width:820px">
+  <div class="reveal" style="max-width:51.25rem">
     <span class="label">Правила</span>
     <h2 class="title">Правила <span class="lime-mark">сервиса</span></h2>
     <p class="lede">Чтобы Moneyrun оставался прозрачным и безопасным для всех, мы открыто публикуем правила: как начисляются XP, как происходит обмен и вывод, какие условия для Клубов и Атлетов.</p>
@@ -738,10 +746,10 @@
 
 <!-- CLUBS -->
 <section id="clubs" class="wrap">
-  <div class="reveal" style="max-width:820px">
+  <div class="reveal" style="max-width:51.25rem">
     <span class="label">Клубы</span>
     <h2 class="title">Вступай в Клубы —<br><span class="lime-mark">получай больше</span></h2>
-    <p class="lede">Клубы определяют курсы обмена и запускают общие челленджи. В открытые может вступить любой Атлет, у закрытых Клубов есть разные условия вступления: Грейд, локация или участие в программе тестирования.</p>
+    <p class="lede">Клубы определяют курсы обмена и запускают общие челленджи. В открытые может вступить любой Атлет, у закрытых Клубов есть разные условия вступления: Грейд, локация или участие в программе&nbsp;тестирования.</p>
   </div>
 
   <div class="clubs-grid">
@@ -793,7 +801,7 @@
 
 <!-- PRINCIPLES -->
 <section id="principles" class="wrap">
-  <div class="reveal" style="max-width:820px">
+  <div class="reveal" style="max-width:51.25rem">
     <span class="label">Принципы</span>
     <h2 class="title">Почему это <span class="lime-mark">работает</span></h2>
   </div>
@@ -889,7 +897,7 @@
       <p class="cf-disclaimer">Нажимая на кнопку, вы даёте согласие на обработку персональных данных и соглашаетесь с <a href="privacypolicy.html" target="_blank" rel="noopener">политикой конфиденциальности</a>.</p>
     </form>
   </div>
-  <p class="contact-care">Для действующих пользователей внутри приложения есть <b>служба Заботы</b>. Пиши туда — о тебе позаботятся.</p>
+  <p class="contact-care">Для действующих пользователей внутри приложения есть <b>служба Заботы.</b><br>Пиши туда — о тебе позаботятся.</p>
 </section>
 
 <!-- FOOTER -->
@@ -960,6 +968,8 @@ if(!RM){
   },{passive:true});
 }
 </script>
+<script>/* принципы: если хотя бы один заголовок переносится — остальные тоже разбиваем на 2 строки */
+(function(){function sync(){var grids=document.querySelectorAll('.principles-grid');grids.forEach(function(g){var hs=[].slice.call(g.querySelectorAll('.principle-card h3'));var heights=hs.map(function(h){h.removeAttribute('data-stacked');return h.getBoundingClientRect().height;});var maxH=Math.max.apply(null,heights),minH=Math.min.apply(null,heights);if(maxH-minH<2)return;hs.forEach(function(h,i){if(heights[i]<maxH){var t=h.textContent.trim().replace(/\s+/g,' ');var w=t.split(' ');if(w.length>=2){var mid=Math.ceil(w.length/2);h.innerHTML=w.slice(0,mid).join(' ')+'<br>'+w.slice(mid).join(' ');h.setAttribute('data-stacked','1')}}})})}if(document.readyState!=='loading')sync();else document.addEventListener('DOMContentLoaded',sync);var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(sync,150)});})();</script>
 <script>/* висячие предлоги: предлог/союз приклеиваем к следующему слову неразрывным пробелом */
 (function(){var NB=String.fromCharCode(160);var W='а|и|в|во|к|ко|с|со|о|об|обо|у|из|изо|от|ото|до|по|на|за|над|надо|под|подо|при|про|для|без|безо|не|ни|но|то|же|ли|бы|или|что|как|я';var re=new RegExp('(^|[\\s'+NB+'(«„])('+W+')[ \\t]+','gi');function bind(s){var p;do{p=s;s=s.replace(re,function(_,b,w){return b+w+NB;});}while(s!==p);return s;}function walk(){var skip={SCRIPT:1,STYLE:1,TEXTAREA:1,CODE:1,PRE:1,NOSCRIPT:1};var tw=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null),n,a=[];while(n=tw.nextNode()){if(n.parentNode&&!skip[n.parentNode.nodeName]&&n.nodeValue.indexOf(' ')>-1)a.push(n);}a.forEach(function(t){var v=t.nodeValue,x=bind(v);if(x!==v)t.nodeValue=x;});}if(document.readyState!=='loading')walk();else document.addEventListener('DOMContentLoaded',walk);})();</script>
 </body>

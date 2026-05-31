@@ -26,7 +26,11 @@
       --r-sm:12px;--r-md:18px;--r-lg:24px;
     }
     *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
+    html{scroll-behavior:smooth;font-size:16px}
+    @media(min-width:1600px){html{font-size:18px} :root{--maxw:1440px}}
+    @media(min-width:1920px){html{font-size:20px} :root{--maxw:1600px}}
+    @media(min-width:2400px){html{font-size:24px} :root{--maxw:1900px}}
+    @media(min-width:3200px){html{font-size:28px} :root{--maxw:2200px}}
     body{background:var(--bg);color:var(--ink);font-family:var(--fb);line-height:1.65;-webkit-font-smoothing:antialiased}
     ::selection{background:var(--lime);color:var(--lime-ink)}
     img{max-width:100%;display:block}
