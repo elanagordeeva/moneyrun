@@ -413,7 +413,7 @@
     .principle-card:hover{transform:translateY(-4px);box-shadow:var(--sh-lg)}
     .principle-card .pblob{display:none}
     .principle-card .pic{position:relative;width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;margin-bottom:1.1rem;font-family:var(--fd);font-weight:800;font-size:1.5rem;letter-spacing:-.02em;z-index:1}
-    .principle-card h3{position:relative;font-family:var(--fd);font-weight:800;font-size:1.15rem;line-height:1.2;color:var(--ink);letter-spacing:-.02em;margin-bottom:.7rem;z-index:1;text-wrap:balance}
+    .principle-card h3{position:relative;font-family:var(--fd);font-weight:800;font-size:1.15rem;line-height:1.2;color:var(--ink);letter-spacing:-.02em;margin-bottom:.7rem;z-index:1;text-wrap:balance;min-height:2.4em}
     .principle-card p{position:relative;color:var(--muted);line-height:1.65;font-size:.98rem;z-index:1}
     .principle-card p b{color:var(--ink);font-weight:600}
     .pc-1{--pat-img:url('art/electric-2-lime.svg')}.pc-1 .pic{background:var(--tx-salat-primary);color:var(--tx-on-primary)}
@@ -519,12 +519,12 @@
     .reveal.in{opacity:1;transform:none}
 
     @media(max-width:1080px){.nav-links{display:none}.hamburger{display:flex}}
-    @media(max-width:720px){.hero-trusted .brands .lg{display:none}}
+    @media(max-width:720px){.hero-trusted .brands .lg{display:none}.hero-art{min-height:560px!important}}
     @media(max-width:960px){
       #hero{grid-template-columns:1fr;padding-top:7rem}
       .hero-inner{min-width:0}
       .hero-trusted .brands{flex-wrap:wrap}
-      .hero-art{min-height:520px;margin-top:1.5rem}
+      .hero-art{min-height:730px;margin-top:1.5rem;overflow:hidden}
       .mk-training{width:78%;right:5%}
       .mk-chart{left:0;top:240px;width:62%}
       .mk-balance{right:0;bottom:0;width:62%}
@@ -532,6 +532,8 @@
       .block,.block.rev{grid-template-columns:1fr;gap:2.5rem}.block.rev .t,.block.rev .v{order:0}
       .clubs-grid{grid-template-columns:1fr}
       .principles-grid{grid-template-columns:1fr;gap:1rem}
+      .principle-card{padding:1.5rem}
+      .principle-card::before{background-size:cover;background-position:top center}
       .stats-grid{grid-template-columns:repeat(2,1fr)}
       .dl-inner{grid-template-columns:1fr;text-align:center}.dl-card p{margin-left:auto;margin-right:auto}.dl-stores{justify-content:center}.dl-phone{display:none}
       .foot-inner{grid-template-columns:1fr;gap:2rem}
@@ -543,16 +545,17 @@
       #step-track .ph-1,#step-xp .ph-1,#step-payout .ph-1{transform:translate(-94%,-50%) rotate(-5deg)}
       #step-track .ph-2,#step-xp .ph-2,#step-payout .ph-2{transform:translate(-6%,-46%) rotate(5deg)}
       /* на узких экранах скрины статичны — без реакции на наведение */
-      #step-track .ph,#step-xp .ph,#step-payout .ph,.hero-art .ph-shot{pointer-events:none}
+      #step-track .ph,#step-xp .ph,#step-payout .ph,.hero-art .ph-shot{pointer-events:none;box-shadow:none}
     }
     @media(max-width:560px){
       .hero-title{font-size:clamp(2rem,11vw,3rem)}
-      .hero-art{min-height:480px}
+      .hero-art{min-height:440px!important}
       .mk-training{width:85%;right:0;max-width:300px}
       .mk-chart{width:70%;max-width:240px}
       .mk-balance{width:68%;max-width:240px}
       .stats-grid{grid-template-columns:1fr 1fr;gap:.8rem}
       .vbox{min-height:360px}
+      .principles-grid{grid-template-columns:1fr;gap:1rem}
     }
     @media(prefers-reduced-motion:reduce){
       *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
