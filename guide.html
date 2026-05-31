@@ -10,14 +10,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,slnt,wght@8..144,-10..0,400..1000&family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#eef2ec;--bg2:#f4f7f3;--surface:#ffffff;--ink:#0e120e;--ink2:#1b1b21;--muted:#6b7068;--muted2:#9aa097;--border:#e6eae3;--border2:#dadfd6;--lime:#d0f85d;--lime2:#d5ffa8;--lime-deep:#bee14b;--lime-ink:#1f2a05;--c-blue:#bcdcff;--c-blue-ink:#143b6b;--c-tomato:#f0563f;--fd:'Roboto Flex','Roboto',system-ui,sans-serif;--fb:'Roboto Flex','Roboto',system-ui,sans-serif;--fm:'Roboto Flex','Roboto',ui-monospace,monospace;--fw:'Roboto Flex','Roboto',system-ui,sans-serif;--maxw:1240px;--sh-sm:0 2px 6px rgba(15,20,15,.05),0 1px 2px rgba(15,20,15,.04);--sh-md:0 14px 30px -10px rgba(15,30,12,.10),0 8px 18px -6px rgba(15,30,12,.06);--r-sm:12px;--r-md:18px;--r-lg:24px}
+    :root{--bg:#eef2ec;--bg2:#f4f7f3;--surface:#ffffff;--ink:#0e120e;--ink2:#1b1b21;--muted:#6b7068;--muted2:#9aa097;--border:#e6eae3;--border2:#dadfd6;--lime:#BDFF76;--lime2:#D5FFA8;--lime-deep:#9CD161;--lime-ink:#1f2a05;--c-blue:#B6D8FF;--c-blue-ink:#133C6F;--blue:#3363E9;--blue-ink:#214199;--c-tomato:#FF3F3F;--fd:'Roboto Flex','Roboto',system-ui,sans-serif;--fb:'Roboto Flex','Roboto',system-ui,sans-serif;--fm:'Roboto Flex','Roboto',ui-monospace,monospace;--fw:'Roboto Flex','Roboto',system-ui,sans-serif;--maxw:1240px;--sh-sm:0 2px 6px rgba(15,20,15,.05),0 1px 2px rgba(15,20,15,.04);--sh-md:0 14px 30px -10px rgba(15,30,12,.10),0 8px 18px -6px rgba(15,30,12,.06);--r-sm:12px;--r-md:18px;--r-lg:24px}
     *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
     body{background:var(--bg);color:var(--ink);font-family:var(--fb);line-height:1.65;-webkit-font-smoothing:antialiased}
     ::selection{background:var(--lime);color:var(--lime-ink)}img{max-width:100%;display:block}a{color:inherit}
     #navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(238,242,236,.82);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);border-bottom:1px solid var(--border)}
     #navbar .nav-inner{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:.85rem clamp(1.25rem,5vw,4rem)}
     .nav-logo{display:flex;align-items:center;gap:.55rem;text-decoration:none;color:var(--ink)}
-    .nav-logo img{height:28px;width:auto;display:block}
+    .nav-logo img{height:48px;width:auto;display:block}
     .nav-logo .wordmark{font-family:var(--fw);font-weight:800;font-style:italic;font-variation-settings:'slnt' -10;font-size:22px;line-height:1;color:var(--ink)}
     .nav-links{display:flex;gap:.05rem;list-style:none;align-items:center}
     .nav-links a{color:var(--muted);text-decoration:none;font-size:.92rem;font-weight:500;padding:.55rem .85rem;border-radius:999px}
@@ -47,15 +47,14 @@
       .g-hero::after{background:linear-gradient(180deg,rgba(252,253,254,.92) 0%,rgba(252,253,254,.55) 62%,rgba(252,253,254,.35) 100%)}
       .g-hero-art{justify-self:center;padding-top:0;max-width:300px;margin:0 auto}
     }
-    .legal h2{font-family:var(--fd);font-weight:800;font-size:clamp(1.3rem,2.4vw,1.7rem);letter-spacing:-.02em;line-height:1.2;margin:2.8rem 0 1rem;padding-top:.4rem}
-    .legal h3{font-family:var(--fd);font-weight:700;font-size:1.1rem;letter-spacing:-.01em;margin:1.8rem 0 .5rem;color:var(--ink)}
+    .legal h2{font-family:var(--fd);font-weight:800;font-size:clamp(1.7rem,3vw,2.4rem);letter-spacing:-.025em;line-height:1.1;margin:2.8rem 0 1rem;padding-top:.4rem;color:var(--ink)}
+    .legal h3{font-family:var(--fd);font-weight:800;font-size:clamp(1.25rem,1.9vw,1.55rem);letter-spacing:-.02em;line-height:1.15;margin:1.8rem 0 .5rem;color:var(--ink)}
     .g-h{position:relative;scroll-margin-top:84px}
     /* салатовые заголовки — фирменная подсветка (тёмный текст на лайме) */
-    .g-h-mark{display:inline;background:var(--lime);color:var(--lime-ink);-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:.04em .3em;border-radius:12px;box-shadow:0 10px 26px -14px rgba(190,225,75,.8)}
-    .legal h2.g-h2,.legal h3.g-h3{line-height:1.32}
-    .legal h3.g-h3 .g-h-mark{border-radius:9px;padding:.04em .28em}
-    /* ДС Roboto Flex: акцентные заголовки с наклоном (ось slnt), как логотип */
-    .g-hero h1,.legal h2.g-h2,.legal h3.g-h3,.g-final-title{font-style:italic;font-variation-settings:'slnt' -10}
+    .g-h-mark{display:inline;background:none;color:inherit;padding:0;border-radius:0;box-shadow:none}
+    .legal h3.g-h3 .g-h-mark{border-radius:0;padding:0}
+    /* акцентный наклон оставляем только для hero h1 и финального заголовка */
+    .g-hero h1,.g-final-title{font-style:italic;font-variation-settings:'slnt' -10}
     /* числа — табличные цифры для ровных колонок (замена моноширинного) */
     table.g-tbl,table.g-matrix,.g-toc a::before,.g-qt .g-zone,.g-qt .g-qtv{font-variant-numeric:tabular-nums}
     .g-h .g-h-link{color:inherit;text-decoration:none;cursor:pointer}
@@ -69,8 +68,8 @@
     @media(max-width:560px){.g-toc ol{columns:1}}
     .g-final{margin:3.6rem 0 1rem}
     .g-final-title{font-family:var(--fd);font-weight:800;font-size:clamp(2.2rem,6vw,4.6rem);line-height:1;letter-spacing:-.04em;color:var(--ink);display:inline-block}
-    .g-final-mark{position:relative;display:inline-block;color:var(--lime-ink);padding:0 .18em;z-index:1}
-    .g-final-mark::before{content:'';position:absolute;inset:.05em -.08em;background:var(--lime);border-radius:14px;z-index:-1;transform:rotate(-1.5deg);box-shadow:0 16px 40px -16px rgba(190,225,75,.6)}
+    .g-final-mark{display:inline;color:inherit;padding:0}
+    .g-final-mark::before{display:none}
     .legal p{color:var(--ink2);line-height:1.72;margin-bottom:.9rem;font-size:1rem}
     .legal b{font-weight:600;color:var(--ink)}
     .legal .g-term{color:var(--c-tomato);font-weight:600}
@@ -88,7 +87,7 @@
     .g-type::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--g-accent)}
     .g-type-grey{--g-accent:#aab0a6}
     .g-type-green{--g-accent:var(--lime-deep)}
-    .g-type-blue{--g-accent:#5b9bff}
+    .g-type-blue{--g-accent:#74B3FF}
     .g-type-name{font-family:var(--fd);font-weight:800;font-size:1.12rem;color:var(--ink);margin:.5rem 0 .5rem;display:flex;align-items:baseline;gap:.45rem;flex-wrap:wrap}
     .g-type-name::before{content:'';width:11px;height:11px;border-radius:50%;background:var(--g-accent);align-self:center}
     .g-type-range{font-family:var(--fm);font-weight:600;font-size:.82rem;color:var(--muted);letter-spacing:.01em}
@@ -102,6 +101,13 @@
     .g-bullets-sub li::before{content:'';position:absolute;left:.55rem;top:.66em;width:5px;height:5px;border-radius:50%;background:var(--muted2)}
     .g-rl-vis{margin:1.4rem 0 1.8rem;text-align:center;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:1rem 1.2rem;box-shadow:var(--sh-sm)}
     .g-rl-vis img{display:block;width:100%;max-width:1080px;height:auto;margin:0 auto}
+    @media(max-width:760px){
+      .g-rl-vis{padding:.75rem .5rem;overflow-x:auto;-webkit-overflow-scrolling:touch}
+      .g-rl-vis img{width:auto;max-width:none;height:240px;margin:0}
+    }
+    @media(max-width:420px){
+      .g-rl-vis img{height:210px}
+    }
     .g-example{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--lime-deep);border-radius:var(--r-md);padding:.95rem 1.2rem;margin:.7rem 0;box-shadow:var(--sh-sm)}
     .g-example p{margin:0;color:var(--ink2);line-height:1.65;font-size:.95rem}
     .g-numlist{list-style:none;margin:1.2rem 0 2rem;padding:0;display:grid;gap:.7rem}
@@ -123,7 +129,7 @@
     .g-formula{font-family:var(--fm);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.5rem .8rem;margin:.3rem 0;font-size:.9rem;color:var(--ink);display:inline-block}
     .g-tablewrap{overflow-x:auto;margin:1.2rem 0 1.6rem;border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface);box-shadow:var(--sh-sm)}
     table.g-tbl,table.g-matrix{border-collapse:collapse;width:100%;font-size:.74rem}
-    table.g-tbl th,table.g-tbl td,table.g-matrix th,table.g-matrix td{padding:.6rem .75rem;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+    table.g-tbl th,table.g-tbl td,table.g-matrix th,table.g-matrix td{padding:.26rem .45rem;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
     table.g-tbl thead th,table.g-tbl tr:first-child th{background:var(--bg2);font-family:var(--fd);font-weight:700;color:var(--ink);position:sticky;top:0}
     .g-matrix th{background:var(--bg2);font-family:var(--fd);font-weight:700}
     .g-matrix .g-rowh{text-align:left;font-family:var(--fb);font-weight:600;color:var(--ink);background:var(--surface);position:sticky;left:0;min-width:200px}
@@ -135,13 +141,13 @@
     .g-matrix .g-grp th{font-family:var(--fd);font-weight:800;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;text-align:center;padding:.45rem .4rem;border:2px solid #fff;border-bottom:none}
     .g-matrix .g-grp .g-c-grey{background:#9aa097;color:#fff}
     .g-matrix .g-grp .g-c-green{background:var(--lime-deep);color:var(--lime-ink)}
-    .g-matrix .g-grp .g-c-blue{background:#5b9bff;color:#fff}
+    .g-matrix .g-grp .g-c-blue{background:#74B3FF;color:#fff}
     .g-matrix thead tr:not(.g-grp) .g-c-grey{background:#edefea}
     .g-matrix thead tr:not(.g-grp) .g-c-green{background:#e8f5c5}
     .g-matrix thead tr:not(.g-grp) .g-c-blue{background:#dcebff}
     .g-matrix tbody .g-c-grey{background:rgba(154,160,151,.08)}
-    .g-matrix tbody .g-c-green{background:rgba(190,225,75,.14)}
-    .g-matrix tbody .g-c-blue{background:rgba(91,155,255,.10)}
+    .g-matrix tbody .g-c-green{background:rgba(156,209,97,.14)}
+    .g-matrix tbody .g-c-blue{background:rgba(116,179,255,.10)}
     /* компактная Матрица: плотнее по обеим осям */
     table.g-matrix{font-size:.74rem}
     table.g-matrix th,table.g-matrix td{padding:.26rem .45rem}
@@ -178,7 +184,7 @@
 </head>
 <body>
 <nav id="navbar"><div class="nav-inner">
-  <a href="index.html" class="nav-logo" aria-label="Moneyrun"><img class="logo-mark" src="art/logo-mark.png" alt="Moneyrun mark" width="120" height="120"><span class="wordmark">Moneyrun</span></a>
+  <a href="index.html" class="nav-logo" aria-label="Moneyrun"><img class="logo-mark" src="art/logo-hor-black.svg" alt="Moneyrun" height="28"></a>
   <div class="nav-right" style="display:flex;align-items:center;gap:.65rem">
     <ul class="nav-links"><li><a href="index.html#howto">Как работает</a></li><li><a href="index.html#rules">Правила</a></li><li><a href="index.html#clubs">Клубы</a></li><li><a href="index.html#principles">Принципы</a></li></ul>
     <a href="https://t.me/moneyrun" target="_blank" rel="noopener" class="tg-pill"><svg viewBox="0 0 24 24"><path d="M23.91 3.79L20.3 20.84c-.25 1.21-.98 1.5-2 .94l-5.5-4.07-2.66 2.57c-.3.3-.55.56-1.1.56-.72 0-.6-.27-.84-.95L6.3 13.7l-5.45-1.7c-1.18-.35-1.19-1.16.26-1.75l21.26-8.2c.97-.43 1.9.24 1.53 1.73z"/></svg>Telegram</a>
@@ -568,7 +574,7 @@ iif( (360-Ch72)&lt;40;40;360-Ch72)
     <p>Все процессы выстроены максимально экономично, с опорой на труд волонтёров, меценатов и энтузиастов бега. <b><i>Moneyrun</i></b> — это некоммерческая организация (выплаты носят характер благотворительных поощрений) и не преследует цели заработка: платформа готова финансово поощрять <b><i>Атлетов,</i></b> нацеленных на результативность.</p>
 </div></main>
 <footer><div class="foot-inner">
-  <div class="foot-c"><a href="index.html" class="nav-logo" style="margin-bottom:.4rem"><img class="logo-mark" src="art/logo-mark.png" alt="Moneyrun" width="120" height="120"><span class="wordmark">Moneyrun</span></a><p class="tagline">Социально-благотворительный проект по развитию бегового движения.</p><p class="foot-slogan">Run, <span>Earn,</span> Enjoy!</p></div>
+  <div class="foot-c"><a href="index.html" class="nav-logo" style="margin-bottom:.4rem"><img class="logo-mark" src="art/logo-hor-black.svg" alt="Moneyrun" height="28"></a><p class="tagline">Социально-благотворительный проект по развитию бегового движения.</p><p class="foot-slogan">Run, <span>Earn,</span> Enjoy!</p></div>
   <div class="foot-c"><span class="label">Сервис</span><a href="index.html#howto">Как работает</a><a href="index.html#rules">Правила</a><a href="index.html#clubs">Клубы</a><a href="index.html#principles">Принципы</a></div>
   <div class="foot-c"><span class="label">Связаться</span><a href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram · @moneyrun</a><a href="index.html#contact">Сотрудничество</a></div>
 </div><div class="foot-bottom"><span>© 2023 — 2026 Moneyrun</span><span style="display:flex;gap:1.5rem;flex-wrap:wrap"><a href="guide.html">Правила сервиса</a><a href="privacypolicy.html">Политика конфиденциальности</a></span></div></footer>
