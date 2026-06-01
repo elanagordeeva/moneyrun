@@ -190,6 +190,8 @@
     .hero-title .lime-mark{position:relative;display:inline-block;color:var(--lime-ink);padding:0 .2em;z-index:1}
     .hero-title .lime-mark::before{content:'';position:absolute;inset:.05em -.1em;background:var(--lime);border-radius:14px;z-index:-1;transform:rotate(-1.5deg);box-shadow:0 16px 40px -16px rgba(156,209,97,.65)}
     .hero-sub{font-size:clamp(1rem,1.3vw,1.18rem);color:var(--muted);max-width:none;margin:0 0 2.2rem;line-height:1.7}
+    .br-wide{display:none}
+    @media(min-width:720px){.br-wide{display:inline}}
     .hero-actions{display:flex;gap:.7rem;flex-wrap:wrap;align-items:center}
     .store{display:inline-flex;align-items:center;gap:.7rem;background:var(--ink);color:#fff;padding:.7rem 1.25rem;border-radius:16px;text-decoration:none;transition:all .25s;box-shadow:var(--sh-md)}
     .store:hover{transform:translateY(-2px);box-shadow:var(--sh-lg);background:#000}
@@ -199,7 +201,7 @@
     .store .name{font-family:var(--fd);font-weight:700;font-size:1.05rem;line-height:1.1;letter-spacing:-.01em}
     .hero-trusted{margin-top:1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
     .hero-trusted .lbl{font-family:var(--fm);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2)}
-    .hero-trusted .brands{display:flex;align-items:center;gap:.9rem;color:var(--muted)}
+    .hero-trusted .brands{display:flex;flex-wrap:wrap;align-items:center;column-gap:.5rem;row-gap:.3rem;color:var(--muted)}
     .hero-trusted .brands span{font-family:var(--fd);font-weight:700;font-size:.95rem;letter-spacing:-.01em}
 
     /* hero mockup stack */
@@ -689,7 +691,7 @@
 <section id="hero">
   <div class="hero-inner">
     <h1 class="hero-title">Бегай.<br><span class="lime-mark">Зарабатывай.</span><br>Повторяй.</h1>
-    <p class="hero-sub">Подключи трекер, копи XP за тренировки и обменивай на рубли.<br>Бесплатно, без подписок.</p>
+    <p class="hero-sub">Подключи трекер, копи XP за тренировки и обменивай на рубли.<br class="br-wide">Бесплатно, без подписок.</p>
     <div class="hero-actions">
       <a href="https://apps.apple.com/app/id6444129392" target="_blank" rel="noopener noreferrer" class="store">
         <svg viewBox="0 0 24 24" fill="currentColor"><use href="#ic-apple"/></svg>
@@ -703,7 +705,7 @@
     <div class="hero-trusted">
       <span class="lbl">Работает с</span>
       <div class="brands">
-        <span>Strava</span><span>·</span><span>Garmin</span><span>·</span><span>Apple<span class="lg"> Watch</span></span><span>·</span><span>Suunto</span><span>·</span><span>Polar</span><span>·</span><span>Coros</span>
+        <span>Strava&nbsp;·</span><span>Garmin&nbsp;·</span><span>Apple<span class="lg"> Watch</span>&nbsp;·</span><span>Suunto&nbsp;·</span><span>Polar&nbsp;·</span><span>Coros</span>
       </div>
     </div>
   </div>

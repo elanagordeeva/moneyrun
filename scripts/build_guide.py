@@ -644,6 +644,11 @@ CSS = """
     .g-rl table th,.g-rl table td{overflow:hidden;text-overflow:ellipsis}
     .g-rl table th:first-child,.g-rl table td:first-child{width:14%}
     .g-rl table th:last-child,.g-rl table td:last-child{width:13%}
+    @media(max-width:560px){
+      .g-rl table th:first-child,.g-rl table td:first-child{width:11%}
+      .g-rl table th:last-child,.g-rl table td:last-child{width:18%;padding-left:.2rem;padding-right:.3rem}
+      .g-rl table th,.g-rl table td{padding:.3rem .25rem;font-size:.7rem}
+    }
     .g-rl{max-height:560px;overflow:auto}
     /* построчная подсветка таблицы Running Level (как в исходнике, но нашими цветами) */
     .g-rl tbody tr.g-rl-hl td{background:var(--lime2)}
