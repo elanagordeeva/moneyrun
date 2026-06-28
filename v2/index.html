@@ -125,6 +125,8 @@
     .help-pop .lbl{font-family:var(--fd);font-size:.6rem;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.42);padding:.65rem .95rem .3rem;font-weight:700}
     .help-pop .sep{height:1px;background:rgba(255,255,255,.06);margin:.25rem .5rem}
 
+    .mobile-dock{display:none}
+
     /* live indicator */
     .corner{position:fixed;left:clamp(1rem,2.5vw,2rem);bottom:clamp(1rem,2.5vw,2rem);z-index:5;font-family:var(--fd);font-size:.72rem;font-weight:600;color:var(--ink-soft);letter-spacing:.06em;opacity:.7;pointer-events:none;display:flex;align-items:center;gap:.5rem}
     .corner-dot{width:8px;height:8px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 3px rgba(14,18,14,.18);animation:pulseDot 2s ease-in-out infinite}
@@ -161,9 +163,21 @@
     body.map-clean .brand{top:0;bottom:0;justify-content:center;padding:1rem}
 
     @media(max-width:560px){
-      .brand-name{font-size:clamp(2.6rem,14vw,4rem)}
-      .help-btn{width:48px;height:48px;font-size:1.3rem}
-      .corner{font-size:.65rem}
+      html,body{height:100dvh;min-height:100dvh}
+      body.map-clean .brand{top:22dvh;bottom:auto;justify-content:flex-start;padding:0 1rem}
+      .brand-name{font-size:clamp(2.7rem,14vw,3.6rem);line-height:.9}
+      .brand-tag{font-size:.9rem;margin-top:.35rem}
+      .pop{gap:.35rem;padding:3px 8px 3px 3px;max-width:calc(100vw - 18px);box-shadow:0 10px 24px -12px rgba(14,18,14,.55)}
+      .pop-ava{width:24px;height:24px}
+      .pop-line{gap:.25rem;font-size:.68rem;min-width:0}
+      .pop-line .city{max-width:7.2em;overflow:hidden;text-overflow:ellipsis}
+      .pop-line .gain{min-height:20px;padding:0 6px;font-size:.64rem}
+      .ping{width:10px;height:10px}
+      .help-btn,.help-pop{display:none}
+      .mobile-dock{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:12;display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:8px;border-radius:22px;background:rgba(14,18,14,.92);box-shadow:0 18px 40px -16px rgba(14,18,14,.65);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+      .mobile-dock a{min-height:38px;border-radius:15px;display:flex;align-items:center;justify-content:center;text-decoration:none;background:rgba(255,255,255,.08);color:#f1f3ee;font-family:var(--fd);font-size:.78rem;font-weight:800;letter-spacing:0}
+      .mobile-dock a.primary{background:var(--lime);color:var(--ink)}
+      .corner{display:none}
     }
   </style>
 </head>
@@ -202,6 +216,13 @@
     Правила сервиса
   </a>
 </div>
+
+<nav class="mobile-dock" aria-label="Быстрые ссылки">
+  <a class="primary" href="https://apps.apple.com/app/id6444129392" target="_blank" rel="noopener">App Store</a>
+  <a class="primary" href="https://play.google.com/store/apps/details?id=tech.aml.moneyrun" target="_blank" rel="noopener">Google Play</a>
+  <a href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram</a>
+  <a href="guide.html">Правила</a>
+</nav>
 
 <script>
 /* Mock data: 33 RF cities mapped to viewBox 1200x500 coords */
@@ -301,6 +322,7 @@ const MAP_VARIANTS = {outline:'',filled:'map-filled',constellation:'map-constell
 const mapVariant = new URLSearchParams(location.search).get('map') || 'clean';
 if (MAP_VARIANTS[mapVariant]) document.body.classList.add(MAP_VARIANTS[mapVariant]);
 const isClean = mapVariant === 'clean';
+const isMobileCompact = () => matchMedia('(max-width:560px)').matches;
 
 /* Карта-как-экран: координаты городов растягиваются на весь viewport
    так чтобы Калининград был слева, Анадырь справа, Мурманск сверху,
@@ -309,6 +331,12 @@ function getBox(){
   const vw = innerWidth, vh = innerHeight;
   const mx = Math.max(60, vw*0.05);
   if (isClean){
+    if (isMobileCompact()){
+      const mobileMx = Math.max(18, vw*0.06);
+      const top = Math.max(86, vh*0.16);
+      const bottom = Math.max(142, vh*0.24);
+      return { mx: mobileMx, top, w: vw - mobileMx*2, h: Math.max(260, vh - top - bottom) };
+    }
     // карта на весь экран, лого по центру поверх
     const my = Math.max(70, vh*0.08);
     return { mx, top: my, w: vw - mx*2, h: vh - my*2 };
@@ -393,12 +421,18 @@ addEventListener('load', layoutMap);
 if (document.fonts && document.fonts.ready) document.fonts.ready.then(layoutMap);
 
 const popsLayer = document.getElementById('pops');
+let mobilePopLane = 0;
 
 function spawnPop(){
   const city = pick(CITIES);
   const name = pick(NAMES);
   const {km, xp, rub} = mockWorkoutGains();
-  const [px, py] = svgToPx(city.x, city.y);
+  let [px, py] = svgToPx(city.x, city.y);
+  if (isMobileCompact()){
+    const lanes = [innerHeight*.42, innerHeight*.50, innerHeight*.58];
+    py = lanes[mobilePopLane++ % lanes.length];
+    px = Math.min(Math.max(px, innerWidth*.26), innerWidth*.74);
+  }
 
   // в clean-варианте не показываем города, спрятанные за центральным лого
   if (behindBrand(px, py)) return;
@@ -448,7 +482,7 @@ function spawnPopBurst(){
     scheduleNextPop();
   }, nextPopDelay());
 })();
-for (let i=0;i<3;i++) setTimeout(spawnPop, rand([250,2400]));
+for (let i=0;i<(isMobileCompact() ? 2 : 3);i++) setTimeout(spawnPop, rand([250,2400]));
 
 
 const btn = document.getElementById('helpBtn');
