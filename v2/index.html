@@ -256,6 +256,45 @@ const AVATAR_URL = id => `https://images.unsplash.com/photo-${id}?w=72&h=72&fit=
 const pickAvatar = () => AVATAR_URL(pick(AVATAR_PHOTOS));
 
 const pick = a => a[Math.floor(Math.random()*a.length)];
+const weightedPick = items => {
+  const total = items.reduce((sum,item)=>sum+item.weight,0);
+  let roll = Math.random()*total;
+  for (const item of items){
+    roll -= item.weight;
+    if (roll <= 0) return item;
+  }
+  return items[items.length-1];
+};
+const rand = ([min,max]) => Math.random()*(max-min)+min;
+
+/* Правдоподобный mock начислений по правилам сервиса:
+   XP держим в единицах/десятках за тренировку, ₽ = XP * тариф грейда. */
+const WORKOUT_TYPES = [
+  {weight:28, km:[3.2,7.5],  load:[.45,.95]},
+  {weight:34, km:[5,11],     load:[.8,1.55]},
+  {weight:16, km:[6,12],     load:[1.35,2.45]},
+  {weight:10, km:[4,9],      load:[2.1,3.8]},
+  {weight:12, km:[12,23.5],  load:[.9,1.85]}
+];
+const GRADE_RATES = [
+  {weight:14, rate:3,  rq:[.8,1.05]},
+  {weight:24, rate:4,  rq:[.9,1.2]},
+  {weight:24, rate:7,  rq:[1,1.35]},
+  {weight:18, rate:10, rq:[1.05,1.4]},
+  {weight:12, rate:13, rq:[1.1,1.5]},
+  {weight:6,  rate:16, rq:[1.2,1.5]},
+  {weight:2,  rate:19, rq:[1.25,1.5]}
+];
+
+function mockWorkoutGains(){
+  const workout = weightedPick(WORKOUT_TYPES);
+  const grade = weightedPick(GRADE_RATES);
+  const kmNum = rand(workout.km);
+  const km = kmNum.toFixed(1).replace(/\.0$/, '');
+  const iq = rand([.9,1.08]);
+  const xp = Math.max(1, Math.min(60, Math.round(kmNum * rand(workout.load) * rand(grade.rq) * iq)));
+  return { km, xp, rub: xp * grade.rate };
+}
 
 /* Вариант оформления карты через ?map=outline|filled|constellation|line|ghost|clean */
 const MAP_VARIANTS = {outline:'',filled:'map-filled',constellation:'map-constellation',line:'map-line',ghost:'map-ghost',clean:'map-clean'};
@@ -358,9 +397,7 @@ const popsLayer = document.getElementById('pops');
 function spawnPop(){
   const city = pick(CITIES);
   const name = pick(NAMES);
-  const km   = (Math.random()*16 + 2).toFixed(1).replace(/\.0$/, '');
-  const xp   = Math.round((+km) * (Math.random()*10 + 12));
-  const rub  = Math.max(1, Math.round(xp * (Math.random()*.025 + .05)));
+  const {km, xp, rub} = mockWorkoutGains();
   const [px, py] = svgToPx(city.x, city.y);
 
   // в clean-варианте не показываем города, спрятанные за центральным лого
