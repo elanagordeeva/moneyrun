@@ -427,11 +427,28 @@ function spawnPop(){
   setTimeout(()=>{ pop.remove(); ping.remove(); }, 4600);
 }
 
-(function loop(){
-  spawnPop();
-  setTimeout(loop, 1400 + Math.random()*1800);
+const POP_DELAYS = [
+  {weight:28, ms:[650,1400]},
+  {weight:46, ms:[1700,3600]},
+  {weight:18, ms:[4200,6800]},
+  {weight:8,  ms:[7600,11000]}
+];
+function nextPopDelay(){
+  return Math.round(rand(weightedPick(POP_DELAYS).ms));
+}
+function spawnPopBurst(){
+  const count = Math.random() < .18 ? 2 : 1;
+  for (let i=0;i<count;i++){
+    setTimeout(spawnPop, i * rand([220,720]));
+  }
+}
+(function scheduleNextPop(){
+  setTimeout(()=>{
+    spawnPopBurst();
+    scheduleNextPop();
+  }, nextPopDelay());
 })();
-for (let i=1;i<3;i++) setTimeout(spawnPop, i*500);
+for (let i=0;i<3;i++) setTimeout(spawnPop, rand([250,2400]));
 
 
 const btn = document.getElementById('helpBtn');
