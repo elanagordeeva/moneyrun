@@ -464,18 +464,18 @@ function spawnPop(){
 }
 
 const POP_DELAYS = [
-  {weight:28, ms:[650,1400]},
-  {weight:46, ms:[1700,3600]},
-  {weight:18, ms:[4200,6800]},
-  {weight:8,  ms:[7600,11000]}
+  {weight:24, ms:[1600,3200]},
+  {weight:46, ms:[4200,7600]},
+  {weight:22, ms:[9000,14000]},
+  {weight:8,  ms:[15000,22000]}
 ];
 function nextPopDelay(){
   return Math.round(rand(weightedPick(POP_DELAYS).ms));
 }
 function spawnPopBurst(){
-  const count = Math.random() < .18 ? 2 : 1;
+  const count = Math.random() < .08 ? 2 : 1;
   for (let i=0;i<count;i++){
-    setTimeout(spawnPop, i * rand([220,720]));
+    setTimeout(spawnPop, i * rand([520,1200]));
   }
 }
 (function scheduleNextPop(){
@@ -484,7 +484,7 @@ function spawnPopBurst(){
     scheduleNextPop();
   }, nextPopDelay());
 })();
-for (let i=0;i<(isMobileCompact() ? 2 : 3);i++) setTimeout(spawnPop, rand([250,2400]));
+for (let i=0;i<(isMobileCompact() ? 1 : 2);i++) setTimeout(spawnPop, rand([700,3600]));
 
 
 const btn = document.getElementById('helpBtn');
