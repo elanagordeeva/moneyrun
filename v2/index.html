@@ -118,6 +118,7 @@
     /* Help button */
     .help-btn{position:fixed;right:clamp(1rem,2.5vw,2rem);bottom:clamp(1rem,2.5vw,2rem);z-index:10;width:54px;height:54px;border-radius:50%;background:var(--ink);color:var(--lime);border:none;cursor:pointer;font-family:var(--fd);font-weight:900;font-size:1.5rem;display:grid;place-items:center;box-shadow:0 18px 36px -10px rgba(14,18,14,.5);transition:transform .25s,box-shadow .25s;line-height:1}
     .help-btn:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 24px 48px -10px rgba(14,18,14,.6)}
+    .help-btn svg{width:28px;height:28px;display:block;transform:rotate(-8deg)}
     .help-pop{position:fixed;right:clamp(1rem,2.5vw,2rem);bottom:calc(clamp(1rem,2.5vw,2rem) + 70px);z-index:10;background:#161a16;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:.4rem;display:flex;flex-direction:column;gap:.15rem;min-width:240px;box-shadow:0 28px 60px -16px rgba(0,0,0,.7),0 0 0 1px rgba(0,0,0,.4) inset;transform-origin:bottom right;transform:scale(.85) translateY(8px);opacity:0;pointer-events:none;transition:transform .22s cubic-bezier(.2,.85,.25,1.05),opacity .18s;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
     .help-pop.open{transform:scale(1) translateY(0);opacity:1;pointer-events:auto}
     .help-pop a{display:flex;align-items:center;gap:.85rem;padding:.7rem .95rem;border-radius:12px;text-decoration:none;color:#f1f3ee;font-family:var(--fd);font-weight:600;font-size:.95rem;transition:background .15s,color .15s;letter-spacing:-.005em}
@@ -202,7 +203,11 @@
   </div>
 </div>
 
-<button class="help-btn" id="helpBtn" aria-label="Ссылки" aria-expanded="false">?</button>
+<button class="help-btn" id="helpBtn" aria-label="Ссылки" aria-expanded="false">
+  <svg viewBox="0 0 116 118" aria-hidden="true" focusable="false">
+    <path d="M83.1593 13.1128C93.1922 18.9053 93.0471 38.8137 84.0466 61.3455C93.8791 52.8517 103.32 49.1439 108.018 52.8085C113.028 56.7176 111.216 67.9021 104.341 80.4765C109.397 78.4152 113.698 78.2997 115.862 80.6251C119.832 84.8925 115.093 95.7541 105.277 104.885C95.4624 114.016 84.2874 117.959 80.3175 113.691C79.4318 112.739 78.981 111.459 78.9219 109.942C70.9068 115.674 63.6644 117.765 59.7368 114.701C57.0824 112.631 56.3436 108.518 57.2567 103.239C44.3701 116.45 31.0671 122.634 22.712 117.811C10.1686 110.568 13.5316 81.2603 30.2236 52.3489C46.9156 23.4375 70.6156 5.871 83.1593 13.1128Z" fill="currentColor"/>
+  </svg>
+</button>
 <div class="help-pop" id="helpPop" role="dialog" aria-label="Ссылки">
   <span class="lbl">Скачать приложение</span>
   <a href="https://apps.apple.com/app/id6444129392" target="_blank" rel="noopener">
