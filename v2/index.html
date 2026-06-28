@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Moneyrun — социально-благотворительный беговой проект | Мы — бег</title>
+  <meta name="description" content="Moneyrun — социально-благотворительный беговой проект. Бесплатное приложение для трекинга беговых тренировок: подключи Strava, Garmin, Apple Watch, Suunto, Polar или Coros, копи XP за тренировки и обменивай их на рубли в Клубах. Без подписок, без рекламы.">
+  <meta name="keywords" content="бег, беговое приложение, трекер бега, Strava, Garmin, Apple Watch, Suunto, Polar, Coros, беговой клуб, марафон, полумарафон, тренировки, беговое сообщество, благотворительность, эндаумент фонд, Moneyrun">
+  <meta name="author" content="Moneyrun">
+  <meta name="application-name" content="Moneyrun">
+  <meta name="theme-color" content="#BDFF76">
+  <link rel="canonical" href="https://moneyrun.tech/">
+  <link rel="icon" type="image/png" href="https://static.tildacdn.com/tild6335-6462-4965-b561-643434616164/Logo_32x32.png">
+  <link rel="apple-touch-icon" href="https://static.tildacdn.com/tild6335-6462-4965-b561-643434616164/Logo_32x32.png">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Moneyrun">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:url" content="https://moneyrun.tech/">
+  <meta property="og:title" content="Moneyrun — социально-благотворительный беговой проект">
+  <meta property="og:description" content="Бесплатное приложение для бега: подключи трекер, копи XP за тренировки и обменивай на рубли в Клубах. Без подписок, без рекламы.">
+  <meta property="og:image" content="https://static.tildacdn.com/tild6362-6335-4038-b032-613330353266/logovert_salat.png">
+  <meta property="og:image:alt" content="Логотип Moneyrun">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Moneyrun — социально-благотворительный беговой проект">
+  <meta name="twitter:description" content="Бесплатное приложение для бега: подключи трекер, копи XP за тренировки и обменивай на рубли в Клубах. Без подписок, без рекламы.">
+  <meta name="twitter:image" content="https://static.tildacdn.com/tild6362-6335-4038-b032-613330353266/logovert_salat.png">
+
+  <!-- Structured data: Organization + WebSite + MobileApplication -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://moneyrun.tech/#org",
+        "name": "Moneyrun",
+        "url": "https://moneyrun.tech/",
+        "logo": "https://static.tildacdn.com/tild6362-6335-4038-b032-613330353266/logovert_salat.png",
+        "description": "Социально-благотворительный проект по развитию бегового движения. Беговое приложение с трекингом, Клубами и обменом XP на рубли.",
+        "sameAs": ["https://t.me/moneyrun"]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://moneyrun.tech/#website",
+        "url": "https://moneyrun.tech/",
+        "name": "Moneyrun",
+        "inLanguage": "ru-RU",
+        "publisher": { "@id": "https://moneyrun.tech/#org" }
+      },
+      {
+        "@type": "MobileApplication",
+        "name": "Moneyrun",
+        "operatingSystem": "iOS, ANDROID",
+        "applicationCategory": "HealthApplication",
+        "description": "Бесплатное беговое приложение: трекинг тренировок, Клубы, обмен XP на рубли.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "RUB" },
+        "downloadUrl": [
+          "https://apps.apple.com/app/id6444129392",
+          "https://play.google.com/store/apps/details?id=tech.aml.moneyrun"
+        ],
+        "publisher": { "@id": "https://moneyrun.tech/#org" }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,slnt,wght@8..144,-10..0,300..1000&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --lime:#BDFF76;
+      --lime-deep:#9CD161;
+      --lime-soft:#D5FFA8;
+      --ink:#0e120e;
+      --ink-soft:#1f2a05;
+      --paper:#FAFFEC;
+      --grid:rgba(31,42,5,.08);
+      --fd:'Roboto Flex','Roboto',system-ui,sans-serif;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
+    html,body{height:100%;overflow:hidden;background:var(--lime);font-family:var(--fd);color:var(--ink)}
+    body{position:relative}
+
+    /* Brand band — плоский блок на зелёном фоне, над картой */
+    .brand{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;flex-direction:column;align-items:center;text-align:center;padding:clamp(2.2rem,7vh,4.5rem) 1rem clamp(1.4rem,3vh,2.2rem);pointer-events:none}
+    .brand-name{font-family:var(--fd);font-weight:900;font-style:italic;font-variation-settings:'slnt' -10;font-size:clamp(3rem,8vw,6.2rem);line-height:.92;letter-spacing:-.04em;color:var(--ink)}
+    .brand-tag{font-family:var(--fd);font-weight:600;font-style:italic;font-variation-settings:'slnt' -10;font-size:clamp(1rem,1.6vw,1.4rem);color:var(--ink-soft);margin-top:.5rem;letter-spacing:.02em}
+
+    /* Activity popup — minimalist capsule */
+    .pops{position:fixed;inset:0;z-index:2;pointer-events:none}
+    .pop{position:absolute;display:flex;align-items:center;gap:.55rem;background:rgba(14,18,14,.92);color:#fff;border-radius:999px;padding:3px 14px 3px 3px;box-shadow:0 8px 22px -8px rgba(14,18,14,.4);transform:translate(-50%,-130%) scale(.7);opacity:0;transition:transform .45s cubic-bezier(.2,.85,.25,1.05),opacity .3s ease;white-space:nowrap;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+    .pop.in{opacity:1;transform:translate(-50%,-130%) scale(1)}
+    .pop.out{opacity:0;transform:translate(-50%,-150%) scale(.94);transition:transform .4s ease,opacity .4s ease}
+
+    .pop-ava{width:28px;height:28px;border-radius:50%;flex:none;background-size:cover;background-position:center;background-color:#444;background-repeat:no-repeat}
+    .pop-line{font-family:var(--fd);font-size:.82rem;font-weight:600;color:#fff;letter-spacing:-.005em;display:flex;align-items:center;gap:.4rem;line-height:1}
+    .pop-line .sep{opacity:.35;font-weight:400}
+    .pop-line .city{font-weight:700}
+    .pop-line .km{opacity:.78;font-variant-numeric:tabular-nums}
+    .pop-line .xp{background:var(--lime);color:var(--ink);padding:2px 7px;border-radius:999px;font-weight:800;font-size:.72rem;font-style:italic;font-variation-settings:'slnt' -10;font-variant-numeric:tabular-nums}
+
+    /* GPS ping at the same coords */
+    .ping{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--ink);transform:translate(-50%,-50%);box-shadow:0 0 0 3px var(--paper);opacity:0;animation:pingFade 4.6s ease forwards;pointer-events:none}
+    .ping::after{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid var(--ink);animation:pingExpand 1.4s ease-out infinite}
+    @keyframes pingFade{0%{opacity:0}10%{opacity:1}80%{opacity:1}100%{opacity:0}}
+    @keyframes pingExpand{0%{transform:scale(1);opacity:.9}100%{transform:scale(3.6);opacity:0}}
+
+    /* Help button */
+    .help-btn{position:fixed;right:clamp(1rem,2.5vw,2rem);bottom:clamp(1rem,2.5vw,2rem);z-index:10;width:54px;height:54px;border-radius:50%;background:var(--ink);color:var(--lime);border:none;cursor:pointer;font-family:var(--fd);font-weight:900;font-size:1.5rem;display:grid;place-items:center;box-shadow:0 18px 36px -10px rgba(14,18,14,.5);transition:transform .25s,box-shadow .25s;line-height:1}
+    .help-btn:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 24px 48px -10px rgba(14,18,14,.6)}
+    .help-pop{position:fixed;right:clamp(1rem,2.5vw,2rem);bottom:calc(clamp(1rem,2.5vw,2rem) + 70px);z-index:10;background:#161a16;border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:.4rem;display:flex;flex-direction:column;gap:.15rem;min-width:240px;box-shadow:0 28px 60px -16px rgba(0,0,0,.7),0 0 0 1px rgba(0,0,0,.4) inset;transform-origin:bottom right;transform:scale(.85) translateY(8px);opacity:0;pointer-events:none;transition:transform .22s cubic-bezier(.2,.85,.25,1.05),opacity .18s;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+    .help-pop.open{transform:scale(1) translateY(0);opacity:1;pointer-events:auto}
+    .help-pop a{display:flex;align-items:center;gap:.85rem;padding:.7rem .95rem;border-radius:12px;text-decoration:none;color:#f1f3ee;font-family:var(--fd);font-weight:600;font-size:.95rem;transition:background .15s,color .15s;letter-spacing:-.005em}
+    .help-pop a:hover{background:rgba(189,255,118,.12);color:var(--lime)}
+    .help-pop a svg{width:18px;height:18px;flex:none;opacity:.85;transition:opacity .15s}
+    .help-pop a:hover svg{opacity:1}
+    .help-pop .lbl{font-family:var(--fd);font-size:.6rem;text-transform:uppercase;letter-spacing:.18em;color:rgba(255,255,255,.42);padding:.65rem .95rem .3rem;font-weight:700}
+    .help-pop .sep{height:1px;background:rgba(255,255,255,.06);margin:.25rem .5rem}
+
+    /* live indicator */
+    .corner{position:fixed;left:clamp(1rem,2.5vw,2rem);bottom:clamp(1rem,2.5vw,2rem);z-index:5;font-family:var(--fd);font-size:.72rem;font-weight:600;color:var(--ink-soft);letter-spacing:.06em;opacity:.7;pointer-events:none;display:flex;align-items:center;gap:.5rem}
+    .corner-dot{width:8px;height:8px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 3px rgba(14,18,14,.18);animation:pulseDot 2s ease-in-out infinite}
+    @keyframes pulseDot{0%,100%{box-shadow:0 0 0 3px rgba(14,18,14,.18)}50%{box-shadow:0 0 0 7px rgba(14,18,14,.05)}}
+
+    /* Схематичная карта РФ на фоне */
+    .rf-map{position:fixed;z-index:0;pointer-events:none;overflow:visible}
+    .rf-map path{fill:rgba(31,42,5,.045);stroke:rgba(31,42,5,.22);stroke-width:1.6;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+    #mapdots{position:fixed;inset:0;z-index:1;pointer-events:none}
+    .rf-dot{position:absolute;width:6px;height:6px;border-radius:50%;background:rgba(31,42,5,.42);transform:translate(-50%,-50%)}
+    .rf-dot.major{width:9px;height:9px;background:var(--ink);box-shadow:0 0 0 3px rgba(189,255,118,.55)}
+    @media(max-width:900px){.rf-dot.major{width:7px;height:7px}.rf-dot{width:5px;height:5px}}
+
+    /* ── Варианты оформления карты ── */
+    /* 2 · Заливка: силуэт залит тёмным, без обводки; точки светятся */
+    body.map-filled .rf-map path{fill:rgba(31,42,5,.10);stroke:none}
+    body.map-filled .rf-dot{background:rgba(31,42,5,.30)}
+    body.map-filled .rf-dot.major{background:var(--ink);box-shadow:0 0 0 4px rgba(189,255,118,.7),0 0 18px 2px rgba(189,255,118,.5)}
+    /* 3 · Созвездие: без силуэта, только точки + пунктирная сеть */
+    body.map-constellation .rf-map{display:none}
+    body.map-constellation .rf-dot{background:rgba(31,42,5,.5)}
+    body.map-constellation .rf-dot.major{box-shadow:0 0 0 3px rgba(189,255,118,.6)}
+    /* 4 · Контур: тонкая лаконичная обводка, точки только крупные города */
+    body.map-line .rf-map path{fill:none;stroke:rgba(31,42,5,.34);stroke-width:2;stroke-dasharray:none}
+    body.map-line .rf-dot:not(.major){display:none}
+    body.map-line .rf-dot.major{width:8px;height:8px;box-shadow:0 0 0 3px rgba(189,255,118,.6)}
+    /* 5 · Призрак: едва различимый силуэт, минимум контраста */
+    body.map-ghost .rf-map path{fill:rgba(31,42,5,.03);stroke:rgba(31,42,5,.10);stroke-width:1.2}
+    body.map-ghost .rf-dot{background:rgba(31,42,5,.22)}
+    body.map-ghost .rf-dot.major{background:rgba(31,42,5,.6);box-shadow:0 0 0 3px rgba(189,255,118,.35)}
+    /* 6 · Clean: без силуэта и без статичных точек, лого по центру поверх карты */
+    body.map-clean .rf-map{display:none}
+    body.map-clean #mapdots{display:none}
+    body.map-clean .brand{top:0;bottom:0;justify-content:center;padding:1rem}
+
+    @media(max-width:560px){
+      .brand-name{font-size:clamp(2.6rem,14vw,4rem)}
+      .help-btn{width:48px;height:48px;font-size:1.3rem}
+      .corner{font-size:.65rem}
+    }
+  </style>
+</head>
+<body>
+
+<svg class="rf-map" id="rfmap" viewBox="0 0 1200 500" preserveAspectRatio="none" aria-hidden="true"></svg>
+<div id="mapdots"></div>
+
+<div class="pops" id="pops"></div>
+
+<div class="brand">
+  <div class="brand-inner">
+    <div class="brand-name">Moneyrun</div>
+    <div class="brand-tag">мы&nbsp;—&nbsp;бег</div>
+  </div>
+</div>
+
+<button class="help-btn" id="helpBtn" aria-label="Ссылки">?</button>
+<div class="help-pop" id="helpPop" role="dialog" aria-label="Ссылки">
+  <span class="lbl">Скачать приложение</span>
+  <a href="https://apps.apple.com/app/id6444129392" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.365 1.43c0 1.14-.418 2.18-1.12 2.97-.74.85-1.95 1.52-3.13 1.42-.16-1.07.41-2.21 1.12-2.98.76-.83 2.04-1.49 3.13-1.41ZM20 17.5c-.4.92-.59 1.33-1.1 2.14-.71 1.13-1.71 2.53-2.94 2.54-1.1.01-1.38-.71-2.86-.71-1.48 0-1.79.7-2.87.72-1.23.05-2.16-1.22-2.88-2.36-2-3.16-2.21-6.86-.98-8.83.87-1.41 2.25-2.23 3.55-2.23 1.32 0 2.15.72 3.25.72 1.07 0 1.71-.72 3.24-.72 1.16 0 2.4.63 3.27 1.71-2.87 1.57-2.41 5.66.32 6.99Z"/></svg>
+    App Store
+  </a>
+  <a href="https://play.google.com/store/apps/details?id=tech.aml.moneyrun" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.7 8.96 4.3 6.55a.5.5 0 0 1 .87-.5l1.4 2.42A8 8 0 0 1 12 7a8 8 0 0 1 5.43 1.46l1.4-2.41a.5.5 0 1 1 .87.5l-1.4 2.41A7 7 0 0 1 21 14H3a7 7 0 0 1 2.7-5.04Zm2.05 2.04a1 1 0 1 0 0 2 1 1 0 0 0 0-2Zm8.5 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"/></svg>
+    Google Play
+  </a>
+  <span class="lbl">Связь</span>
+  <a href="https://t.me/moneyrun" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.91 3.79 20.3 20.84c-.25 1.21-.98 1.5-2 .94l-5.5-4.07-2.66 2.57c-.3.3-.55.56-1.1.56-.72 0-.6-.27-.84-.95L6.3 13.7l-5.45-1.7c-1.18-.35-1.19-1.16.26-1.75l21.26-8.2c.97-.43 1.9.24 1.53 1.73z"/></svg>
+    Telegram-канал
+  </a>
+  <a href="guide.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 3h11l4 4v14H5z"/><path d="M16 3v4h4M8 13h8M8 17h6"/></svg>
+    Правила сервиса
+  </a>
+</div>
+
+<script>
+/* Mock data: 33 RF cities mapped to viewBox 1200x500 coords */
+const CITIES = [
+  {name:'Москва',         x: 132, y: 318},
+  {name:'Санкт-Петербург',x:  75, y: 257},
+  {name:'Калининград',    x:  12, y: 290},
+  {name:'Сочи',           x: 150, y: 495},
+  {name:'Краснодар',      x: 135, y: 478},
+  {name:'Ростов-на-Дону', x: 152, y: 458},
+  {name:'Воронеж',        x: 162, y: 410},
+  {name:'Волгоград',      x: 180, y: 440},
+  {name:'Нижний Новгород',x: 188, y: 325},
+  {name:'Казань',         x: 215, y: 340},
+  {name:'Самара',         x: 232, y: 372},
+  {name:'Уфа',            x: 270, y: 350},
+  {name:'Пермь',          x: 278, y: 315},
+  {name:'Екатеринбург',   x: 300, y: 314},
+  {name:'Челябинск',      x: 305, y: 354},
+  {name:'Тюмень',         x: 330, y: 322},
+  {name:'Омск',           x: 405, y: 352},
+  {name:'Новосибирск',    x: 472, y: 328},
+  {name:'Барнаул',        x: 488, y: 360},
+  {name:'Красноярск',     x: 555, y: 330},
+  {name:'Иркутск',        x: 630, y: 371},
+  {name:'Улан-Удэ',       x: 660, y: 372},
+  {name:'Чита',           x: 705, y: 380},
+  {name:'Якутск',         x: 817, y: 228},
+  {name:'Магадан',        x: 975, y: 257},
+  {name:'Хабаровск',      x: 870, y: 414},
+  {name:'Владивосток',    x: 832, y: 495},
+  {name:'Петропавловск-Камчатский', x:1042, y:357},
+  {name:'Анадырь',        x:1170, y: 200},
+  {name:'Мурманск',       x:  97, y: 128},
+  {name:'Архангельск',    x: 130, y: 200},
+  {name:'Норильск',       x: 510, y: 128},
+  {name:'Сургут',         x: 380, y: 245},
+];
+
+const NAMES = ['Алексей П.','Мария В.','Иван С.','Елена К.','Дмитрий Л.','Анна Г.','Сергей М.','Ольга Р.','Артём В.','Полина З.','Никита О.','Юлия Ф.','Павел Б.','Ксения Т.','Илья Н.','Дарья И.','Кирилл А.','Софья Д.','Михаил Е.','Виктория Ж.','Роман Х.','Алиса Ц.','Тимур Я.','Лера Щ.','Глеб У.','Карина Й.','Олег Ч.','Настя Ш.'];
+
+/* МОК-аватарки: подобранные фото-портреты (Unsplash, crop по лицу).
+   Заменятся реальными данными по API. */
+const AVATAR_PHOTOS = [
+  '1506794778202-cad84cf45f1d','1500648767791-00dcc994a43e','1499996860823-5214fcc65f8f',
+  '1568602471122-7832951cc4c5','1545167622-3a6ac756afa4','1547425260-76bcadfb4f2c',
+  '1527082395-e939b847da0d','1494790108377-be9c29b29330','1517365830460-955ce3ccd263',
+  '1499952127939-9bbf5af6c51c','1546961329-78bef0414d7c','1502685104226-ee32379fefbe',
+  '1524504388940-b1c1722653e1'
+];
+const AVATAR_URL = id => `https://images.unsplash.com/photo-${id}?w=72&h=72&fit=crop&crop=faces&q=70`;
+const pickAvatar = () => AVATAR_URL(pick(AVATAR_PHOTOS));
+
+const pick = a => a[Math.floor(Math.random()*a.length)];
+
+/* Вариант оформления карты через ?map=outline|filled|constellation|line|ghost|clean */
+const MAP_VARIANTS = {outline:'',filled:'map-filled',constellation:'map-constellation',line:'map-line',ghost:'map-ghost',clean:'map-clean'};
+const mapVariant = new URLSearchParams(location.search).get('map') || 'clean';
+if (MAP_VARIANTS[mapVariant]) document.body.classList.add(MAP_VARIANTS[mapVariant]);
+const isClean = mapVariant === 'clean';
+
+/* Карта-как-экран: координаты городов растягиваются на весь viewport
+   так чтобы Калининград был слева, Анадырь справа, Мурманск сверху,
+   Сочи/Владивосток снизу. С небольшим safe-margin от краёв. */
+function getBox(){
+  const vw = innerWidth, vh = innerHeight;
+  const mx = Math.max(60, vw*0.05);
+  if (isClean){
+    // карта на весь экран, лого по центру поверх
+    const my = Math.max(70, vh*0.08);
+    return { mx, top: my, w: vw - mx*2, h: vh - my*2 };
+  }
+  // верхний отступ карты = высота бренд-полосы + зазор, чтобы карта была ниже логотипа
+  const brand = document.querySelector('.brand');
+  const top = (brand ? brand.offsetHeight : 120) + 24;
+  const bottom = Math.max(80, vh*0.08);
+  return { mx, top, w: vw - mx*2, h: vh - top - bottom };
+}
+/* точка скрыта за центральным лого (только для clean-варианта) */
+function behindBrand(px,py){
+  if (!isClean) return false;
+  const el = document.querySelector('.brand-inner') || document.querySelector('.brand');
+  if (!el) return false;
+  const r = el.getBoundingClientRect(), pad = 28;
+  return px > r.left-pad && px < r.right+pad && py > r.top-pad && py < r.bottom+pad;
+}
+function svgToPx(x,y){
+  const {mx,top,w,h} = getBox();
+  return [ mx + (x/1200)*w, top + (y/500)*h ];
+}
+
+/* Фоновая карта: силуэт растягиваем в ту же рамку, статичные точки-города */
+const MAJOR = new Set(['Москва','Санкт-Петербург','Калининград','Сочи','Казань','Екатеринбург','Новосибирск','Красноярск','Якутск','Владивосток','Мурманск']);
+const rfmap = document.getElementById('rfmap');
+const mapDots = document.getElementById('mapdots');
+
+/* Опорные точки силуэта РФ (по часовой) в системе 1200x500 — сглаживаются сплайном */
+const RF_OUTLINE = [
+  [150,170],[112,124],[96,100],[131,150],[176,134],[241,160],[300,121],[361,150],
+  [431,130],[510,96],[560,66],[611,101],[701,130],[800,120],[900,135],[1000,121],
+  [1090,140],[1176,150],[1186,205],[1121,235],[1076,266],[1066,300],[1086,345],
+  [1060,396],[1035,356],[1030,311],[981,321],[931,376],[896,425],[856,490],[836,500],
+  [806,466],[761,436],[691,446],[611,451],[521,458],[471,440],[421,450],[351,450],
+  [301,426],[256,446],[216,470],[196,455],[186,440],[166,475],[152,500],[133,478],
+  [119,448],[106,410],[93,360],[96,300],[121,255],[141,210]
+];
+const RF_KLGD = [[3,285],[21,277],[29,293],[11,304]];
+
+function smoothPath(pts){
+  const n = pts.length, P = i => pts[(i%n+n)%n];
+  let d = `M${P(0)[0]},${P(0)[1]}`;
+  for (let i=0;i<n;i++){
+    const p0=P(i-1),p1=P(i),p2=P(i+1),p3=P(i+2);
+    const c1x=p1[0]+(p2[0]-p0[0])/6, c1y=p1[1]+(p2[1]-p0[1])/6;
+    const c2x=p2[0]-(p3[0]-p1[0])/6, c2y=p2[1]-(p3[1]-p1[1])/6;
+    d += `C${c1x.toFixed(1)},${c1y.toFixed(1)} ${c2x.toFixed(1)},${c2y.toFixed(1)} ${p2[0]},${p2[1]}`;
+  }
+  return d + 'Z';
+}
+rfmap.innerHTML = `<path d="${smoothPath(RF_OUTLINE)}"/><path d="${smoothPath(RF_KLGD)}"/>`;
+
+function layoutMap(){
+  const {mx,top,w,h} = getBox();
+  rfmap.style.left = mx+'px'; rfmap.style.top = top+'px';
+  rfmap.style.width = w+'px'; rfmap.style.height = h+'px';
+  mapDots.innerHTML = '';
+  // соединительные линии (только для варианта-созвездия)
+  if (document.body.classList.contains('map-constellation')){
+    const pts = CITIES.map(c=>svgToPx(c.x,c.y));
+    let svg = `<svg width="${innerWidth}" height="${innerHeight}" style="position:fixed;inset:0;pointer-events:none" aria-hidden="true">`;
+    for (let i=0;i<pts.length;i++){
+      // соединяем каждый город с ближайшим соседом справа по индексу (даёт «маршрутную» сеть)
+      const a=pts[i], b=pts[(i+1)%pts.length];
+      svg += `<line x1="${a[0].toFixed(0)}" y1="${a[1].toFixed(0)}" x2="${b[0].toFixed(0)}" y2="${b[1].toFixed(0)}" stroke="rgba(31,42,5,.14)" stroke-width="1" stroke-dasharray="2 5"/>`;
+    }
+    svg += `</svg>`;
+    mapDots.insertAdjacentHTML('beforeend', svg);
+  }
+  CITIES.forEach(c=>{
+    const [px,py] = svgToPx(c.x,c.y);
+    const d = document.createElement('div');
+    d.className = 'rf-dot' + (MAJOR.has(c.name) ? ' major' : '');
+    d.style.left = px+'px'; d.style.top = py+'px';
+    mapDots.appendChild(d);
+  });
+}
+layoutMap();
+addEventListener('resize', layoutMap);
+addEventListener('load', layoutMap);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(layoutMap);
+
+const popsLayer = document.getElementById('pops');
+
+function spawnPop(){
+  const city = pick(CITIES);
+  const name = pick(NAMES);
+  const km   = (Math.random()*16 + 2).toFixed(1).replace(/\.0$/, '');
+  const xp   = Math.round((+km) * (Math.random()*10 + 12));
+  const [px, py] = svgToPx(city.x, city.y);
+
+  // в clean-варианте не показываем города, спрятанные за центральным лого
+  if (behindBrand(px, py)) return;
+
+  const ping = document.createElement('div');
+  ping.className = 'ping';
+  ping.style.left = px+'px'; ping.style.top = py+'px';
+  popsLayer.appendChild(ping);
+
+  const pop = document.createElement('div');
+  pop.className = 'pop';
+  pop.style.left = px+'px'; pop.style.top = py+'px';
+  pop.innerHTML = `
+    <div class="pop-ava" style="background-image:url('${pickAvatar()}')"></div>
+    <div class="pop-line"><span class="city">${city.name}</span><span class="sep">·</span><span class="km">${km}&nbsp;км</span><span class="xp">+${xp}&nbsp;XP</span></div>`;
+  popsLayer.appendChild(pop);
+  // clamp inside viewport (popup translates by -50% so we need half its width)
+  const popW = pop.offsetWidth, vw = window.innerWidth, margin = 12;
+  let dx = 0;
+  if (px - popW/2 < margin)        dx = margin - (px - popW/2);
+  else if (px + popW/2 > vw-margin) dx = (vw - margin) - (px + popW/2);
+  if (dx) pop.style.left = (px + dx) + 'px';
+  requestAnimationFrame(()=>pop.classList.add('in'));
+
+  setTimeout(()=>{ pop.classList.remove('in'); pop.classList.add('out'); }, 3800);
+  setTimeout(()=>{ pop.remove(); ping.remove(); }, 4600);
+}
+
+(function loop(){
+  spawnPop();
+  setTimeout(loop, 1400 + Math.random()*1800);
+})();
+for (let i=1;i<3;i++) setTimeout(spawnPop, i*500);
+
+
+const btn = document.getElementById('helpBtn');
+const pop = document.getElementById('helpPop');
+btn.addEventListener('click', e=>{
+  e.stopPropagation();
+  pop.classList.toggle('open');
+  btn.textContent = pop.classList.contains('open') ? '×' : '?';
+});
+document.addEventListener('click', e=>{
+  if (pop.classList.contains('open') && !pop.contains(e.target) && e.target!==btn){
+    pop.classList.remove('open');
+    btn.textContent = '?';
+  }
+});
+document.addEventListener('keydown', e=>{
+  if (e.key==='Escape' && pop.classList.contains('open')){
+    pop.classList.remove('open');
+    btn.textContent='?';
+  }
+});
+</script>
+</body>
+</html>
