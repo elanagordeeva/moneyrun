@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Сборка guide.html (Правила сервиса) из /tmp/guide.txt в дизайне нового сайта.
+"""Сборка guide.html (Правила платформы) из /tmp/guide.txt в дизайне нового сайта.
 Текст 1-в-1, таблицы переносятся структурно."""
 import re, html as H
 from pathlib import Path
@@ -682,7 +682,7 @@ FOOT = """<footer><div class="foot-inner">
   <div class="foot-c"><a href="index.html" class="nav-logo" style="margin-bottom:.4rem"><img class="logo-mark" src="art/logo-hor-black.svg" alt="Moneyrun" height="28"></a><p class="tagline">Социально-благотворительный проект по развитию бегового движения.</p><p class="foot-slogan">Run, <span>Earn,</span> Enjoy!</p></div>
   <div class="foot-c"><span class="label">Сервис</span><a href="index.html#howto">Как работает</a><a href="index.html#rules">Правила</a><a href="index.html#clubs">Клубы</a><a href="index.html#principles">Принципы</a></div>
   <div class="foot-c"><span class="label">Связаться</span><a href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram · @moneyrun</a><a href="index.html#contact">Сотрудничество</a></div>
-</div><div class="foot-bottom"><span>© 2023 — 2026 Moneyrun</span><span style="display:flex;gap:1.5rem;flex-wrap:wrap"><a href="guide.html">Правила сервиса</a><a href="privacypolicy.html">Политика конфиденциальности</a></span></div></footer>"""
+</div><div class="foot-bottom"><span>© 2023 — 2026 Moneyrun</span><span style="display:flex;gap:1.5rem;flex-wrap:wrap"><a href="guide.html">Правила платформы</a><a href="privacypolicy.html">Политика конфиденциальности</a></span></div></footer>"""
 
 JS = ("""<script>document.querySelectorAll('.g-tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.g-tab').forEach(x=>x.classList.remove('on'));b.classList.add('on');const t=b.dataset.t;document.querySelectorAll('.g-rlpane').forEach(p=>{p.hidden=(p.dataset.pane!==t)});}));</script>"""
  + r"""<script>/* висячие предлоги */
@@ -694,8 +694,8 @@ doc=f"""<!DOCTYPE html>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Правила сервиса — Moneyrun</title>
-  <meta name="description" content="Правила сервиса Moneyrun: игровой Грейдовый модуль, начисление XP, монетизация и финансирование.">
+  <title>Правила платформы — Moneyrun</title>
+  <meta name="description" content="Правила платформы Moneyrun: игровой Грейдовый модуль, начисление XP, монетизация и финансирование.">
   <meta name="theme-color" content="#eef2ec">
   <link rel="icon" type="image/png" href="https://static.tildacdn.com/tild6335-6462-4965-b561-643434616164/Logo_32x32.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -709,7 +709,7 @@ doc=f"""<!DOCTYPE html>
     <header class="g-hero">
       <div class="g-hero-text">
         <span class="g-hero-eyebrow">Документация</span>
-        <h1>Правила сервиса</h1>
+        <h1>Правила платформы</h1>
         <p class="g-hero-sub">Платформа Moneyrun — социально-благотворительный проект по развитию бегового движения.</p>
       </div>
       <div class="g-hero-art" aria-hidden="true">
