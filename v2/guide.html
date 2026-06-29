@@ -112,10 +112,20 @@
     .g-hero-meta{display:flex;gap:.6rem;flex-wrap:wrap;margin:0}
     .g-hero-meta .chip{display:inline-flex;align-items:center;gap:.45rem;font-family:var(--fm);font-size:.74rem;letter-spacing:.03em;color:#f1f3ee;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:.4rem .85rem}
     .g-hero-meta .chip span{color:rgba(255,255,255,.5)}
+    .g-read{background:#fbfdf9;border:1px solid var(--border);border-radius:var(--r-md);box-shadow:var(--sh-sm);padding:1.25rem 1.35rem 1.35rem;margin:-1.65rem 0 2.4rem}
+    .g-read-k{display:block;font-family:var(--fm);font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0 0 .35rem}
+    .g-read-title{font-family:var(--fd);font-weight:850;font-size:clamp(1.25rem,2vw,1.55rem);line-height:1.12;color:var(--ink);margin:0 0 1rem}
+    .g-read-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.7rem}
+    .g-read-item{border-left:3px solid var(--lime-deep);padding:.15rem .2rem .05rem .75rem}
+    .g-read-item strong{display:block;font-family:var(--fd);font-weight:850;color:var(--ink);margin:0 0 .22rem}
+    .g-read-item span{display:block;color:var(--ink2);font-size:.9rem;line-height:1.5}
     @media(max-width:560px){
       .g-hero{padding:2rem 1.4rem 1.8rem}
       .g-hero h1{font-size:clamp(2rem,11vw,3rem)}
+      .g-read{margin:-1.45rem 0 2rem;padding:1.05rem 1.05rem 1.15rem}
     }
+    @media(max-width:920px){.g-read-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:560px){.g-read-grid{grid-template-columns:1fr}.g-read-item span{font-size:.88rem}}
     .legal h2{font-family:var(--fd);font-weight:800;font-size:clamp(1.7rem,3vw,2.4rem);letter-spacing:0;line-height:1.12;margin:4.1rem 0 1.15rem;padding-top:1.35rem;border-top:1px solid var(--border);color:var(--ink)}
     .legal h2:first-of-type{margin-top:0;padding-top:0;border-top:0}
     .legal h2 .g-h-link{display:inline-flex;align-items:center;gap:.65rem}
@@ -368,6 +378,16 @@
       <p class="g-hero-lead">Бегаешь — копишь <b>XP</b>. Обмениваешь <b>XP</b> — получаешь рубли.<br class="lead-br"> Чем регулярнее и интенсивнее ты бегаешь, тем больше денег можно обменять в Клубах.</p>
       <p class="g-hero-meta"><span class="chip"><span>Версия</span> 16.02.26</span></p>
     </header>
+    <section class="g-read" aria-label="Как читать правила">
+      <span class="g-read-k">Коротко перед документом</span>
+      <p class="g-read-title">Как читать правила</p>
+      <div class="g-read-grid">
+        <div class="g-read-item"><strong>XP</strong><span>Баллы начисляются за подходящие беговые тренировки и зависят от нагрузки, пульса и результативности.</span></div>
+        <div class="g-read-item"><strong>Грейды</strong><span>Грейд показывает уровень Атлета и открывает условия для роста, клубных механик и курса обмена.</span></div>
+        <div class="g-read-item"><strong>Деньги</strong><span>XP могут обмениваться на рубли в Клубах, если выполнены правила платформы и есть месячный бюджет.</span></div>
+        <div class="g-read-item"><strong>Ограничения</strong><span>Монетизируется только бег: учитываются темп, устройство, лимиты нагрузки и дополнительные условия Грейда.</span></div>
+      </div>
+    </section>
     <div class="g-doc">
     <nav class="g-toc" id="toc" aria-label="Содержание"><p class="g-toc-title">Содержание</p><ol><li><a href="#elementy-platformy">Элементы платформы</a></li><li><a href="#igrovoy-modul-im">Игровой модуль (ИМ)</a></li><li><a href="#matrica-greydov">Матрица Грейдов</a></li><li><a href="#im-experience-xp-detalizaciya">ИМ. Experience (XP). Детализация</a></li><li><a href="#im-xp-pulsovye-dannye">ИМ. XP. Пульсовые данные</a></li><li><a href="#im-xp-trenirovochnaya-nagruzka">ИМ. XP. Тренировочная нагрузка</a></li><li><a href="#im-xp-limity-nagruzki">ИМ. XP. Лимиты нагрузки</a></li><li><a href="#im-xp-lyubitelskaya-rezultativnost">ИМ. XP. Любительская результативность</a></li><li><a href="#tablica-running-level">Таблица Running Level</a></li><li><a href="#im-xp-nachislenie">ИМ. XP. Начисление</a></li><li><a href="#im-xp-dopolnitelnye-usloviya">ИМ. XP. Дополнительные условия</a></li><li><a href="#finansirovanie">Финансирование</a></li><li><a href="#filosofiya">Философия</a></li></ol></nav>
     <div class="g-doc-body">
