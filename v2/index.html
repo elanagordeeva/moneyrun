@@ -448,7 +448,7 @@ function spawnPop(){
   if (isMobileCompact()){
     const lanes = [innerHeight*.42, innerHeight*.50, innerHeight*.58];
     py = lanes[mobilePopLane++ % lanes.length];
-    px = Math.min(Math.max(px, innerWidth*.26), innerWidth*.74);
+    px = innerWidth * .5;
   }
 
   // в clean-варианте не показываем города, спрятанные за центральным лого
