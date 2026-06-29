@@ -138,21 +138,12 @@
     .g-toc a::before{content:counter(toc);font-family:var(--fm);font-size:.74rem;color:var(--muted2);min-width:1.5em;text-align:right}
     .g-toc a:hover,.g-toc a.is-active{color:var(--lime-deep)}
     .g-toc a.is-active::before{color:var(--lime-deep)}
-    .g-side{min-width:0}
-    .g-mini-gloss{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);box-shadow:var(--sh-sm);padding:1rem 1.05rem 1.1rem;margin:-1.6rem 0 2.6rem}
-    .g-mini-gloss-title{font-family:var(--fm);font-weight:500;font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:0 0 .75rem}
-    .g-mini-gloss dl{display:grid;gap:.55rem;margin:0}
-    .g-mini-gloss div{display:grid;grid-template-columns:3rem minmax(0,1fr);gap:.55rem;align-items:baseline}
-    .g-mini-gloss dt{font-family:var(--fd);font-weight:850;font-size:.8rem;color:var(--ink)}
-    .g-mini-gloss dd{margin:0;color:var(--ink2);font-size:.76rem;line-height:1.38}
     @media(min-width:1100px){
-      .g-doc .g-side{position:sticky;top:92px;max-height:calc(100vh - 112px);overflow:auto}
-      .g-doc .g-toc{position:static;max-height:none;overflow:visible;margin:0 0 1rem;padding:1rem 1rem 1.1rem}
+      .g-doc .g-toc{position:sticky;top:92px;max-height:calc(100vh - 112px);overflow:auto;margin:0;padding:1rem 1rem 1.1rem}
       .g-doc .g-toc ol{columns:1}
       .g-doc .g-toc a{font-size:.78rem;line-height:1.32}
-      .g-doc .g-mini-gloss{margin:0;padding:.95rem 1rem 1rem}
     }
-    @media(max-width:1099px){.g-doc{display:block}.g-doc .g-toc{margin:1.6rem 0 1rem}.g-doc .g-mini-gloss{margin:0 0 2.6rem}}
+    @media(max-width:1099px){.g-doc{display:block}.g-doc .g-toc{margin:1.6rem 0 2.6rem}}
     /* очень широкие экраны (4K и больше) — боковое Содержание шире */
     @media(min-width:3200px){
       .g-doc{grid-template-columns:minmax(320px,400px) minmax(0,1fr);gap:clamp(2.6rem,3vw,4rem)}
@@ -160,7 +151,7 @@
       .g-doc .g-toc a{font-size:.92rem;line-height:1.45}
       .g-doc .g-toc-title{font-size:.8rem}
     }
-    @media(max-width:560px){.g-toc ol{columns:1}.g-mini-gloss div{grid-template-columns:2.7rem minmax(0,1fr)}}
+    @media(max-width:560px){.g-toc ol{columns:1}}
     .g-final{margin:3.6rem 0 1rem}
     .g-final-title{font-family:var(--fd);font-weight:800;font-size:clamp(2.2rem,6vw,4.6rem);line-height:1;letter-spacing:-.04em;color:var(--ink);display:inline-block}
     .g-final-mark{display:inline;color:inherit;padding:0}
@@ -378,10 +369,7 @@
       <p class="g-hero-meta"><span class="chip"><span>Версия</span> 16.02.26</span></p>
     </header>
     <div class="g-doc">
-    <aside class="g-side" aria-label="Навигация и термины">
     <nav class="g-toc" id="toc" aria-label="Содержание"><p class="g-toc-title">Содержание</p><ol><li><a href="#elementy-platformy">Элементы платформы</a></li><li><a href="#igrovoy-modul-im">Игровой модуль (ИМ)</a></li><li><a href="#matrica-greydov">Матрица Грейдов</a></li><li><a href="#im-experience-xp-detalizaciya">ИМ. Experience (XP). Детализация</a></li><li><a href="#im-xp-pulsovye-dannye">ИМ. XP. Пульсовые данные</a></li><li><a href="#im-xp-trenirovochnaya-nagruzka">ИМ. XP. Тренировочная нагрузка</a></li><li><a href="#im-xp-limity-nagruzki">ИМ. XP. Лимиты нагрузки</a></li><li><a href="#im-xp-lyubitelskaya-rezultativnost">ИМ. XP. Любительская результативность</a></li><li><a href="#tablica-running-level">Таблица Running Level</a></li><li><a href="#im-xp-nachislenie">ИМ. XP. Начисление</a></li><li><a href="#im-xp-dopolnitelnye-usloviya">ИМ. XP. Дополнительные условия</a></li><li><a href="#finansirovanie">Финансирование</a></li><li><a href="#filosofiya">Философия</a></li></ol></nav>
-    <section class="g-mini-gloss" aria-label="Короткий словарь терминов"><p class="g-mini-gloss-title">Короткий словарь</p><dl><div><dt>XP</dt><dd>баллы за тренировки</dd></div><div><dt>Грейд</dt><dd>уровень Атлета от D до A+</dd></div><div><dt>RL</dt><dd>Running Level, результативность</dd></div><div><dt>RQ</dt><dd>множитель за соответствие RL</dd></div><div><dt>IQ</dt><dd>качество тренировочной нагрузки</dd></div><div><dt>EF</dt><dd>эндаумент-фонд выплат</dd></div></dl></section>
-    </aside>
     <div class="g-doc-body">
     <h2 id="elementy-platformy" class="g-h g-h2"><a class="g-h-link" href="#elementy-platformy"><span class="g-h-mark">Элементы платформы</span></a></h2>
     <ol class="g-elements"><li><span class="g-num g-num-1">1</span><span class="g-el-text">Тематическая социальная сеть и сервис с бесплатными инструментами для ведения беговой статистики, тренировочных планов и клубных сообществ.</span></li><li><span class="g-num g-num-2">2</span><span class="g-el-text"><b><i>Игровой Грейдовый модуль</i></b> (<b><i>ИМ</i></b>), основанный на личном и любительском прогрессе в беге с мотивационным финансовым подкреплением за счёт целевого благотворительного <b><i><span class="g-term"><a class="g-link" href="#finansirovanie">Эндаумент фонда (EF)</a></span></i></b>.</span></li></ol>
