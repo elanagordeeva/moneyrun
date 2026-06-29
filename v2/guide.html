@@ -293,10 +293,33 @@
     .g-matrix tbody .g-c-blue{background:rgba(116,179,255,.10)}
     /* компактная Матрица: плотнее по обеим осям */
     table.g-matrix{font-size:.74rem}
-    table.g-matrix th,table.g-matrix td{padding:.26rem .45rem}
+    table.g-matrix th,table.g-matrix td{padding:.32rem .45rem}
     .g-matrix .g-rowh{min-width:0;font-size:.76rem;padding-right:.7rem}
     .g-matrix .g-grp th{padding:.28rem .35rem;font-size:.64rem}
     .g-matrix tr.g-sub td{padding:.28rem .6rem;font-size:.62rem}
+
+    /* ── Читабельность таблиц ── */
+    /* подсветка строки под курсором (везде) */
+    @media(hover:hover){
+      table.g-tbl tbody tr:hover td,
+      table.g-tbl tbody tr:hover td:first-child{background:#eef7df}
+      .g-matrix tbody tr:not(.g-sub):hover td,
+      .g-matrix tbody tr:not(.g-sub):hover .g-rowh{background:#eef7df}
+    }
+    /* разделители между зонами Грейдов (серый | зелёный | синий) */
+    .g-matrix .g-c-grey + .g-c-green,
+    .g-matrix .g-c-green + .g-c-blue{border-left:2px solid #cfd5cd}
+    .g-matrix thead .g-c-grey + .g-c-green,
+    .g-matrix thead .g-c-green + .g-c-blue{border-left:2px solid #fff}
+    /* колонка-метка отделена от данных */
+    .g-matrix .g-rowh{box-shadow:1px 0 0 var(--border2)}
+    /* да/нет: «+» — лаймовая галочка, «—» — приглушённый прочерк (классы ставит JS) */
+    .g-matrix td.is-yes{color:var(--lime-deep);font-weight:800}
+    .g-matrix td.is-no{color:#aeb4ab}
+    /* грейд-колонка в таблице Running Level подкрашена по типу Грейда */
+    .g-rl td.tier-green{background:rgba(156,209,97,.16)}
+    .g-rl td.tier-blue{background:rgba(116,179,255,.14)}
+    .g-rl td.tier-grey{color:var(--muted)}
     .g-qt td{vertical-align:middle}
     .g-qt .g-zone{display:inline-block;min-width:3.6em;text-align:center;padding:.22em .6em;border-radius:999px;font-family:var(--fm);font-weight:600;font-size:.74rem;color:#22260f;border:1px solid rgba(15,20,15,.06)}
     .g-qt .g-qtv{font-family:var(--fm);color:var(--ink2);font-weight:600}
@@ -766,6 +789,23 @@
     w.addEventListener('scroll',upd,{passive:true});
     window.addEventListener('resize',upd,{passive:true});
     upd();
+  });
+})();
+</script>
+<script>/* читабельность: да/нет в Матрице + подкраска грейд-колонки в Running Level */
+(function(){
+  // Матрица: «+» → галочка, «—» → приглушённый прочерк
+  [].slice.call(document.querySelectorAll('.g-matrix td')).forEach(function(td){
+    var t=(td.textContent||'').trim();
+    if(t==='+'){td.classList.add('is-yes');td.textContent='✓';}
+    else if(t==='—'||t==='-'){td.classList.add('is-no');}
+  });
+  // Running Level: последняя колонка (Грейд) — окраска по типу
+  var tier={'A+':'tier-blue','A':'tier-blue','B+':'tier-green','B':'tier-green','C+':'tier-green','C':'tier-green','Next':'tier-grey'};
+  [].slice.call(document.querySelectorAll('.g-rl table tbody tr')).forEach(function(tr){
+    var cells=tr.children, last=cells[cells.length-1];
+    if(!last)return; var g=(last.textContent||'').trim();
+    if(tier[g])last.classList.add(tier[g]);
   });
 })();
 </script>
