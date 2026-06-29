@@ -88,6 +88,13 @@
       .g-doc .g-toc a{font-size:.78rem;line-height:1.32}
     }
     @media(max-width:1099px){.g-doc{display:block}.g-doc .g-toc{margin:1.6rem 0 2.6rem}}
+    /* очень широкие экраны (4K и больше) — боковое Содержание шире */
+    @media(min-width:3200px){
+      .g-doc{grid-template-columns:minmax(320px,400px) minmax(0,1fr);gap:clamp(2.6rem,3vw,4rem)}
+      .g-doc .g-toc{padding:1.4rem 1.5rem 1.6rem}
+      .g-doc .g-toc a{font-size:.92rem;line-height:1.45}
+      .g-doc .g-toc-title{font-size:.8rem}
+    }
     @media(max-width:560px){.g-toc ol{columns:1}}
     .g-final{margin:3.6rem 0 1rem}
     .g-final-title{font-family:var(--fd);font-weight:800;font-size:clamp(2.2rem,6vw,4.6rem);line-height:1;letter-spacing:-.04em;color:var(--ink);display:inline-block}
