@@ -458,19 +458,39 @@ if (document.fonts && document.fonts.ready) document.fonts.ready.then(layoutMap)
 const popsLayer = document.getElementById('pops');
 let mobilePopLane = 0;
 
+function clampValue(value, min, max){
+  return Math.min(max, Math.max(min, value));
+}
+function mobilePopPoint(){
+  const vw = innerWidth, vh = innerHeight;
+  const brand = document.querySelector('.brand-inner') || document.querySelector('.brand');
+  const r = brand ? brand.getBoundingClientRect() : null;
+  const safeTop = Math.max(96, vh*.16);
+  const safeBottom = Math.max(safeTop + 120, vh - 118);
+  const aboveY = r ? r.top - Math.max(34, vh*.035) : vh*.36;
+  const belowY = r ? r.bottom + Math.max(62, vh*.065) : vh*.64;
+  const lane = [
+    {x:.5, y:aboveY},
+    {x:.42, y:belowY},
+    {x:.58, y:belowY + Math.min(42, vh*.05)}
+  ][mobilePopLane++ % 3];
+  return [
+    clampValue(vw * lane.x, 28, vw - 28),
+    clampValue(lane.y, safeTop, safeBottom)
+  ];
+}
+
 function spawnPop(){
   const city = pick(CITIES);
   const name = pick(NAMES);
   const {km, xp, rub} = mockWorkoutGains();
   let [px, py] = svgToPx(city.x, city.y);
   if (isMobileCompact()){
-    const lanes = [innerHeight*.42, innerHeight*.50, innerHeight*.58];
-    py = lanes[mobilePopLane++ % lanes.length];
-    px = innerWidth * .5;
+    [px, py] = mobilePopPoint();
   }
 
   // в clean-варианте не показываем города, спрятанные за центральным лого
-  if (behindBrand(px, py)) return;
+  if (!isMobileCompact() && behindBrand(px, py)) return;
 
   const ping = document.createElement('div');
   ping.className = 'ping';
