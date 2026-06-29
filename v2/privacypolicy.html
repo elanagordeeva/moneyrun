@@ -109,6 +109,9 @@
     .legal .p-hero .p-hero-lead{color:rgba(255,255,255,.82);line-height:1.58;margin:0 0 1.45rem}
     .legal .p-hero .legal-meta{color:#f1f3ee;line-height:1.35;margin:0}
     .legal .p-hero .legal-meta span{color:rgba(255,255,255,.56)}
+    .legal a:not(.legal-back):not(.nav-logo):not(.privacy-toc a):not(.foot-c a):not(.foot-bottom a){display:inline;color:#25301f;text-decoration:none;background:linear-gradient(transparent 54%,rgba(189,255,118,.62) 54%);border-bottom:1px solid rgba(102,160,45,.54);border-radius:4px;padding:0 .08em;font-weight:700;box-decoration-break:clone;-webkit-box-decoration-break:clone;transition:color .15s,background .15s,border-color .15s}
+    .legal a:not(.legal-back):not(.nav-logo):not(.privacy-toc a):not(.foot-c a):not(.foot-bottom a):hover{color:#0e120e;background:linear-gradient(transparent 42%,rgba(189,255,118,.9) 42%);border-color:var(--lime-deep)}
+    .legal a[target="_blank"]:not(.legal-back):not(.nav-logo):not(.privacy-toc a):not(.foot-c a):not(.foot-bottom a)::after{content:'↗';display:inline-grid;place-items:center;width:1.08em;height:1.08em;margin-left:.22em;border-radius:50%;background:#0e120e;color:var(--lime);font-family:var(--fd);font-size:.64em;font-weight:900;line-height:1;vertical-align:.16em}
     .legal p.sub{font-weight:600;color:var(--ink);margin-top:1.4rem}
     .legal p.lvl3{padding-left:1.2rem}
     .p-summary,.p-data-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;margin:1rem 0 2rem}
@@ -139,6 +142,7 @@
     .foot-c{display:flex;flex-direction:column;gap:.6rem}
     .foot-c .label{font-family:var(--fm);font-size:.66rem;letter-spacing:.24em;color:rgba(255,255,255,.45);text-transform:uppercase;margin-bottom:.5rem}
     .foot-c a{color:#f1f3ee;text-decoration:none;font-size:.95rem;transition:color .15s}.foot-c a:hover{color:var(--lime-deep)}
+    .foot-c a[target="_blank"]::after{content:'↗';display:inline-block;margin-left:.34em;color:var(--lime-deep);font-size:.78em;font-weight:800;vertical-align:.12em}
     .foot-c .tagline{color:rgba(255,255,255,.6);font-size:.92rem;line-height:1.6;max-width:340px}
     .foot-c .nav-logo{color:#f1f3ee}
     .foot-c .nav-logo img.logo-mark{filter:brightness(0) invert(1)}
