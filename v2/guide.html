@@ -305,17 +305,15 @@
 <tr><td><span class="g-zone" style="background:#C2E1CB">77%</span></td><td class="g-qtv">1,24</td><td><span class="g-zone" style="background:#A5A3FF">51%</span></td><td class="g-qtv">0,25</td></tr>
 </tbody></table></div>
     <h2 id="im-xp-limity-nagruzki" class="g-h g-h2"><a class="g-h-link" href="#im-xp-limity-nagruzki"><span class="g-h-mark">ИМ. XP. Лимиты нагрузки</span></a></h2>
-    <p>Полученные баллы <b><i>eTRIMP</i></b> конвертируются в <b><i>XP</i></b>, а затем на них накладываются контрольные лимиты, определенные по исследованиям на контрольных группах:</p>
-    <p>Трехсуточный лимит (72 часа, <b><i>Ch72</i></b>) максимального накопленного значения <b><i>eTRIMP = 360 баллов</i></b></p>
-    <p>Лимит на конкретную тренировку (<b><i>ChT</i></b>) <b><i>= 260 eTRIMP</i></b></p>
-    <p>В случае если какой-либо лимит превышен, вычисление итогового <b><i>eTRIMP</i></b> к конвертации в <b><i>XP</i></b> производится по формуле</p>
+    <p>После расчёта <b><i>eTRIMP</i></b> система применяет контрольные лимиты нагрузки. Они нужны, чтобы ограничивать чрезмерные значения и сохранять начисление <b><i>XP</i></b> в реалистичном диапазоне.</p>
+    <div class="g-rules" aria-label="Лимиты тренировочной нагрузки"><div class="g-rule"><span class="g-rule-badge">Ch72</span><span><strong class="g-rule-title">Трёхсуточный лимит</strong><span class="g-rule-text">За 72 часа максимальное накопленное значение составляет <b><i>360 eTRIMP</i></b>.</span></span></div><div class="g-rule"><span class="g-rule-badge">ChT</span><span><strong class="g-rule-title">Лимит одной тренировки</strong><span class="g-rule-text">Для конкретной тренировки верхний предел составляет <b><i>260 eTRIMP</i></b>.</span></span></div><div class="g-rule"><span class="g-rule-badge">HPZ</span><span><strong class="g-rule-title">Лимиты высоких пульсовых зон</strong><span class="g-rule-text">Для зоны <b><i>95 — 100%</i></b> от <b><i>ЧССМ</i></b> максимум за 72 часа — <b><i>100 eTRIMP</i></b>, для зоны <b><i>90 — 95%</i></b> — <b><i>150 eTRIMP</i></b>.</span></span></div></div>
+    <h3 class="g-subhead">Формула при превышении лимитов</h3>
+    <p>Если какой-либо лимит превышен, итоговое значение <b><i>eTRIMP</i></b>, доступное к конвертации в <b><i>XP</i></b>, вычисляется так:</p>
     <pre class="g-formula">min(
 iif( (360-Ch72)&lt;40;40;360-Ch72)
 , ChT
 )</pre>
-    <p>К конвертации в <b><i>XP</i></b> будет доступно минимум <b><i>40 eTRIMP</i></b>, но в <b><i>Ch72</i></b> будет зачислено оригинальное количество баллов из тренировки.</p>
-    <p>Лимиты на <span class="g-term">пульсовые зоны</span>, где <b><i>95 — 100%</i></b> от <b><i>ЧССМ = 100 eTRIMP</i></b> и одновременно <b><i>90 — 95%</i></b> от <b><i>ЧССМ = 150 eTRIMP</i></b></p>
-    <p>Данные значения считаются максимальными для набора за 72 часа и в случае превышения возьмется максимальное значение для этих зон, а оригинальное количество баллов пойдет в <b><i>Ch72</i></b>.</p>
+    <div class="g-notice"><strong class="g-notice-title">Как применяется ограничение</strong><p>К конвертации в <b><i>XP</i></b> будет доступно минимум <b><i>40 eTRIMP</i></b>. При превышении лимитов по высоким пульсовым зонам берётся максимальное допустимое значение для этих зон, а оригинальное количество баллов всё равно попадает в <b><i>Ch72</i></b>.</p></div>
     <h2 id="im-xp-lyubitelskaya-rezultativnost" class="g-h g-h2"><a class="g-h-link" href="#im-xp-lyubitelskaya-rezultativnost"><span class="g-h-mark">ИМ. XP. Любительская результативность</span></a></h2>
     <p><b><i><span class="g-term">Таблица Running Level </span></i></b>определяет соответствует ли <b><i>Атлет</i></b> по уровню результативности конкретному <b><i>Грейду</i></b> и напрямую влияет на начисления <b><i>XP</i></b> в каждой тренировке, что дает ускорение/замедление в переходах по <b><i>Грейдам</i></b>.</p>
     <h3 id="opredelenie-rl-intervala-dlya-greydov" class="g-h g-h3"><a class="g-h-link" href="#opredelenie-rl-intervala-dlya-greydov"><span class="g-h-mark">Определение RL-интервала для Грейдов</span></a></h3>
