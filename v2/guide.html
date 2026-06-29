@@ -37,6 +37,8 @@
     .legal-wrap{max-width:none;margin:0}
     .legal-back{display:inline-flex;gap:.4rem;font-size:.9rem;color:var(--muted);text-decoration:none;margin-bottom:1.2rem}
     .legal-back:hover{color:var(--lime-deep)}
+    .g-doc{display:grid;grid-template-columns:minmax(210px,250px) minmax(0,1fr);gap:clamp(1.4rem,3vw,2.6rem);align-items:start}
+    .g-doc-body{min-width:0}
     /* hero-блок страницы */
     .g-hero{position:relative;overflow:hidden;border-radius:var(--r-lg);background:#0e120e;color:#f1f3ee;margin:0 0 3.4rem;padding:clamp(2.6rem,6vw,4.6rem) clamp(1.6rem,5vw,3rem);isolation:isolate}
     .g-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(120% 100% at 88% -10%,rgba(189,255,118,.20),transparent 55%);z-index:0;pointer-events:none}
@@ -78,7 +80,14 @@
     .g-toc li{counter-increment:toc;margin:0 0 .5rem;break-inside:avoid}
     .g-toc a{display:flex;gap:.55rem;align-items:baseline;color:var(--ink2);text-decoration:none;font-size:.86rem;line-height:1.35}
     .g-toc a::before{content:counter(toc);font-family:var(--fm);font-size:.74rem;color:var(--muted2);min-width:1.5em;text-align:right}
-    .g-toc a:hover{color:var(--lime-deep)}
+    .g-toc a:hover,.g-toc a.is-active{color:var(--lime-deep)}
+    .g-toc a.is-active::before{color:var(--lime-deep)}
+    @media(min-width:1100px){
+      .g-doc .g-toc{position:sticky;top:92px;max-height:calc(100vh - 112px);overflow:auto;margin:0;padding:1rem 1rem 1.1rem}
+      .g-doc .g-toc ol{columns:1}
+      .g-doc .g-toc a{font-size:.78rem;line-height:1.32}
+    }
+    @media(max-width:1099px){.g-doc{display:block}.g-doc .g-toc{margin:1.6rem 0 2.6rem}}
     @media(max-width:560px){.g-toc ol{columns:1}}
     .g-final{margin:3.6rem 0 1rem}
     .g-final-title{font-family:var(--fd);font-weight:800;font-size:clamp(2.2rem,6vw,4.6rem);line-height:1;letter-spacing:-.04em;color:var(--ink);display:inline-block}
@@ -131,6 +140,18 @@
     .g-flow-k{display:block;font-family:var(--fm);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 .45rem}
     .g-flow-v{display:block;font-family:var(--fd);font-weight:800;font-size:1rem;line-height:1.2;color:var(--ink)}
     .g-flow-note{display:block;color:var(--muted);font-size:.82rem;line-height:1.45;margin-top:.45rem}
+    .g-summary{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.75rem;align-items:start;background:#fbfdf9;border:1px solid var(--border);border-left:4px solid var(--lime-deep);border-radius:var(--r-md);padding:.9rem 1rem;margin:.65rem 0 1.1rem;box-shadow:var(--sh-sm)}
+    .g-summary-k{font-family:var(--fm);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--lime-ink);background:var(--lime);border-radius:999px;padding:.22rem .62rem;white-space:nowrap}
+    .g-summary p{margin:0;color:var(--ink2);font-size:.96rem;line-height:1.62}
+    .g-glossary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem;margin:1rem 0 2rem}
+    .g-gloss{background:#fbfdf9;border:1px solid var(--border);border-radius:var(--r-sm);padding:.75rem .85rem;box-shadow:var(--sh-sm)}
+    .g-gloss strong{display:block;font-family:var(--fm);font-size:.78rem;color:var(--ink);margin-bottom:.18rem}
+    .g-gloss span{display:block;color:var(--muted);font-size:.84rem;line-height:1.45}
+    .g-xp-map{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.7rem;margin:1rem 0 1.7rem}
+    .g-xp-item{background:linear-gradient(180deg,#fff,#fbfdf9);border:1px solid var(--border);border-radius:var(--r-sm);padding:.85rem .9rem;box-shadow:var(--sh-sm)}
+    .g-xp-k{display:block;font-family:var(--fm);font-size:.66rem;color:var(--muted);margin-bottom:.28rem}
+    .g-xp-v{display:block;font-family:var(--fd);font-weight:800;color:var(--ink);line-height:1.22;margin-bottom:.25rem}
+    .g-xp-note{display:block;color:var(--ink2);font-size:.84rem;line-height:1.48}
     .g-thesis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem;margin:1.2rem 0 1.35rem}
     .g-thesis-item{border-left:3px solid var(--lime-deep);background:#fbfdf9;padding:.9rem 1rem;border-radius:0 var(--r-sm) var(--r-sm) 0}
     .g-thesis-item strong{display:block;font-family:var(--fd);font-weight:800;color:var(--ink);margin-bottom:.3rem}
@@ -166,8 +187,14 @@
     .g-acc-item[open] summary{color:var(--ink)}
     .g-acc-body{padding:0 .9rem .8rem;color:var(--ink2);line-height:1.6}
     .g-acc-body p{margin:0;font-size:.74rem;line-height:1.6}
-    .g-formula{font-family:var(--fm);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.5rem .8rem;margin:.3rem 0;font-size:.9rem;color:var(--ink);display:inline-block}
+    .g-formula-card{background:#fbfdf9;border:1px solid var(--border);border-radius:var(--r-md);padding:1rem 1.1rem;margin:1rem 0 1.35rem;box-shadow:var(--sh-sm)}
+    .g-formula-title{display:block;font-family:var(--fd);font-weight:800;color:var(--ink);margin-bottom:.55rem}
+    .g-formula{font-family:var(--fm);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.7rem .85rem;margin:0 0 .7rem;font-size:.9rem;color:var(--ink);display:block;white-space:pre-wrap;overflow:auto}
+    .g-formula-list{list-style:none;margin:.2rem 0 0;padding:0;display:grid;gap:.35rem}
+    .g-formula-list li{position:relative;padding-left:1.05rem;color:var(--ink2);font-size:.9rem;line-height:1.55}
+    .g-formula-list li::before{content:'';position:absolute;left:.2rem;top:.68em;width:5px;height:5px;border-radius:50%;background:var(--lime-deep)}
     .g-tablewrap{overflow:auto;-webkit-overflow-scrolling:touch;margin:1.45rem 0 2rem;border:1px solid var(--border2);border-radius:var(--r-md);background:var(--surface);box-shadow:var(--sh-sm)}
+    .g-tablewrap::before{display:none;content:'← таблицу можно прокручивать →';position:sticky;left:.65rem;top:0;z-index:5;width:max-content;margin:.55rem .65rem 0;padding:.22rem .55rem;border-radius:999px;background:rgba(14,18,14,.82);color:#fff;font-family:var(--fm);font-size:.62rem;letter-spacing:.03em}
     table.g-tbl,table.g-matrix{border-collapse:separate;border-spacing:0;width:100%;font-size:.78rem}
     table.g-tbl th,table.g-tbl td,table.g-matrix th,table.g-matrix td{padding:.46rem .62rem;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
     table.g-tbl thead th,table.g-tbl tr:first-child th{background:#edf3ec;font-family:var(--fd);font-weight:750;color:var(--ink);position:sticky;top:0;z-index:2;border-bottom:1px solid var(--border2)}
@@ -234,6 +261,7 @@
     .foot-bottom span:last-child{grid-column:2;justify-self:start}
     .foot-bottom a{color:rgba(255,255,255,.55);text-decoration:none}.foot-bottom a:hover{color:var(--lime-deep)}
     @media(max-width:880px){.foot-inner,.foot-bottom{grid-template-columns:1fr;gap:2rem}.foot-bottom span:last-child{grid-column:1}}
+    @media(max-width:760px){.g-summary{grid-template-columns:1fr}.g-glossary,.g-xp-map{grid-template-columns:1fr}.g-tablewrap::before{display:block}}
 </style>
 </head>
 <body>
@@ -246,9 +274,11 @@
       <p class="g-hero-lead">Бегаешь — копишь <b>XP</b>. Обмениваешь <b>XP</b> — получаешь рубли.<br class="lead-br"> Чем регулярнее и интенсивнее ты бегаешь, тем больше денег можно обменять в Клубах.</p>
       <p class="g-hero-meta"><span class="chip"><span>Версия</span> 16.02.26</span></p>
     </header>
+    <div class="g-doc">
+    <nav class="g-toc" id="toc" aria-label="Содержание"><p class="g-toc-title">Содержание</p><ol><li><a href="#elementy-platformy">Элементы платформы</a></li><li><a href="#igrovoy-modul-im">Игровой модуль (ИМ)</a></li><li><a href="#matrica-greydov">Матрица Грейдов</a></li><li><a href="#im-experience-xp-detalizaciya">ИМ. Experience (XP). Детализация</a></li><li><a href="#im-xp-pulsovye-dannye">ИМ. XP. Пульсовые данные</a></li><li><a href="#im-xp-trenirovochnaya-nagruzka">ИМ. XP. Тренировочная нагрузка</a></li><li><a href="#im-xp-limity-nagruzki">ИМ. XP. Лимиты нагрузки</a></li><li><a href="#im-xp-lyubitelskaya-rezultativnost">ИМ. XP. Любительская результативность</a></li><li><a href="#tablica-running-level">Таблица Running Level</a></li><li><a href="#im-xp-nachislenie">ИМ. XP. Начисление</a></li><li><a href="#im-xp-dopolnitelnye-usloviya">ИМ. XP. Дополнительные условия</a></li><li><a href="#finansirovanie">Финансирование</a></li><li><a href="#filosofiya">Философия</a></li></ol></nav>
+    <div class="g-doc-body">
     <h2 id="elementy-platformy" class="g-h g-h2"><a class="g-h-link" href="#elementy-platformy"><span class="g-h-mark">Элементы платформы</span></a></h2>
     <ol class="g-elements"><li><span class="g-num g-num-1">1</span><span class="g-el-text">Тематическая социальная сеть и сервис с бесплатными инструментами для ведения беговой статистики, тренировочных планов и клубных сообществ.</span></li><li><span class="g-num g-num-2">2</span><span class="g-el-text"><b><i>Игровой Грейдовый модуль</i></b> (<b><i>ИМ</i></b>), основанный на личном и любительском прогрессе в беге с мотивационным финансовым подкреплением за счёт целевого благотворительного <b><i><span class="g-term">Эндаумент фонда (EF)</span></i></b>.</span></li></ol>
-    <nav class="g-toc" aria-label="Содержание"><p class="g-toc-title">Содержание</p><ol><li><a href="#elementy-platformy">Элементы платформы</a></li><li><a href="#igrovoy-modul-im">Игровой модуль (ИМ)</a></li><li><a href="#matrica-greydov">Матрица Грейдов</a></li><li><a href="#im-experience-xp-detalizaciya">ИМ. Experience (XP). Детализация</a></li><li><a href="#im-xp-pulsovye-dannye">ИМ. XP. Пульсовые данные</a></li><li><a href="#im-xp-trenirovochnaya-nagruzka">ИМ. XP. Тренировочная нагрузка</a></li><li><a href="#im-xp-limity-nagruzki">ИМ. XP. Лимиты нагрузки</a></li><li><a href="#im-xp-lyubitelskaya-rezultativnost">ИМ. XP. Любительская результативность</a></li><li><a href="#tablica-running-level">Таблица Running Level</a></li><li><a href="#im-xp-nachislenie">ИМ. XP. Начисление</a></li><li><a href="#im-xp-dopolnitelnye-usloviya">ИМ. XP. Дополнительные условия</a></li><li><a href="#finansirovanie">Финансирование</a></li><li><a href="#filosofiya">Философия</a></li></ol></nav>
     <h2 id="igrovoy-modul-im" class="g-h g-h2"><a class="g-h-link" href="#igrovoy-modul-im"><span class="g-h-mark">Игровой модуль (ИМ)</span></a></h2>
     <p>Общая концепция: за каждую тренировку <b><i>Атлет</i></b> получает баллы (<b><i>Experience, XP</i></b>), по мере набора которых поднимается по <b><i>Грейдам</i></b> от <b><i>D</i></b> до <b><i>A+</i></b> и выше. В <b><i><span class="g-term">Матрице Грейдов</span></i></b> заложено три типа:</p>
     <div class="g-types"><div class="g-type g-type-grey"><h4 class="g-type-name">Серый <span class="g-type-range">(D — D2)</span></h4><p class="g-type-desc">Начинающие пользователи</p></div><div class="g-type g-type-green"><h4 class="g-type-name">Зелёный <span class="g-type-range">(C — B+)</span></h4><p class="g-type-desc">Любители, работающие над результативностью</p></div><div class="g-type g-type-blue"><h4 class="g-type-name">Синий <span class="g-type-range">(A — A+)</span></h4><p class="g-type-desc">Продвинутые любители или профи с высокой результативностью</p></div></div>
@@ -615,12 +645,33 @@ iif( (360-Ch72)&lt;40;40;360-Ch72)
     <p>Тренировки с низким темпом или показателями ультрабега могут не пройти проверку <b><i>Совета экспертов</i></b> и не получить монетизацию как не входящие в сферу интересов <b><i>EF Moneyrun</i></b>. Это не говорит о негативном отношении к другим видам спорта — сервис уважает и ценит старания <b><i>Атлетов</i></b>, но готов монетизировать только тренировки, учитывающие специфику подготовки к бегу на результат, в рамках текущей концепции.</p>
     <div class="g-notice"><strong class="g-notice-title">К монетизации разрешен только бег</strong><p>Размещение тренировок из небеговых дисциплин (велосипед, роликовые коньки, лыжи и др.) не приветствуется: <b><i>Атлету</i></b> выносится предупреждение. При повторении ситуации сервис будет вынужден заблокировать аккаунт.</p></div>
     <p>Все процессы выстроены максимально экономично, с опорой на труд волонтёров, меценатов и энтузиастов бега. <b><i>Moneyrun</i></b> — это некоммерческая организация (выплаты носят характер благотворительных поощрений) и не преследует цели заработка: платформа готова финансово поощрять <b><i>Атлетов,</i></b> нацеленных на результативность.</p>
-</div></main>
+</div></div></div></main>
 <footer><div class="foot-inner">
   <div class="foot-c"><a href="index.html" class="nav-logo" style="margin-bottom:.4rem"><img class="logo-mark" src="../art/logo-hor-black.svg" alt="Moneyrun" height="28"></a><p class="tagline">Социально-благотворительный проект по развитию бегового движения</p><p class="foot-slogan">Run, <span>Earn,</span> Enjoy!</p></div>
   <div class="foot-c"><span class="label">Связаться</span><a href="https://apps.apple.com/app/id6444129392" target="_blank" rel="noopener">App Store</a><a href="https://play.google.com/store/apps/details?id=tech.aml.moneyrun" target="_blank" rel="noopener">Google Play</a><a href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram · @moneyrun</a></div>
 </div><div class="foot-bottom"><span>© 2023 — 2026 Moneyrun</span><span><a href="privacypolicy.html">Политика конфиденциальности</a></span></div></footer>
-<script>document.querySelectorAll('.g-tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.g-tab').forEach(x=>x.classList.remove('on'));b.classList.add('on');const t=b.dataset.t;document.querySelectorAll('.g-rlpane').forEach(p=>{p.hidden=(p.dataset.pane!==t)});}));</script><script>/* висячие предлоги */
+<script>document.querySelectorAll('.g-tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.g-tab').forEach(x=>x.classList.remove('on'));b.classList.add('on');const t=b.dataset.t;document.querySelectorAll('.g-rlpane').forEach(p=>{p.hidden=(p.dataset.pane!==t)});}));</script>
+<script>/* скроллспай: подсветка активного раздела в боковом оглавлении */
+(function(){
+  var toc=document.getElementById('toc'); if(!toc) return;
+  var links=[].slice.call(toc.querySelectorAll('a[href^="#"]'));
+  var items=[]; links.forEach(function(a){var el=document.getElementById(a.getAttribute('href').slice(1));if(el)items.push({a:a,el:el});});
+  if(!items.length) return;
+  var cur=null;
+  function setActive(a){if(a===cur)return;cur=a;links.forEach(function(l){l.classList.remove('is-active')});a.classList.add('is-active');}
+  function onScroll(){
+    var y=(window.scrollY||document.documentElement.scrollTop)+150, pick=items[0].a;
+    for(var i=0;i<items.length;i++){
+      if(items[i].el.getBoundingClientRect().top+window.scrollY<=y) pick=items[i].a; else break;
+    }
+    setActive(pick);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll,{passive:true});
+  onScroll();
+})();
+</script>
+<script>/* висячие предлоги */
 (function(){var NB=String.fromCharCode(160);var W='а|и|в|во|к|ко|с|со|о|об|обо|у|из|изо|от|ото|до|по|на|за|над|надо|под|подо|при|про|для|без|безо|не|ни|но|то|же|ли|бы|или|что|как|я';var re=new RegExp('(^|[\\s'+NB+'(«„])('+W+')[ \\t]+','gi');function bind(s){var p;do{p=s;s=s.replace(re,function(_,b,w){return b+w+NB;});}while(s!==p);return s;}function walk(){var skip={SCRIPT:1,STYLE:1,TEXTAREA:1,CODE:1,PRE:1,NOSCRIPT:1};var tw=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null),n,a=[];while(n=tw.nextNode()){if(n.parentNode&&!skip[n.parentNode.nodeName]&&n.nodeValue.indexOf(' ')>-1)a.push(n);}a.forEach(function(t){var v=t.nodeValue,x=bind(v);if(x!==v)t.nodeValue=x;});}if(document.readyState!=='loading')walk();else document.addEventListener('DOMContentLoaded',walk);})();</script>
 </body>
 </html>
