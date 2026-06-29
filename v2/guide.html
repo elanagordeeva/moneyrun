@@ -193,6 +193,13 @@
     .g-formula-list{list-style:none;margin:.2rem 0 0;padding:0;display:grid;gap:.35rem}
     .g-formula-list li{position:relative;padding-left:1.05rem;color:var(--ink2);font-size:.9rem;line-height:1.55}
     .g-formula-list li::before{content:'';position:absolute;left:.2rem;top:.68em;width:5px;height:5px;border-radius:50%;background:var(--lime-deep)}
+    .g-table-cap{display:block;font-family:var(--fm);font-size:.7rem;letter-spacing:.04em;color:var(--muted);margin:1.45rem 0 .5rem}
+    .g-tablebox{position:relative;margin:1.45rem 0 2rem}
+    .g-tablebox .g-tablewrap{margin:0}
+    .g-table-cap + .g-tablebox{margin-top:0}
+    /* правый fade-индикатор: виден, пока таблицу можно прокрутить вправо */
+    .g-tablebox::after{content:'';position:absolute;top:0;right:0;bottom:0;width:42px;border-radius:0 var(--r-md) var(--r-md) 0;background:linear-gradient(90deg,rgba(255,255,255,0),var(--surface));pointer-events:none;opacity:0;transition:opacity .2s;z-index:4}
+    .g-tablebox.can-right::after{opacity:1}
     .g-tablewrap{overflow:auto;-webkit-overflow-scrolling:touch;margin:1.45rem 0 2rem;border:1px solid var(--border2);border-radius:var(--r-md);background:var(--surface);box-shadow:var(--sh-sm)}
     .g-tablewrap::before{display:none;content:'← таблицу можно прокручивать →';position:sticky;left:.65rem;top:0;z-index:5;width:max-content;margin:.55rem .65rem 0;padding:.22rem .55rem;border-radius:999px;background:rgba(14,18,14,.82);color:#fff;font-family:var(--fm);font-size:.62rem;letter-spacing:.03em}
     table.g-tbl,table.g-matrix{border-collapse:separate;border-spacing:0;width:100%;font-size:.78rem}
@@ -287,6 +294,7 @@
     <ul class="g-bullets"><li>На любом <b><i>Грейде</i></b> применить финансовый <b><i>Инвайт</i></b>, доступный для получения у другого <b><i>Атлета</i></b> с <b><i>Грейдом С+</i></b> или выше, в <b><i>Верифицированном Клубе</i></b> или <b><i><span class="g-term">розыгрышах офиц. <a class="g-link" href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram-канала</a></span></i></b>.</li><li>На <b><i>Грейде D2 </i></b>и выше, при подтверждении минимального <b><i>RL=1,</i></b> монетизация активируется автоматически.</li></ul>
     <p>Курс обмена <b><i>XP</i></b> на деньги зависит от <b><i>Грейда</i></b>: чем выше <b><i>Грейд</i></b>, тем более выгодный тариф в стандартной сетке. Курс определяет скорость выборки одобренного месячного лимита в <b><i>Клубах</i></b>. Необходимое количество <b><i>XP</i></b> для конкретного <b><i>Грейда</i></b>, курс обмена, <b><i>RL</i></b> и др. можно посмотреть в <b><i><span class="g-term">Матрице Грейдов</span></i></b>.</p>
     <h2 id="matrica-greydov" class="g-h g-h2"><a class="g-h-link" href="#matrica-greydov"><span class="g-h-mark">Матрица Грейдов</span></a></h2>
+    <p class="g-table-cap">Таблица 1 · Условия и пороги перехода по Грейдам (F → Next)</p>
     <div class="g-tablewrap"><table class="g-matrix">
 <thead><tr class="g-grp"><th></th><th class="g-c-grey" colspan="4">Серый</th><th class="g-c-green" colspan="4">Зелёный</th><th class="g-c-blue" colspan="3">Синий</th></tr>
 <tr><th>Грейды</th><th class="g-c-grey">F</th><th class="g-c-grey">D</th><th class="g-c-grey">D1</th><th class="g-c-grey">D2</th><th class="g-c-green">C</th><th class="g-c-green">C+</th><th class="g-c-green">B</th><th class="g-c-green">B+</th><th class="g-c-blue">A</th><th class="g-c-blue">A+</th><th class="g-c-blue">Next</th></tr></thead>
@@ -312,8 +320,27 @@
 </table></div>
     <div class="g-acc"><details class="g-acc-item"><summary>Регистрация</summary><div class="g-acc-body"><p>Наличие действующего аккаунта на платформе <b><i>Moneyrun</i></b>.</p></div></details><details class="g-acc-item"><summary>Инфо Профиля</summary><div class="g-acc-body"><p>Заполненные обязательные поля в аккаунте <b><i>Атлета</i></b>: Имя, Пол, День рождения, Вес.</p></div></details><details class="g-acc-item"><summary>Подписка в Telegram</summary><div class="g-acc-body"><p>Активная подписка <b><i><span class="g-term">на официальный <a class="g-link" href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram-канал</a> Moneyrun</span></i></b>, которая определяется ботом @Moneyrunbot. При отсутствии активной подписки на текущем <b><i>Грейде</i></b> новые тренировки не монетизируются.</p></div></details><details class="g-acc-item"><summary>Running Level</summary><div class="g-acc-body"><p>Верификация аккаунта в <b><i>Moneyrun</i></b> и наличие <b><i>Забегов</i></b> за последние 180 дней, на основании которых определяется <b><i>RL</i></b> из <b><i><span class="g-term">таблицы</span></i></b>.</p></div></details><details class="g-acc-item"><summary>Experience, XP</summary><div class="g-acc-body"><p>Количество баллов <b><i>XP</i></b>, заработанных за активности на платформе <b><i>Moneyrun</i></b>.</p></div></details><details class="g-acc-item"><summary>Монетизация, ₽</summary><div class="g-acc-body"><p>Размер финансового вознаграждения за <b><i>1 XP</i></b> в базовой тарифной сетке <b><i>Клуба Moneyrun</i></b>.</p></div></details><details class="g-acc-item"><summary>Пульсовые данные</summary><div class="g-acc-body"><p>Условие, где при наличии пульса рассчитывается <b><i>XP</i></b> за тренировку на основании <b><i>eTRIMP</i></b>, а при его отсутствии на «серых» <b><i>Грейдах</i></b>, подсчёт <b><i>XP</i></b> происходит по времени: длительность тренировки в минутах делится на 20.</p></div></details><details class="g-acc-item"><summary>Верхние зоны (HPZ)</summary><div class="g-acc-body"><p>High Perfomance Zones (Z3, Z4 и Z5) доступны для <b><i>Грейда D2</i></b> и выше, при <b><i>RL=1</i></b> наличии <b><i>IQ &gt;45%</i></b> (значение может быть пересмотрено).</p></div></details><details class="g-acc-item"><summary>Беговые часы</summary><div class="g-acc-body"><p>Необходимость записи трека через устройство брендов Garmin, Coros, Polar, Suunto или Apple, которые передают больше достоверных данных через API, в отличие от записи с помощью смартфона.</p></div></details><details class="g-acc-item"><summary>Минимальный темп, мин/км</summary><div class="g-acc-body"><p>Предел среднего темпа тренировки, ниже которого активность не считается беговой и не монетизируется по правилам платформы.</p></div></details><details class="g-acc-item"><summary>Создание Клуба</summary><div class="g-acc-body"><p>Возможность создать собственный <b><i>Клуб</i></b> на платформе <b><i>Moneyrun</i></b> и претендовать на его <b><i>Верификацию</i></b>.</p></div></details><details class="g-acc-item"><summary>Роль Забота в Клубе</summary><div class="g-acc-body"><p>Возможность участвовать в развитии <b><i>Верифицированного Клуба</i></b> и состоять в закрытом сообществе <b><i>MR Забота</i></b>.</p></div></details><details class="g-acc-item"><summary>Финвайт</summary><div class="g-acc-body"><p>Специальный код (не более 3 штук на каждом следующем <b><i>Грейде</i></b>) для подключения монетизации в аккаунте другого <b><i>Атлета</i></b>.</p></div></details></div>
     <h2 id="im-experience-xp-detalizaciya" class="g-h g-h2"><a class="g-h-link" href="#im-experience-xp-detalizaciya"><span class="g-h-mark">ИМ. Experience (XP). Детализация</span></a></h2>
+    <h3 class="g-subhead">Обозначения</h3>
+    <div class="g-glossary" aria-label="Основные обозначения">
+      <div class="g-gloss"><strong>XP</strong><span>Experience — баллы за тренировки; по ним растёт Грейд.</span></div>
+      <div class="g-gloss"><strong>RL</strong><span>Running Level — уровень результативности по таблице рекордов.</span></div>
+      <div class="g-gloss"><strong>RQ</strong><span>Коэффициент результативности: множитель XP относительно Грейда.</span></div>
+      <div class="g-gloss"><strong>IQ</strong><span>Intensive Quotient — насколько нагрузка соответствует ожиданиям платформы.</span></div>
+      <div class="g-gloss"><strong>eTRIMP</strong><span>Мера тренировочной нагрузки: время в пульсовых зонах × вес зоны.</span></div>
+      <div class="g-gloss"><strong>Ch72</strong><span>Накопленный лимит нагрузки за 72 часа.</span></div>
+      <div class="g-gloss"><strong>ChT</strong><span>Лимит нагрузки за одну тренировку.</span></div>
+      <div class="g-gloss"><strong>HPZ</strong><span>High Performance Zones — высокие пульсовые зоны (Z3–Z5).</span></div>
+      <div class="g-gloss"><strong>ЧССМ</strong><span>Максимальная частота сердечных сокращений.</span></div>
+    </div>
     <p>Размер начисляемого <b><i>XP</i></b> зависит преимущественно от следующих факторов:</p>
-    <ol class="g-numlist"><li><span class="g-num-b">1</span><span class="g-nl-text"><b><i><span class="g-term">Пульсовые данные</span></i></b>, указанные <b><i>Атлетом</i></b> (в том числе <b><i>ЧССМ</i></b>)</span></li><li><span class="g-num-b">2</span><span class="g-nl-text"><b><i><span class="g-term">Интенсивность и продолжительность тренировочной нагрузки</span></i></b> (<b><i>eTRIMP</i></b>)</span></li><li><span class="g-num-b">3</span><span class="g-nl-text"><b><i><span class="g-term">Баланс тренировочной нагрузки</span></i></b> (<b><i>Ch72 и ChT </i></b>)</span></li><li><span class="g-num-b">4</span><span class="g-nl-text"><b><i><span class="g-term">Любительская результативность</span></i></b> (<b><i>RL и RQ</i></b>)</span></li></ol>
+    <h3 class="g-subhead">Что влияет на XP</h3>
+    <div class="g-xp-map" aria-label="Что влияет на начисление XP">
+      <div class="g-xp-item"><span class="g-xp-k">Фактор 1</span><span class="g-xp-v">Пульсовые данные</span><span class="g-xp-note">ЧССМ и пульс тренировки — основа расчёта нагрузки.</span></div>
+      <div class="g-xp-item"><span class="g-xp-k">Фактор 2</span><span class="g-xp-v">Тренировочная нагрузка</span><span class="g-xp-note">Интенсивность и длительность через eTRIMP.</span></div>
+      <div class="g-xp-item"><span class="g-xp-k">Фактор 3</span><span class="g-xp-v">Результативность · RQ</span><span class="g-xp-note">Соответствие RL текущему Грейду ускоряет или замедляет рост.</span></div>
+      <div class="g-xp-item"><span class="g-xp-k">Фактор 4</span><span class="g-xp-v">Лимиты нагрузки</span><span class="g-xp-note">Ch72 и ChT удерживают начисление в реалистичном диапазоне.</span></div>
+      <div class="g-xp-item"><span class="g-xp-k">Фактор 5</span><span class="g-xp-v">Дополнительные условия</span><span class="g-xp-note">Грейд, темп, подписка и беговые часы — по Матрице Грейдов.</span></div>
+    </div>
     <h2 id="im-xp-pulsovye-dannye" class="g-h g-h2"><a class="g-h-link" href="#im-xp-pulsovye-dannye"><span class="g-h-mark">ИМ. XP. Пульсовые данные</span></a></h2>
     <p>Для корректного расчёта тренировочной нагрузки в личном профиле, в разделе Пульс, необходимо заполнить <b><i>ЧССМ</i></b> — максимальную частоту сердечных сокращений.</p>
     <div class="g-rules" aria-label="Условия заполнения пульсовых данных"><div class="g-rule"><span class="g-rule-badge">Точность</span><span><strong class="g-rule-title">Указать максимально корректно</strong><span class="g-rule-text"><b><i>ЧССМ</i></b> лучше указывать с небольшим запасом в большую сторону: от этого зависит расчёт нагрузки и итоговых <b><i>XP</i></b>.</span></span></div><div class="g-rule"><span class="g-rule-badge">До D1</span><span><strong class="g-rule-title">Заполнить до перехода на Грейд D1</strong><span class="g-rule-text">После перехода на <b><i>Грейд D1</i></b> при отсутствии пульсовых данных <b><i>XP</i></b> начисляться не будет.</span></span></div><div class="g-rule"><span class="g-rule-badge">30 дней</span><span><strong class="g-rule-title">Редактировать не чаще одного раза в месяц</strong><span class="g-rule-text">Изменение параметра <b><i>ЧССМ</i></b> допустимо не чаще, чем раз в 30 дней.</span></span></div></div>
@@ -335,16 +362,26 @@
 <tr><td><span class="g-zone" style="background:#C2E1CB">77%</span></td><td class="g-qtv">1,24</td><td><span class="g-zone" style="background:#A5A3FF">51%</span></td><td class="g-qtv">0,25</td></tr>
 </tbody></table></div>
     <h2 id="im-xp-limity-nagruzki" class="g-h g-h2"><a class="g-h-link" href="#im-xp-limity-nagruzki"><span class="g-h-mark">ИМ. XP. Лимиты нагрузки</span></a></h2>
+    <div class="g-summary"><span class="g-summary-k">Коротко</span><p>Чтобы за один тяжёлый день нельзя было «набегать» сколько угодно <b><i>XP</i></b>, нагрузка ограничивается: есть потолок на одну тренировку и на каждые 72 часа. Сверх лимита баллы не начисляются, но учитываются в накоплении.</p></div>
     <p>После расчёта <b><i>eTRIMP</i></b> система применяет контрольные лимиты нагрузки. Они нужны, чтобы ограничивать чрезмерные значения и сохранять начисление <b><i>XP</i></b> в реалистичном диапазоне.</p>
     <div class="g-rules" aria-label="Лимиты тренировочной нагрузки"><div class="g-rule"><span class="g-rule-badge">Ch72</span><span><strong class="g-rule-title">Трёхсуточный лимит</strong><span class="g-rule-text">За 72 часа максимальное накопленное значение составляет <b><i>360 eTRIMP</i></b>.</span></span></div><div class="g-rule"><span class="g-rule-badge">ChT</span><span><strong class="g-rule-title">Лимит одной тренировки</strong><span class="g-rule-text">Для конкретной тренировки верхний предел составляет <b><i>260 eTRIMP</i></b>.</span></span></div><div class="g-rule"><span class="g-rule-badge">HPZ</span><span><strong class="g-rule-title">Лимиты высоких пульсовых зон</strong><span class="g-rule-text">Для зоны <b><i>95 — 100%</i></b> от <b><i>ЧССМ</i></b> максимум за 72 часа — <b><i>100 eTRIMP</i></b>, для зоны <b><i>90 — 95%</i></b> — <b><i>150 eTRIMP</i></b>.</span></span></div></div>
-    <h3 class="g-subhead">Формула при превышении лимитов</h3>
-    <p>Если какой-либо лимит превышен, итоговое значение <b><i>eTRIMP</i></b>, доступное к конвертации в <b><i>XP</i></b>, вычисляется так:</p>
-    <pre class="g-formula">min(
-iif( (360-Ch72)&lt;40;40;360-Ch72)
-, ChT
+    <div class="g-formula-card">
+      <span class="g-formula-title">Формула при превышении лимитов</span>
+      <p>Если какой-либо лимит превышен, итоговое значение <b><i>eTRIMP</i></b>, доступное к конвертации в <b><i>XP</i></b>, вычисляется так:</p>
+      <pre class="g-formula">min(
+  iif( (360 − Ch72) &lt; 40 ; 40 ; 360 − Ch72 ),
+  ChT
 )</pre>
-    <div class="g-notice"><strong class="g-notice-title">Как применяется ограничение</strong><p>К конвертации в <b><i>XP</i></b> будет доступно минимум <b><i>40 eTRIMP</i></b>. При превышении лимитов по высоким пульсовым зонам берётся максимальное допустимое значение для этих зон, а оригинальное количество баллов всё равно попадает в <b><i>Ch72</i></b>.</p></div>
+      <ul class="g-formula-list">
+        <li><b>Ch72</b> — сколько нагрузки уже накоплено за последние 72 часа; <code>360 − Ch72</code> — это сколько ещё «помещается» в трёхсуточный лимит.</li>
+        <li><b>ChT</b> — потолок одной тренировки (260 eTRIMP); итог не может его превысить.</li>
+        <li><b>min(…)</b> — берётся меньшее из двух значений, чтобы соблюсти оба лимита сразу.</li>
+        <li><b>Минимум 40 eTRIMP</b> — даже при почти исчерпанном лимите к конвертации в XP останется хотя бы 40 баллов.</li>
+      </ul>
+    </div>
+    <div class="g-notice"><strong class="g-notice-title">Как применяется ограничение</strong><p>При превышении лимитов по высоким пульсовым зонам берётся максимальное допустимое значение для этих зон, а оригинальное количество баллов всё равно попадает в <b><i>Ch72</i></b>.</p></div>
     <h2 id="im-xp-lyubitelskaya-rezultativnost" class="g-h g-h2"><a class="g-h-link" href="#im-xp-lyubitelskaya-rezultativnost"><span class="g-h-mark">ИМ. XP. Любительская результативность</span></a></h2>
+    <div class="g-summary"><span class="g-summary-k">Коротко</span><p>Платформа сравнивает твой результат на дистанции с эталоном для текущего <b><i>Грейда</i></b>. Бежишь быстрее эталона — получаешь множитель <b><i>RQ</i></b> выше 1 и копишь <b><i>XP</i></b> быстрее; медленнее — множитель снижается. Результат нужно подтверждать забегами.</p></div>
     <p><b><i><span class="g-term">Таблица Running Level </span></i></b>определяет соответствует ли <b><i>Атлет</i></b> по уровню результативности конкретному <b><i>Грейду</i></b> и напрямую влияет на начисления <b><i>XP</i></b> в каждой тренировке, что дает ускорение/замедление в переходах по <b><i>Грейдам</i></b>.</p>
     <h3 id="opredelenie-rl-intervala-dlya-greydov" class="g-h g-h3"><a class="g-h-link" href="#opredelenie-rl-intervala-dlya-greydov"><span class="g-h-mark">Определение RL-интервала для Грейдов</span></a></h3>
     <p>Для вычисления референсных значений результативности <b><i>Грейдов</i></b>, ежегодно используются протоколы мужского и женского забега <b><i><span class="g-term">Московского марафона</span></i></b> на дистанции 10 км. Протокол ранжируется от большего к меньшему результату, принимается за 100% и делится на группы по убывающей экспоненте с коэффициентом 0,5. Выбирается время результата <b><i>Ранга</i></b> лежащего на границе групп.</p>
@@ -614,6 +651,7 @@ iif( (360-Ch72)&lt;40;40;360-Ch72)
 <tr class="g-rl-w"><td>0</td><td colspan="4">Наличие верификации и любого забега за 180 дней</td><td>D2</td></tr>
 </tbody></table></div></div>
     <h2 id="im-xp-nachislenie" class="g-h g-h2"><a class="g-h-link" href="#im-xp-nachislenie"><span class="g-h-mark">ИМ. XP. Начисление</span></a></h2>
+    <div class="g-summary"><span class="g-summary-k">Коротко</span><p>Накопленная нагрузка превращается в <b><i>XP</i></b>: время в каждой пульсовой зоне делится на «вес» зоны (чем выше зона — тем больше XP), а затем результат корректируется множителями <b><i>RQ</i></b> (результативность) и <b><i>IQ</i></b> (качество нагрузки).</p></div>
     <p>Финальные значения <b><i>eTRIMP</i></b> конвертируются в <b><i>XP</i></b> по пульсовым зонам: нагрузка делится на установленный для зоны делитель, а затем корректируется коэффициентами <b><i>RQ</i></b> и <b><i>IQ</i></b>.</p>
     <div class="g-flow" aria-label="Схема начисления XP"><div class="g-flow-step"><span class="g-flow-k">Шаг 1</span><span class="g-flow-v">eTRIMP</span><span class="g-flow-note">нагрузка считается по времени в пульсовых зонах</span></div><div class="g-flow-step"><span class="g-flow-k">Шаг 2</span><span class="g-flow-v">Делитель зоны</span><span class="g-flow-note">чем выше зона, тем меньше делитель и выше XP</span></div><div class="g-flow-step"><span class="g-flow-k">Шаг 3</span><span class="g-flow-v">RQ</span><span class="g-flow-note">учитывает результативность относительно текущего Грейда</span></div><div class="g-flow-step"><span class="g-flow-k">Шаг 4</span><span class="g-flow-v">IQ</span><span class="g-flow-note">проверяет соответствие тренировочной нагрузки ожиданиям платформы</span></div></div>
     <h3 class="g-subhead">Делители по пульсовым зонам</h3>
@@ -651,6 +689,22 @@ iif( (360-Ch72)&lt;40;40;360-Ch72)
   <div class="foot-c"><span class="label">Связаться</span><a href="https://apps.apple.com/app/id6444129392" target="_blank" rel="noopener">App Store</a><a href="https://play.google.com/store/apps/details?id=tech.aml.moneyrun" target="_blank" rel="noopener">Google Play</a><a href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram · @moneyrun</a></div>
 </div><div class="foot-bottom"><span>© 2023 — 2026 Moneyrun</span><span><a href="privacypolicy.html">Политика конфиденциальности</a></span></div></footer>
 <script>document.querySelectorAll('.g-tab').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.g-tab').forEach(x=>x.classList.remove('on'));b.classList.add('on');const t=b.dataset.t;document.querySelectorAll('.g-rlpane').forEach(p=>{p.hidden=(p.dataset.pane!==t)});}));</script>
+<script>/* таблицы: обёртка + правый fade-индикатор скролла */
+(function(){
+  function wrap(w){
+    if(w.parentElement&&w.parentElement.classList.contains('g-tablebox'))return w.parentElement;
+    var box=document.createElement('div');box.className='g-tablebox';
+    w.parentNode.insertBefore(box,w);box.appendChild(w);return box;
+  }
+  [].slice.call(document.querySelectorAll('.g-tablewrap')).forEach(function(w){
+    var box=wrap(w);
+    var upd=function(){box.classList.toggle('can-right', w.scrollWidth-w.clientWidth-w.scrollLeft>2);};
+    w.addEventListener('scroll',upd,{passive:true});
+    window.addEventListener('resize',upd,{passive:true});
+    upd();
+  });
+})();
+</script>
 <script>/* скроллспай: подсветка активного раздела в боковом оглавлении */
 (function(){
   var toc=document.getElementById('toc'); if(!toc) return;
