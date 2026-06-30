@@ -125,10 +125,10 @@
     .legal p.sub{font-weight:600;color:var(--ink);margin-top:1.4rem}
     .legal p.lvl3{padding-left:1.2rem}
     .p-summary,.p-data-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;margin:1rem 0 2rem}
-    .p-card{background:var(--surface);border:1px solid var(--border);border-left:2px solid rgba(143,189,89,.55);border-radius:var(--r-md);padding:.95rem 1rem;box-shadow:var(--sh-sm)}
+    .p-card{background:transparent;border:0;border-left:2px solid rgba(143,189,89,.55);border-radius:0;padding:.65rem 0 .65rem 1rem;box-shadow:none}
     .p-card strong{display:block;font-family:var(--fd);font-weight:800;color:var(--ink);margin-bottom:.28rem}
     .p-card span{display:block;color:var(--ink2);font-size:.92rem;line-height:1.55}
-    .p-note{border:1px solid var(--border);border-left:2px solid rgba(143,189,89,.6);border-radius:var(--r-md);background:#fbfdf9;padding:1rem 1.15rem;margin:1.15rem 0 1.35rem}
+    .p-note{border:0;border-left:2px solid rgba(143,189,89,.6);border-radius:0;background:transparent;padding:.8rem 0 .8rem 1rem;margin:1.15rem 0 1.35rem}
     .p-note strong{display:block;font-family:var(--fd);font-weight:800;color:var(--ink);margin-bottom:.35rem}
     .p-note p{margin:0;font-size:.96rem;line-height:1.68}
     .p-terms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem;margin:1rem 0 1.5rem}
@@ -140,7 +140,8 @@
     .p-term[open] summary::after{content:'−';color:var(--ink)}
     .p-term p{margin:0;padding:0 .9rem .85rem;color:var(--ink2);font-size:.86rem;line-height:1.58}
     .p-rules{list-style:none;margin:1rem 0 1.35rem;padding:0;display:grid;gap:.55rem}
-    .p-rules li{position:relative;background:var(--surface);border:1px solid var(--border);border-left:2px solid rgba(143,189,89,.5);border-radius:var(--r-sm);padding:.75rem .9rem .75rem 2rem;color:var(--ink2);line-height:1.58;font-size:.94rem}
+    .p-rules li{position:relative;background:transparent;border:0;border-top:1px solid var(--border);border-left:2px solid rgba(143,189,89,.5);border-radius:0;padding:.75rem 0 .75rem 2rem;color:var(--ink2);line-height:1.58;font-size:.94rem}
+    .p-rules li:last-child{border-bottom:1px solid var(--border)}
     .p-rules li::before{content:'';position:absolute;left:.9rem;top:1.25rem;width:5px;height:5px;border-radius:50%;background:var(--lime-deep)}
     @media(min-width:1100px){.privacy-doc .privacy-toc{position:sticky;top:92px;max-height:calc(100vh - 112px);overflow:auto}}
     @media(max-width:1099px){.privacy-doc{display:block}.privacy-body{max-width:none}.privacy-toc{margin:0 0 2rem}.privacy-toc ol{columns:2;column-gap:1.8rem}.privacy-toc li{break-inside:avoid}}
