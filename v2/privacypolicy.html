@@ -111,7 +111,8 @@
     .privacy-toc li{counter-increment:toc;margin:0 0 .5rem}
     .privacy-toc a{display:flex;gap:.55rem;align-items:baseline;color:var(--ink2);text-decoration:none;font-size:.8rem;line-height:1.32}
     .privacy-toc a::before{content:counter(toc);font-family:var(--fm);font-size:.74rem;color:var(--muted2);min-width:1.5em;text-align:right}
-    .privacy-toc a:hover{color:var(--lime-deep)}
+    .privacy-toc a:hover,.privacy-toc a.is-active{color:var(--lime-deep)}
+    .privacy-toc a.is-active::before{color:var(--lime-deep)}
     .legal h2{font-family:var(--fd);font-weight:800;font-style:normal;font-variation-settings:normal;font-size:clamp(1.35rem,2.3vw,1.85rem);letter-spacing:0;line-height:1.16;margin:3rem 0 1rem;padding-top:1.25rem;border-top:1px solid var(--border);color:var(--ink);scroll-margin-top:96px}
     .legal h2:first-child{margin-top:0}
     .legal p{color:var(--ink2);line-height:1.72;margin-bottom:1rem;font-size:1rem}
@@ -273,6 +274,26 @@
   <div class="foot-c"><a href="index.html" class="nav-logo" style="margin-bottom:.4rem"><img class="logo-mark" src="../art/logo-hor-black.svg" alt="Moneyrun" height="28"></a><p class="tagline">Социально-благотворительный проект по развитию бегового движения</p><p class="foot-slogan">Run, <span>Earn,</span> Enjoy!</p></div>
   <div class="foot-c"><span class="label">Связаться</span><a href="https://apps.apple.com/app/id6444129392" target="_blank" rel="noopener">App Store</a><a href="https://play.google.com/store/apps/details?id=tech.aml.moneyrun" target="_blank" rel="noopener">Google Play</a><a href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram · @moneyrun</a></div>
 </div><div class="foot-bottom"><span>© 2023 — 2026 Moneyrun</span><span><a href="guide.html">Правила платформы</a></span></div></footer>
+<script>/* скроллспай: подсветка активного раздела в боковом содержании */
+(function(){
+  var toc=document.querySelector('.privacy-toc'); if(!toc) return;
+  var links=[].slice.call(toc.querySelectorAll('a[href^="#"]'));
+  var items=[]; links.forEach(function(a){var el=document.getElementById(a.getAttribute('href').slice(1));if(el)items.push({a:a,el:el});});
+  if(!items.length) return;
+  var cur=null;
+  function setActive(a){if(a===cur)return;cur=a;links.forEach(function(l){l.classList.remove('is-active')});a.classList.add('is-active');}
+  function onScroll(){
+    var y=(window.scrollY||document.documentElement.scrollTop)+150, pick=items[0].a;
+    for(var i=0;i<items.length;i++){
+      if(items[i].el.getBoundingClientRect().top+window.scrollY<=y) pick=items[i].a; else break;
+    }
+    setActive(pick);
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',onScroll,{passive:true});
+  onScroll();
+})();
+</script>
 <script>/* висячие предлоги: предлог/союз приклеиваем к следующему слову неразрывным пробелом */
 (function(){var NB=String.fromCharCode(160);var W='а|и|в|во|к|ко|с|со|о|об|обо|у|из|изо|от|ото|до|по|на|за|над|надо|под|подо|при|про|для|без|безо|не|ни|но|то|же|ли|бы|или|что|как|я';var re=new RegExp('(^|[\\s'+NB+'(«„])('+W+')[ \\t]+','gi');function bind(s){var p;do{p=s;s=s.replace(re,function(_,b,w){return b+w+NB;});}while(s!==p);return s;}function walk(){var skip={SCRIPT:1,STYLE:1,TEXTAREA:1,CODE:1,PRE:1,NOSCRIPT:1};var tw=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null),n,a=[];while(n=tw.nextNode()){if(n.parentNode&&!skip[n.parentNode.nodeName]&&n.nodeValue.indexOf(' ')>-1)a.push(n);}a.forEach(function(t){var v=t.nodeValue,x=bind(v);if(x!==v)t.nodeValue=x;});}if(document.readyState!=='loading')walk();else document.addEventListener('DOMContentLoaded',walk);})();</script>
 
