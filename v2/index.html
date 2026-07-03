@@ -483,14 +483,6 @@ function getBox(){
   const bottom = Math.max(80, vh*0.08);
   return { mx, top, w: vw - mx*2, h: vh - top - bottom };
 }
-/* точка скрыта за центральным лого (только для clean-варианта) */
-function behindBrand(px,py){
-  if (!isClean) return false;
-  const el = document.querySelector('.brand-inner') || document.querySelector('.brand');
-  if (!el) return false;
-  const r = el.getBoundingClientRect(), pad = 28;
-  return px > r.left-pad && px < r.right+pad && py > r.top-pad && py < r.bottom+pad;
-}
 function svgToPx(x,y){
   const {mx,top,w,h} = getBox();
   return [ mx + (x/1200)*w, top + (y/500)*h ];
@@ -591,8 +583,6 @@ function spawnPop(){
     [px, py] = mobilePopPoint();
   }
 
-  // в clean-варианте не показываем города, спрятанные за центральным лого
-  if (!isMobileCompact() && behindBrand(px, py)) return;
   if (window.MR_TODAY){ MR_TODAY.w += 1; MR_TODAY.km += parseFloat(km); MR_TODAY.rub += rub; }
 
   const ping = document.createElement('div');
@@ -614,6 +604,27 @@ function spawnPop(){
   if (px - popW/2 < margin)        dx = margin - (px - popW/2);
   else if (px + popW/2 > vw-margin) dx = (vw - margin) - (px + popW/2);
   if (dx) pop.style.left = (px + dx) + 'px';
+
+  // приподнять карточки, чей «пузырь» налезает на надписи бренда (clean, десктоп)
+  if (isClean && !isMobileCompact()){
+    const bi = document.querySelector('.brand-inner');
+    if (bi){
+      const br = bi.getBoundingClientRect();
+      const H = pop.offsetHeight, cx = px + dx, gap = 16;
+      const capL = cx - popW/2, capR = cx + popW/2; // рамка пузыря (transform translate(-50%,-130%))
+      const capBot = py - 0.30*H;
+      const overlapX = capR > br.left - 6 && capL < br.right + 6;
+      if (overlapX && capBot > br.top - gap){
+        const dy = capBot - (br.top - gap);         // поднять так, чтобы низ пузыря был над брендом
+        if ((py - 1.30*H) - dy >= 8){
+          pop.style.top  = (py - dy) + 'px';
+          ping.style.top = (py - dy) + 'px';
+        } else {
+          pop.remove(); ping.remove(); return;       // сверху нет места — прячем
+        }
+      }
+    }
+  }
   requestAnimationFrame(()=>pop.classList.add('in'));
 
   const detail = { name, city:city.name, km, xp, rub, ava, seed:Math.floor(Math.random()*1e9)+1 };
