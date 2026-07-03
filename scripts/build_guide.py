@@ -697,7 +697,9 @@ doc=f"""<!DOCTYPE html>
   <title>Правила платформы — Moneyrun</title>
   <meta name="description" content="Правила платформы Moneyrun: игровой Грейдовый модуль, начисление XP, монетизация и финансирование.">
   <meta name="theme-color" content="#eef2ec">
-  <link rel="icon" type="image/png" href="https://static.tildacdn.com/tild6335-6462-4965-b561-643434616164/Logo_32x32.png">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,slnt,wght@8..144,-10..0,400..1000&family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>{CSS}</style>
