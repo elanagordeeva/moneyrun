@@ -97,9 +97,10 @@
 
     /* Activity popup — minimalist capsule */
     .pops{position:fixed;inset:0;z-index:2;pointer-events:none}
-    .pop{position:absolute;display:flex;align-items:center;gap:.55rem;background:rgba(14,18,14,.92);color:#fff;border-radius:999px;padding:3px 14px 3px 3px;box-shadow:0 8px 22px -8px rgba(14,18,14,.4);transform:translate(-50%,-130%) scale(.7);opacity:0;transition:transform .45s cubic-bezier(.2,.85,.25,1.05),opacity .3s ease;white-space:nowrap;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+    .pop{position:absolute;display:flex;align-items:center;gap:.55rem;background:rgba(14,18,14,.92);color:#fff;border-radius:999px;padding:3px 14px 3px 3px;box-shadow:0 8px 22px -8px rgba(14,18,14,.4);transform:translate(-50%,-130%) scale(.7);opacity:0;transition:transform .45s cubic-bezier(.2,.85,.25,1.05),opacity .3s ease,box-shadow .2s;white-space:nowrap;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);pointer-events:auto;cursor:pointer}
     .pop.in{opacity:1;transform:translate(-50%,-130%) scale(1)}
     .pop.out{opacity:0;transform:translate(-50%,-150%) scale(.94);transition:transform .4s ease,opacity .4s ease}
+    @media(hover:hover){.pop:hover{box-shadow:0 14px 30px -8px rgba(14,18,14,.6),0 0 0 2px rgba(189,255,118,.85)}}
 
     .pop-ava{width:28px;height:28px;border-radius:50%;flex:none;background-size:cover;background-position:center;background-color:#444;background-repeat:no-repeat}
     .pop-line{font-family:var(--fd);font-size:.82rem;font-weight:600;color:#fff;letter-spacing:-.005em;display:flex;align-items:center;gap:.4rem;line-height:1}
@@ -115,6 +116,50 @@
     .ping::after{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid var(--ink);animation:pingExpand 1.4s ease-out infinite}
     @keyframes pingFade{0%{opacity:0}10%{opacity:1}80%{opacity:1}100%{opacity:0}}
     @keyframes pingExpand{0%{transform:scale(1);opacity:.9}100%{transform:scale(3.6);opacity:0}}
+
+    /* Большая карточка тренировки (только тёмная тема) */
+    .wcard-back{position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;padding:clamp(12px,3vw,30px);background:rgba(6,8,6,.62);backdrop-filter:blur(9px) saturate(1.05);-webkit-backdrop-filter:blur(9px) saturate(1.05);opacity:0;pointer-events:none;transition:opacity .26s ease}
+    .wcard-back.open{opacity:1;pointer-events:auto}
+    .wcard{width:min(430px,100%);max-height:min(94vh,820px);overflow:auto;background:#12160f;color:#f1f3ee;border:1px solid rgba(255,255,255,.08);border-radius:26px;box-shadow:0 44px 100px -28px rgba(0,0,0,.85),0 0 0 1px rgba(0,0,0,.4);transform:translateY(20px) scale(.965);opacity:0;transition:transform .34s cubic-bezier(.2,.85,.25,1.02),opacity .24s;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent}
+    .wcard-back.open .wcard{transform:none;opacity:1}
+    .wcard::-webkit-scrollbar{width:8px}.wcard::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:8px}
+    @media(prefers-reduced-motion:reduce){.wcard,.wcard-back{transition:opacity .2s}.wcard{transform:none}}
+    /* карта с треком */
+    .wc-map{position:relative;background:#0c0f0b;line-height:0}
+    .wc-map svg{display:block;width:100%;height:auto}
+    .wc-close{position:absolute;left:12px;top:12px;width:38px;height:38px;border-radius:50%;border:none;background:rgba(10,12,10,.62);color:#fff;cursor:pointer;display:grid;place-items:center;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);transition:background .15s;z-index:2}
+    .wc-close:hover{background:rgba(10,12,10,.85)}
+    .wc-close svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+    .wc-map-chip{position:absolute;right:12px;top:12px;display:inline-flex;align-items:center;gap:.42rem;padding:.34rem .66rem;border-radius:999px;background:rgba(10,12,10,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);font-size:.74rem;font-weight:700;letter-spacing:.005em;z-index:2}
+    .wc-map-chip .pin{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 3px rgba(189,255,118,.2)}
+    /* тело */
+    .wc-body{padding:1.05rem 1.15rem 1.25rem}
+    .wc-head{display:flex;align-items:center;gap:.75rem}
+    .wc-ava{width:46px;height:46px;border-radius:50%;flex:none;background-size:cover;background-position:center;background-color:#333;box-shadow:0 0 0 2px rgba(189,255,118,.55)}
+    .wc-id{min-width:0;flex:1}
+    .wc-name{font-weight:800;font-size:1.04rem;letter-spacing:-.01em;line-height:1.12;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .wc-sub{font-size:.77rem;color:rgba(255,255,255,.5);margin-top:3px;display:flex;align-items:center;gap:.42rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .wc-sub .dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.34);flex:none}
+    .wc-chips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1rem}
+    .wc-chip{display:inline-flex;align-items:center;gap:.3rem;padding:.34rem .66rem;border-radius:999px;font-size:.78rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
+    .wc-chip.xp{background:linear-gradient(128deg,#A7FFC8,#52D1FA);color:#0c221f;font-style:italic;font-variation-settings:'slnt' -10}
+    .wc-chip.rub{background:linear-gradient(90deg,#D5FFA8,#BDFF76);color:#1f2a05;font-style:italic;font-variation-settings:'slnt' -10}
+    .wc-chip.ghost{background:rgba(255,255,255,.06);color:rgba(255,255,255,.72);font-weight:700}
+    .wc-title{font-weight:850;font-size:1.28rem;letter-spacing:-.02em;margin-top:1.05rem}
+    .wc-dist{margin-top:.7rem}
+    .wc-dist b{font-family:var(--fd);font-weight:900;font-style:italic;font-variation-settings:'slnt' -10;font-size:2.9rem;line-height:.9;letter-spacing:-.02em;color:#fff;font-variant-numeric:tabular-nums}
+    .wc-dist span{display:block;font-size:.74rem;color:rgba(255,255,255,.46);margin-top:.4rem;letter-spacing:.01em}
+    .wc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:1.05rem;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.07);border-radius:16px;overflow:hidden}
+    .wc-stat{background:#12160f;padding:.75rem .5rem .66rem;text-align:center}
+    .wc-stat b{display:block;font-size:1.14rem;font-weight:850;letter-spacing:-.01em;font-variant-numeric:tabular-nums;line-height:1;color:#fff}
+    .wc-stat span{display:block;font-size:.61rem;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.4);margin-top:.38rem;font-weight:700}
+    .wc-splits{margin-top:1.1rem}
+    .wc-splits-h{display:flex;justify-content:space-between;align-items:baseline;font-size:.61rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);font-weight:700;margin-bottom:.55rem}
+    .wc-splits-h em{font-style:normal;color:var(--lime);letter-spacing:.02em}
+    .wc-bars{display:flex;align-items:flex-end;gap:3px;height:52px}
+    .wc-bar{flex:1 1 0;min-width:2px;background:rgba(255,255,255,.11);border-radius:3px 3px 2px 2px;transition:height .55s cubic-bezier(.2,.85,.25,1)}
+    .wc-bar.best{background:linear-gradient(180deg,#D5FFA8,#BDFF76)}
+    @media(max-width:430px){.wcard{border-radius:22px}.wc-stat b{font-size:1.04rem}.wc-dist b{font-size:2.5rem}}
 
     /* Help button */
     .help-btn{position:fixed;right:clamp(1rem,2.5vw,2rem);bottom:clamp(1rem,2.5vw,2rem);z-index:10;width:54px;height:54px;border-radius:50%;background:var(--ink);color:var(--lime);border:none;cursor:pointer;font-family:var(--fd);font-weight:900;font-size:1.5rem;display:grid;place-items:center;box-shadow:0 18px 36px -10px rgba(14,18,14,.5);transition:transform .25s,box-shadow .25s;line-height:1;animation:helpPulse 4.8s ease-in-out infinite}
@@ -538,6 +583,7 @@ function mobilePopPoint(){
 function spawnPop(){
   const city = pick(CITIES);
   const name = pick(NAMES);
+  const ava = pickAvatar();
   const {km, xp, rub} = mockWorkoutGains();
   let [px, py] = svgToPx(city.x, city.y);
   if (isMobileCompact()){
@@ -556,8 +602,9 @@ function spawnPop(){
   const pop = document.createElement('div');
   pop.className = 'pop';
   pop.style.left = px+'px'; pop.style.top = py+'px';
+  pop.title = 'Открыть тренировку';
   pop.innerHTML = `
-    <div class="pop-ava" style="background-image:url('${pickAvatar()}')"></div>
+    <div class="pop-ava" style="background-image:url('${ava}')"></div>
     <div class="pop-line"><span class="city">${city.name}</span><span class="sep">·</span><span class="km">${km}&nbsp;км</span><span class="gain gain-xp">+${xp}&nbsp;XP</span><span class="gain gain-rub">+${rub}&nbsp;₽</span></div>`;
   popsLayer.appendChild(pop);
   // clamp inside viewport (popup translates by -50% so we need half its width)
@@ -568,9 +615,160 @@ function spawnPop(){
   if (dx) pop.style.left = (px + dx) + 'px';
   requestAnimationFrame(()=>pop.classList.add('in'));
 
-  setTimeout(()=>{ pop.classList.remove('in'); pop.classList.add('out'); }, 3800);
-  setTimeout(()=>{ pop.remove(); ping.remove(); }, 4600);
+  const detail = { name, city:city.name, km, xp, rub, ava, seed:Math.floor(Math.random()*1e9)+1 };
+  let t1 = setTimeout(()=>{ pop.classList.remove('in'); pop.classList.add('out'); }, 3800);
+  let t2 = setTimeout(()=>{ pop.remove(); ping.remove(); }, 4600);
+  // клик — открыть большую карточку тренировки
+  pop.addEventListener('click', ()=> openWorkoutCard(detail));
+  // ховер удерживает карточку, чтобы удобно кликнуть
+  pop.addEventListener('mouseenter', ()=>{
+    clearTimeout(t1); clearTimeout(t2);
+    pop.classList.remove('out'); pop.classList.add('in');
+  });
+  pop.addEventListener('mouseleave', ()=>{
+    t1 = setTimeout(()=>{ pop.classList.remove('in'); pop.classList.add('out'); }, 1400);
+    t2 = setTimeout(()=>{ pop.remove(); ping.remove(); }, 2000);
+  });
 }
+
+/* ——— Большая карточка тренировки: маршрут-трек + статистика ——— */
+const wback = document.createElement('div');
+wback.className = 'wcard-back';
+wback.innerHTML = '<div class="wcard" role="dialog" aria-modal="true" aria-label="Детали тренировки"></div>';
+document.body.appendChild(wback);
+const wcard = wback.firstElementChild;
+
+/* правдоподобный «GPS-трек»: блуждание с лёгким возвратом к старту */
+function buildRoute(seed, W, H, pad){
+  const rnd = seededRandom(seed);
+  const steps = 30 + Math.floor(rnd()*22);
+  let ang = rnd()*Math.PI*2, x=0, y=0;
+  const pts = [[0,0]];
+  for (let i=0;i<steps;i++){
+    ang += (rnd()-0.5)*1.15;
+    const back = Math.atan2(-y,-x);
+    ang += Math.atan2(Math.sin(back-ang), Math.cos(back-ang)) * 0.11 * (i/steps);
+    const len = 6 + rnd()*5;
+    x += Math.cos(ang)*len; y += Math.sin(ang)*len;
+    pts.push([x,y]);
+  }
+  const xs = pts.map(p=>p[0]), ys = pts.map(p=>p[1]);
+  const minx=Math.min(...xs), maxx=Math.max(...xs), miny=Math.min(...ys), maxy=Math.max(...ys);
+  const sw=W-pad*2, sh=H-pad*2;
+  const scale = Math.min(sw/((maxx-minx)||1), sh/((maxy-miny)||1));
+  const ox = pad + (sw-(maxx-minx)*scale)/2 - minx*scale;
+  const oy = pad + (sh-(maxy-miny)*scale)/2 - miny*scale;
+  return pts.map(p=>[p[0]*scale+ox, p[1]*scale+oy]);
+}
+function catmullOpen(P){
+  if (P.length<2) return '';
+  const p = i => P[Math.max(0,Math.min(P.length-1,i))];
+  let d = `M${p(0)[0].toFixed(1)},${p(0)[1].toFixed(1)}`;
+  for (let i=0;i<P.length-1;i++){
+    const p0=p(i-1),p1=p(i),p2=p(i+1),p3=p(i+2);
+    const c1x=p1[0]+(p2[0]-p0[0])/6, c1y=p1[1]+(p2[1]-p0[1])/6;
+    const c2x=p2[0]-(p3[0]-p1[0])/6, c2y=p2[1]-(p3[1]-p1[1])/6;
+    d += `C${c1x.toFixed(1)},${c1y.toFixed(1)} ${c2x.toFixed(1)},${c2y.toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`;
+  }
+  return d;
+}
+/* тёмная стилизованная карта района с треком */
+function workoutMapSVG(seed){
+  const W=430, H=248, pad=30;
+  const rnd = seededRandom(seed*7+13);
+  const P = buildRoute(seed, W, H, pad);
+  const d = catmullOpen(P);
+  let parks='';
+  for (let i=0;i<2;i++){ const pw=54+rnd()*70, ph=38+rnd()*50, x=rnd()*(W-pw), y=rnd()*(H-ph);
+    parks += `<rect x="${x.toFixed(0)}" y="${y.toFixed(0)}" width="${pw.toFixed(0)}" height="${ph.toFixed(0)}" rx="12"/>`; }
+  let streets='';
+  const vC=5+Math.floor(rnd()*3), hC=4+Math.floor(rnd()*3);
+  for (let i=1;i<=vC;i++){ const x=(W/(vC+1))*i+(rnd()-.5)*20; streets+=`<line x1="${x.toFixed(1)}" y1="-4" x2="${(x+(rnd()-.5)*16).toFixed(1)}" y2="${H+4}"/>`; }
+  for (let i=1;i<=hC;i++){ const y=(H/(hC+1))*i+(rnd()-.5)*16; streets+=`<line x1="-4" y1="${y.toFixed(1)}" x2="${W+4}" y2="${(y+(rnd()-.5)*14).toFixed(1)}"/>`; }
+  const s=P[0], e=P[P.length-1];
+  return `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <rect width="${W}" height="${H}" fill="#0c0f0b"/>
+    <g fill="rgba(120,180,90,.07)">${parks}</g>
+    <g stroke="rgba(255,255,255,.055)" stroke-width="1">${streets}</g>
+    <path d="${d}" fill="none" stroke="rgba(189,255,118,.18)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="${d}" fill="none" stroke="#BDFF76" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="${s[0].toFixed(1)}" cy="${s[1].toFixed(1)}" r="5.5" fill="#0c0f0b" stroke="#BDFF76" stroke-width="3"/>
+    <circle cx="${e[0].toFixed(1)}" cy="${e[1].toFixed(1)}" r="6" fill="#BDFF76"/>
+    <circle cx="${e[0].toFixed(1)}" cy="${e[1].toFixed(1)}" r="6" fill="none" stroke="rgba(189,255,118,.4)" stroke-width="5">
+      <animate attributeName="r" values="6;16" dur="1.8s" repeatCount="indefinite"/>
+      <animate attributeName="stroke-opacity" values="0.4;0" dur="1.8s" repeatCount="indefinite"/>
+    </circle>
+  </svg>`;
+}
+const fmtPace = s => `${Math.floor(s/60)}:${String(Math.round(s%60)).padStart(2,'0')}`;
+const fmtDur = s => { const h=Math.floor(s/3600), m=Math.floor(s%3600/60), ss=Math.floor(s%60);
+  return h ? `${h}:${String(m).padStart(2,'0')}:${String(ss).padStart(2,'0')}` : `${m}:${String(ss).padStart(2,'0')}`; };
+
+function openWorkoutCard(base){
+  const r = seededRandom(base.seed);
+  const km = parseFloat(base.km);
+  const paceSec = Math.round((4.6 + r()*1.9)*60);
+  const durSec  = Math.round(km*paceSec);
+  const cal  = Math.round(km*(58+r()*24));
+  const hr   = Math.round(132 + r()*34);
+  const elev = Math.round(8 + r()*180);
+  const cad  = Math.round(158 + r()*26);
+  const temp = Math.round(3 + r()*22);
+  // сплиты по километрам (быстрее = выше столбик)
+  const n = Math.max(4, Math.min(30, Math.round(km)));
+  const sp = []; for (let i=0;i<n;i++) sp.push(paceSec*(0.9 + r()*0.24));
+  const smin=Math.min(...sp), smax=Math.max(...sp), best=sp.indexOf(smin);
+  const bars = sp.map((s,i)=>`<span class="wc-bar${i===best?' best':''}" style="height:${(34+68*(smax-s)/((smax-smin)||1)).toFixed(0)}%"></span>`).join('');
+
+  const now = moscowNow();
+  now.setMinutes(now.getMinutes() - Math.floor(r()*180));
+  const hhmm = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+  wcard.scrollTop = 0;
+  wcard.innerHTML = `
+    <div class="wc-map">
+      ${workoutMapSVG(base.seed)}
+      <button class="wc-close" aria-label="Закрыть"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="wc-map-chip"><span class="pin"></span>${base.city}</div>
+    </div>
+    <div class="wc-body">
+      <div class="wc-head">
+        <div class="wc-ava" style="background-image:url('${base.ava}')"></div>
+        <div class="wc-id">
+          <div class="wc-name">${base.name}</div>
+          <div class="wc-sub">сегодня, ${hhmm}<span class="dot"></span>${base.city}</div>
+        </div>
+      </div>
+      <div class="wc-chips">
+        <span class="wc-chip xp">+${base.xp} XP</span>
+        <span class="wc-chip rub">+${base.rub} ₽</span>
+        <span class="wc-chip ghost">☁ +${temp}°</span>
+      </div>
+      <div class="wc-title">${base.city}, Бег</div>
+      <div class="wc-dist"><b>${String(base.km).replace('.',',')}</b><span>Расстояние, км</span></div>
+      <div class="wc-stats">
+        <div class="wc-stat"><b>${fmtPace(paceSec)}</b><span>ср. темп, /км</span></div>
+        <div class="wc-stat"><b>${fmtDur(durSec)}</b><span>время</span></div>
+        <div class="wc-stat"><b>${hr}</b><span>ср. пульс, уд/мин</span></div>
+        <div class="wc-stat"><b>${elev}</b><span>высота, м</span></div>
+        <div class="wc-stat"><b>${cal}</b><span>калории, ккал</span></div>
+        <div class="wc-stat"><b>${cad}</b><span>каденс, шаг/мин</span></div>
+      </div>
+      <div class="wc-splits">
+        <div class="wc-splits-h"><span>Темп по километрам</span><em>лучший км — ${best+1}-й</em></div>
+        <div class="wc-bars">${bars}</div>
+      </div>
+    </div>`;
+  wcard.querySelector('.wc-close').addEventListener('click', closeWorkoutCard);
+  wback.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeWorkoutCard(){
+  wback.classList.remove('open');
+  document.body.style.overflow = '';
+}
+wback.addEventListener('click', e=>{ if (e.target === wback) closeWorkoutCard(); });
+document.addEventListener('keydown', e=>{ if (e.key==='Escape' && wback.classList.contains('open')) closeWorkoutCard(); });
 
 const POP_DELAYS = [
   {weight:24, ms:[1600,3200]},
