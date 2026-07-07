@@ -623,6 +623,61 @@ function trainingCardMapBounds(halfW, halfH){
     maxY: box.top + box.h - halfH - pad
   };
 }
+function trainingCardClampPoint(x, y, bounds, halfW, halfH, margin){
+  if (bounds){
+    return [
+      clampWithinBounds(x, bounds.minX, bounds.maxX),
+      clampWithinBounds(y, bounds.minY, bounds.maxY)
+    ];
+  }
+  return [
+    clampValue(x, margin + halfW, innerWidth - margin - halfW),
+    clampValue(y, margin + halfH, innerHeight - margin - halfH)
+  ];
+}
+function trainingCardBrandAdjustedY(x, y, bounds, halfW, halfH, margin){
+  if (!isClean || isMobileCompact()) return y;
+  const bi = document.querySelector('.brand-inner');
+  if (!bi) return y;
+  const br = bi.getBoundingClientRect();
+  const gap = 16;
+  const overlapX = (x + halfW) > br.left - 6 && (x - halfW) < br.right + 6;
+  const overlapY = (y + halfH) > br.top - gap && (y - halfH) < br.bottom + gap;
+  if (!overlapX || !overlapY) return y;
+  const above = br.top - gap - halfH;
+  const minY = bounds ? bounds.minY : margin + halfH;
+  return above >= minY ? above : null;
+}
+function trainingCardOverlapsCity(cityName, x, y){
+  const gap = 14;
+  return [...tcardsLayer.querySelectorAll('.tcard')].some(card => {
+    if (card.dataset.city !== cityName || card.classList.contains('out')) return false;
+    const cx = parseFloat(card.dataset.x || card.style.left);
+    const cy = parseFloat(card.dataset.y || card.style.top);
+    return Math.abs(cx - x) < TCARD_W + gap && Math.abs(cy - y) < TCARD_H + gap;
+  });
+}
+function resolveTrainingCardPosition(cityName, x, y, bounds, halfW, halfH, margin){
+  const stepX = TCARD_W + 14;
+  const stepY = TCARD_H + 14;
+  const offsets = [
+    [0,0],
+    [stepX,0],[-stepX,0],
+    [0,-stepY],[0,stepY],
+    [stepX,-stepY],[-stepX,-stepY],
+    [stepX,stepY],[-stepX,stepY],
+    [stepX*2,0],[-stepX*2,0],
+    [0,-stepY*2],[0,stepY*2]
+  ];
+
+  for (const [dx, dy] of offsets){
+    let [cx, cy] = trainingCardClampPoint(x + dx, y + dy, bounds, halfW, halfH, margin);
+    cy = trainingCardBrandAdjustedY(cx, cy, bounds, halfW, halfH, margin);
+    if (cy == null) continue;
+    if (!trainingCardOverlapsCity(cityName, cx, cy)) return [cx, cy];
+  }
+  return null;
+}
 function mobilePopPoint(){
   const vw = innerWidth, vh = innerHeight;
   const brand = document.querySelector('.brand-inner') || document.querySelector('.brand');
@@ -816,39 +871,21 @@ function spawnTrainingCard(){
   if (isMobileCompact()){
     [px, py] = mobilePopPoint();
   }
-  const margin = 12, vw = innerWidth, vh = innerHeight;
+  const margin = 12;
   const halfW = TCARD_W/2, halfH = TCARD_H/2;
   const mapBounds = !isMobileCompact() ? trainingCardMapBounds(halfW, halfH) : null;
-  if (mapBounds){
-    px = clampWithinBounds(px, mapBounds.minX, mapBounds.maxX);
-    py = clampWithinBounds(py, mapBounds.minY, mapBounds.maxY);
-  } else {
-    px = clampValue(px, margin + halfW, vw - margin - halfW);
-    py = clampValue(py, margin + halfH, vh - margin - halfH);
-  }
-
-  // Если город по карте попадает под wordmark, показываем карточку выше логотипа.
-  if (isClean && !isMobileCompact()){
-    const bi = document.querySelector('.brand-inner');
-    if (bi){
-      const br = bi.getBoundingClientRect();
-      const gap = 16;
-      const overlapX = (px + halfW) > br.left - 6 && (px - halfW) < br.right + 6;
-      const overlapY = (py + halfH) > br.top - gap && (py - halfH) < br.bottom + gap;
-      if (overlapX && overlapY){
-        const above = br.top - gap - halfH;
-        const minY = mapBounds ? mapBounds.minY : margin + halfH;
-        if (above >= minY) py = above;
-        else return; // сверху нет места — пропускаем этот спавн
-      }
-    }
-  }
+  const resolvedPosition = resolveTrainingCardPosition(city.name, px, py, mapBounds, halfW, halfH, margin);
+  if (!resolvedPosition) return;
+  [px, py] = resolvedPosition;
 
   const { html, detail } = trainingCardHTML(city);
   const el = document.createElement('div');
   el.className = 'tcard';
   el.style.left = px + 'px';
   el.style.top = py + 'px';
+  el.dataset.city = city.name;
+  el.dataset.x = px;
+  el.dataset.y = py;
   el.innerHTML = html;
   el.title = 'Открыть тренировку';
   tcardsLayer.appendChild(el);
