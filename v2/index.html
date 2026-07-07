@@ -78,7 +78,7 @@
   <style>
     :root{
       --lime:#BDFF76;
-      --lime-deep:#9CD161;
+      --lime-deep:#8AB60E;
       --lime-soft:#D5FFA8;
       --bg:#11121c;
       --card:#1a1c2b;
@@ -221,7 +221,7 @@
     .help-pop{position:fixed;right:clamp(1rem,2.5vw,2rem);bottom:calc(clamp(1rem,2.5vw,2rem) + 70px);z-index:10;background:#fff;border:1px solid rgba(14,18,14,.08);border-radius:18px;padding:.4rem;display:flex;flex-direction:column;gap:.15rem;min-width:240px;box-shadow:0 28px 60px -16px rgba(14,18,14,.28),0 0 0 1px rgba(14,18,14,.04) inset;transform-origin:bottom right;transform:scale(.85) translateY(8px);opacity:0;pointer-events:none;transition:transform .22s cubic-bezier(.2,.85,.25,1.05),opacity .18s;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
     .help-pop.open{transform:scale(1) translateY(0);opacity:1;pointer-events:auto}
     .help-pop a{display:flex;align-items:center;gap:.85rem;padding:.7rem .95rem;border-radius:12px;text-decoration:none;color:#171a12;font-family:var(--fd);font-weight:600;font-size:.95rem;transition:background .15s,color .15s;letter-spacing:-.005em}
-    .help-pop a:hover{background:rgba(157,209,97,.16);color:#5B8A2E}
+    .help-pop a:hover{background:rgba(138,182,14,.14);color:var(--lime-deep)}
     .help-pop a svg{width:20px;height:20px;flex:0 0 20px;opacity:.7;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:opacity .15s}
     .help-pop a:hover svg{opacity:1}
     .help-pop .lbl{font-family:var(--fd);font-size:.6rem;text-transform:uppercase;letter-spacing:.18em;color:rgba(14,18,14,.4);padding:.65rem .95rem .3rem;font-weight:700}
@@ -233,7 +233,7 @@
     @keyframes hpDot{0%,100%{box-shadow:0 0 0 3px rgba(157,209,97,.28)}50%{box-shadow:0 0 0 6px rgba(157,209,97,.06)}}
     .hp-stats{display:flex;flex-direction:column;gap:.42rem}
     .hp-stat{display:flex;align-items:baseline;justify-content:space-between;gap:.7rem}
-    .hp-stat b{font-family:var(--fd);font-weight:850;font-size:1.16rem;color:#74B3FF;font-variant-numeric:tabular-nums;letter-spacing:-.01em;line-height:1}
+    .hp-stat b{font-family:var(--fd);font-weight:850;font-size:1.16rem;color:var(--lime-deep);font-variant-numeric:tabular-nums;letter-spacing:-.01em;line-height:1}
     .hp-stat span{font-family:var(--fd);font-size:.74rem;color:rgba(14,18,14,.55);font-weight:500;white-space:nowrap}
     @media(prefers-reduced-motion:reduce){.hp-dot{animation:none}}
 
