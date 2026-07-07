@@ -80,6 +80,7 @@
       --lime:#BDFF76;
       --lime-deep:#9CD161;
       --lime-soft:#D5FFA8;
+      --blue:#74B3FF;
       --bg:#11121c;
       --card:#1a1c2b;
       --ink:#F1F3EE;
@@ -114,7 +115,7 @@
     .pop-line .city{font-weight:700}
     .pop-line .km{opacity:.78;font-variant-numeric:tabular-nums}
     .pop-line .gain{display:inline-flex;align-items:center;justify-content:center;min-height:22px;padding:0 8px;border-radius:999px;color:#20212A;font-weight:850;font-size:.72rem;font-style:italic;font-variation-settings:'slnt' -10;font-variant-numeric:tabular-nums;line-height:1;box-shadow:inset 0 1px 0 rgba(255,255,255,.45)}
-    .pop-line .gain-xp{background:linear-gradient(128deg,#A7FFC8 0%,#52D1FA 100%)}
+    .pop-line .gain-xp{background:linear-gradient(128deg,#A7FFC8 0%,var(--blue) 100%)}
     .pop-line .gain-rub{background:linear-gradient(90deg,#D5FFA8 0%,#BDFF76 100%)}
 
     /* Training mini-card — richer activity card with route track (Figma, 1:1 px) */
@@ -136,7 +137,7 @@
     .tcard-city{font-family:var(--fd);font-weight:500;font-size:9px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.4}
     .tcard-stats{display:flex;align-items:center;gap:3px}
     .tcard-km{font-family:var(--fd);font-size:6px;color:#9b9fad;font-variant-numeric:tabular-nums;line-height:1.4;white-space:nowrap}
-    .tcard-xp{display:inline-flex;align-items:center;justify-content:center;height:9px;padding:0 3px;border-radius:21px;background:linear-gradient(156deg,#A7FFC8 2%,#52D1FA 100%);color:#20212A;font-weight:800;font-size:6px;font-style:italic;font-variation-settings:'slnt' -10;font-variant-numeric:tabular-nums;line-height:1.4;white-space:nowrap}
+    .tcard-xp{display:inline-flex;align-items:center;justify-content:center;height:9px;padding:0 3px;border-radius:21px;background:linear-gradient(156deg,#A7FFC8 2%,var(--blue) 100%);color:#20212A;font-weight:800;font-size:6px;font-style:italic;font-variation-settings:'slnt' -10;font-variant-numeric:tabular-nums;line-height:1.4;white-space:nowrap}
 
     /* Вход/выход карточки — раскадровка: подсветка → трек рисуется → пин пружинит → плашка пружинит.
        Анимации входа висят на самих селекторах (без JS-класса-триггера) — стартуют в момент
@@ -190,7 +191,7 @@
     .wc-sub .dot{width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,.34);flex:none}
     .wc-chips{display:flex;flex-wrap:wrap;gap:.34rem;margin-top:.75rem}
     .wc-chip{display:inline-flex;align-items:center;gap:.28rem;padding:.28rem .56rem;border-radius:999px;font-size:.71rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
-    .wc-chip.xp{background:linear-gradient(128deg,#A7FFC8,#52D1FA);color:#0c221f;font-style:italic;font-variation-settings:'slnt' -10}
+    .wc-chip.xp{background:linear-gradient(128deg,#A7FFC8,var(--blue));color:#0c221f;font-style:italic;font-variation-settings:'slnt' -10}
     .wc-chip.rub{background:linear-gradient(90deg,#D5FFA8,#BDFF76);color:#1f2a05;font-style:italic;font-variation-settings:'slnt' -10}
     .wc-chip.ghost{background:rgba(255,255,255,.06);color:rgba(255,255,255,.72);font-weight:700}
     .wc-title{font-weight:850;font-size:1.08rem;letter-spacing:-.02em;margin-top:.85rem}
@@ -233,7 +234,7 @@
     @keyframes hpDot{0%,100%{box-shadow:0 0 0 3px rgba(157,209,97,.28)}50%{box-shadow:0 0 0 6px rgba(157,209,97,.06)}}
     .hp-stats{display:flex;flex-direction:column;gap:.42rem}
     .hp-stat{display:flex;align-items:baseline;justify-content:space-between;gap:.7rem}
-    .hp-stat b{font-family:var(--fd);font-weight:850;font-size:1.16rem;color:#74B3FF;font-variant-numeric:tabular-nums;letter-spacing:-.01em;line-height:1}
+    .hp-stat b{font-family:var(--fd);font-weight:850;font-size:1.16rem;color:var(--blue);font-variant-numeric:tabular-nums;letter-spacing:-.01em;line-height:1}
     .hp-stat span{font-family:var(--fd);font-size:.74rem;color:rgba(14,18,14,.55);font-weight:500;white-space:nowrap}
     @media(prefers-reduced-motion:reduce){.hp-dot{animation:none}}
 
