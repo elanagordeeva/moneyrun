@@ -346,7 +346,7 @@
     <span class="hp-today-h"><span class="hp-dot"></span>Сегодня в движении</span>
     <div class="hp-stats">
       <div class="hp-stat"><b id="tdW">—</b><span>тренировок</span></div>
-      <div class="hp-stat"><b id="tdKm">—</b><span>километров</span></div>
+      <div class="hp-stat"><b id="tdXp">—</b><span>XP начислено</span></div>
       <div class="hp-stat"><b id="tdRub">—</b><span>₽ обменяли</span></div>
     </div>
   </div>
@@ -497,6 +497,7 @@ function makeTodaySnapshot(){
   const seeded = seededRandom(daySeed(now));
   const targetWorkouts = 482 + Math.round(seeded()*54); // около 500, но не ровно одно и то же число
   const avgKm = 15.5 + seeded()*5.5;
+  const avgXp = 12 + seeded()*8;
   const avgRub = 53 + seeded()*19;
   const progress = dailyActivityProgress(now);
   const workoutNoise = .985 + seeded()*0.03;
@@ -504,8 +505,20 @@ function makeTodaySnapshot(){
   return {
     w,
     km: Math.round(w * avgKm * (0.98 + seeded()*0.04) * 10) / 10,
+    xp: Math.round(w * avgXp * (0.98 + seeded()*0.04)),
     rub: Math.round(w * avgRub * (0.98 + seeded()*0.04))
   };
+}
+function applyTodayWorkout(detail){
+  if (!window.MR_TODAY) return;
+  MR_TODAY.w += 1;
+  MR_TODAY.km += parseFloat(detail.km);
+  MR_TODAY.xp += detail.xp;
+  applyTodayPayout(detail.rub);
+}
+function applyTodayPayout(rub){
+  if (!window.MR_TODAY) return;
+  MR_TODAY.rub += rub;
 }
 
 /* Вариант оформления карты через ?map=outline|filled|constellation|line|ghost|clean */
@@ -707,7 +720,7 @@ function spawnPop(){
     [px, py] = mobilePopPoint();
   }
 
-  if (window.MR_TODAY){ MR_TODAY.w += 1; MR_TODAY.km += parseFloat(km); MR_TODAY.rub += rub; }
+  applyTodayWorkout({ km, xp, rub });
 
   const ping = document.createElement('div');
   ping.className = 'ping';
@@ -890,7 +903,7 @@ function spawnTrainingCard(){
   el.title = 'Открыть тренировку';
   tcardsLayer.appendChild(el);
 
-  if (window.MR_TODAY){ MR_TODAY.w += 1; MR_TODAY.km += parseFloat(detail.km); MR_TODAY.rub += detail.rub; }
+  applyTodayWorkout(detail);
 
   let t1 = setTimeout(()=> el.classList.add('out'), TCARD_ENTER_MS + TCARD_HOLD_MS);
   let t2 = setTimeout(()=> el.remove(), TCARD_ENTER_MS + TCARD_HOLD_MS + TCARD_EXIT_MS);
@@ -1073,15 +1086,15 @@ document.addEventListener('keydown', e=>{
 (function(){
   var today = makeTodaySnapshot();
   window.MR_TODAY = today;
-  var elW=document.getElementById('tdW'), elKm=document.getElementById('tdKm'), elRub=document.getElementById('tdRub');
+  var elW=document.getElementById('tdW'), elXp=document.getElementById('tdXp'), elRub=document.getElementById('tdRub');
   if(!elW) return;
-  var shown = { w: Math.max(0, today.w - 2), km: Math.max(0, today.km - 26), rub: Math.max(0, today.rub - 90) };
+  var shown = { w: Math.max(0, today.w - 2), xp: Math.max(0, today.xp - 32), rub: Math.max(0, today.rub - 90) };
   var fmt = function(n){ return Math.round(n).toLocaleString('ru-RU'); };
   setInterval(function(){
     shown.w   += (today.w   - shown.w  )*0.14;
-    shown.km  += (today.km  - shown.km )*0.14;
+    shown.xp  += (today.xp  - shown.xp )*0.14;
     shown.rub += (today.rub - shown.rub)*0.14;
-    elW.textContent=fmt(shown.w); elKm.textContent=fmt(shown.km); elRub.textContent=fmt(shown.rub);
+    elW.textContent=fmt(shown.w); elXp.textContent=fmt(shown.xp); elRub.textContent=fmt(shown.rub);
   }, 40);
 })();
 </script>
