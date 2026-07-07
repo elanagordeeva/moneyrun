@@ -854,15 +854,6 @@ function spawnTrainingCardBurst(){
 }
 
 const ENABLE_TRAINING_CARDS = true;
-if (ENABLE_TRAINING_CARDS){
-  (function scheduleNextTrainingCard(){
-    setTimeout(()=>{
-      spawnTrainingCardBurst();
-      scheduleNextTrainingCard();
-    }, nextPopDelay());
-  })();
-  for (let i=0;i<(isMobileCompact() ? 1 : 2);i++) setTimeout(spawnTrainingCard, rand([700,3600]));
-}
 
 /* тёмная стилизованная карта района с треком */
 function workoutMapSVG(seed){
@@ -973,6 +964,15 @@ function nextPopDelay(){
   const hourWeight = HOURLY_WORKOUT_WEIGHTS[moscowNow().getHours()];
   const dayPace = clampValue(hourWeight / hourWeightsAvg, .38, 1.55);
   return Math.round(rand(weightedPick(POP_DELAYS).ms) / dayPace);
+}
+if (ENABLE_TRAINING_CARDS){
+  (function scheduleNextTrainingCard(){
+    setTimeout(()=>{
+      spawnTrainingCardBurst();
+      scheduleNextTrainingCard();
+    }, nextPopDelay());
+  })();
+  for (let i=0;i<(isMobileCompact() ? 1 : 2);i++) setTimeout(spawnTrainingCard, rand([700,3600]));
 }
 function spawnPopBurst(){
   const count = Math.random() < .08 ? 2 : 1;
