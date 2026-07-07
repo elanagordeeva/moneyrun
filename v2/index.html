@@ -609,6 +609,20 @@ let mobilePopLane = 0;
 function clampValue(value, min, max){
   return Math.min(max, Math.max(min, value));
 }
+function clampWithinBounds(value, min, max){
+  if (min > max) return (min + max) / 2;
+  return clampValue(value, min, max);
+}
+function trainingCardMapBounds(halfW, halfH){
+  const box = getBox();
+  const pad = 10;
+  return {
+    minX: box.mx + halfW + pad,
+    maxX: box.mx + box.w - halfW - pad,
+    minY: box.top + halfH + pad,
+    maxY: box.top + box.h - halfH - pad
+  };
+}
 function mobilePopPoint(){
   const vw = innerWidth, vh = innerHeight;
   const brand = document.querySelector('.brand-inner') || document.querySelector('.brand');
@@ -804,10 +818,16 @@ function spawnTrainingCard(){
   }
   const margin = 12, vw = innerWidth, vh = innerHeight;
   const halfW = TCARD_W/2, halfH = TCARD_H/2;
-  px = clampValue(px, margin + halfW, vw - margin - halfW);
-  py = clampValue(py, margin + halfH, vh - margin - halfH);
+  const mapBounds = !isMobileCompact() ? trainingCardMapBounds(halfW, halfH) : null;
+  if (mapBounds){
+    px = clampWithinBounds(px, mapBounds.minX, mapBounds.maxX);
+    py = clampWithinBounds(py, mapBounds.minY, mapBounds.maxY);
+  } else {
+    px = clampValue(px, margin + halfW, vw - margin - halfW);
+    py = clampValue(py, margin + halfH, vh - margin - halfH);
+  }
 
-  // приподнять (или опустить) карточку, если она налезает на бренд-вордмарк (clean, десктоп)
+  // Если город по карте попадает под wordmark, показываем карточку выше логотипа.
   if (isClean && !isMobileCompact()){
     const bi = document.querySelector('.brand-inner');
     if (bi){
@@ -817,10 +837,9 @@ function spawnTrainingCard(){
       const overlapY = (py + halfH) > br.top - gap && (py - halfH) < br.bottom + gap;
       if (overlapX && overlapY){
         const above = br.top - gap - halfH;
-        const below = br.bottom + gap + halfH;
-        if (above - halfH >= margin) py = above;
-        else if (below + halfH <= vh - margin) py = below;
-        else return; // совсем некуда — пропускаем этот спавн
+        const minY = mapBounds ? mapBounds.minY : margin + halfH;
+        if (above >= minY) py = above;
+        else return; // сверху нет места — пропускаем этот спавн
       }
     }
   }
