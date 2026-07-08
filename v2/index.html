@@ -167,7 +167,7 @@
     /* Большая карточка тренировки (только тёмная тема) */
     .wcard-back{position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;padding:clamp(6px,3vw,30px);background:rgba(6,8,6,.62);backdrop-filter:blur(9px) saturate(1.05);-webkit-backdrop-filter:blur(9px) saturate(1.05);opacity:0;pointer-events:none;transition:opacity .26s ease}
     .wcard-back.open{opacity:1;pointer-events:auto}
-    .wcard{width:min(380px,100%);max-height:min(92vh,760px);overflow:auto;background:#20212A;color:#f7f8fb;border:1px solid rgba(255,255,255,.06);border-radius:22px;box-shadow:0 40px 90px -28px rgba(0,0,0,.85),0 0 0 1px rgba(0,0,0,.4);transform:translateY(18px) scale(.965);opacity:0;transition:transform .34s cubic-bezier(.2,.85,.25,1.02),opacity .24s;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent}
+    .wcard{width:min(460px,100%);max-height:min(92dvh,820px);overflow:auto;background:#20212A;color:#f7f8fb;border:1px solid rgba(255,255,255,.06);border-radius:22px;box-shadow:0 40px 90px -28px rgba(0,0,0,.85),0 0 0 1px rgba(0,0,0,.4);transform:translateY(18px) scale(.965);opacity:0;transition:transform .34s cubic-bezier(.2,.85,.25,1.02),opacity .24s;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent}
     .wcard-back.open .wcard{transform:none;opacity:1}
     .wcard::-webkit-scrollbar{width:8px}.wcard::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:8px}
     @media(prefers-reduced-motion:reduce){.wcard,.wcard-back{transition:opacity .2s}.wcard{transform:none}}
@@ -195,9 +195,9 @@
     .wc-id{min-width:0;flex:1;padding-top:1px}
     .wc-name{font-weight:800;font-size:.94rem;letter-spacing:-.01em;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .wc-sub{font-size:.71rem;color:rgba(247,248,251,.5);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .wc-chips{display:flex;flex-wrap:nowrap;gap:.34rem;margin-top:.9rem;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;margin-inline:-1.05rem;padding-inline:1.05rem}
+    .wc-chips{display:flex;flex-wrap:wrap;gap:.42rem;margin-top:.9rem;overflow:visible;scrollbar-width:none;-ms-overflow-style:none}
     .wc-chips::-webkit-scrollbar{display:none}
-    .wc-chips.has-overflow{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 26px),transparent 100%);mask-image:linear-gradient(90deg,#000 calc(100% - 26px),transparent 100%)}
+    .wc-chips.has-overflow{-webkit-mask-image:none;mask-image:none}
     .wc-chip{display:inline-flex;align-items:center;gap:.24rem;height:2.06rem;padding:0 .95rem;border-radius:999px;font-size:.63rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1;white-space:nowrap;flex:none}
     .wc-chip.xp{background:linear-gradient(128deg,#A7FFC8,#52D1FA);color:#0c221f;font-style:italic;font-variation-settings:'slnt' -10}
     .wc-chip.rub{background:linear-gradient(90deg,#D5FFA8,#BDFF76);color:#1f2a05;font-style:italic;font-variation-settings:'slnt' -10}
@@ -211,6 +211,7 @@
     .wc-stats{display:grid;grid-template-columns:repeat(3,1fr);column-gap:.5rem;row-gap:1.1rem;margin-top:1.2rem}
     .wc-stat b{display:block;font-size:1.05rem;font-weight:850;letter-spacing:-.01em;font-variant-numeric:tabular-nums;line-height:1;color:#fff}
     .wc-stat span{display:block;font-size:.64rem;color:rgba(247,248,251,.45);margin-top:.36rem;letter-spacing:.005em;line-height:1.35}
+    @media(max-width:520px){.wc-chips{flex-wrap:nowrap;overflow:hidden}}
     @media(max-width:360px){.wc-stat b{font-size:.94rem}.wc-dist b{font-size:2rem}}
 
     /* Help button */
