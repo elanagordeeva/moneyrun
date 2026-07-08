@@ -165,7 +165,7 @@
     @keyframes pingExpand{0%{transform:scale(1);opacity:.9}100%{transform:scale(3.6);opacity:0}}
 
     /* Большая карточка тренировки (только тёмная тема) */
-    .wcard-back{position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;padding:clamp(12px,3vw,30px);background:rgba(6,8,6,.62);backdrop-filter:blur(9px) saturate(1.05);-webkit-backdrop-filter:blur(9px) saturate(1.05);opacity:0;pointer-events:none;transition:opacity .26s ease}
+    .wcard-back{position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;padding:clamp(6px,3vw,30px);background:rgba(6,8,6,.62);backdrop-filter:blur(9px) saturate(1.05);-webkit-backdrop-filter:blur(9px) saturate(1.05);opacity:0;pointer-events:none;transition:opacity .26s ease}
     .wcard-back.open{opacity:1;pointer-events:auto}
     .wcard{width:min(380px,100%);max-height:min(92vh,760px);overflow:auto;background:#20212A;color:#f7f8fb;border:1px solid rgba(255,255,255,.06);border-radius:22px;box-shadow:0 40px 90px -28px rgba(0,0,0,.85),0 0 0 1px rgba(0,0,0,.4);transform:translateY(18px) scale(.965);opacity:0;transition:transform .34s cubic-bezier(.2,.85,.25,1.02),opacity .24s;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent}
     .wcard-back.open .wcard{transform:none;opacity:1}
@@ -175,13 +175,18 @@
     .wc-map{position:relative;aspect-ratio:412/394;background:#0c0f0b;line-height:0;overflow:hidden;border-radius:22px 22px 0 0}
     .wc-map svg{display:block;width:100%;height:100%}
     .wc-map::before{content:'';position:absolute;left:0;right:0;top:0;height:40%;background:linear-gradient(rgba(0,0,0,.5),transparent);pointer-events:none;z-index:1}
+    .wc-slides{position:absolute;inset:0;z-index:0;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .wc-slides::-webkit-scrollbar{display:none}
+    .wc-slide{flex:0 0 100%;width:100%;height:100%;scroll-snap-align:start}
+    .wc-slide-photo{background:#0c0d13}
+    .wc-slide-photo img{width:100%;height:100%;object-fit:cover;display:block}
     .wc-action{position:absolute;top:10px;width:36px;height:36px;border-radius:50%;border:none;background:rgba(247,248,251,.94);color:#20212A;cursor:pointer;display:grid;place-items:center;transition:transform .15s,background .15s;z-index:2}
     .wc-action:hover{background:#fff;transform:scale(1.06)}
     .wc-action svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
     .wc-close{left:10px}
     .wc-share{right:10px}
     .wc-dots{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);display:flex;align-items:center;gap:4px;padding:6px;border-radius:999px;background:rgba(17,18,28,.35);z-index:2}
-    .wc-dots .d{width:6px;height:6px;border-radius:3px;background:rgba(247,248,251,.35)}
+    .wc-dots .d{width:6px;height:6px;border-radius:3px;background:rgba(247,248,251,.35);cursor:pointer;transition:width .2s,background .2s}
     .wc-dots .d.active{width:12px;background:#f7f8fb}
     /* тело */
     .wc-body{padding:1rem 1.05rem 1.2rem}
@@ -190,15 +195,15 @@
     .wc-id{min-width:0;flex:1;padding-top:1px}
     .wc-name{font-weight:800;font-size:.94rem;letter-spacing:-.01em;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .wc-sub{font-size:.71rem;color:rgba(247,248,251,.5);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .wc-chips{display:flex;flex-wrap:nowrap;gap:.3rem;margin-top:.9rem;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;margin-inline:-1.05rem;padding-inline:1.05rem}
+    .wc-chips{display:flex;flex-wrap:nowrap;gap:.16rem;margin-top:.9rem;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;margin-inline:-1.05rem;padding-inline:1.05rem}
     .wc-chips::-webkit-scrollbar{display:none}
     .wc-chips.has-overflow{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 26px),transparent 100%);mask-image:linear-gradient(90deg,#000 calc(100% - 26px),transparent 100%)}
-    .wc-chip{display:inline-flex;align-items:center;gap:.26rem;height:1.95rem;padding:0 .52rem;border-radius:999px;font-size:.68rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1;white-space:nowrap;flex:none}
+    .wc-chip{display:inline-flex;align-items:center;gap:.2rem;height:1.95rem;padding:0 .32rem;border-radius:999px;font-size:.63rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1;white-space:nowrap;flex:none}
     .wc-chip.xp{background:linear-gradient(128deg,#A7FFC8,#52D1FA);color:#0c221f;font-style:italic;font-variation-settings:'slnt' -10}
     .wc-chip.rub{background:linear-gradient(90deg,#D5FFA8,#BDFF76);color:#1f2a05;font-style:italic;font-variation-settings:'slnt' -10}
     .wc-chip.ghost{background:#2F2F3A;color:rgba(247,248,251,.88);font-weight:700}
-    .wc-chip .ico{width:14px;height:14px;border-radius:50%;background:#747887;display:grid;place-items:center;flex:none}
-    .wc-chip .ico svg{width:8px;height:8px;fill:#F7F8FB;stroke:none}
+    .wc-chip .ico{width:12px;height:12px;border-radius:50%;background:#747887;display:grid;place-items:center;flex:none}
+    .wc-chip .ico svg{width:7px;height:7px;fill:#F7F8FB;stroke:none}
     .wc-title{font-weight:850;font-size:1.1rem;letter-spacing:-.02em;margin-top:1.15rem}
     .wc-dist{margin-top:.55rem}
     .wc-dist b{font-family:var(--fd);font-weight:900;font-style:italic;font-variation-settings:'slnt' -10;font-size:2.2rem;line-height:.9;letter-spacing:-.02em;color:#fff;font-variant-numeric:tabular-nums}
@@ -223,6 +228,8 @@
     .help-pop a:hover{background:rgba(138,182,14,.14);color:var(--lime-deep)}
     .help-pop a svg{width:20px;height:20px;flex:0 0 20px;opacity:.7;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:opacity .15s}
     .help-pop a:hover svg{opacity:1}
+    .help-pop a .ext-ico{width:13px;height:13px;flex:0 0 13px;margin-left:auto;opacity:.4;stroke-width:2.3}
+    .help-pop a:hover .ext-ico{opacity:.65}
     .help-pop .lbl{font-family:var(--fd);font-size:.6rem;text-transform:uppercase;letter-spacing:.18em;color:rgba(14,18,14,.4);padding:.65rem .95rem .3rem;font-weight:700}
     .help-pop .sep{height:1px;background:rgba(14,18,14,.08);margin:.25rem .5rem}
     /* мини-дашборд «Сегодня» */
@@ -344,9 +351,9 @@
   <div class="hp-today" aria-label="Статистика за сегодня">
     <span class="hp-today-h"><span class="hp-dot"></span>Сегодня в движении</span>
     <div class="hp-stats">
-      <div class="hp-stat"><b id="tdW">—</b><span>тренировок</span></div>
+      <div class="hp-stat"><b id="tdActivities">—</b><span>тренировок</span></div>
       <div class="hp-stat"><b id="tdXp">—</b><span>XP начислено</span></div>
-      <div class="hp-stat"><b id="tdRub">—</b><span>₽ обменяли</span></div>
+      <div class="hp-stat"><b id="tdExchange">—</b><span>₽ обменяли</span></div>
     </div>
   </div>
   <span class="sep"></span>
@@ -354,15 +361,18 @@
   <a href="https://apps.apple.com/app/id6444129392" target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.7 3.2c-.7.8-1.6 1.3-2.6 1.2-.1-1 .4-1.9 1-2.5.7-.7 1.7-1.2 2.6-1.2.1.9-.3 1.8-1 2.5Z"/><path d="M19 16.7c-.4 1-1 2-1.8 3-.8.9-1.5 1.3-2.2 1.3-.5 0-.9-.1-1.4-.4-.5-.2-1-.3-1.6-.3-.6 0-1.2.1-1.7.4-.5.2-.9.3-1.3.3-.8 0-1.6-.5-2.4-1.6-1.1-1.4-1.9-3.5-1.9-5.6 0-1.8.5-3.2 1.4-4.2.8-.9 1.8-1.4 3-1.4.6 0 1.2.1 1.8.4.5.2.9.3 1.2.3.3 0 .7-.1 1.3-.4.6-.3 1.2-.4 1.9-.4 1.5 0 2.7.6 3.5 1.8-1.2.8-1.8 1.9-1.8 3.3 0 1.5.7 2.7 2 3.5Z"/></svg>
     App Store
+    <svg class="ext-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
   </a>
   <a href="https://play.google.com/store/apps/details?id=tech.aml.moneyrun" target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.8 4.8v14.4c0 .9 1 1.5 1.8 1l11.5-7.2c.7-.4.7-1.5 0-1.9L7.6 3.8c-.8-.5-1.8.1-1.8 1Z"/><path d="M6.4 4.2 13 12l-6.6 7.8"/><path d="M13 12 19.4 12"/></svg>
     Google Play
+    <svg class="ext-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
   </a>
   <span class="lbl">Связь</span>
   <a href="https://t.me/moneyrun" target="_blank" rel="noopener">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 4 3 11.5l7 2.2M21 4l-4 16-7-6.3M21 4 10 13.7"/></svg>
     Telegram-канал
+    <svg class="ext-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
   </a>
   <a href="guide.html">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l3 3v15H6z"/><path d="M15 3v4h4M9 12h6M9 16h6"/></svg>
@@ -415,6 +425,72 @@ const CITIES = [
   {name:'Норильск',       x: 512, y: 128},
   {name:'Сургут',         x: 402, y: 241},
 ];
+
+/* location с бэка приходит на английском («Altai Republic, Russia») — переводим для показа.
+   Словарь покрывает города из мока и федеральные субъекты РФ; если строка уже на русском
+   или совпадения нет — показываем как есть (лучше английский текст, чем пустота/ошибка). */
+const LOCATION_TRANSLATIONS = {
+  'Moscow':'Москва','Saint Petersburg':'Санкт-Петербург','St. Petersburg':'Санкт-Петербург','St Petersburg':'Санкт-Петербург',
+  'Kaliningrad':'Калининград','Sochi':'Сочи','Krasnodar':'Краснодар','Rostov-on-Don':'Ростов-на-Дону','Voronezh':'Воронеж',
+  'Volgograd':'Волгоград','Nizhny Novgorod':'Нижний Новгород','Kazan':'Казань','Samara':'Самара','Ufa':'Уфа','Perm':'Пермь',
+  'Yekaterinburg':'Екатеринбург','Ekaterinburg':'Екатеринбург','Chelyabinsk':'Челябинск','Tyumen':'Тюмень','Omsk':'Омск',
+  'Novosibirsk':'Новосибирск','Barnaul':'Барнаул','Krasnoyarsk':'Красноярск','Irkutsk':'Иркутск','Ulan-Ude':'Улан-Удэ',
+  'Chita':'Чита','Yakutsk':'Якутск','Magadan':'Магадан','Khabarovsk':'Хабаровск','Vladivostok':'Владивосток',
+  'Petropavlovsk-Kamchatsky':'Петропавловск-Камчатский','Anadyr':'Анадырь','Murmansk':'Мурманск','Arkhangelsk':'Архангельск',
+  'Norilsk':'Норильск','Surgut':'Сургут',
+  'Altai Republic':'Республика Алтай','Altai Krai':'Алтайский край','Amur Oblast':'Амурская область',
+  'Arkhangelsk Oblast':'Архангельская область','Astrakhan Oblast':'Астраханская область',
+  'Bashkortostan':'Республика Башкортостан','Republic of Bashkortostan':'Республика Башкортостан',
+  'Belgorod Oblast':'Белгородская область','Bryansk Oblast':'Брянская область','Buryatia':'Республика Бурятия',
+  'Republic of Buryatia':'Республика Бурятия','Chechen Republic':'Чеченская Республика','Chechnya':'Чеченская Республика',
+  'Chelyabinsk Oblast':'Челябинская область','Chukotka Autonomous Okrug':'Чукотский автономный округ',
+  'Chuvash Republic':'Чувашская Республика','Chuvashia':'Чувашская Республика','Dagestan':'Республика Дагестан',
+  'Republic of Dagestan':'Республика Дагестан','Ingushetia':'Республика Ингушетия','Irkutsk Oblast':'Иркутская область',
+  'Ivanovo Oblast':'Ивановская область','Jewish Autonomous Oblast':'Еврейская автономная область',
+  'Kabardino-Balkar Republic':'Кабардино-Балкарская Республика','Kaliningrad Oblast':'Калининградская область',
+  'Kalmykia':'Республика Калмыкия','Kaluga Oblast':'Калужская область','Kamchatka Krai':'Камчатский край',
+  'Karachay-Cherkess Republic':'Карачаево-Черкесская Республика','Karelia':'Республика Карелия',
+  'Kemerovo Oblast':'Кемеровская область','Khabarovsk Krai':'Хабаровский край','Khakassia':'Республика Хакасия',
+  'Khanty-Mansi Autonomous Okrug':'Ханты-Мансийский автономный округ','Kirov Oblast':'Кировская область',
+  'Komi Republic':'Республика Коми','Kostroma Oblast':'Костромская область','Krasnodar Krai':'Краснодарский край',
+  'Krasnoyarsk Krai':'Красноярский край','Kurgan Oblast':'Курганская область','Kursk Oblast':'Курская область',
+  'Leningrad Oblast':'Ленинградская область','Lipetsk Oblast':'Липецкая область','Magadan Oblast':'Магаданская область',
+  'Mari El Republic':'Республика Марий Эл','Mordovia':'Республика Мордовия','Moscow Oblast':'Московская область',
+  'Murmansk Oblast':'Мурманская область','Nenets Autonomous Okrug':'Ненецкий автономный округ',
+  'Nizhny Novgorod Oblast':'Нижегородская область','North Ossetia–Alania':'Республика Северная Осетия — Алания',
+  'North Ossetia-Alania':'Республика Северная Осетия — Алания','Novgorod Oblast':'Новгородская область',
+  'Novosibirsk Oblast':'Новосибирская область','Omsk Oblast':'Омская область','Orenburg Oblast':'Оренбургская область',
+  'Oryol Oblast':'Орловская область','Orel Oblast':'Орловская область','Penza Oblast':'Пензенская область',
+  'Perm Krai':'Пермский край','Primorsky Krai':'Приморский край','Pskov Oblast':'Псковская область',
+  'Rostov Oblast':'Ростовская область','Ryazan Oblast':'Рязанская область','Sakha Republic':'Республика Саха (Якутия)',
+  'Yakutia':'Республика Саха (Якутия)','Sakhalin Oblast':'Сахалинская область','Samara Oblast':'Самарская область',
+  'Saratov Oblast':'Саратовская область','Smolensk Oblast':'Смоленская область','Stavropol Krai':'Ставропольский край',
+  'Sverdlovsk Oblast':'Свердловская область','Tambov Oblast':'Тамбовская область','Tatarstan':'Республика Татарстан',
+  'Republic of Tatarstan':'Республика Татарстан','Tomsk Oblast':'Томская область','Tula Oblast':'Тульская область',
+  'Tver Oblast':'Тверская область','Tyumen Oblast':'Тюменская область','Tyva Republic':'Республика Тыва','Tuva':'Республика Тыва',
+  'Udmurt Republic':'Удмуртская Республика','Ulyanovsk Oblast':'Ульяновская область','Vladimir Oblast':'Владимирская область',
+  'Volgograd Oblast':'Волгоградская область','Vologda Oblast':'Вологодская область','Voronezh Oblast':'Воронежская область',
+  'Yamalo-Nenets Autonomous Okrug':'Ямало-Ненецкий автономный округ','Yaroslavl Oblast':'Ярославская область',
+  'Zabaykalsky Krai':'Забайкальский край','Trans-Baikal Krai':'Забайкальский край',
+  'Russia':'Россия','Russian Federation':'Россия'
+};
+function translateLocation(str){
+  if (!str) return '';
+  if (/[а-яё]/i.test(str)) return str; // уже по-русски
+  return str.split(',').map(part=>{
+    const p = part.trim();
+    return LOCATION_TRANSLATIONS[p] || LOCATION_TRANSLATIONS[p.replace(/^Republic of /,'')] || p;
+  }).join(', ');
+}
+
+// Тренировки не в РФ не показываем на карте (но в счётчик они попадают).
+// С бэка location приходит на английском, последний сегмент — страна.
+function isInRussia(location){
+  if (!location) return false;
+  if (/[а-яё]/i.test(location)) return true; // наши моковые российские города
+  const country = location.split(',').pop().trim().toLowerCase();
+  return country === 'russia' || country === 'russian federation' || country === 'россия';
+}
 
 const NAMES = ['Алексей Петров','Мария Волкова','Иван Соколов','Елена Кузнецова','Дмитрий Лебедев','Анна Громова','Сергей Морозов','Ольга Рябова','Артём Волков','Полина Зайцева','Никита Орлов','Юлия Фомина','Павел Борисов','Ксения Титова','Илья Никитин','Дарья Игнатьева','Кирилл Абрамов','Софья Дмитриева','Михаил Егоров','Виктория Жукова','Роман Хохлов','Алиса Царёва','Тимур Яковлев','Лера Щербакова','Глеб Ушаков','Карина Литвинова','Олег Чернов','Настя Шевченко'];
 
@@ -477,6 +553,38 @@ function mockWorkoutGains(){
   return { km, xp, rub };
 }
 
+/* ——— Данные тренировки в форме бэка: {distance, location, xp, polyline, image} ———
+   Реальный пример, который прислал бэкендер — используем как есть (без искажений),
+   чтобы по-настоящему проверить декодирование polyline и показ фото, а не просто мок. */
+const REAL_SAMPLE_RECORD = {
+  distance: 10,
+  location: 'Altai Republic, Russia',
+  xp: 3,
+  polyline: '_q}zHgvfjOBFERMROLKBa@?[Fg@CIBKLKZIt@?p@E\\D\\HFd@LRX\\R~GzBfAf@ZDrChAfB|@r@d@j@Td@Ll@?j@HPDl@^pAz@p@h@TV^Rj@f@n@p@pAfBd@j@l@r@`@`@tB`BXZr@l@|AfA`BxAxC|Bh@Tx@Ph@?x@GV?VCv@Dr@RtEdBlA\\TFXABA@OAEUXM@sAc@aDqA_Bg@}@Gc@FuBJ_AQ]Mc@U_BmA}A}AwAiA_A{@gAw@a@_@cAw@_A}@oA_Bu@eAoAuAa@]iAq@uAcAy@e@q@OeAM_@Ko@YqAw@{@c@cAa@}Ac@y@_@oBm@{@]qFaBiDoAwAa@QK]IYO[IqB_AiAaA_ByAY[k@]]MkA]{@M[Bg@EU@_BKmAYa@U[Gs@e@[WiBgA{@y@QYY]QYGEC@@BJ@HF~@dAtAlArA|@XLRN^RjAb@hARzB?h@D|@NjAXf@TPJhCdCpB|AbAh@fC|@`@LtBz@J@HCFKRSNY@I@w@Fc@Lg@BEHCX?\\G`@@VCRSDKHe@FIBA',
+  image: 'https://a2036f06-9250-4b9a-b800-f10b0bd4b361.selcdn.net/F0AD479A-59BE-44C2-9FE6-9DDDDA5C426D'
+};
+/* мок-запись в ТОЧНО ТОЙ ЖЕ форме, что отдаст бэк: {distance, location, xp, polyline, image}.
+   Изредка подмешиваем реальный образец от бэкендера — так на сайте видно, что весь путь
+   (декодирование polyline, перевод location, показ фото) реально работает, а не только в теории. */
+function mockTrainingRecord(city){
+  if (Math.random() < 0.12) return REAL_SAMPLE_RECORD;
+  const { km, xp } = mockWorkoutGains();
+  const seed = Math.floor(Math.random()*1e9)+1;
+  return {
+    distance: parseFloat(km),
+    location: city.name, // мок уже на русском — translateLocation() пропустит как есть
+    xp,
+    polyline: encodePolyline(mockGeoWalk(seed, svgToGeo(city.x, city.y))), // настоящая encoded-строка + база = реальные координаты города
+    image: null
+  };
+}
+/* ВРЕМЕННО мок — когда бэк будет готов, заменить тело на реальный запрос за тренировками.
+   Форма ответа {distance, location, xp, polyline, image} уже согласована, менять
+   остальной код не придётся. Если у записи нет polyline/location — карточку не показываем. */
+function fetchTrainingRecord(city){
+  return mockTrainingRecord(city);
+}
+
 function moscowNow(){
   return new Date(new Date().toLocaleString('en-US', { timeZone:'Europe/Moscow' }));
 }
@@ -499,33 +607,38 @@ function dailyActivityProgress(date){
   const before = HOURLY_WORKOUT_WEIGHTS.slice(0, hour).reduce((sum,value)=>sum+value,0);
   return Math.min(1, (before + HOURLY_WORKOUT_WEIGHTS[hour] * minutePart) / total);
 }
+/* Мок-снепшот дневной статистики. Форма объекта — 1-в-1 модель, которую отдаёт бэк:
+   { "activities": 200, "xp": 3000, "exchange": 10000 } */
 function makeTodaySnapshot(){
   const now = moscowNow();
   const seeded = seededRandom(daySeed(now));
   const targetWorkouts = 482 + Math.round(seeded()*54); // около 500, но не ровно одно и то же число
-  const avgKm = 15.5 + seeded()*5.5;
   const avgXp = 12 + seeded()*8;
-  const avgRub = 53 + seeded()*19;
+  const avgExchange = 53 + seeded()*19;
   const progress = dailyActivityProgress(now);
   const workoutNoise = .985 + seeded()*0.03;
-  const w = Math.max(0, Math.floor(targetWorkouts * progress * workoutNoise));
+  const activities = Math.max(0, Math.floor(targetWorkouts * progress * workoutNoise));
   return {
-    w,
-    km: Math.round(w * avgKm * (0.98 + seeded()*0.04) * 10) / 10,
-    xp: Math.round(w * avgXp * (0.98 + seeded()*0.04)),
-    rub: Math.round(w * avgRub * (0.98 + seeded()*0.04))
+    activities,
+    xp: Math.round(activities * avgXp * (0.98 + seeded()*0.04)),
+    exchange: Math.round(activities * avgExchange * (0.98 + seeded()*0.04))
   };
+}
+/* ВРЕМЕННО мок — когда бэк будет готов, заменить тело на реальный запрос
+   (эндпоинт должен отдавать ровно { activities, xp, exchange }), сигнатура и
+   форма ответа уже согласованы, остальной код трогать не придётся. */
+function fetchTodaySnapshot(){
+  return makeTodaySnapshot();
 }
 function applyTodayWorkout(detail){
   if (!window.MR_TODAY) return;
-  MR_TODAY.w += 1;
-  MR_TODAY.km += parseFloat(detail.km);
+  MR_TODAY.activities += 1;
   MR_TODAY.xp += detail.xp;
   applyTodayPayout(detail.rub);
 }
 function applyTodayPayout(rub){
   if (!window.MR_TODAY) return;
-  MR_TODAY.rub += rub;
+  MR_TODAY.exchange += rub;
 }
 
 /* Вариант оформления карты через ?map=outline|filled|constellation|line|ghost|clean */
@@ -561,6 +674,19 @@ function getBox(){
 function svgToPx(x,y){
   const {mx,top,w,h} = getBox();
   return [ mx + (x/1200)*w, top + (y/500)*h ];
+}
+
+/* Проекция реальных гео-координат на схематичную карту 1200×500.
+   С бэка координат нет — только polyline, но он и есть настоящие [lat,lng],
+   так что позицию карточки берём прямо из трека, без геокодинга.
+   Константы подобраны линейной регрессией по 32 городам (макс. отклонение <0.6 ед.). */
+const MAP_LNG_A = 7.3726, MAP_LNG_B = -138.773;
+const MAP_LAT_A = -13.9864, MAP_LAT_B = 1097.94;
+function geoToSvg(lat, lng){
+  return [ MAP_LNG_A*lng + MAP_LNG_B, MAP_LAT_A*lat + MAP_LAT_B ];
+}
+function svgToGeo(x, y){
+  return [ (y - MAP_LAT_B)/MAP_LAT_A, (x - MAP_LNG_B)/MAP_LNG_A ];
 }
 
 /* Фоновая карта: силуэт растягиваем в ту же рамку, статичные точки-города */
@@ -829,13 +955,112 @@ function catmullOpen(P){
   return d;
 }
 
+/* ——— Реальный трек с бэка: encoded polyline (формат Google/Strava) ——— */
+function decodePolyline(encoded, precision){
+  if (!encoded) return [];
+  precision = precision || 5;
+  const factor = Math.pow(10, precision);
+  let index = 0, lat = 0, lng = 0;
+  const coords = [];
+  const len = encoded.length;
+  while (index < len){
+    let shift = 0, result = 0, b;
+    do { b = encoded.charCodeAt(index++) - 63; result |= (b & 0x1f) << shift; shift += 5; } while (b >= 0x20);
+    lat += (result & 1) ? ~(result >> 1) : (result >> 1);
+    shift = 0; result = 0;
+    do { b = encoded.charCodeAt(index++) - 63; result |= (b & 0x1f) << shift; shift += 5; } while (b >= 0x20);
+    lng += (result & 1) ? ~(result >> 1) : (result >> 1);
+    coords.push([lat / factor, lng / factor]);
+  }
+  return coords;
+}
+/* прореживаем плотный GPS-трек до разумного числа точек для маленькой карточки */
+function decimatePoints(points, maxPoints){
+  if (points.length <= maxPoints) return points;
+  const step = points.length / maxPoints;
+  const out = [];
+  for (let i=0;i<maxPoints;i++) out.push(points[Math.floor(i*step)]);
+  out.push(points[points.length-1]);
+  return out;
+}
+/* [lat,lng] → пиксели карточки, вписываем в бокс с отступом (как buildRoute для мока) */
+function projectGeoPoints(points, W, H, pad){
+  const xs = points.map(p=>p[1]), ys = points.map(p=>-p[0]);
+  const minx=Math.min(...xs), maxx=Math.max(...xs), miny=Math.min(...ys), maxy=Math.max(...ys);
+  const sw=W-pad*2, sh=H-pad*2;
+  const scale = Math.min(sw/((maxx-minx)||1), sh/((maxy-miny)||1));
+  const ox = pad + (sw-(maxx-minx)*scale)/2 - minx*scale;
+  const oy = pad + (sh-(maxy-miny)*scale)/2 - miny*scale;
+  return points.map((_,i)=>[xs[i]*scale+ox, ys[i]*scale+oy]);
+}
+/* единая точка входа: реальный polyline с бэка, если есть — иначе мок-блуждание по seed */
+function routePointsFromRecord(record, seed, W, H, pad, maxPoints){
+  if (record && record.polyline){
+    const geo = decodePolyline(record.polyline);
+    if (geo.length >= 2) return projectGeoPoints(decimatePoints(geo, maxPoints || 90), W, H, pad);
+  }
+  return buildRoute(seed, W, H, pad); // подстраховка на случай нерабочего polyline
+}
+/* центр тяжести трека в гео-координатах — где реально прошла тренировка */
+function recordCentroidGeo(record){
+  if (!record || !record.polyline) return null;
+  const geo = decodePolyline(record.polyline);
+  if (!geo.length) return null;
+  let lat=0, lng=0;
+  geo.forEach(p=>{ lat+=p[0]; lng+=p[1]; });
+  return [lat/geo.length, lng/geo.length];
+}
+/* ——— Энкодер polyline (обратный decodePolyline) — только для мока: превращаем
+   случайное блуждание в НАСТОЯЩУЮ encoded-строку, чтобы мок шёл через тот же
+   декодер, что и данные с бэка, а не по отдельному пути ——— */
+function encodePolylineValue(num){
+  num = num < 0 ? ~(num << 1) : (num << 1);
+  let out = '';
+  while (num >= 0x20){ out += String.fromCharCode((0x20 | (num & 0x1f)) + 63); num >>= 5; }
+  out += String.fromCharCode(num + 63);
+  return out;
+}
+function encodePolyline(points, precision){
+  const factor = Math.pow(10, precision || 5);
+  let out = '', prevLat = 0, prevLng = 0;
+  points.forEach(([lat,lng])=>{
+    const lat5 = Math.round(lat*factor), lng5 = Math.round(lng*factor);
+    out += encodePolylineValue(lat5-prevLat) + encodePolylineValue(lng5-prevLng);
+    prevLat = lat5; prevLng = lng5;
+  });
+  return out;
+}
+/* случайное блуждание в градусах (та же механика, что buildRoute, только в geo-координатах) */
+function mockGeoWalk(seed, base){
+  const rnd = seededRandom(seed);
+  // база — реальные координаты города (чтобы позиция на карте совпала с подписью),
+  // иначе просто «где-то в России»: форма трека важна, не точность
+  const baseLat = base ? base[0] : 55 + rnd()*10;
+  const baseLng = base ? base[1] : 37 + rnd()*40;
+  const steps = 30 + Math.floor(rnd()*22);
+  let ang = rnd()*Math.PI*2, x=0, y=0;
+  // одинаковый делитель для lat и lng: реальная проекция ниже (projectGeoPoints) плоская,
+  // без поправки на широту, так что и здесь поправку не делаем — иначе фигура растягивается
+  const mPerDeg = 111320;
+  const pts = [[baseLat, baseLng]];
+  for (let i=0;i<steps;i++){
+    ang += (rnd()-0.5)*1.15;
+    const back = Math.atan2(-y,-x);
+    ang += Math.atan2(Math.sin(back-ang), Math.cos(back-ang)) * 0.11 * (i/steps);
+    const len = 6 + rnd()*5;
+    x += Math.cos(ang)*len; y += Math.sin(ang)*len;
+    pts.push([baseLat + y/mPerDeg, baseLng + x/mPerDeg]);
+  }
+  return pts;
+}
+
 /* ——— Мини-карточка тренировки: трек + инфо (Figma) ——— */
 const TCARD_MAP_IMG = 'img/tcard-map-placeholder.png';
 
 const TCARD_TRACK_W = 74, TCARD_TRACK_H = 92, TCARD_TRACK_LEFT = 29, TCARD_TRACK_TOP = 20;
-function trainingCardTrack(seed){
+function trainingCardTrack(seed, record){
   const pad = 9;
-  const P = buildRoute(seed, TCARD_TRACK_W, TCARD_TRACK_H, pad);
+  const P = routePointsFromRecord(record, seed, TCARD_TRACK_W, TCARD_TRACK_H, pad, 70);
   const d = catmullOpen(P);
   const s = P[0], e = P[P.length-1];
   let len = 0;
@@ -850,16 +1075,21 @@ function trainingCardTrack(seed){
   return { svg, end: e };
 }
 
-function trainingCardHTML(city){
-  const name = pick(NAMES);
+function trainingCardHTML(city, record){
+  const name = pick(NAMES); // мок-поле — придёт в расширенной модели для подробной карточки
   const hasPhoto = Math.random() < 0.85; // мок: изредка бэк не присылает фото — показываем заглушку
   const ava = hasPhoto ? pickAvatar() : null;
-  const { km, xp, rub } = mockWorkoutGains();
+  const money = weightedPick(MONEY_TIERS);
+  const rub = Math.round(rand(money.rub)); // мок: обмена ₽ пока нет в модели бэка
   const seed = Math.floor(Math.random()*1e9)+1;
-  const { svg, end } = trainingCardTrack(seed);
+  const { svg, end } = trainingCardTrack(seed, record);
   const pinLeft = TCARD_TRACK_LEFT + end[0];
   const pinTop = TCARD_TRACK_TOP + end[1];
   const avaHTML = avatarImg(ava, 'tcard-avatar');
+  const locationRu = translateLocation(record.location);
+  const km = record.distance;
+  const xp = record.xp;
+  const images = Array.isArray(record.images) ? record.images.filter(Boolean) : (record.image ? [record.image] : []);
   const html = `
     <div class="tcard-glow"><img src="${TCARD_MAP_IMG}" alt="" aria-hidden="true"></div>
     <div class="tcard-track">${svg}</div>
@@ -867,12 +1097,12 @@ function trainingCardHTML(city){
     <div class="tcard-pill">
       <div class="tcard-ava">${avaHTML}</div>
       <div class="tcard-body">
-        <div class="tcard-city" title="${city.name}">${city.name}</div>
+        <div class="tcard-city" title="${locationRu}">${locationRu}</div>
         <div class="tcard-stats"><span class="tcard-km">${km}&nbsp;км</span><span class="tcard-xp">+${xp}&nbsp;XP</span></div>
       </div>
     </div>
-    <span class="sr-only">${name}, ${city.name}, ${km} км, +${xp} XP</span>`;
-  const detail = { name, city: city.name, km, xp, rub, ava: avatarSrc(ava), seed };
+    <span class="sr-only">${name}, ${locationRu}, ${km} км, +${xp} XP</span>`;
+  const detail = { name, city: locationRu, km, xp, rub, ava: avatarSrc(ava), seed, polyline: record.polyline || null, images };
   return { html, detail };
 }
 
@@ -883,30 +1113,43 @@ const TCARD_ENTER_MS = 2700, TCARD_HOLD_MS = 4400, TCARD_EXIT_MS = 450;
 
 function spawnTrainingCard(){
   const city = pick(CITIES);
+  const record = fetchTrainingRecord(city);
+  if (!record || !record.polyline || !record.location) return; // нет трека/локации с бэка — не показываем и не считаем
+
+  const { html, detail } = trainingCardHTML(city, record);
+  applyTodayWorkout(detail); // данные всегда попадают в «Сегодня в движении», даже если тренировка не в РФ
+
+  if (!isInRussia(record.location)) return; // тренировка не в РФ — на карте не показываем
+
+  // позиция на карте — из реальных координат трека (centroid polyline), а не из мок-списка
   let [px, py] = svgToPx(city.x, city.y);
   if (isMobileCompact()){
     [px, py] = mobilePopPoint();
+  } else {
+    const centroid = recordCentroidGeo(record);
+    if (centroid){
+      const [sx, sy] = geoToSvg(centroid[0], centroid[1]);
+      [px, py] = svgToPx(sx, sy);
+    }
   }
+  const posKey = record.location; // ключ для антистэка — реальная локация тренировки
   const margin = 12;
   const halfW = TCARD_W/2, halfH = TCARD_H/2;
   const mapBounds = !isMobileCompact() ? trainingCardMapBounds(halfW, halfH) : null;
-  const resolvedPosition = resolveTrainingCardPosition(city.name, px, py, mapBounds, halfW, halfH, margin);
+  const resolvedPosition = resolveTrainingCardPosition(posKey, px, py, mapBounds, halfW, halfH, margin);
   if (!resolvedPosition) return;
   [px, py] = resolvedPosition;
 
-  const { html, detail } = trainingCardHTML(city);
   const el = document.createElement('div');
   el.className = 'tcard';
   el.style.left = px + 'px';
   el.style.top = py + 'px';
-  el.dataset.city = city.name;
+  el.dataset.city = posKey;
   el.dataset.x = px;
   el.dataset.y = py;
   el.innerHTML = html;
   el.title = 'Открыть тренировку';
   tcardsLayer.appendChild(el);
-
-  applyTodayWorkout(detail);
 
   let t1 = setTimeout(()=> el.classList.add('out'), TCARD_ENTER_MS + TCARD_HOLD_MS);
   let t2 = setTimeout(()=> el.remove(), TCARD_ENTER_MS + TCARD_HOLD_MS + TCARD_EXIT_MS);
@@ -928,10 +1171,10 @@ function spawnTrainingCardBurst(){
 const ENABLE_TRAINING_CARDS = true;
 
 /* тёмная стилизованная карта района с треком */
-function workoutMapSVG(seed){
+function workoutMapSVG(seed, record){
   const W=412, H=394, pad=30;
   const rnd = seededRandom(seed*7+13);
-  const P = buildRoute(seed, W, H, pad);
+  const P = routePointsFromRecord(record, seed, W, H, pad, 220);
   const d = catmullOpen(P);
   let parks='';
   for (let i=0;i<2;i++){ const pw=54+rnd()*70, ph=38+rnd()*50, x=rnd()*(W-pw), y=rnd()*(H-ph);
@@ -1003,13 +1246,18 @@ function openWorkoutCard(base){
   now.setMinutes(now.getMinutes() - Math.floor(r()*180) - Math.floor(r()*60*24*3));
   const hhmm = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
 
+  const images = Array.isArray(base.images) ? base.images.filter(Boolean) : [];
+  const slides = [`<div class="wc-slide wc-slide-map">${workoutMapSVG(base.seed, base)}</div>`]
+    .concat(images.map(src => `<div class="wc-slide wc-slide-photo"><img src="${src}" alt="Фото с тренировки" loading="lazy"></div>`));
+  const dots = slides.map((_,i) => `<span class="d${i===0?' active':''}"></span>`).join('');
+
   wcard.scrollTop = 0;
   wcard.innerHTML = `
     <div class="wc-map">
-      ${workoutMapSVG(base.seed)}
+      <div class="wc-slides">${slides.join('')}</div>
       <button class="wc-action wc-close" type="button" aria-label="Закрыть">${ICO_CLOSE}</button>
       <button class="wc-action wc-share" type="button" aria-label="Поделиться">${ICO_SHARE}</button>
-      <div class="wc-dots"><span class="d active"></span><span class="d"></span><span class="d"></span></div>
+      ${slides.length > 1 ? `<div class="wc-dots">${dots}</div>` : ''}
     </div>
     <div class="wc-body">
       <div class="wc-head">
@@ -1041,6 +1289,23 @@ function openWorkoutCard(base){
   wcard.querySelector('.wc-share').addEventListener('click', ()=>{
     if (navigator.share) navigator.share({ title:'Moneyrun', text:`${base.name} пробежал ${base.km} км в ${base.city}`, url: location.href }).catch(()=>{});
   });
+  // «листалка»: карта + фото (если пришли) — точки синхронизируются со скроллом, клик по точке листает
+  const slidesEl = wcard.querySelector('.wc-slides');
+  const dotEls = wcard.querySelectorAll('.wc-dots .d');
+  if (dotEls.length){
+    let scrollRaf = null;
+    slidesEl.addEventListener('scroll', ()=>{
+      if (scrollRaf) return;
+      scrollRaf = requestAnimationFrame(()=>{
+        scrollRaf = null;
+        const idx = Math.round(slidesEl.scrollLeft / slidesEl.clientWidth);
+        dotEls.forEach((d,i)=> d.classList.toggle('active', i===idx));
+      });
+    });
+    dotEls.forEach((d,i)=> d.addEventListener('click', ()=>{
+      slidesEl.scrollTo({ left: i*slidesEl.clientWidth, behavior:'smooth' });
+    }));
+  }
   const chipsEl = wcard.querySelector('.wc-chips');
   chipsEl.classList.toggle('has-overflow', chipsEl.scrollWidth > chipsEl.clientWidth + 1);
   wback.classList.add('open');
@@ -1110,19 +1375,21 @@ document.addEventListener('keydown', e=>{
   }
 });
 
-/* мини-дашборд «Сегодня»: стартует от московской полуночи и пополняется от карточек на карте */
+/* мини-дашборд «Сегодня»: стартует от московской полуночи и пополняется от карточек на карте.
+   today приходит в форме { activities, xp, exchange } — сейчас из мока (fetchTodaySnapshot),
+   позже эту же форму будет отдавать бэк. */
 (function(){
-  var today = makeTodaySnapshot();
+  var today = fetchTodaySnapshot();
   window.MR_TODAY = today;
-  var elW=document.getElementById('tdW'), elXp=document.getElementById('tdXp'), elRub=document.getElementById('tdRub');
-  if(!elW) return;
-  var shown = { w: Math.max(0, today.w - 2), xp: Math.max(0, today.xp - 32), rub: Math.max(0, today.rub - 90) };
+  var elActivities=document.getElementById('tdActivities'), elXp=document.getElementById('tdXp'), elExchange=document.getElementById('tdExchange');
+  if(!elActivities) return;
+  var shown = { activities: Math.max(0, today.activities - 2), xp: Math.max(0, today.xp - 32), exchange: Math.max(0, today.exchange - 90) };
   var fmt = function(n){ return Math.round(n).toLocaleString('ru-RU'); };
   setInterval(function(){
-    shown.w   += (today.w   - shown.w  )*0.14;
-    shown.xp  += (today.xp  - shown.xp )*0.14;
-    shown.rub += (today.rub - shown.rub)*0.14;
-    elW.textContent=fmt(shown.w); elXp.textContent=fmt(shown.xp); elRub.textContent=fmt(shown.rub);
+    shown.activities += (today.activities - shown.activities)*0.14;
+    shown.xp         += (today.xp         - shown.xp        )*0.14;
+    shown.exchange   += (today.exchange   - shown.exchange  )*0.14;
+    elActivities.textContent=fmt(shown.activities); elXp.textContent=fmt(shown.xp); elExchange.textContent=fmt(shown.exchange);
   }, 40);
 })();
 </script>
