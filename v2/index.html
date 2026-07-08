@@ -1001,14 +1001,12 @@ function routePointsFromRecord(record, seed, W, H, pad, maxPoints){
   }
   return buildRoute(seed, W, H, pad); // подстраховка на случай нерабочего polyline
 }
-/* центр тяжести трека в гео-координатах — где реально прошла тренировка */
-function recordCentroidGeo(record){
+/* точка начала трека в гео-координатах — по ней ставим карточку на карту */
+function recordStartGeo(record){
   if (!record || !record.polyline) return null;
   const geo = decodePolyline(record.polyline);
   if (!geo.length) return null;
-  let lat=0, lng=0;
-  geo.forEach(p=>{ lat+=p[0]; lng+=p[1]; });
-  return [lat/geo.length, lng/geo.length];
+  return geo[0];
 }
 /* ——— Энкодер polyline (обратный decodePolyline) — только для мока: превращаем
    случайное блуждание в НАСТОЯЩУЮ encoded-строку, чтобы мок шёл через тот же
@@ -1121,14 +1119,14 @@ function spawnTrainingCard(){
 
   if (!isInRussia(record.location)) return; // тренировка не в РФ — на карте не показываем
 
-  // позиция на карте — из реальных координат трека (centroid polyline), а не из мок-списка
+  // позиция на карте — из точки начала реального трека (polyline), а не из мок-списка
   let [px, py] = svgToPx(city.x, city.y);
   if (isMobileCompact()){
     [px, py] = mobilePopPoint();
   } else {
-    const centroid = recordCentroidGeo(record);
-    if (centroid){
-      const [sx, sy] = geoToSvg(centroid[0], centroid[1]);
+    const start = recordStartGeo(record);
+    if (start){
+      const [sx, sy] = geoToSvg(start[0], start[1]);
       [px, py] = svgToPx(sx, sy);
     }
   }
