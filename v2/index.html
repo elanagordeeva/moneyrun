@@ -98,7 +98,7 @@
     .brand{position:fixed;top:0;left:0;right:0;z-index:6;display:flex;flex-direction:column;align-items:center;text-align:center;padding:clamp(2.2rem,7vh,4.5rem) 1rem clamp(1.4rem,3vh,2.2rem);pointer-events:none}
     .brand-name{display:flex;justify-content:center;color:var(--lime-brand)}
     .brand-name svg{height:clamp(1.125rem,2.25vw,1.5rem);width:auto;display:block}
-    .brand-tag{display:flex;justify-content:center;margin-top:.6rem;color:rgba(255,255,255,.82)}
+    .brand-tag{display:flex;justify-content:center;margin-top:.9rem;color:rgba(255,255,255,.82)}
     .brand-tag svg{height:clamp(.7rem,1.1vw,.85rem);width:auto;display:block}
 
     /* Activity popup — minimalist capsule */
@@ -129,9 +129,8 @@
     .tcard-pin::after{content:'';position:absolute;inset:0;margin:auto;width:4px;height:4px;border-radius:50%;background:#fff}
     .tcard-pill{position:absolute;left:17px;top:49px;max-width:124px;height:33px;border-radius:24px;background:#111410;display:flex;align-items:center;gap:6px;padding:3px 9px 3px 6px}
     .tcard-ava{position:relative;width:27px;height:27px;flex:none}
-    .tcard-ava img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;box-shadow:0 0 0 1px rgba(255,255,255,.28),0 0 0 3px rgba(255,255,255,.08)}
-    .tcard-ava .ph{width:100%;height:100%;border-radius:50%;background:#2a2c3a;box-shadow:0 0 0 1px rgba(255,255,255,.28),0 0 0 3px rgba(255,255,255,.08);display:grid;place-items:center;color:rgba(255,255,255,.5)}
-    .tcard-ava .ph svg{width:14px;height:14px}
+    .tcard-ava img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;background:#2F2F3A;box-shadow:0 0 0 1px rgba(255,255,255,.28),0 0 0 3px rgba(255,255,255,.08)}
+    .tcard-ava img.is-fallback{object-fit:cover}
     .tcard-body{min-width:0;flex:1;display:flex;flex-direction:column;gap:1px}
     .tcard-city{font-family:var(--fd);font-weight:500;font-size:9px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.4}
     .tcard-stats{display:flex;align-items:center;gap:3px}
@@ -168,7 +167,7 @@
     /* Большая карточка тренировки (только тёмная тема) */
     .wcard-back{position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;padding:clamp(12px,3vw,30px);background:rgba(6,8,6,.62);backdrop-filter:blur(9px) saturate(1.05);-webkit-backdrop-filter:blur(9px) saturate(1.05);opacity:0;pointer-events:none;transition:opacity .26s ease}
     .wcard-back.open{opacity:1;pointer-events:auto}
-    .wcard{width:min(360px,100%);max-height:min(92vh,760px);overflow:auto;background:#20212A;color:#f7f8fb;border:1px solid rgba(255,255,255,.06);border-radius:22px;box-shadow:0 40px 90px -28px rgba(0,0,0,.85),0 0 0 1px rgba(0,0,0,.4);transform:translateY(18px) scale(.965);opacity:0;transition:transform .34s cubic-bezier(.2,.85,.25,1.02),opacity .24s;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent}
+    .wcard{width:min(380px,100%);max-height:min(92vh,760px);overflow:auto;background:#20212A;color:#f7f8fb;border:1px solid rgba(255,255,255,.06);border-radius:22px;box-shadow:0 40px 90px -28px rgba(0,0,0,.85),0 0 0 1px rgba(0,0,0,.4);transform:translateY(18px) scale(.965);opacity:0;transition:transform .34s cubic-bezier(.2,.85,.25,1.02),opacity .24s;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent}
     .wcard-back.open .wcard{transform:none;opacity:1}
     .wcard::-webkit-scrollbar{width:8px}.wcard::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:8px}
     @media(prefers-reduced-motion:reduce){.wcard,.wcard-back{transition:opacity .2s}.wcard{transform:none}}
@@ -176,34 +175,37 @@
     .wc-map{position:relative;aspect-ratio:412/394;background:#0c0f0b;line-height:0;overflow:hidden;border-radius:22px 22px 0 0}
     .wc-map svg{display:block;width:100%;height:100%}
     .wc-map::before{content:'';position:absolute;left:0;right:0;top:0;height:40%;background:linear-gradient(rgba(0,0,0,.5),transparent);pointer-events:none;z-index:1}
-    .wc-share{position:absolute;right:10px;top:10px;width:36px;height:36px;border-radius:50%;border:none;background:rgba(247,248,251,.94);color:#20212A;cursor:pointer;display:grid;place-items:center;transition:transform .15s,background .15s;z-index:2}
-    .wc-share:hover{background:#fff;transform:scale(1.06)}
-    .wc-share svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .wc-action{position:absolute;top:10px;width:36px;height:36px;border-radius:50%;border:none;background:rgba(247,248,251,.94);color:#20212A;cursor:pointer;display:grid;place-items:center;transition:transform .15s,background .15s;z-index:2}
+    .wc-action:hover{background:#fff;transform:scale(1.06)}
+    .wc-action svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+    .wc-close{left:10px}
+    .wc-share{right:10px}
     .wc-dots{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);display:flex;align-items:center;gap:4px;padding:6px;border-radius:999px;background:rgba(17,18,28,.35);z-index:2}
     .wc-dots .d{width:6px;height:6px;border-radius:3px;background:rgba(247,248,251,.35)}
     .wc-dots .d.active{width:12px;background:#f7f8fb}
     /* тело */
     .wc-body{padding:1rem 1.05rem 1.2rem}
     .wc-head{display:flex;align-items:flex-start;gap:.65rem}
-    .wc-ava{width:38px;height:38px;border-radius:50%;flex:none;background-size:cover;background-position:center;background-color:#333}
+    .wc-ava{width:38px;height:38px;border-radius:50%;flex:none;object-fit:cover;display:block;background:#2F2F3A}
     .wc-id{min-width:0;flex:1;padding-top:1px}
     .wc-name{font-weight:800;font-size:.94rem;letter-spacing:-.01em;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .wc-sub{font-size:.71rem;color:rgba(247,248,251,.5);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .wc-chips{display:flex;flex-wrap:nowrap;gap:.4rem;margin-top:.9rem;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;margin-inline:-1.05rem;padding-inline:1.05rem}
+    .wc-chips{display:flex;flex-wrap:nowrap;gap:.3rem;margin-top:.9rem;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;margin-inline:-1.05rem;padding-inline:1.05rem}
     .wc-chips::-webkit-scrollbar{display:none}
-    .wc-chip{display:inline-flex;align-items:center;gap:.32rem;height:2.05rem;padding:0 .68rem;border-radius:999px;font-size:.72rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1;white-space:nowrap;flex:none}
+    .wc-chips.has-overflow{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 26px),transparent 100%);mask-image:linear-gradient(90deg,#000 calc(100% - 26px),transparent 100%)}
+    .wc-chip{display:inline-flex;align-items:center;gap:.26rem;height:1.95rem;padding:0 .52rem;border-radius:999px;font-size:.68rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1;white-space:nowrap;flex:none}
     .wc-chip.xp{background:linear-gradient(128deg,#A7FFC8,#52D1FA);color:#0c221f;font-style:italic;font-variation-settings:'slnt' -10}
     .wc-chip.rub{background:linear-gradient(90deg,#D5FFA8,#BDFF76);color:#1f2a05;font-style:italic;font-variation-settings:'slnt' -10}
     .wc-chip.ghost{background:#2F2F3A;color:rgba(247,248,251,.88);font-weight:700}
-    .wc-chip .ico{width:16px;height:16px;border-radius:50%;background:#747887;display:grid;place-items:center;flex:none}
-    .wc-chip .ico svg{width:9px;height:9px;fill:#F7F8FB;stroke:none}
+    .wc-chip .ico{width:14px;height:14px;border-radius:50%;background:#747887;display:grid;place-items:center;flex:none}
+    .wc-chip .ico svg{width:8px;height:8px;fill:#F7F8FB;stroke:none}
     .wc-title{font-weight:850;font-size:1.1rem;letter-spacing:-.02em;margin-top:1.15rem}
     .wc-dist{margin-top:.55rem}
     .wc-dist b{font-family:var(--fd);font-weight:900;font-style:italic;font-variation-settings:'slnt' -10;font-size:2.2rem;line-height:.9;letter-spacing:-.02em;color:#fff;font-variant-numeric:tabular-nums}
     .wc-dist span{display:block;font-size:.68rem;color:rgba(247,248,251,.46);margin-top:.32rem;letter-spacing:.01em}
-    .wc-stats{display:grid;grid-template-columns:repeat(3,1fr);row-gap:1.1rem;margin-top:1.2rem}
+    .wc-stats{display:grid;grid-template-columns:repeat(3,1fr);column-gap:.5rem;row-gap:1.1rem;margin-top:1.2rem}
     .wc-stat b{display:block;font-size:1.05rem;font-weight:850;letter-spacing:-.01em;font-variant-numeric:tabular-nums;line-height:1;color:#fff}
-    .wc-stat span{display:block;font-size:.64rem;color:rgba(247,248,251,.45);margin-top:.36rem;letter-spacing:.005em}
+    .wc-stat span{display:block;font-size:.64rem;color:rgba(247,248,251,.45);margin-top:.36rem;letter-spacing:.005em;line-height:1.35}
     @media(max-width:360px){.wc-stat b{font-size:.94rem}.wc-dist b{font-size:2rem}}
 
     /* Help button */
@@ -279,7 +281,7 @@
       }
       body.map-clean .brand{top:50svh;bottom:auto;justify-content:flex-start;padding:0 1rem;transform:translateY(-50%)}
       .brand-name svg{height:clamp(.98rem,4.5vw,1.35rem)}
-      .brand-tag{margin-top:.4rem}
+      .brand-tag{margin-top:.6rem}
       .brand-tag svg{height:clamp(.6rem,3vw,.72rem)}
       .pop{gap:.35rem;padding:3px 8px 3px 3px;max-width:calc(100vw - 18px);box-shadow:0 10px 24px -12px rgba(14,18,14,.55)}
       .pop-ava{width:24px;height:24px}
@@ -425,8 +427,16 @@ const AVATAR_PHOTOS = [
   '1499952127939-9bbf5af6c51c','1546961329-78bef0414d7c','1502685104226-ee32379fefbe',
   '1524504388940-b1c1722653e1'
 ];
+const FALLBACK_AVATAR_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" rx="24" fill="#2F2F3A"/><circle cx="24" cy="19" r="7.5" fill="#B9BDC6"/><path d="M10 42c1.8-9.4 7.3-14 14-14s12.2 4.6 14 14" fill="#B9BDC6"/></svg>`;
+const FALLBACK_AVATAR = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(FALLBACK_AVATAR_SVG)}`;
 const AVATAR_URL = id => `https://images.unsplash.com/photo-${id}?w=72&h=72&fit=crop&crop=faces&q=70`;
 const pickAvatar = () => AVATAR_URL(pick(AVATAR_PHOTOS));
+const avatarSrc = src => (src && String(src).trim()) ? src : FALLBACK_AVATAR;
+const avatarClass = src => avatarSrc(src) === FALLBACK_AVATAR ? ' is-fallback' : '';
+const avatarImg = (src, cls, alt = '') => {
+  const safeSrc = avatarSrc(src);
+  return `<img class="${cls}${avatarClass(src)}" src="${safeSrc}" alt="${alt}" onerror="this.onerror=null;this.src='${FALLBACK_AVATAR}';this.classList.add('is-fallback')">`;
+};
 
 const pick = a => a[Math.floor(Math.random()*a.length)];
 const weightedPick = items => {
@@ -729,7 +739,7 @@ function spawnPop(){
   pop.style.left = px+'px'; pop.style.top = py+'px';
   pop.title = 'Открыть тренировку';
   pop.innerHTML = `
-    <div class="pop-ava" style="background-image:url('${ava}')"></div>
+    <div class="pop-ava" style="background-image:url('${avatarSrc(ava)}')"></div>
     <div class="pop-line"><span class="city">${city.name}</span><span class="sep">·</span><span class="km">${km}&nbsp;км</span><span class="gain gain-xp">+${xp}&nbsp;XP</span><span class="gain gain-rub">+${rub}&nbsp;₽</span></div>`;
   popsLayer.appendChild(pop);
   // clamp inside viewport (popup translates by -50% so we need half its width)
@@ -761,7 +771,7 @@ function spawnPop(){
   }
   requestAnimationFrame(()=>pop.classList.add('in'));
 
-  const detail = { name, city:city.name, km, xp, rub, ava, seed:Math.floor(Math.random()*1e9)+1 };
+  const detail = { name, city:city.name, km, xp, rub, ava: avatarSrc(ava), seed:Math.floor(Math.random()*1e9)+1 };
   let t1 = setTimeout(()=>{ pop.classList.remove('in'); pop.classList.add('out'); }, 3800);
   let t2 = setTimeout(()=>{ pop.remove(); ping.remove(); }, 4600);
   // клик — открыть большую карточку тренировки
@@ -820,8 +830,6 @@ function catmullOpen(P){
 }
 
 /* ——— Мини-карточка тренировки: трек + инфо (Figma) ——— */
-const PLACEHOLDER_AVATAR_SVG = `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="9.2" r="4" fill="currentColor"/><path d="M4 20.2c0-4.42 3.58-7 8-7s8 2.58 8 7" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg>`;
-
 const TCARD_MAP_IMG = 'img/tcard-map-placeholder.png';
 
 const TCARD_TRACK_W = 74, TCARD_TRACK_H = 92, TCARD_TRACK_LEFT = 29, TCARD_TRACK_TOP = 20;
@@ -851,9 +859,7 @@ function trainingCardHTML(city){
   const { svg, end } = trainingCardTrack(seed);
   const pinLeft = TCARD_TRACK_LEFT + end[0];
   const pinTop = TCARD_TRACK_TOP + end[1];
-  const avaHTML = ava
-    ? `<img src="${ava}" alt="">`
-    : `<div class="ph" aria-hidden="true">${PLACEHOLDER_AVATAR_SVG}</div>`;
+  const avaHTML = avatarImg(ava, 'tcard-avatar');
   const html = `
     <div class="tcard-glow"><img src="${TCARD_MAP_IMG}" alt="" aria-hidden="true"></div>
     <div class="tcard-track">${svg}</div>
@@ -866,14 +872,14 @@ function trainingCardHTML(city){
       </div>
     </div>
     <span class="sr-only">${name}, ${city.name}, ${km} км, +${xp} XP</span>`;
-  const detail = { name, city: city.name, km, xp, rub, ava: ava || '', seed };
+  const detail = { name, city: city.name, km, xp, rub, ava: avatarSrc(ava), seed };
   return { html, detail };
 }
 
 /* ── Жизненный цикл мини-карточки: появление (раскадровка) → пауза → исчезновение → следующая ── */
 const tcardsLayer = document.getElementById('tcards');
 const TCARD_W = 158, TCARD_H = 132;
-const TCARD_ENTER_MS = 2700, TCARD_HOLD_MS = 2400, TCARD_EXIT_MS = 450;
+const TCARD_ENTER_MS = 2700, TCARD_HOLD_MS = 4400, TCARD_EXIT_MS = 450;
 
 function spawnTrainingCard(){
   const city = pick(CITIES);
@@ -957,6 +963,7 @@ const fmtDate = d => `${d.getDate()} ${MONTHS_SHORT[d.getMonth()]} ${d.getFullYe
 const DEVICES = ['Strava','Garmin','Apple Watch','Suunto','Polar','Coros'];
 const ICO_DEVICE = `<svg viewBox="0 0 24 24"><path d="M3 19 9 8l4 6 2-3 6 8Z"/></svg>`;
 const ICO_SHARE = `<svg viewBox="0 0 24 24"><circle cx="18" cy="6" r="2.6"/><circle cx="6" cy="12" r="2.6"/><circle cx="18" cy="18" r="2.6"/><path d="M8.2 10.8 15.8 7.2M8.2 13.2l7.6 3.6"/></svg>`;
+const ICO_CLOSE = `<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>`;
 
 /* Погода: значок по типу условия, а не просто градус */
 const ICO_SUN = `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><rect x="11" y="1" width="2" height="4" rx="1"/><rect x="11" y="19" width="2" height="4" rx="1"/><rect x="1" y="11" width="4" height="2" rx="1"/><rect x="19" y="11" width="4" height="2" rx="1"/><rect x="4.2" y="3.5" width="2" height="4" rx="1" transform="rotate(45 5.2 5.5)"/><rect x="17.8" y="16.5" width="2" height="4" rx="1" transform="rotate(45 18.8 18.5)"/><rect x="3.5" y="17.8" width="2" height="4" rx="1" transform="rotate(-45 4.5 19.8)"/><rect x="18.5" y="2.2" width="2" height="4" rx="1" transform="rotate(-45 19.5 4.2)"/></svg>`;
@@ -1000,12 +1007,13 @@ function openWorkoutCard(base){
   wcard.innerHTML = `
     <div class="wc-map">
       ${workoutMapSVG(base.seed)}
-      <button class="wc-share" aria-label="Поделиться">${ICO_SHARE}</button>
+      <button class="wc-action wc-close" type="button" aria-label="Закрыть">${ICO_CLOSE}</button>
+      <button class="wc-action wc-share" type="button" aria-label="Поделиться">${ICO_SHARE}</button>
       <div class="wc-dots"><span class="d active"></span><span class="d"></span><span class="d"></span></div>
     </div>
     <div class="wc-body">
       <div class="wc-head">
-        <div class="wc-ava" style="background-image:url('${base.ava}')"></div>
+        ${avatarImg(base.ava, 'wc-ava')}
         <div class="wc-id">
           <div class="wc-name">${base.name}</div>
           <div class="wc-sub">${fmtDate(now)}, ${hhmm} · ${base.city}</div>
@@ -1021,17 +1029,20 @@ function openWorkoutCard(base){
       <div class="wc-title">${base.city} Бег</div>
       <div class="wc-dist"><b>${String(base.km).replace('.',',')}</b><span>Расстояние, км</span></div>
       <div class="wc-stats">
-        <div class="wc-stat"><b>${fmtPace(paceSec)}</b><span>Ср. темп, мин/км</span></div>
-        <div class="wc-stat"><b>${fmtDur(durSec)}</b><span>Время, ч</span></div>
-        <div class="wc-stat"><b>${hr}</b><span>Ср. пульс, уд./мин</span></div>
-        <div class="wc-stat"><b>${elev}</b><span>Высота, м</span></div>
-        <div class="wc-stat"><b>${cal}</b><span>Калории, ккал</span></div>
-        <div class="wc-stat"><b>${cad}</b><span>Ср. шаг, шаг./мин</span></div>
+        <div class="wc-stat"><b>${fmtPace(paceSec)}</b><span>Ср. темп,<br>мин/км</span></div>
+        <div class="wc-stat"><b>${fmtDur(durSec)}</b><span>Время,<br>часы</span></div>
+        <div class="wc-stat"><b>${hr}</b><span>Ср. пульс,<br>уд./мин</span></div>
+        <div class="wc-stat"><b>${elev}</b><span>Высота,<br>метры</span></div>
+        <div class="wc-stat"><b>${cal}</b><span>Калории,<br>ккал</span></div>
+        <div class="wc-stat"><b>${cad}</b><span>Ср. шаг,<br>шаг/мин</span></div>
       </div>
     </div>`;
+  wcard.querySelector('.wc-close').addEventListener('click', closeWorkoutCard);
   wcard.querySelector('.wc-share').addEventListener('click', ()=>{
     if (navigator.share) navigator.share({ title:'Moneyrun', text:`${base.name} пробежал ${base.km} км в ${base.city}`, url: location.href }).catch(()=>{});
   });
+  const chipsEl = wcard.querySelector('.wc-chips');
+  chipsEl.classList.toggle('has-overflow', chipsEl.scrollWidth > chipsEl.clientWidth + 1);
   wback.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -1039,9 +1050,6 @@ function closeWorkoutCard(){
   wback.classList.remove('open');
   document.body.style.overflow = '';
 }
-wback.addEventListener('click', e=>{ if (e.target === wback) closeWorkoutCard(); });
-document.addEventListener('keydown', e=>{ if (e.key==='Escape' && wback.classList.contains('open')) closeWorkoutCard(); });
-
 const POP_DELAYS = [
   {weight:24, ms:[1600,3200]},
   {weight:46, ms:[4200,7600]},
