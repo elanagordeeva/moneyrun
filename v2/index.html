@@ -195,10 +195,10 @@
     .wc-id{min-width:0;flex:1;padding-top:1px}
     .wc-name{font-weight:800;font-size:.94rem;letter-spacing:-.01em;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .wc-sub{font-size:.71rem;color:rgba(247,248,251,.5);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-    .wc-chips{display:flex;flex-wrap:nowrap;gap:.16rem;margin-top:.9rem;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;margin-inline:-1.05rem;padding-inline:1.05rem}
+    .wc-chips{display:flex;flex-wrap:nowrap;gap:.34rem;margin-top:.9rem;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;-webkit-overflow-scrolling:touch;margin-inline:-1.05rem;padding-inline:1.05rem}
     .wc-chips::-webkit-scrollbar{display:none}
     .wc-chips.has-overflow{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 26px),transparent 100%);mask-image:linear-gradient(90deg,#000 calc(100% - 26px),transparent 100%)}
-    .wc-chip{display:inline-flex;align-items:center;gap:.2rem;height:1.95rem;padding:0 .32rem;border-radius:999px;font-size:.63rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1;white-space:nowrap;flex:none}
+    .wc-chip{display:inline-flex;align-items:center;gap:.24rem;height:2.06rem;padding:0 .95rem;border-radius:999px;font-size:.63rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1;white-space:nowrap;flex:none}
     .wc-chip.xp{background:linear-gradient(128deg,#A7FFC8,#52D1FA);color:#0c221f;font-style:italic;font-variation-settings:'slnt' -10}
     .wc-chip.rub{background:linear-gradient(90deg,#D5FFA8,#BDFF76);color:#1f2a05;font-style:italic;font-variation-settings:'slnt' -10}
     .wc-chip.ghost{background:#2F2F3A;color:rgba(247,248,251,.88);font-weight:700}
@@ -599,6 +599,15 @@ function seededRandom(seed){
 function daySeed(date){
   return date.getFullYear()*10000 + (date.getMonth()+1)*100 + date.getDate();
 }
+// перемешиваем сид (murmur-хеш): соседние даты дают близкие daySeed, а простой LCG
+// на близких сидах выдаёт почти одинаковые первые значения — хеш разносит их по диапазону
+function hashSeed(x){
+  x = x|0;
+  x = Math.imul(x ^ (x >>> 16), 0x45d9f3b);
+  x = Math.imul(x ^ (x >>> 16), 0x45d9f3b);
+  x = (x ^ (x >>> 16)) >>> 0;
+  return (x % 2147483646) + 1;
+}
 const HOURLY_WORKOUT_WEIGHTS = [3,2,1.5,1.5,2.5,5,12,23,30,34,36,38,39,40,42,44,47,49,45,34,23,13,7,4];
 function dailyActivityProgress(date){
   const hour = date.getHours();
@@ -611,17 +620,17 @@ function dailyActivityProgress(date){
    { "activities": 200, "xp": 3000, "exchange": 10000 } */
 function makeTodaySnapshot(){
   const now = moscowNow();
-  const seeded = seededRandom(daySeed(now));
-  const targetWorkouts = 4380 + Math.round(seeded()*260); // около 4500, но не ровно одно и то же число
-  const avgXp = 12 + seeded()*8;
-  const avgExchange = 53 + seeded()*19;
+  const seeded = seededRandom(hashSeed(daySeed(now)));
+  const targetWorkouts = Math.round(6000 + seeded()*4000);   // 6000–10000 тренировок за сутки
+  const avgXp = 14 + seeded()*3;                             // каждая тренировка даёт 1–30 XP, в среднем ~15.5
+  const targetExchange = 80000 + seeded()*20000;            // 80 000–100 000 ₽ обменяно за сутки
   const progress = dailyActivityProgress(now);
   const workoutNoise = .985 + seeded()*0.03;
   const activities = Math.max(0, Math.floor(targetWorkouts * progress * workoutNoise));
   return {
     activities,
-    xp: Math.round(activities * avgXp * (0.98 + seeded()*0.04)),
-    exchange: Math.round(activities * avgExchange * (0.98 + seeded()*0.04))
+    xp: Math.round(activities * avgXp * (0.98 + seeded()*0.04)),        // суммарный XP = кол-во тренировок × средний XP
+    exchange: Math.round(targetExchange * progress * (0.98 + seeded()*0.04)) // ₽ — суточный итог, растёт по ходу дня
   };
 }
 /* ВРЕМЕННО мок — когда бэк будет готов, заменить тело на реальный запрос
