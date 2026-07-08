@@ -167,7 +167,7 @@
     /* Большая карточка тренировки (только тёмная тема) */
     .wcard-back{position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;padding:clamp(6px,3vw,30px);background:rgba(6,8,6,.62);backdrop-filter:blur(9px) saturate(1.05);-webkit-backdrop-filter:blur(9px) saturate(1.05);opacity:0;pointer-events:none;transition:opacity .26s ease}
     .wcard-back.open{opacity:1;pointer-events:auto}
-    .wcard{width:min(460px,100%);max-height:min(92dvh,820px);overflow:auto;background:#20212A;color:#f7f8fb;border:1px solid rgba(255,255,255,.06);border-radius:22px;box-shadow:0 40px 90px -28px rgba(0,0,0,.85),0 0 0 1px rgba(0,0,0,.4);transform:translateY(18px) scale(.965);opacity:0;transition:transform .34s cubic-bezier(.2,.85,.25,1.02),opacity .24s;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent}
+    .wcard{width:min(420px,100%);max-height:min(92dvh,820px);overflow:auto;background:#20212A;color:#f7f8fb;border:1px solid rgba(255,255,255,.06);border-radius:22px;box-shadow:0 40px 90px -28px rgba(0,0,0,.85),0 0 0 1px rgba(0,0,0,.4);transform:translateY(18px) scale(.965);opacity:0;transition:transform .34s cubic-bezier(.2,.85,.25,1.02),opacity .24s;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent}
     .wcard-back.open .wcard{transform:none;opacity:1}
     .wcard::-webkit-scrollbar{width:8px}.wcard::-webkit-scrollbar-thumb{background:rgba(255,255,255,.16);border-radius:8px}
     @media(prefers-reduced-motion:reduce){.wcard,.wcard-back{transition:opacity .2s}.wcard{transform:none}}
