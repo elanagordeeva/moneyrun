@@ -286,7 +286,7 @@
     table.g-tbl thead th:first-child,table.g-tbl tr:first-child th:first-child{z-index:3;background:#edf3ec}
     table.g-tbl tbody tr:nth-child(even) td:first-child{background:#fafcf9}
     .g-matrix th{background:var(--bg2);font-family:var(--fd);font-weight:700}
-    .g-matrix .g-rowh{text-align:left;font-family:var(--fb);font-weight:600;color:var(--ink);background:var(--surface);position:sticky;left:0;min-width:200px}
+    .g-matrix .g-rowh{text-align:left;font-family:var(--fb);font-weight:600;color:var(--ink);background:var(--surface);position:sticky;left:0;min-width:200px;white-space:normal;max-width:200px}
     .g-matrix td{text-align:center;color:var(--ink2)}
     .g-matrix tr.g-sub td{background:#e7ebf1;color:#3a4150;font-family:var(--fd);font-weight:800;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;text-align:left;border-top:1px solid #d8dee8;border-bottom:1px solid #d8dee8}
     /* подзаголовки секций закреплены слева — видны при горизонтальном скролле */
@@ -305,7 +305,7 @@
     /* компактная Матрица: плотнее по обеим осям */
     table.g-matrix{font-size:.74rem}
     table.g-matrix th,table.g-matrix td{padding:.32rem .45rem}
-    .g-matrix .g-rowh{min-width:0;font-size:.76rem;padding-right:.7rem}
+    .g-matrix .g-rowh{min-width:0;max-width:112px;font-size:.76rem;padding-right:.7rem}
     .g-matrix .g-grp th{padding:.28rem .35rem;font-size:.64rem}
     .g-matrix tr.g-sub td{padding:.28rem .6rem;font-size:.62rem}
 
@@ -343,10 +343,7 @@
     .g-rl-tools{display:flex;gap:.55rem;align-items:center;flex-wrap:wrap;margin:.5rem 0 .7rem}
     .g-rl-search{flex:1 1 250px;min-width:0;font-family:var(--fb);font-size:.9rem;padding:.5rem .85rem;border:1px solid var(--border2);border-radius:8px;background:var(--surface);color:var(--ink);outline:none;transition:border-color .15s,box-shadow .15s}
     .g-rl-search:focus{border-color:var(--ink);box-shadow:none}
-    .g-rl-density{font-family:var(--fd);font-weight:700;font-size:.82rem;padding:.5rem .95rem;border:1px solid var(--border2);border-radius:8px;background:var(--surface);color:var(--ink2);cursor:pointer;white-space:nowrap;transition:border-color .15s,color .15s}
-    .g-rl-density:hover{border-color:var(--ink);color:var(--ink)}
     .g-rl-count{font-family:var(--fm);font-size:.74rem;color:var(--muted);white-space:nowrap}
-    .g-rl table.roomy th,.g-rl table.roomy td{padding-top:.6rem;padding-bottom:.6rem}
     .g-rl tr.is-hidden{display:none}
     .g-rl table th:first-child,.g-rl table td:first-child{width:14%}
     .g-rl table th:last-child,.g-rl table td:last-child{width:13%}
@@ -392,7 +389,6 @@
       <p class="g-hero-meta"><span class="chip"><span>Версия</span> 16.02.26</span></p>
     </header>
     <section class="g-read" aria-label="Как читать правила">
-      <span class="g-read-k">Коротко перед документом</span>
       <p class="g-read-title">Как читать правила</p>
       <div class="g-read-grid">
         <div class="g-read-item"><strong>XP</strong><span>Баллы начисляются за подходящие беговые тренировки и зависят от нагрузки, пульса и результативности.</span></div>
@@ -528,7 +524,6 @@
     <div class="g-tabs"><button class="g-tab on" data-t="m">Мужчины</button><button class="g-tab" data-t="w">Женщины</button></div>
     <div class="g-rl-tools">
       <input class="g-rl-search" type="search" placeholder="Фильтр: RL или результат — например 53 или 36:00" aria-label="Фильтр таблицы Running Level">
-      <button class="g-rl-density" type="button" aria-pressed="false">Просторнее</button>
       <span class="g-rl-count" aria-live="polite"></span>
     </div>
     <div class="g-rlpane" data-pane="m"><div class="g-tablewrap g-rl"><table class="g-tbl">
@@ -851,7 +846,6 @@
 (function(){
   var tools=document.querySelector('.g-rl-tools'); if(!tools) return;
   var input=tools.querySelector('.g-rl-search');
-  var dens=tools.querySelector('.g-rl-density');
   var count=tools.querySelector('.g-rl-count');
   var tables=[].slice.call(document.querySelectorAll('.g-rl table'));
   function bodyRows(t){return [].slice.call(t.querySelectorAll('tbody tr'));}
@@ -869,12 +863,6 @@
     count.textContent = q ? ('Найдено '+vis+' из '+rs.length) : (rs.length+' строк');
   }
   input.addEventListener('input', apply);
-  dens.addEventListener('click', function(){
-    var on=dens.getAttribute('aria-pressed')==='true';
-    dens.setAttribute('aria-pressed', String(!on));
-    dens.textContent = on ? 'Просторнее' : 'Компактнее';
-    tables.forEach(function(t){t.classList.toggle('roomy', !on);});
-  });
   document.querySelectorAll('.g-tab').forEach(function(b){b.addEventListener('click', function(){setTimeout(apply,0);});});
   apply();
 })();
