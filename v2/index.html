@@ -612,7 +612,7 @@ function dailyActivityProgress(date){
 function makeTodaySnapshot(){
   const now = moscowNow();
   const seeded = seededRandom(daySeed(now));
-  const targetWorkouts = 482 + Math.round(seeded()*54); // около 500, но не ровно одно и то же число
+  const targetWorkouts = 4380 + Math.round(seeded()*260); // около 4500, но не ровно одно и то же число
   const avgXp = 12 + seeded()*8;
   const avgExchange = 53 + seeded()*19;
   const progress = dailyActivityProgress(now);
