@@ -825,7 +825,7 @@ function trainingCardClampPoint(x, y, bounds, halfW, halfH, margin){
   ];
 }
 function trainingCardBrandAdjustedY(x, y, bounds, halfW, halfH, margin){
-  if (!isClean || isMobileCompact()) return y;
+  if (!isClean) return y;
   const bi = document.querySelector('.brand-inner');
   if (!bi) return y;
   const br = bi.getBoundingClientRect();
@@ -834,7 +834,14 @@ function trainingCardBrandAdjustedY(x, y, bounds, halfW, halfH, margin){
   const overlapY = (y + halfH) > br.top - gap && (y - halfH) < br.bottom + gap;
   if (!overlapX || !overlapY) return y;
   const above = br.top - gap - halfH;
+  const below = br.bottom + gap + halfH;
   const minY = bounds ? bounds.minY : margin + halfH;
+  const maxY = bounds ? bounds.maxY : innerHeight - margin - halfH;
+  if (isMobileCompact()){
+    if (above >= minY) return above;
+    if (below <= maxY) return below;
+    return Math.abs(y - minY) < Math.abs(y - maxY) ? maxY : minY;
+  }
   return above >= minY ? above : null;
 }
 // раздвигаем ЛЮБЫЕ перекрывающиеся карточки — не только с той же локацией, но и разные
@@ -845,12 +852,12 @@ function trainingCardOverlapsAny(x, y){
     if (card.classList.contains('out')) return false;
     const cx = parseFloat(card.dataset.x || card.style.left);
     const cy = parseFloat(card.dataset.y || card.style.top);
-    return Math.abs(cx - x) < TCARD_W + gap && Math.abs(cy - y) < TCARD_H + gap;
+    return Math.abs(cx - x) < TCARD_VISUAL_W + gap && Math.abs(cy - y) < TCARD_VISUAL_H + gap;
   });
 }
 function resolveTrainingCardPosition(x, y, bounds, halfW, halfH, margin){
-  const stepX = TCARD_W + 14;
-  const stepY = TCARD_H + 14;
+  const stepX = TCARD_VISUAL_W + 14;
+  const stepY = TCARD_VISUAL_H + 14;
   const offsets = [
     [0,0],
     [stepX,0],[-stepX,0],
@@ -1152,6 +1159,7 @@ function trainingCardHTML(city, record){
 /* ── Жизненный цикл мини-карточки: появление (раскадровка) → пауза → исчезновение → следующая ── */
 const tcardsLayer = document.getElementById('tcards');
 const TCARD_W = 196, TCARD_H = 132;
+const TCARD_VISUAL_W = 200, TCARD_VISUAL_H = 156;
 const TCARD_ENTER_MS = 2700, TCARD_HOLD_MS = 4400, TCARD_EXIT_MS = 450;
 
 function spawnTrainingCard(){
@@ -1177,7 +1185,7 @@ function spawnTrainingCard(){
   }
   const posKey = record.location; // сохраняем локацию в dataset (для отладки/будущего)
   const margin = 12;
-  const halfW = TCARD_W/2, halfH = TCARD_H/2;
+  const halfW = TCARD_VISUAL_W/2, halfH = TCARD_VISUAL_H/2;
   const mapBounds = !isMobileCompact() ? trainingCardMapBounds(halfW, halfH) : null;
   const resolvedPosition = resolveTrainingCardPosition(px, py, mapBounds, halfW, halfH, margin);
   if (!resolvedPosition) return;
@@ -1259,7 +1267,7 @@ function spawnRunCluster(){
   const count = CLUSTER_MIN + 40 + Math.floor(Math.random()*560); // ~40–600 атлетов
   let [px, py] = svgToPx(city.x, city.y);
   if (isMobileCompact()){ [px, py] = mobilePopPoint(); }
-  const margin = 12, halfW = TCARD_W/2, halfH = TCARD_H/2;
+  const margin = 12, halfW = TCARD_VISUAL_W/2, halfH = TCARD_VISUAL_H/2;
   const mapBounds = !isMobileCompact() ? trainingCardMapBounds(halfW, halfH) : null;
   const pos = resolveTrainingCardPosition(px, py, mapBounds, halfW, halfH, margin);
   if (!pos) return;
