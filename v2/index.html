@@ -120,6 +120,7 @@
     /* Training mini-card — richer activity card with route track (Figma, 1:1 px) */
     .tcards{position:fixed;inset:0;z-index:3;pointer-events:none}
     .tcard{position:absolute;width:158px;height:132px;background:#11121c;transform:translate(-50%,-50%);pointer-events:auto;cursor:pointer}
+    .tcard.is-static{cursor:default}
     .tcard-glow{position:absolute;left:0;top:0;width:132px;height:132px;border-radius:50%;overflow:hidden;background-color:#0c0d13}
     .tcard-glow img{position:absolute;left:0;top:50%;width:100%;height:auto;transform:translateY(-50%);display:block;filter:grayscale(.15) brightness(.85)}
     .tcard-glow::after{content:'';position:absolute;inset:0;background:radial-gradient(circle 66px at 50% 50%,transparent 0,#11121c 66px)}
@@ -1150,19 +1151,19 @@ function spawnTrainingCard(){
   [px, py] = resolvedPosition;
 
   const el = document.createElement('div');
-  el.className = 'tcard';
+  el.className = ENABLE_WORKOUT_DETAIL_CARD ? 'tcard' : 'tcard is-static';
   el.style.left = px + 'px';
   el.style.top = py + 'px';
   el.dataset.city = posKey;
   el.dataset.x = px;
   el.dataset.y = py;
   el.innerHTML = html;
-  el.title = 'Открыть тренировку';
+  el.title = ENABLE_WORKOUT_DETAIL_CARD ? 'Открыть тренировку' : '';
   tcardsLayer.appendChild(el);
 
   let t1 = setTimeout(()=> el.classList.add('out'), TCARD_ENTER_MS + TCARD_HOLD_MS);
   let t2 = setTimeout(()=> el.remove(), TCARD_ENTER_MS + TCARD_HOLD_MS + TCARD_EXIT_MS);
-  el.addEventListener('click', ()=> openWorkoutCard(detail));
+  if (ENABLE_WORKOUT_DETAIL_CARD) el.addEventListener('click', ()=> openWorkoutCard(detail));
   el.addEventListener('mouseenter', ()=>{ clearTimeout(t1); clearTimeout(t2); el.classList.remove('out'); });
   el.addEventListener('mouseleave', ()=>{
     t1 = setTimeout(()=> el.classList.add('out'), 900);
@@ -1178,6 +1179,7 @@ function spawnTrainingCardBurst(){
 }
 
 const ENABLE_TRAINING_CARDS = true;
+const ENABLE_WORKOUT_DETAIL_CARD = false;
 
 /* тёмная стилизованная карта района с треком */
 function workoutMapSVG(seed, record){
@@ -1245,6 +1247,7 @@ function fitWorkoutChips(chipsEl){
 }
 
 function openWorkoutCard(base){
+  if (!ENABLE_WORKOUT_DETAIL_CARD) return;
   const r = seededRandom(base.seed);
   const km = parseFloat(base.km);
   const paceSec = Math.round((4.6 + r()*1.9)*60);
