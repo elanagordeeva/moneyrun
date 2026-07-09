@@ -128,15 +128,15 @@
     .tcard-track svg{position:absolute;inset:0;display:block;overflow:visible}
     .tcard-pin{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 10px #1F2D20;transform:translate(-50%,-50%)}
     .tcard-pin::after{content:'';position:absolute;inset:0;margin:auto;width:4px;height:4px;border-radius:50%;background:#fff}
-    .tcard-pill{position:absolute;left:17px;top:49px;max-width:177px;height:33px;border-radius:24px;background:#111410;display:flex;align-items:center;gap:6px;padding:3px 9px 3px 6px}
-    .tcard-ava{position:relative;width:27px;height:27px;flex:none}
+    .tcard-pill{position:absolute;left:17px;top:47px;max-width:181px;height:38px;border-radius:24px;background:#111410;display:flex;align-items:center;gap:7px;padding:3px 11px 3px 6px}
+    .tcard-ava{position:relative;width:28px;height:28px;flex:none}
     .tcard-ava img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;background:#2F2F3A;box-shadow:0 0 0 1px rgba(255,255,255,.28),0 0 0 3px rgba(255,255,255,.08)}
     .tcard-ava img.is-fallback{object-fit:cover}
-    .tcard-body{min-width:0;flex:1;display:flex;flex-direction:column;gap:1px}
-    .tcard-city{font-family:var(--fd);font-weight:500;font-size:9px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.4}
-    .tcard-stats{display:flex;align-items:center;gap:3px}
-    .tcard-km{font-family:var(--fd);font-size:6px;color:#9b9fad;font-variant-numeric:tabular-nums;line-height:1.4;white-space:nowrap}
-    .tcard-xp{display:inline-flex;align-items:center;justify-content:center;height:9px;padding:0 3px;border-radius:21px;background:linear-gradient(156deg,#A7FFC8 2%,#52D1FA 100%);color:#20212A;font-weight:800;font-size:6px;font-style:italic;font-variation-settings:'slnt' -10;font-variant-numeric:tabular-nums;line-height:1.4;white-space:nowrap}
+    .tcard-body{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px}
+    .tcard-city{font-family:var(--fd);font-weight:500;font-size:10px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.35}
+    .tcard-stats{display:flex;align-items:center;gap:4px}
+    .tcard-km{font-family:var(--fd);font-weight:500;font-size:9px;color:#9b9fad;font-variant-numeric:tabular-nums;line-height:1.3;white-space:nowrap}
+    .tcard-xp{display:inline-flex;align-items:center;justify-content:center;height:13px;padding:0 5px;border-radius:21px;background:linear-gradient(156deg,#A7FFC8 2%,#52D1FA 100%);color:#20212A;font-weight:800;font-size:9px;font-style:italic;font-variation-settings:'slnt' -10;font-variant-numeric:tabular-nums;line-height:1;white-space:nowrap}
 
     /* Вход/выход карточки — раскадровка: подсветка → трек рисуется → пин пружинит → плашка пружинит.
        Анимации входа висят на самих селекторах (без JS-класса-триггера) — стартуют в момент
@@ -1098,7 +1098,10 @@ function mockGeoWalk(seed, base){
 }
 
 /* ——— Мини-карточка тренировки: трек + инфо (Figma) ——— */
-const TCARD_MAP_IMG = 'img/tcard-map-placeholder.png';
+/* 6 подложек-карт под трек — захардкожены на фронте (с бэка не приходят), выбираются
+   в случайном порядке для каждой карточки/кластера, чтобы карта не повторялась */
+const TCARD_MAPS = ['img/tcard-map-1.png','img/tcard-map-2.png','img/tcard-map-3.png','img/tcard-map-4.png','img/tcard-map-5.png','img/tcard-map-6.png'];
+const randomMapImg = () => pick(TCARD_MAPS);
 
 const TCARD_TRACK_W = 74, TCARD_TRACK_H = 92, TCARD_TRACK_LEFT = 29, TCARD_TRACK_TOP = 20;
 function trainingCardTrack(seed, record){
@@ -1131,7 +1134,7 @@ function trainingCardHTML(city, record){
   const km = record.distance;
   const xp = record.xp;
   const html = `
-    <div class="tcard-glow"><img src="${TCARD_MAP_IMG}" alt="" aria-hidden="true"></div>
+    <div class="tcard-glow"><img src="${randomMapImg()}" alt="" aria-hidden="true"></div>
     <div class="tcard-track">${svg}</div>
     <span class="tcard-pin" style="left:${pinLeft.toFixed(1)}px;top:${pinTop.toFixed(1)}px"></span>
     <div class="tcard-pill">
@@ -1234,7 +1237,7 @@ function runClusterHTML(city, count){
   const loc = translateLocation(city.name);
   const avaHTML = [pickAvatar(), pickAvatar(), pickAvatar()].map(a => avatarImg(a, '')).join('');
   return `
-    <div class="tcluster-glow"><img src="${TCARD_MAP_IMG}" alt="" aria-hidden="true"></div>
+    <div class="tcluster-glow"><img src="${randomMapImg()}" alt="" aria-hidden="true"></div>
     <div class="tcluster-dots">${clusterDotsHTML(count*7 + city.x)}</div>
     <div class="tcluster-pill">
       <div class="tcluster-avas">${avaHTML}</div>
