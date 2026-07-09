@@ -18,4 +18,8 @@ server.watch(str(ROOT / "art"))
 server.watch(str(ROOT / "*.html"))
 server.watch(str(ROOT / "*.css"))
 server.watch(str(ROOT / "*.js"))
+# v2 — альтернативная версия сайта
+server.watch(str(ROOT / "v2" / "*.html"))
+server.watch(str(ROOT / "v2" / "*.css"))
+server.watch(str(ROOT / "v2" / "*.js"))
 server.serve(port=8000, host="localhost", root=str(ROOT), open_url_delay=None)
