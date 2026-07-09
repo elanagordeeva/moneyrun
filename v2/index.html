@@ -159,6 +159,27 @@
       .tcard-track path{stroke-dashoffset:0!important}
     }
 
+    /* Кластер-маркер: скопление тренировок в одной локации (большой забег) — одна карточка вместо стопки */
+    .tcluster{position:absolute;width:196px;height:132px;background:#11121c;transform:translate(-50%,-50%);pointer-events:auto;cursor:default;transition:opacity .45s ease,transform .45s ease}
+    .tcluster.out{opacity:0;transform:translate(-50%,-50%) scale(.94)}
+    .tcluster-glow{position:absolute;left:0;top:0;width:132px;height:132px;border-radius:50%;overflow:hidden;background-color:#0c0d13}
+    .tcluster-glow img{position:absolute;left:0;top:50%;width:100%;height:auto;transform:translateY(-50%);display:block;filter:grayscale(.15) brightness(.8)}
+    .tcluster-glow::after{content:'';position:absolute;inset:0;background:radial-gradient(circle 66px at 50% 50%,transparent 0,#11121c 66px)}
+    .tcluster-dots{position:absolute;left:0;top:0;width:132px;height:132px;pointer-events:none}
+    .tcluster-dot{position:absolute;border-radius:50%;background:var(--lime);box-shadow:0 0 6px rgba(189,255,118,.55);transform:translate(-50%,-50%)}
+    .tcluster-pill{position:absolute;left:17px;top:47px;max-width:177px;height:37px;border-radius:24px;background:#111410;display:flex;align-items:center;gap:8px;padding:3px 12px 3px 6px}
+    .tcluster-avas{display:flex;flex:none}
+    .tcluster-avas img{width:26px;height:26px;border-radius:50%;object-fit:cover;display:block;background:#2F2F3A;box-shadow:0 0 0 2px #111410}
+    .tcluster-avas img+img{margin-left:-11px}
+    .tcluster-body{min-width:0;display:flex;flex-direction:column;gap:1px}
+    .tcluster-count{font-family:var(--fd);font-weight:700;font-size:11px;color:#fff;white-space:nowrap;line-height:1.25}
+    .tcluster-count b{font-weight:850;color:var(--lime);font-variant-numeric:tabular-nums}
+    .tcluster-loc{font-family:var(--fd);font-weight:500;font-size:9px;color:#9b9fad;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.35}
+    .tcluster-glow{animation:tcardGlowIn .55s cubic-bezier(.42,0,.58,1) both}
+    .tcluster-dot{animation:tcardTrackIn .5s ease-out both}
+    .tcluster-pill{animation:tcardPillIn .5s cubic-bezier(.34,1.56,.64,1) 1.15s both}
+    @media(prefers-reduced-motion:reduce){.tcluster-glow,.tcluster-dot,.tcluster-pill{animation:none!important;opacity:1}}
+
     /* GPS ping at the same coords */
     .ping{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--lime);transform:translate(-50%,-50%);box-shadow:0 0 0 3px var(--paper);opacity:0;animation:pingFade 4.6s ease forwards;pointer-events:none}
     .ping::after{content:'';position:absolute;inset:0;border-radius:50%;border:2px solid var(--lime);animation:pingExpand 1.4s ease-out infinite}
@@ -576,8 +597,9 @@ const REAL_SAMPLE_RECORD = {
   image: 'https://a2036f06-9250-4b9a-b800-f10b0bd4b361.selcdn.net/F0AD479A-59BE-44C2-9FE6-9DDDDA5C426D'
 };
 /* мок-запись в ТОЧНО ТОЙ ЖЕ форме, что отдаст бэк: {distance, location, xp, polyline, image}.
-   Изредка подмешиваем реальный образец от бэкендера — так на сайте видно, что весь путь
-   (декодирование polyline, перевод location, показ фото) реально работает, а не только в теории. */
+   image — аватарка атлета (может не прийти с бэка → показываем заглушку).
+   Изредка подмешиваем реальный образец от бэкендера — проверяем, что весь путь
+   (декод polyline, перевод location, аватар) реально работает, а не только в теории. */
 function mockTrainingRecord(city){
   if (Math.random() < 0.12) return REAL_SAMPLE_RECORD;
   const { km, xp } = mockWorkoutGains();
@@ -587,7 +609,7 @@ function mockTrainingRecord(city){
     location: city.name, // мок уже на русском — translateLocation() пропустит как есть
     xp,
     polyline: encodePolyline(mockGeoWalk(seed, svgToGeo(city.x, city.y))), // настоящая encoded-строка + база = реальные координаты города
-    image: null
+    image: Math.random() < 0.85 ? pickAvatar() : null // аватар атлета; иногда бэк не присылает — заглушка
   };
 }
 /* ВРЕМЕННО мок — когда бэк будет готов, заменить тело на реальный запрос за тренировками.
@@ -815,16 +837,18 @@ function trainingCardBrandAdjustedY(x, y, bounds, halfW, halfH, margin){
   const minY = bounds ? bounds.minY : margin + halfH;
   return above >= minY ? above : null;
 }
-function trainingCardOverlapsCity(cityName, x, y){
+// раздвигаем ЛЮБЫЕ перекрывающиеся карточки — не только с той же локацией, но и разные
+// близкие (позиция берётся из гео-координат трека, поэтому соседние места могут наложиться)
+function trainingCardOverlapsAny(x, y){
   const gap = 14;
-  return [...tcardsLayer.querySelectorAll('.tcard')].some(card => {
-    if (card.dataset.city !== cityName || card.classList.contains('out')) return false;
+  return [...tcardsLayer.querySelectorAll('.tcard, .tcluster')].some(card => {
+    if (card.classList.contains('out')) return false;
     const cx = parseFloat(card.dataset.x || card.style.left);
     const cy = parseFloat(card.dataset.y || card.style.top);
     return Math.abs(cx - x) < TCARD_W + gap && Math.abs(cy - y) < TCARD_H + gap;
   });
 }
-function resolveTrainingCardPosition(cityName, x, y, bounds, halfW, halfH, margin){
+function resolveTrainingCardPosition(x, y, bounds, halfW, halfH, margin){
   const stepX = TCARD_W + 14;
   const stepY = TCARD_H + 14;
   const offsets = [
@@ -841,7 +865,7 @@ function resolveTrainingCardPosition(cityName, x, y, bounds, halfW, halfH, margi
     let [cx, cy] = trainingCardClampPoint(x + dx, y + dy, bounds, halfW, halfH, margin);
     cy = trainingCardBrandAdjustedY(cx, cy, bounds, halfW, halfH, margin);
     if (cy == null) continue;
-    if (!trainingCardOverlapsCity(cityName, cx, cy)) return [cx, cy];
+    if (!trainingCardOverlapsAny(cx, cy)) return [cx, cy];
   }
   return null;
 }
@@ -1096,19 +1120,16 @@ function trainingCardTrack(seed, record){
 
 function trainingCardHTML(city, record){
   const name = pick(NAMES); // мок-поле — придёт в расширенной модели для подробной карточки
-  const hasPhoto = Math.random() < 0.85; // мок: изредка бэк не присылает фото — показываем заглушку
-  const ava = hasPhoto ? pickAvatar() : null;
   const money = weightedPick(MONEY_TIERS);
   const rub = Math.round(rand(money.rub)); // мок: обмена ₽ пока нет в модели бэка
   const seed = Math.floor(Math.random()*1e9)+1;
   const { svg, end } = trainingCardTrack(seed, record);
   const pinLeft = TCARD_TRACK_LEFT + end[0];
   const pinTop = TCARD_TRACK_TOP + end[1];
-  const avaHTML = avatarImg(ava, 'tcard-avatar');
+  const avaHTML = avatarImg(record.image, 'tcard-avatar'); // image с бэка = аватар атлета, заглушка если пусто
   const locationRu = translateLocation(record.location);
   const km = record.distance;
   const xp = record.xp;
-  const images = Array.isArray(record.images) ? record.images.filter(Boolean) : (record.image ? [record.image] : []);
   const html = `
     <div class="tcard-glow"><img src="${TCARD_MAP_IMG}" alt="" aria-hidden="true"></div>
     <div class="tcard-track">${svg}</div>
@@ -1121,7 +1142,7 @@ function trainingCardHTML(city, record){
       </div>
     </div>
     <span class="sr-only">${name}, ${locationRu}, ${km} км, +${xp} XP</span>`;
-  const detail = { name, city: locationRu, km, xp, rub, ava: avatarSrc(ava), seed, polyline: record.polyline || null, images };
+  const detail = { name, city: locationRu, km, xp, rub, ava: avatarSrc(record.image), seed, polyline: record.polyline || null };
   return { html, detail };
 }
 
@@ -1151,11 +1172,11 @@ function spawnTrainingCard(){
       [px, py] = svgToPx(sx, sy);
     }
   }
-  const posKey = record.location; // ключ для антистэка — реальная локация тренировки
+  const posKey = record.location; // сохраняем локацию в dataset (для отладки/будущего)
   const margin = 12;
   const halfW = TCARD_W/2, halfH = TCARD_H/2;
   const mapBounds = !isMobileCompact() ? trainingCardMapBounds(halfW, halfH) : null;
-  const resolvedPosition = resolveTrainingCardPosition(posKey, px, py, mapBounds, halfW, halfH, margin);
+  const resolvedPosition = resolveTrainingCardPosition(px, py, mapBounds, halfW, halfH, margin);
   if (!resolvedPosition) return;
   [px, py] = resolvedPosition;
 
@@ -1181,10 +1202,75 @@ function spawnTrainingCard(){
 }
 
 function spawnTrainingCardBurst(){
+  // изредка вместо одиночных карточек — большой забег: много тренировок в одной локации
+  // показываем одним кластер-маркером, а не стопкой карточек (иначе накладываются)
+  if (Math.random() < .07){ spawnRunCluster(); return; }
   const count = Math.random() < .08 ? 2 : 1;
   for (let i=0;i<count;i++){
     setTimeout(spawnTrainingCard, i * rand([520,1200]));
   }
+}
+
+/* Порог: 1–2 тренировки в точке — обычные карточки, 3+ — сливаются в кластер.
+   В моке скопление эмулируем целым «забегом»; при реальном бэке здесь будет
+   агрегация записей по локации. Число атлетов = размер забега. */
+const CLUSTER_MIN = 3;
+const CLUSTER_WORD = 'тренировок';
+function clusterDotsHTML(seed){
+  const rnd = seededRandom(seed);
+  const cx = 66, cy = 66, R = 50; // в круге glow 132×132
+  const n = 8 + Math.floor(rnd()*6);
+  let out = '';
+  for (let i=0;i<n;i++){
+    const a = rnd()*Math.PI*2, r = Math.sqrt(rnd())*R;
+    const x = cx + Math.cos(a)*r, y = cy + Math.sin(a)*r;
+    const d = (4 + rnd()*3).toFixed(0);
+    const op = (0.5 + rnd()*0.5).toFixed(2);
+    out += `<span class="tcluster-dot" style="left:${x.toFixed(0)}px;top:${y.toFixed(0)}px;width:${d}px;height:${d}px;opacity:${op}"></span>`;
+  }
+  return out;
+}
+function runClusterHTML(city, count){
+  const loc = translateLocation(city.name);
+  const avaHTML = [pickAvatar(), pickAvatar(), pickAvatar()].map(a => avatarImg(a, '')).join('');
+  return `
+    <div class="tcluster-glow"><img src="${TCARD_MAP_IMG}" alt="" aria-hidden="true"></div>
+    <div class="tcluster-dots">${clusterDotsHTML(count*7 + city.x)}</div>
+    <div class="tcluster-pill">
+      <div class="tcluster-avas">${avaHTML}</div>
+      <div class="tcluster-body">
+        <div class="tcluster-count"><b>${count.toLocaleString('ru-RU')}</b> ${CLUSTER_WORD}</div>
+        <div class="tcluster-loc" title="${loc}">${loc}</div>
+      </div>
+    </div>
+    <span class="sr-only">${loc}: ${count} ${CLUSTER_WORD}</span>`;
+}
+function spawnRunCluster(){
+  const city = pick(CITIES);
+  const count = CLUSTER_MIN + 40 + Math.floor(Math.random()*560); // ~40–600 атлетов
+  let [px, py] = svgToPx(city.x, city.y);
+  if (isMobileCompact()){ [px, py] = mobilePopPoint(); }
+  const margin = 12, halfW = TCARD_W/2, halfH = TCARD_H/2;
+  const mapBounds = !isMobileCompact() ? trainingCardMapBounds(halfW, halfH) : null;
+  const pos = resolveTrainingCardPosition(px, py, mapBounds, halfW, halfH, margin);
+  if (!pos) return;
+  [px, py] = pos;
+  const el = document.createElement('div');
+  el.className = 'tcluster';
+  el.style.left = px + 'px';
+  el.style.top = py + 'px';
+  el.dataset.x = px;
+  el.dataset.y = py;
+  el.innerHTML = runClusterHTML(city, count);
+  el.title = `${translateLocation(city.name)}: ${count} ${CLUSTER_WORD}`;
+  tcardsLayer.appendChild(el);
+  let t1 = setTimeout(()=> el.classList.add('out'), TCARD_ENTER_MS + TCARD_HOLD_MS);
+  let t2 = setTimeout(()=> el.remove(), TCARD_ENTER_MS + TCARD_HOLD_MS + TCARD_EXIT_MS);
+  el.addEventListener('mouseenter', ()=>{ clearTimeout(t1); clearTimeout(t2); el.classList.remove('out'); });
+  el.addEventListener('mouseleave', ()=>{
+    t1 = setTimeout(()=> el.classList.add('out'), 900);
+    t2 = setTimeout(()=> el.remove(), 900 + TCARD_EXIT_MS);
+  });
 }
 
 const ENABLE_TRAINING_CARDS = true;
@@ -1276,9 +1362,9 @@ function openWorkoutCard(base){
   now.setMinutes(now.getMinutes() - Math.floor(r()*180) - Math.floor(r()*60*24*3));
   const hhmm = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
 
-  const images = Array.isArray(base.images) ? base.images.filter(Boolean) : [];
-  const slides = [`<div class="wc-slide wc-slide-map">${workoutMapSVG(base.seed, base)}</div>`]
-    .concat(images.map(src => `<div class="wc-slide wc-slide-photo"><img src="${src}" alt="Фото с тренировки" loading="lazy"></div>`));
+  // image с бэка — это аватар атлета (показан в шапке карточки), а не фото трека,
+  // поэтому в «листалке» только карта маршрута
+  const slides = [`<div class="wc-slide wc-slide-map">${workoutMapSVG(base.seed, base)}</div>`];
   const dots = slides.map((_,i) => `<span class="d${i===0?' active':''}"></span>`).join('');
 
   wcard.scrollTop = 0;
@@ -1346,17 +1432,16 @@ function closeWorkoutCard(){
   wback.classList.remove('open');
   document.body.style.overflow = '';
 }
-const POP_DELAYS = [
-  {weight:24, ms:[1600,3200]},
-  {weight:46, ms:[4200,7600]},
-  {weight:22, ms:[9000,14000]},
-  {weight:8,  ms:[15000,22000]}
-];
+// Темп всплывания карточек = реальный поток ~8000 тренировок/сутки, распределённый
+// по суточному профилю (ночью реже, днём и вечером чаще). Интервалы экспоненциальные —
+// пуассоновский поток, как настоящие независимые события, а не фиксированные «бакеты».
+const TARGET_DAILY_ACTIVITIES = 8000;
 function nextPopDelay(){
-  const hourWeightsAvg = HOURLY_WORKOUT_WEIGHTS.reduce((sum,value)=>sum+value,0) / HOURLY_WORKOUT_WEIGHTS.length;
+  const weightsSum = HOURLY_WORKOUT_WEIGHTS.reduce((sum,value)=>sum+value,0);
   const hourWeight = HOURLY_WORKOUT_WEIGHTS[moscowNow().getHours()];
-  const dayPace = clampValue(hourWeight / hourWeightsAvg, .38, 1.55);
-  return Math.round(rand(weightedPick(POP_DELAYS).ms) / dayPace);
+  const perHour = TARGET_DAILY_ACTIVITIES * hourWeight / weightsSum; // тренировок в текущий час
+  const meanMs = 3600000 / Math.max(1, perHour);                     // средний интервал сейчас
+  return Math.round(-Math.log(1 - Math.random()) * meanMs);          // экспоненциальный интервал
 }
 if (ENABLE_TRAINING_CARDS){
   (function scheduleNextTrainingCard(){
