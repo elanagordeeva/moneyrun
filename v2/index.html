@@ -119,7 +119,7 @@
 
     /* Training mini-card — richer activity card with route track (Figma, 1:1 px) */
     .tcards{position:fixed;inset:0;z-index:3;pointer-events:none}
-    .tcard{position:absolute;width:158px;height:132px;background:#11121c;transform:translate(-50%,-50%);pointer-events:auto;cursor:pointer}
+    .tcard{position:absolute;width:196px;height:132px;background:#11121c;transform:translate(-50%,-50%);pointer-events:auto;cursor:pointer}
     .tcard.is-static{cursor:default}
     .tcard-glow{position:absolute;left:0;top:0;width:132px;height:132px;border-radius:50%;overflow:hidden;background-color:#0c0d13}
     .tcard-glow img{position:absolute;left:0;top:50%;width:100%;height:auto;transform:translateY(-50%);display:block;filter:grayscale(.15) brightness(.85)}
@@ -128,7 +128,7 @@
     .tcard-track svg{position:absolute;inset:0;display:block;overflow:visible}
     .tcard-pin{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 10px #1F2D20;transform:translate(-50%,-50%)}
     .tcard-pin::after{content:'';position:absolute;inset:0;margin:auto;width:4px;height:4px;border-radius:50%;background:#fff}
-    .tcard-pill{position:absolute;left:17px;top:49px;max-width:124px;height:33px;border-radius:24px;background:#111410;display:flex;align-items:center;gap:6px;padding:3px 9px 3px 6px}
+    .tcard-pill{position:absolute;left:17px;top:49px;max-width:177px;height:33px;border-radius:24px;background:#111410;display:flex;align-items:center;gap:6px;padding:3px 9px 3px 6px}
     .tcard-ava{position:relative;width:27px;height:27px;flex:none}
     .tcard-ava img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;background:#2F2F3A;box-shadow:0 0 0 1px rgba(255,255,255,.28),0 0 0 3px rgba(255,255,255,.08)}
     .tcard-ava img.is-fallback{object-fit:cover}
@@ -1118,7 +1118,7 @@ function trainingCardHTML(city, record){
 
 /* ── Жизненный цикл мини-карточки: появление (раскадровка) → пауза → исчезновение → следующая ── */
 const tcardsLayer = document.getElementById('tcards');
-const TCARD_W = 158, TCARD_H = 132;
+const TCARD_W = 196, TCARD_H = 132;
 const TCARD_ENTER_MS = 2700, TCARD_HOLD_MS = 4400, TCARD_EXIT_MS = 450;
 
 function spawnTrainingCard(){
