@@ -45,6 +45,9 @@ server {
     location = /guide.html         { return 301 /guide; }
     location = /privacypolicy.html { return 301 /privacypolicy; }
 
+    # страница 404 в фирменном стиле
+    error_page 404 /404.html;
+
     # всё остальное — как есть (ассеты, robots.txt, sitemap.xml, llms.txt, og-картинка)
     location / { try_files $uri $uri/ =404; }
 }
