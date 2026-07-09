@@ -477,13 +477,22 @@ const LOCATION_TRANSLATIONS = {
   'Zabaykalsky Krai':'Забайкальский край','Trans-Baikal Krai':'Забайкальский край',
   'Russia':'Россия','Russian Federation':'Россия'
 };
+// у нас все тренировки в РФ, поэтому страну в конце («…, Россия») убираем — оставляем регион/город.
+// Но если пришла только страна без региона — так и показываем «Россия».
+const COUNTRY_NAMES = new Set(['россия','российская федерация','russia','russian federation']);
+function stripCountry(str){
+  const parts = str.split(',').map(s=>s.trim()).filter(Boolean);
+  if (parts.length > 1 && COUNTRY_NAMES.has(parts[parts.length-1].toLowerCase())) parts.pop();
+  return parts.join(', ');
+}
 function translateLocation(str){
   if (!str) return '';
-  if (/[а-яё]/i.test(str)) return str; // уже по-русски
-  return str.split(',').map(part=>{
+  if (/[а-яё]/i.test(str)) return stripCountry(str); // уже по-русски
+  const translated = str.split(',').map(part=>{
     const p = part.trim();
     return LOCATION_TRANSLATIONS[p] || LOCATION_TRANSLATIONS[p.replace(/^Republic of /,'')] || p;
   }).join(', ');
+  return stripCountry(translated);
 }
 
 // Тренировки не в РФ не показываем на карте (но в счётчик они попадают).
