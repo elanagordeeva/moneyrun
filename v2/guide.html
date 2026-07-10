@@ -77,20 +77,8 @@
     @media(min-width:3200px){html{font-size:28px} :root{--maxw:2200px}}
     body{background:var(--surface);color:var(--ink);font-family:var(--fb);line-height:1.65;-webkit-font-smoothing:antialiased}
     ::selection{background:var(--lime);color:var(--lime-ink)}img{max-width:100%;display:block}a{color:inherit}
-    #navbar{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(238,242,236,.82);backdrop-filter:blur(18px) saturate(160%);-webkit-backdrop-filter:blur(18px) saturate(160%);border-bottom:1px solid var(--border)}
-    #navbar .nav-inner{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:.85rem clamp(1.25rem,5vw,4rem)}
     .nav-logo{display:flex;align-items:center;gap:.55rem;text-decoration:none;color:var(--ink)}
     .nav-logo img{height:48px;width:auto;display:block}
-    .nav-logo .wordmark{font-family:var(--fw);font-weight:800;font-style:italic;font-variation-settings:'slnt' -10;font-size:22px;line-height:1;color:var(--ink)}
-    .nav-links{display:flex;gap:.05rem;list-style:none;align-items:center}
-    .nav-links a{color:var(--muted);text-decoration:none;font-size:.92rem;font-weight:500;padding:.55rem .85rem;border-radius:999px}
-    .nav-links a:hover{color:var(--lime-deep);background:rgba(17,18,28,.04)}
-    .nav-cta{display:none;align-items:center;gap:.35rem;background:var(--ink);color:#fff;font-family:var(--fd);font-weight:700;font-size:.92rem;padding:.6rem 1.1rem;border-radius:999px;text-decoration:none}
-    @media(min-width:1100px){.nav-cta{display:inline-flex}}
-    .tg-pill{display:inline-flex;align-items:center;gap:.4rem;background:#fff;color:var(--ink);padding:.5rem .85rem;border-radius:999px;text-decoration:none;font-size:.88rem;font-weight:500;border:1px solid var(--border);transition:all .25s}
-    .tg-pill:hover{border-color:var(--ink);transform:translateY(-1px)}
-    .tg-pill svg{width:16px;height:16px;fill:currentColor}
-    @media(max-width:1080px){.nav-links{display:none}}
     .legal{max-width:var(--maxw);margin:0 auto;padding:3rem clamp(1.25rem,5vw,4rem) 4rem}
     .legal-wrap{max-width:none;margin:0}
     .legal-back{display:inline-flex;gap:.4rem;font-size:.9rem;color:var(--muted);text-decoration:none;margin-bottom:1.2rem}
