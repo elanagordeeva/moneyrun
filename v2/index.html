@@ -124,16 +124,16 @@
     .tcard-glow{position:absolute;left:-12px;top:-12px;width:156px;height:156px;border-radius:50%;overflow:hidden;background-color:#0c0d13}
     .tcard-glow img{position:absolute;left:0;top:50%;width:100%;height:auto;transform:translateY(-50%);display:block;filter:grayscale(.15) brightness(.85)}
     .tcard-glow::after{content:'';position:absolute;inset:0;background:radial-gradient(circle 78px at 50% 50%,transparent 0,#11121c 78px)}
-    .tcard-track{position:absolute;left:5px;top:-6px;width:122px;height:144px;overflow:visible}
+    .tcard-track{position:absolute;left:-4px;top:-16px;width:140px;height:164px;overflow:visible}
     .tcard-track svg{position:absolute;inset:0;display:block;overflow:visible}
     .tcard-pin{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 10px #1F2D20;transform:translate(-50%,-50%)}
     .tcard-pin::after{content:'';position:absolute;inset:0;margin:auto;width:4px;height:4px;border-radius:50%;background:#fff}
-    .tcard-pill{position:absolute;left:17px;top:47px;max-width:181px;height:38px;border-radius:24px;background:#111410;display:flex;align-items:center;gap:7px;padding:3px 11px 3px 6px}
+    .tcard-pill{position:absolute;left:17px;top:47px;max-width:181px;min-height:38px;border-radius:24px;background:#111410;display:flex;align-items:center;gap:7px;padding:5px 11px 5px 6px}
     .tcard-ava{position:relative;width:28px;height:28px;flex:none}
     .tcard-ava img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;background:#2F2F3A;box-shadow:0 0 0 1px rgba(255,255,255,.28),0 0 0 3px rgba(255,255,255,.08)}
     .tcard-ava img.is-fallback{object-fit:cover}
     .tcard-body{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px}
-    .tcard-city{font-family:var(--fd);font-weight:500;font-size:10px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.35}
+    .tcard-city{font-family:var(--fd);font-weight:500;font-size:10px;color:#fff;overflow-wrap:anywhere;line-height:1.3}
     .tcard-stats{display:flex;align-items:center;gap:4px}
     .tcard-km{font-family:var(--fd);font-weight:500;font-size:9px;color:#9b9fad;font-variant-numeric:tabular-nums;line-height:1.3;white-space:nowrap}
     .tcard-xp{display:inline-flex;align-items:center;justify-content:center;height:13px;padding:0 5px;border-radius:21px;background:linear-gradient(156deg,#A7FFC8 2%,#52D1FA 100%);color:#20212A;font-weight:800;font-size:9px;font-style:italic;font-variation-settings:'slnt' -10;font-variant-numeric:tabular-nums;line-height:1;white-space:nowrap}
@@ -1110,7 +1110,7 @@ function mockGeoWalk(seed, base){
 const TCARD_MAPS = ['img/tcard-map-1.png','img/tcard-map-2.png','img/tcard-map-3.png','img/tcard-map-4.png','img/tcard-map-5.png','img/tcard-map-6.png'];
 const randomMapImg = () => pick(TCARD_MAPS);
 
-const TCARD_TRACK_W = 122, TCARD_TRACK_H = 144, TCARD_TRACK_LEFT = 5, TCARD_TRACK_TOP = -6;
+const TCARD_TRACK_W = 140, TCARD_TRACK_H = 164, TCARD_TRACK_LEFT = -4, TCARD_TRACK_TOP = -16;
 function trainingCardTrack(seed, record){
   const pad = 11;
   const P = routePointsFromRecord(record, seed, TCARD_TRACK_W, TCARD_TRACK_H, pad, 70);
