@@ -484,7 +484,14 @@ const LOCATION_TRANSLATIONS = {
   'Novosibirsk':'Новосибирск','Barnaul':'Барнаул','Krasnoyarsk':'Красноярск','Irkutsk':'Иркутск','Ulan-Ude':'Улан-Удэ',
   'Chita':'Чита','Yakutsk':'Якутск','Magadan':'Магадан','Khabarovsk':'Хабаровск','Vladivostok':'Владивосток',
   'Petropavlovsk-Kamchatsky':'Петропавловск-Камчатский','Anadyr':'Анадырь','Murmansk':'Мурманск','Arkhangelsk':'Архангельск',
-  'Norilsk':'Норильск','Surgut':'Сургут',
+  'Norilsk':'Норильск','Surgut':'Сургут','Saratov':'Саратов','Tolyatti':'Тольятти','Izhevsk':'Ижевск',
+  'Orenburg':'Оренбург','Penza':'Пенза','Ryazan':'Рязань','Tula':'Тула','Lipetsk':'Липецк','Kursk':'Курск',
+  'Belgorod':'Белгород','Oryol':'Орёл','Orel':'Орёл','Yaroslavl':'Ярославль','Vladimir':'Владимир','Tver':'Тверь',
+  'Pskov':'Псков','Veliky Novgorod':'Великий Новгород','Vologda':'Вологда','Cherepovets':'Череповец',
+  'Kirov':'Киров','Syktyvkar':'Сыктывкар','Yoshkar-Ola':'Йошкар-Ола','Saransk':'Саранск','Cheboksary':'Чебоксары',
+  'Naberezhnye Chelny':'Набережные Челны','Nizhnekamsk':'Нижнекамск','Magnitogorsk':'Магнитогорск',
+  'Sterlitamak':'Стерлитамак','Tomsk':'Томск','Kemerovo':'Кемерово','Novokuznetsk':'Новокузнецк',
+  'Abakan':'Абакан','Kyzyl':'Кызыл','Blagoveshchensk':'Благовещенск','Yuzhno-Sakhalinsk':'Южно-Сахалинск',
   'Altai Republic':'Республика Алтай','Altai Krai':'Алтайский край','Amur Oblast':'Амурская область',
   'Arkhangelsk Oblast':'Архангельская область','Astrakhan Oblast':'Астраханская область',
   'Bashkortostan':'Республика Башкортостан','Republic of Bashkortostan':'Республика Башкортостан',
@@ -521,31 +528,85 @@ const LOCATION_TRANSLATIONS = {
   'Zabaykalsky Krai':'Забайкальский край','Trans-Baikal Krai':'Забайкальский край',
   'Russia':'Россия','Russian Federation':'Россия'
 };
+const LOCATION_ALIASES = {
+  'Moskva':'Москва','Moscow City':'Москва','City of Moscow':'Москва',
+  'Saint-Petersburg':'Санкт-Петербург','Saint-Petersburg City':'Санкт-Петербург','Saint Petersburg City':'Санкт-Петербург',
+  'St.-Petersburg':'Санкт-Петербург','St Petersburg City':'Санкт-Петербург','St. Petersburg City':'Санкт-Петербург',
+  'Sankt-Peterburg':'Санкт-Петербург','Sankt Petersburg':'Санкт-Петербург','Sankt Peterburg':'Санкт-Петербург','SPB':'Санкт-Петербург',
+  'Rostov on Don':'Ростов-на-Дону','Rostov-na-Donu':'Ростов-на-Дону',
+  'Nizhniy Novgorod':'Нижний Новгород','Nizhni Novgorod':'Нижний Новгород','Nizhnij Novgorod':'Нижний Новгород','N. Novgorod':'Нижний Новгород',
+  'Yekaterinburg City':'Екатеринбург','Ekaterinburg City':'Екатеринбург',
+  'Ulan Ude':'Улан-Удэ','Petropavlovsk Kamchatsky':'Петропавловск-Камчатский','Petropavlovsk-Kamchatskiy':'Петропавловск-Камчатский',
+  'Yoshkar Ola':'Йошкар-Ола','Velikiy Novgorod':'Великий Новгород','Naberezhnye Chelny City':'Набережные Челны',
+  'Altay Republic':'Республика Алтай','Respublika Altay':'Республика Алтай','Respublika Tatarstan':'Республика Татарстан',
+  'Tatarstan Republic':'Республика Татарстан','Sakha (Yakutia) Republic':'Республика Саха (Якутия)',
+  'Republic of Sakha (Yakutia)':'Республика Саха (Якутия)',
+  'Khanty-Mansiysk Autonomous Okrug':'Ханты-Мансийский автономный округ','Khanty-Mansi AO':'Ханты-Мансийский автономный округ',
+  'Yamalo-Nenets AO':'Ямало-Ненецкий автономный округ','Zabaykalye Krai':'Забайкальский край','Transbaikal Krai':'Забайкальский край'
+};
+
+function normalizeLocationKey(value){
+  return String(value || '')
+    .normalize('NFKC')
+    .trim()
+    .toLowerCase()
+    .replace(/[.'’]/g, '')
+    .replace(/[\u2010-\u2015-]/g, ' ')
+    .replace(/\s+/g, ' ');
+}
+
+const LOCATION_TRANSLATION_INDEX = (() => {
+  const index = new Map();
+  Object.entries({...LOCATION_TRANSLATIONS, ...LOCATION_ALIASES}).forEach(([key, value]) => {
+    index.set(normalizeLocationKey(key), value);
+  });
+  return index;
+})();
+
 // у нас все тренировки в РФ, поэтому страну в конце («…, Россия») убираем — оставляем регион/город.
 // Но если пришла только страна без региона — так и показываем «Россия».
-const COUNTRY_NAMES = new Set(['россия','российская федерация','russia','russian federation']);
+const COUNTRY_NAMES = new Set(['россия','российская федерация','russia','russian federation','rf'].map(normalizeLocationKey));
+
 function stripCountry(str){
   const parts = str.split(',').map(s=>s.trim()).filter(Boolean);
-  if (parts.length > 1 && COUNTRY_NAMES.has(parts[parts.length-1].toLowerCase())) parts.pop();
+  if (parts.length > 1 && COUNTRY_NAMES.has(normalizeLocationKey(parts[parts.length-1]))) parts.pop();
   return parts.join(', ');
 }
+
+function translateLocationPart(part){
+  const raw = part.trim();
+  if (!raw) return '';
+  if (/[а-яё]/i.test(raw)) return raw;
+
+  const candidates = [
+    raw,
+    raw.replace(/^Republic of\s+/i, ''),
+    raw.replace(/\s+City$/i, ''),
+    raw.replace(/^Republic of\s+/i, '').replace(/\s+City$/i, '')
+  ];
+
+  for (const candidate of candidates) {
+    const translated = LOCATION_TRANSLATION_INDEX.get(normalizeLocationKey(candidate));
+    if (translated) return translated;
+  }
+  return raw;
+}
+
 function translateLocation(str){
   if (!str) return '';
-  if (/[а-яё]/i.test(str)) return stripCountry(str); // уже по-русски
-  const translated = str.split(',').map(part=>{
-    const p = part.trim();
-    return LOCATION_TRANSLATIONS[p] || LOCATION_TRANSLATIONS[p.replace(/^Republic of /,'')] || p;
-  }).join(', ');
+  const translated = str.split(',').map(translateLocationPart).filter(Boolean).join(', ');
   return stripCountry(translated);
 }
 
 // Тренировки не в РФ не показываем на карте (но в счётчик они попадают).
-// С бэка location приходит на английском, последний сегмент — страна.
+// Обычно последний сегмент — страна, но иногда бэк присылает только город/регион.
 function isInRussia(location){
   if (!location) return false;
   if (/[а-яё]/i.test(location)) return true;
-  const country = location.split(',').pop().trim().toLowerCase();
-  return country === 'russia' || country === 'russian federation' || country === 'россия';
+  const parts = location.split(',').map(s=>s.trim()).filter(Boolean);
+  const country = normalizeLocationKey(parts[parts.length - 1]);
+  if (COUNTRY_NAMES.has(country)) return true;
+  return parts.some(part => translateLocationPart(part) !== part.trim());
 }
 
 const FALLBACK_AVATAR_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" rx="24" fill="#2F2F3A"/><circle cx="24" cy="19" r="7.5" fill="#B9BDC6"/><path d="M10 42c1.8-9.4 7.3-14 14-14s12.2 4.6 14 14" fill="#B9BDC6"/></svg>`;
