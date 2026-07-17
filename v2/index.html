@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow">
   <title>Moneyrun — бегай, копи XP, получай ₽</title>
   <meta name="description" content="Беговое приложение: тренировки превращаются в XP, а XP — в выплаты в Клубах. Без подписок и рекламы.">
   <meta name="keywords" content="бег, беговое приложение, трекер бега, Strava, Garmin, Apple Watch, Suunto, Polar, Coros, беговой клуб, марафон, полумарафон, тренировки, беговое сообщество, благотворительность, эндаумент фонд, Moneyrun">
@@ -77,7 +76,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,slnt,wght@8..144,-10..0,300..1000&display=swap" rel="stylesheet">
   <style>
     :root{
-      --lime:#BDFF76;
+      --lime:#B0ED6D;
       --lime-deep:#8AB60E;
       --lime-soft:#D5FFA8;
       --bg:#11121c;
@@ -86,7 +85,12 @@
       --ink-soft:rgba(241,243,238,.6);
       --paper:#11121c;
       --grid:#191A23;
-      --lime-brand:#B8F772;
+      --lime-brand:#B0ED6D;
+      --ui-muted:#747887;
+      --ui-divider:#3B3C49;
+      --ui-light:#E7E9EF;
+      --ui-panel:#20212A;
+      --ui-hover:#1C1D25;
       --fd:'Roboto Flex','Roboto',system-ui,sans-serif;
     }
     *{box-sizing:border-box;margin:0;padding:0;-webkit-font-smoothing:antialiased}
@@ -119,16 +123,16 @@
 
     /* Training mini-card — richer activity card with route track (Figma, 1:1 px) */
     .tcards{position:fixed;inset:0;z-index:3;pointer-events:none}
-    .tcard{position:absolute;width:196px;height:132px;background:#11121c;transform:translate(-50%,-50%);pointer-events:auto;cursor:pointer}
+    .tcard{position:absolute;width:196px;height:132px;background:transparent;transform:translate(-50%,-50%);pointer-events:auto;cursor:pointer}
     .tcard.is-static{cursor:default}
-    .tcard-glow{position:absolute;left:-12px;top:-12px;width:156px;height:156px;border-radius:50%;overflow:hidden;background-color:#0c0d13}
-    .tcard-glow img{position:absolute;left:0;top:50%;width:100%;height:auto;transform:translateY(-50%);display:block;filter:grayscale(.15) brightness(.85)}
-    .tcard-glow::after{content:'';position:absolute;inset:0;background:radial-gradient(circle 78px at 50% 50%,transparent 0,#11121c 78px)}
-    .tcard-track{position:absolute;left:-4px;top:-16px;width:140px;height:164px;overflow:visible}
+    .tcard-glow{position:absolute;left:0;top:0;width:132px;height:132px;border-radius:50%;overflow:hidden;background-color:transparent}
+    .tcard-glow img{position:absolute;left:0;top:50%;width:100%;height:auto;transform:translateY(-50%);display:block}
+    .tcard-glow::after{content:'';position:absolute;inset:0;background:none}
+    .tcard-track{position:absolute;left:0;top:0;width:132px;height:132px;overflow:visible}
     .tcard-track svg{position:absolute;inset:0;display:block;overflow:visible}
     .tcard-pin{position:absolute;width:12px;height:12px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 10px #1F2D20;transform:translate(-50%,-50%)}
     .tcard-pin::after{content:'';position:absolute;inset:0;margin:auto;width:4px;height:4px;border-radius:50%;background:#fff}
-    .tcard-pill{position:absolute;left:17px;top:47px;max-width:181px;min-height:38px;border-radius:24px;background:#111410;display:flex;align-items:center;gap:7px;padding:5px 11px 5px 6px}
+    .tcard-pill{position:absolute;left:-3px;top:47px;max-width:181px;min-height:38px;border-radius:24px;background:#111410;display:flex;align-items:center;gap:7px;padding:5px 11px 5px 6px}
     .tcard-ava{position:relative;width:28px;height:28px;flex:none}
     .tcard-ava img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;background:#2F2F3A;box-shadow:0 0 0 1px rgba(255,255,255,.28),0 0 0 3px rgba(255,255,255,.08)}
     .tcard-ava img.is-fallback{object-fit:cover}
@@ -154,10 +158,9 @@
     .tcard-track path{animation:tcardDrawIn .95s cubic-bezier(.42,0,.58,1) .75s both}
     .tcard-pin{animation:tcardPinIn .45s cubic-bezier(.34,1.56,.64,1) 1.7s both}
     .tcard-pill{animation:tcardPillIn .5s cubic-bezier(.34,1.56,.64,1) 1.95s both}
-    @media(prefers-reduced-motion:reduce){
-      .tcard-glow,.tcard-track,.tcard-track path,.tcard-pin,.tcard-pill{animation:none!important;opacity:1}
-      .tcard-track path{stroke-dashoffset:0!important}
-    }
+    /* Live-карточки всегда анимируются: на лендинге это основная визуальная механика,
+       а не декоративный эффект. Иначе Windows/Chrome с prefers-reduced-motion сразу
+       показывает уже нарисованный трек. */
 
     /* Кластер-маркер: скопление тренировок в одной локации (большой забег) — одна карточка вместо стопки */
     .tcluster{position:absolute;width:196px;height:132px;background:#11121c;transform:translate(-50%,-50%);pointer-events:auto;cursor:default;transition:opacity .45s ease,transform .45s ease}
@@ -243,28 +246,30 @@
     .help-btn svg{width:100%;height:100%;display:block;transform-origin:50% 50%;animation:helpMarkInvite 4.8s ease-in-out infinite}
     .help-btn:hover,.help-btn:focus-visible{animation-play-state:paused}
     .help-btn:hover svg,.help-btn:focus-visible svg{animation-play-state:paused;transform:scale(1.07)}
-    @keyframes helpPulse{0%,58%,100%{box-shadow:0 18px 36px -10px rgba(0,0,0,.55)}66%{box-shadow:0 18px 38px -10px rgba(0,0,0,.6),0 0 0 0 rgba(189,255,118,.25)}76%{box-shadow:0 22px 46px -12px rgba(0,0,0,.6),0 0 0 9px rgba(189,255,118,.1)}86%{box-shadow:0 18px 36px -10px rgba(0,0,0,.55),0 0 0 14px rgba(189,255,118,0)}}
+    @keyframes helpPulse{0%,58%,100%{box-shadow:0 18px 36px -10px rgba(0,0,0,.55)}66%{box-shadow:0 18px 38px -10px rgba(0,0,0,.6),0 0 0 0 rgba(176,237,109,.25)}76%{box-shadow:0 22px 46px -12px rgba(0,0,0,.6),0 0 0 9px rgba(176,237,109,.1)}86%{box-shadow:0 18px 36px -10px rgba(0,0,0,.55),0 0 0 14px rgba(176,237,109,0)}}
     @keyframes helpMarkInvite{0%,60%,100%{transform:scale(1)}70%{transform:scale(1.12)}80%{transform:scale(.98)}}
     @media(prefers-reduced-motion:reduce){.help-btn,.help-btn svg{animation:none}}
-    .help-pop{position:fixed;right:clamp(1rem,2.5vw,2rem);bottom:calc(clamp(1rem,2.5vw,2rem) + 70px);z-index:10;background:#fff;border:1px solid rgba(14,18,14,.08);border-radius:18px;padding:.4rem;display:flex;flex-direction:column;gap:.15rem;min-width:240px;box-shadow:0 28px 60px -16px rgba(14,18,14,.28),0 0 0 1px rgba(14,18,14,.04) inset;transform-origin:bottom right;transform:scale(.85) translateY(8px);opacity:0;pointer-events:none;transition:transform .22s cubic-bezier(.2,.85,.25,1.05),opacity .18s;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+    .help-pop{position:fixed;right:clamp(1rem,2.5vw,2rem);bottom:calc(clamp(1rem,2.5vw,2rem) + 70px);z-index:10;width:354px;max-height:calc(100dvh - 96px);overflow-y:auto;background:var(--ui-panel);border:0;border-radius:40px;padding:16px 16px 28px;display:flex;flex-direction:column;gap:0;box-shadow:0 28px 60px -18px rgba(0,0,0,.42);transform-origin:bottom right;transform:scale(.85) translateY(8px);opacity:0;pointer-events:none;transition:transform .22s cubic-bezier(.2,.85,.25,1.05),opacity .18s;scrollbar-width:none}
+    .help-pop::-webkit-scrollbar{display:none}
     .help-pop.open{transform:scale(1) translateY(0);opacity:1;pointer-events:auto}
-    .help-pop a{display:flex;align-items:center;gap:.85rem;padding:.7rem .95rem;border-radius:12px;text-decoration:none;color:#171a12;font-family:var(--fd);font-weight:600;font-size:.95rem;transition:background .15s,color .15s;letter-spacing:-.005em}
-    .help-pop a:hover{background:rgba(138,182,14,.14);color:var(--lime-deep)}
-    .help-pop a svg{width:20px;height:20px;flex:0 0 20px;opacity:.7;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:opacity .15s}
-    .help-pop a:hover svg{opacity:1}
-    .help-pop a .ext-ico{width:13px;height:13px;flex:0 0 13px;margin-left:auto;opacity:.4;stroke-width:2.3}
-    .help-pop a:hover .ext-ico{opacity:.65}
-    .help-pop .lbl{font-family:var(--fd);font-size:.6rem;text-transform:uppercase;letter-spacing:.18em;color:rgba(14,18,14,.4);padding:.65rem .95rem .3rem;font-weight:700}
-    .help-pop .sep{height:1px;background:rgba(14,18,14,.08);margin:.25rem .5rem}
+    .help-pop a{display:flex;align-items:center;gap:16px;min-height:48px;padding:0 16px;border-radius:8px;text-decoration:none;color:var(--ui-light);font-family:var(--fd);font-weight:600;font-size:20px;line-height:1.2;transition:background .15s,color .15s;letter-spacing:0}
+    .help-pop a:hover,.help-pop a:focus-visible{background:var(--ui-hover);color:var(--ui-light);outline:none}
+    .help-pop a svg{width:24px;height:24px;flex:0 0 24px;opacity:1;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:opacity .15s}
+    .help-pop a .menu-ico{width:24px;height:24px;flex:0 0 24px;display:grid;place-items:center}
+    .help-pop a .menu-ico img{display:block;width:auto;height:24px;max-width:none}
+    .help-pop a .ext-ico{width:16px;height:16px;flex:0 0 16px;margin-left:auto;opacity:1;stroke-width:2}
+    .help-pop .lbl{font-family:var(--fd);font-size:12px;line-height:16px;text-transform:uppercase;letter-spacing:0;color:var(--ui-muted);padding:9px 16px 12px;font-weight:600}
+    .help-pop a+.lbl{margin-top:16px}
+    .help-pop .sep{height:1px;flex:none;background:var(--ui-divider);margin:0 16px 16px}
     /* мини-дашборд «Сегодня» */
-    .hp-today{padding:.7rem .95rem .35rem}
-    .hp-today-h{display:flex;align-items:center;gap:.5rem;font-family:var(--fd);font-size:.6rem;text-transform:uppercase;letter-spacing:.18em;color:rgba(14,18,14,.45);font-weight:700;margin-bottom:.6rem}
-    .hp-dot{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 3px rgba(157,209,97,.28);animation:hpDot 1.9s ease-in-out infinite}
-    @keyframes hpDot{0%,100%{box-shadow:0 0 0 3px rgba(157,209,97,.28)}50%{box-shadow:0 0 0 6px rgba(157,209,97,.06)}}
-    .hp-stats{display:flex;flex-direction:column;gap:.42rem}
-    .hp-stat{display:flex;align-items:baseline;justify-content:space-between;gap:.7rem}
-    .hp-stat b{font-family:var(--fd);font-weight:850;font-size:1.16rem;color:var(--lime-deep);font-variant-numeric:tabular-nums;letter-spacing:-.01em;line-height:1}
-    .hp-stat span{font-family:var(--fd);font-size:.74rem;color:rgba(14,18,14,.55);font-weight:500;white-space:nowrap}
+    .hp-today{padding:16px 16px 24px}
+    .hp-today-h{display:flex;align-items:center;gap:12px;font-family:var(--fd);font-size:12px;line-height:16px;text-transform:uppercase;letter-spacing:0;color:var(--ui-muted);font-weight:600;margin-bottom:24px}
+    .hp-dot{width:10px;height:10px;flex:none;border-radius:50%;background:var(--lime);box-shadow:0 0 7px 2px rgba(176,237,109,.5);animation:hpDot 1.9s ease-in-out infinite}
+    @keyframes hpDot{0%,100%{box-shadow:0 0 7px 2px rgba(176,237,109,.5)}50%{box-shadow:0 0 11px 4px rgba(176,237,109,.18)}}
+    .hp-stats{display:flex;flex-direction:column;gap:4px}
+    .hp-stat{display:flex;align-items:baseline;justify-content:space-between;gap:16px;min-height:32px}
+    .hp-stat b{font-family:var(--fd);font-weight:800;font-size:28px;color:var(--lime);font-variant-numeric:tabular-nums;letter-spacing:0;line-height:32px}
+    .hp-stat span{font-family:var(--fd);font-size:14px;line-height:20px;color:var(--ui-muted);font-weight:500;white-space:nowrap;letter-spacing:0}
     @media(prefers-reduced-motion:reduce){.hp-dot{animation:none}}
 
     .mobile-dock{display:none}
@@ -321,11 +326,16 @@
       .pop-line .gain{min-height:20px;padding:0 6px;font-size:.64rem}
       .ping{width:10px;height:10px}
       .help-btn{right:16px;bottom:calc(16px + env(safe-area-inset-bottom));width:48px;height:48px;display:grid;font-size:1.35rem;box-shadow:0 16px 32px -10px rgba(14,18,14,.52)}
-      .help-pop{right:12px;bottom:calc(76px + env(safe-area-inset-bottom));display:flex;min-width:0;width:min(276px,calc(100vw - 24px));border-radius:20px;padding:7px}
-      .help-pop a{min-height:42px;border-radius:14px;padding:.65rem .8rem;font-size:.86rem;font-weight:750}
-      .help-pop .lbl{font-size:.56rem;padding:.6rem .8rem .25rem}
+      .help-pop{right:24px;bottom:calc(76px + env(safe-area-inset-bottom));display:flex;width:min(354px,calc(100vw - 48px));border-radius:40px;padding:16px 16px 28px}
+      .help-pop a{min-height:48px;border-radius:8px;padding:0 16px;font-size:20px;font-weight:600}
+      .help-pop .lbl{font-size:12px;padding:9px 16px 12px}
       .mobile-dock{display:none}
       .corner{display:none}
+    }
+    @media(max-width:360px){
+      .help-pop{right:12px;width:calc(100vw - 24px);border-radius:32px;padding:12px 12px 22px}
+      .help-pop a{font-size:18px;gap:16px}
+      .hp-stat b{font-size:26px}
     }
   </style>
 </head>
@@ -363,7 +373,7 @@
   </ul>
   <h2>Сколько стоит</h2>
   <p>Приложение Moneyrun бесплатное: нет подписок, платных тарифов и рекламы. Регулярный бег приносит рубли.</p>
-  <p>Подробные правила платформы — <a href="guide.html">в документации</a>. Скачать приложение: <a href="https://apps.apple.com/app/id6444129392">App Store</a>, <a href="https://play.google.com/store/apps/details?id=tech.aml.moneyrun">Google Play</a>. Сообщество — <a href="https://t.me/moneyrun">Telegram-канал</a>.</p>
+  <p>Подробные правила платформы — <a href="/guide">в документации</a>. Скачать приложение: <a href="https://apps.apple.com/app/id6444129392">App Store</a>, <a href="https://play.google.com/store/apps/details?id=tech.aml.moneyrun">Google Play</a>. Сообщество — <a href="https://t.me/moneyrun">Telegram-канал</a>.</p>
 </section>
 
 <button class="help-btn" id="helpBtn" aria-label="Ссылки" aria-expanded="false">
@@ -383,23 +393,23 @@
   <span class="sep"></span>
   <span class="lbl">Скачать приложение</span>
   <a href="https://apps.apple.com/app/id6444129392" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.7 3.2c-.7.8-1.6 1.3-2.6 1.2-.1-1 .4-1.9 1-2.5.7-.7 1.7-1.2 2.6-1.2.1.9-.3 1.8-1 2.5Z"/><path d="M19 16.7c-.4 1-1 2-1.8 3-.8.9-1.5 1.3-2.2 1.3-.5 0-.9-.1-1.4-.4-.5-.2-1-.3-1.6-.3-.6 0-1.2.1-1.7.4-.5.2-.9.3-1.3.3-.8 0-1.6-.5-2.4-1.6-1.1-1.4-1.9-3.5-1.9-5.6 0-1.8.5-3.2 1.4-4.2.8-.9 1.8-1.4 3-1.4.6 0 1.2.1 1.8.4.5.2.9.3 1.2.3.3 0 .7-.1 1.3-.4.6-.3 1.2-.4 1.9-.4 1.5 0 2.7.6 3.5 1.8-1.2.8-1.8 1.9-1.8 3.3 0 1.5.7 2.7 2 3.5Z"/></svg>
+    <span class="menu-ico" aria-hidden="true"><img src="img/Appstore_glif.png" alt=""></span>
     App Store
     <svg class="ext-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
   </a>
   <a href="https://play.google.com/store/apps/details?id=tech.aml.moneyrun" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.8 4.8v14.4c0 .9 1 1.5 1.8 1l11.5-7.2c.7-.4.7-1.5 0-1.9L7.6 3.8c-.8-.5-1.8.1-1.8 1Z"/><path d="M6.4 4.2 13 12l-6.6 7.8"/><path d="M13 12 19.4 12"/></svg>
+    <span class="menu-ico" aria-hidden="true"><img src="img/Googleplay_glif.png" alt=""></span>
     Google Play
     <svg class="ext-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
   </a>
   <span class="lbl">Связь</span>
   <a href="https://t.me/moneyrun" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 4 3 11.5l7 2.2M21 4l-4 16-7-6.3M21 4 10 13.7"/></svg>
+    <span class="menu-ico" aria-hidden="true"><img src="img/Telegram_glif.png" alt=""></span>
     Telegram-канал
     <svg class="ext-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
   </a>
-  <a href="guide.html">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l3 3v15H6z"/><path d="M15 3v4h4M9 12h6M9 16h6"/></svg>
+  <a href="/guide">
+    <span class="menu-ico" aria-hidden="true"><img src="img/Doc_glif.png" alt=""></span>
     Правила платформы
   </a>
 </div>
@@ -408,12 +418,25 @@
   <a class="primary" href="https://apps.apple.com/app/id6444129392" target="_blank" rel="noopener">App Store</a>
   <a class="primary" href="https://play.google.com/store/apps/details?id=tech.aml.moneyrun" target="_blank" rel="noopener">Google Play</a>
   <a href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram</a>
-  <a href="guide.html">Правила</a>
+  <a href="/guide">Правила</a>
 </nav>
 
+<script src="https://cdn.jsdelivr.net/npm/@microsoft/signalr@8.0.7/dist/browser/signalr.min.js" crossorigin="anonymous"></script>
 <script>
-/* Mock data: RF cities mapped to the schematic 1200x500 Russia viewBox.
-   Coordinates follow a simple lon/lat projection; Kaliningrad stays on the inset. */
+const MONEYRUN_SIGNALR_HUB_URL = 'https://hub.moneyrun.tech/control?user=landing';
+const MONEYRUN_SIGNALR_EVENTS = {
+  training: 'activities.run.new',
+  today: 'statistic.today.new'
+};
+const MONEYRUN_EMPTY_TODAY = { activities: 0, xp: 0, exchange: 0 };
+const MONEYRUN_TRAINING_CARD_GAP_MS = 900;
+const MONEYRUN_AVATAR_PRELOAD_TIMEOUT_MS = 8000;
+const liveTrainingQueue = [];
+const liveTrainingPendingQueue = [];
+let liveTrainingDrainTimer = null;
+
+/* RF city anchors mapped to the schematic 1200x500 Russia viewBox.
+   Used only as fallback positioning helpers for live training cards. */
 const CITIES = [
   {name:'Москва',         x: 139, y: 318},
   {name:'Санкт-Петербург',x:  85, y: 260},
@@ -451,7 +474,7 @@ const CITIES = [
 ];
 
 /* location с бэка приходит на английском («Altai Republic, Russia») — переводим для показа.
-   Словарь покрывает города из мока и федеральные субъекты РФ; если строка уже на русском
+   Словарь покрывает частые города и федеральные субъекты РФ; если строка уже на русском
    или совпадения нет — показываем как есть (лучше английский текст, чем пустота/ошибка). */
 const LOCATION_TRANSLATIONS = {
   'Moscow':'Москва','Saint Petersburg':'Санкт-Петербург','St. Petersburg':'Санкт-Петербург','St Petersburg':'Санкт-Петербург',
@@ -520,103 +543,186 @@ function translateLocation(str){
 // С бэка location приходит на английском, последний сегмент — страна.
 function isInRussia(location){
   if (!location) return false;
-  if (/[а-яё]/i.test(location)) return true; // наши моковые российские города
+  if (/[а-яё]/i.test(location)) return true;
   const country = location.split(',').pop().trim().toLowerCase();
   return country === 'russia' || country === 'russian federation' || country === 'россия';
 }
 
-const NAMES = ['Алексей Петров','Мария Волкова','Иван Соколов','Елена Кузнецова','Дмитрий Лебедев','Анна Громова','Сергей Морозов','Ольга Рябова','Артём Волков','Полина Зайцева','Никита Орлов','Юлия Фомина','Павел Борисов','Ксения Титова','Илья Никитин','Дарья Игнатьева','Кирилл Абрамов','Софья Дмитриева','Михаил Егоров','Виктория Жукова','Роман Хохлов','Алиса Царёва','Тимур Яковлев','Лера Щербакова','Глеб Ушаков','Карина Литвинова','Олег Чернов','Настя Шевченко'];
-
-/* МОК-аватарки: подобранные фото-портреты (Unsplash, crop по лицу).
-   Заменятся реальными данными по API. */
-const AVATAR_PHOTOS = [
-  '1506794778202-cad84cf45f1d','1500648767791-00dcc994a43e','1499996860823-5214fcc65f8f',
-  '1568602471122-7832951cc4c5','1545167622-3a6ac756afa4','1547425260-76bcadfb4f2c',
-  '1527082395-e939b847da0d','1494790108377-be9c29b29330','1517365830460-955ce3ccd263',
-  '1499952127939-9bbf5af6c51c','1546961329-78bef0414d7c','1502685104226-ee32379fefbe',
-  '1524504388940-b1c1722653e1'
-];
 const FALLBACK_AVATAR_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" rx="24" fill="#2F2F3A"/><circle cx="24" cy="19" r="7.5" fill="#B9BDC6"/><path d="M10 42c1.8-9.4 7.3-14 14-14s12.2 4.6 14 14" fill="#B9BDC6"/></svg>`;
 const FALLBACK_AVATAR = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(FALLBACK_AVATAR_SVG)}`;
-const AVATAR_URL = id => `https://images.unsplash.com/photo-${id}?w=72&h=72&fit=crop&crop=faces&q=70`;
-const pickAvatar = () => AVATAR_URL(pick(AVATAR_PHOTOS));
 const avatarSrc = src => (src && String(src).trim()) ? src : FALLBACK_AVATAR;
 const avatarClass = src => avatarSrc(src) === FALLBACK_AVATAR ? ' is-fallback' : '';
 const avatarImg = (src, cls, alt = '') => {
   const safeSrc = avatarSrc(src);
-  return `<img class="${cls}${avatarClass(src)}" src="${safeSrc}" alt="${alt}" onerror="this.onerror=null;this.src='${FALLBACK_AVATAR}';this.classList.add('is-fallback')">`;
+  return `<img class="${cls}${avatarClass(src)}" src="${safeSrc}" alt="${alt}" decoding="sync" onerror="this.onerror=null;this.src='${FALLBACK_AVATAR}';this.classList.add('is-fallback')">`;
 };
 
 const pick = a => a[Math.floor(Math.random()*a.length)];
-const weightedPick = items => {
-  const total = items.reduce((sum,item)=>sum+item.weight,0);
-  let roll = Math.random()*total;
-  for (const item of items){
-    roll -= item.weight;
-    if (roll <= 0) return item;
-  }
-  return items[items.length-1];
-};
-const rand = ([min,max]) => Math.random()*(max-min)+min;
-
-/* Правдоподобный mock начислений: длинные беговые тренировки,
-   умеренный прирост XP и обмен в пределах десятков рублей. */
-const WORKOUT_TYPES = [
-  {weight:24, km:[10,14.5],  load:[.55,.95]},
-  {weight:32, km:[12,18],    load:[.8,1.3]},
-  {weight:20, km:[16,23],    load:[1.05,1.65]},
-  {weight:16, km:[20,28],    load:[1.2,1.9]},
-  {weight:8,  km:[26,30],    load:[1.05,1.45]}
-];
-const MONEY_TIERS = [
-  {weight:18, rub:[30,48]},
-  {weight:34, rub:[42,68]},
-  {weight:28, rub:[58,84]},
-  {weight:14, rub:[78,100]},
-  {weight:6,  rub:[90,100]}
-];
-
-function mockWorkoutGains(){
-  const workout = weightedPick(WORKOUT_TYPES);
-  const money = weightedPick(MONEY_TIERS);
-  const kmNum = rand(workout.km);
-  const km = kmNum.toFixed(1).replace(/\.0$/, '');
-  const xp = Math.max(3, Math.min(42, Math.round(kmNum * rand(workout.load) * rand([.55,.9]))));
-  const rub = Math.round(rand(money.rub));
-  return { km, xp, rub };
+function unwrapLivePayload(payload){
+  if (!payload || typeof payload !== 'object') return payload;
+  if (payload.data && typeof payload.data === 'object') return payload.data;
+  if (payload.payload && typeof payload.payload === 'object') return payload.payload;
+  return payload;
 }
-
-/* ——— Данные тренировки в форме бэка: {distance, location, xp, polyline, image} ———
-   Реальный пример, который прислал бэкендер — используем как есть (без искажений),
-   чтобы по-настоящему проверить декодирование polyline и показ фото, а не просто мок. */
-const REAL_SAMPLE_RECORD = {
-  distance: 10,
-  location: 'Altai Republic, Russia',
-  xp: 3,
-  polyline: '_q}zHgvfjOBFERMROLKBa@?[Fg@CIBKLKZIt@?p@E\\D\\HFd@LRX\\R~GzBfAf@ZDrChAfB|@r@d@j@Td@Ll@?j@HPDl@^pAz@p@h@TV^Rj@f@n@p@pAfBd@j@l@r@`@`@tB`BXZr@l@|AfA`BxAxC|Bh@Tx@Ph@?x@GV?VCv@Dr@RtEdBlA\\TFXABA@OAEUXM@sAc@aDqA_Bg@}@Gc@FuBJ_AQ]Mc@U_BmA}A}AwAiA_A{@gAw@a@_@cAw@_A}@oA_Bu@eAoAuAa@]iAq@uAcAy@e@q@OeAM_@Ko@YqAw@{@c@cAa@}Ac@y@_@oBm@{@]qFaBiDoAwAa@QK]IYO[IqB_AiAaA_ByAY[k@]]MkA]{@M[Bg@EU@_BKmAYa@U[Gs@e@[WiBgA{@y@QYY]QYGEC@@BJ@HF~@dAtAlArA|@XLRN^RjAb@hARzB?h@D|@NjAXf@TPJhCdCpB|AbAh@fC|@`@LtBz@J@HCFKRSNY@I@w@Fc@Lg@BEHCX?\\G`@@VCRSDKHe@FIBA',
-  image: 'https://a2036f06-9250-4b9a-b800-f10b0bd4b361.selcdn.net/F0AD479A-59BE-44C2-9FE6-9DDDDA5C426D'
-};
-/* мок-запись в ТОЧНО ТОЙ ЖЕ форме, что отдаст бэк: {distance, location, xp, polyline, image}.
-   image — аватарка атлета (может не прийти с бэка → показываем заглушку).
-   Изредка подмешиваем реальный образец от бэкендера — проверяем, что весь путь
-   (декод polyline, перевод location, аватар) реально работает, а не только в теории. */
-function mockTrainingRecord(city){
-  if (Math.random() < 0.12) return REAL_SAMPLE_RECORD;
-  const { km, xp } = mockWorkoutGains();
-  const seed = Math.floor(Math.random()*1e9)+1;
+function finiteNumber(value, fallback){
+  const number = Number(value);
+  return Number.isFinite(number) ? number : fallback;
+}
+function hasOwn(object, key){
+  return Object.prototype.hasOwnProperty.call(object, key);
+}
+function normalizeTrainingRecord(payload){
+  const record = unwrapLivePayload(payload);
+  if (!record || typeof record !== 'object') return null;
+  const distance = finiteNumber(record.distance, NaN);
+  const hasXp = hasOwn(record, 'xp') && record.xp !== null && record.xp !== '';
+  const xp = hasXp ? finiteNumber(record.xp, NaN) : null;
+  const location = typeof record.location === 'string' ? record.location.trim() : '';
+  const polyline = typeof record.polyline === 'string' ? record.polyline.trim() : '';
+  const image = typeof record.image === 'string' && record.image.trim() ? record.image.trim() : null;
+  if (!Number.isFinite(distance) || distance <= 0 || !location || !polyline) return null;
   return {
-    distance: parseFloat(km),
-    location: city.name, // мок уже на русском — translateLocation() пропустит как есть
-    xp,
-    polyline: encodePolyline(mockGeoWalk(seed, svgToGeo(city.x, city.y))), // настоящая encoded-строка + база = реальные координаты города
-    image: Math.random() < 0.85 ? pickAvatar() : null // аватар атлета; иногда бэк не присылает — заглушка
+    distance,
+    location,
+    xp: Number.isFinite(xp) ? Math.max(0, Math.round(xp)) : null,
+    hasXp: Number.isFinite(xp),
+    polyline,
+    image,
+    receivedAt: finiteNumber(record.receivedAt, Date.now()),
+    __mrLive: true
   };
 }
-/* ВРЕМЕННО мок — когда бэк будет готов, заменить тело на реальный запрос за тренировками.
-   Форма ответа {distance, location, xp, polyline, image} уже согласована, менять
-   остальной код не придётся. Если у записи нет polyline/location — карточку не показываем. */
+function normalizeTodaySnapshot(payload){
+  const snapshot = unwrapLivePayload(payload);
+  if (!snapshot || typeof snapshot !== 'object') return null;
+  const activities = finiteNumber(snapshot.activities, NaN);
+  const xp = finiteNumber(snapshot.xp, NaN);
+  const exchange = finiteNumber(snapshot.exchange, NaN);
+  if (!Number.isFinite(activities) || !Number.isFinite(xp) || !Number.isFinite(exchange)) return null;
+  return {
+    activities: Math.max(0, Math.round(activities)),
+    xp: Math.max(0, Math.round(xp)),
+    exchange: Math.max(0, Math.round(exchange))
+  };
+}
+function setTodaySnapshot(snapshot){
+  const next = normalizeTodaySnapshot(snapshot);
+  if (!next) return false;
+  if (!window.MR_TODAY){
+    window.MR_TODAY = next;
+    return true;
+  }
+  window.MR_TODAY.activities = next.activities;
+  window.MR_TODAY.xp = next.xp;
+  window.MR_TODAY.exchange = next.exchange;
+  return true;
+}
+function preloadTrainingAvatar(record){
+  if (!record.image || typeof Image === 'undefined') return Promise.resolve(record);
+  return new Promise(function(resolve){
+    const image = new Image();
+    let settled = false;
+    let timer = null;
+    const finish = function(loaded){
+      if (settled) return;
+      settled = true;
+      if (timer) clearTimeout(timer);
+      image.onload = null;
+      image.onerror = null;
+      if (!loaded) record.image = null;
+      resolve(record);
+    };
+    image.decoding = 'async';
+    image.onload = function(){
+      if (typeof image.decode !== 'function'){
+        finish(true);
+        return;
+      }
+      try {
+        image.decode().catch(function(){}).then(function(){ finish(true); });
+      } catch (error){
+        finish(true);
+      }
+    };
+    image.onerror = function(){ finish(false); };
+    timer = setTimeout(function(){ finish(false); }, MONEYRUN_AVATAR_PRELOAD_TIMEOUT_MS);
+    try {
+      image.src = record.image;
+    } catch (error){
+      finish(false);
+    }
+  });
+}
+function queueTrainingRecord(record){
+  if (!record) return false;
+  liveTrainingQueue.push(record);
+  return true;
+}
+function releaseReadyTrainingRecords(){
+  let released = false;
+  while (liveTrainingPendingQueue.length && liveTrainingPendingQueue[0].ready){
+    const pending = liveTrainingPendingQueue.shift();
+    if (queueTrainingRecord(pending.record)) released = true;
+  }
+  if (released) scheduleTrainingCardDrain(0);
+}
+function scheduleTrainingCardDrain(delay){
+  if (liveTrainingDrainTimer || !liveTrainingQueue.length) return;
+  liveTrainingDrainTimer = setTimeout(function(){
+    liveTrainingDrainTimer = null;
+    if (!liveTrainingQueue.length) return;
+    if (typeof spawnTrainingCard === 'function') spawnTrainingCard();
+    if (liveTrainingQueue.length) scheduleTrainingCardDrain(MONEYRUN_TRAINING_CARD_GAP_MS);
+  }, delay || 0);
+}
+function receiveLiveTrainingRecord(payload){
+  const record = normalizeTrainingRecord(payload);
+  if (!record) return;
+  const pending = { record, ready:false };
+  liveTrainingPendingQueue.push(pending);
+  preloadTrainingAvatar(record).catch(function(){
+    record.image = null;
+    return record;
+  }).then(function(readyRecord){
+    pending.record = readyRecord;
+    pending.ready = true;
+    releaseReadyTrainingRecords();
+  });
+}
+function receiveLiveTodaySnapshot(payload){
+  setTodaySnapshot(payload);
+}
+function startSignalRConnection(connection, retryMs){
+  if (connection.state && connection.state !== signalR.HubConnectionState.Disconnected) return;
+  connection.start().catch(function(){
+    setTimeout(function(){
+      startSignalRConnection(connection, Math.min(Math.round(retryMs * 1.7), 30000));
+    }, retryMs);
+  });
+}
+function startMoneyrunLiveHub(){
+  if (!window.signalR || !signalR.HubConnectionBuilder){
+    return;
+  }
+  const connection = new signalR.HubConnectionBuilder()
+    .withUrl(MONEYRUN_SIGNALR_HUB_URL, { withCredentials: false })
+    .withAutomaticReconnect()
+    .configureLogging(signalR.LogLevel.None)
+    .build();
+
+  connection.on(MONEYRUN_SIGNALR_EVENTS.training, receiveLiveTrainingRecord);
+  connection.on(MONEYRUN_SIGNALR_EVENTS.today, receiveLiveTodaySnapshot);
+  connection.onclose(function(){
+    setTimeout(function(){ startSignalRConnection(connection, 5000); }, 5000);
+  });
+  window.MR_SIGNALR_CONNECTION = connection;
+  startSignalRConnection(connection, 2500);
+}
+/* Live-очередь тренировок. Если SignalR ещё ничего не прислал, карточка не показывается. */
 function fetchTrainingRecord(city){
-  return mockTrainingRecord(city);
+  const liveRecord = liveTrainingQueue.shift();
+  if (liveRecord) return liveRecord;
+  return null;
 }
 
 function moscowNow(){
@@ -630,58 +736,20 @@ function seededRandom(seed){
     return (n - 1) / 2147483646;
   };
 }
-function daySeed(date){
-  return date.getFullYear()*10000 + (date.getMonth()+1)*100 + date.getDate();
-}
-// перемешиваем сид (murmur-хеш): соседние даты дают близкие daySeed, а простой LCG
-// на близких сидах выдаёт почти одинаковые первые значения — хеш разносит их по диапазону
-function hashSeed(x){
-  x = x|0;
-  x = Math.imul(x ^ (x >>> 16), 0x45d9f3b);
-  x = Math.imul(x ^ (x >>> 16), 0x45d9f3b);
-  x = (x ^ (x >>> 16)) >>> 0;
-  return (x % 2147483646) + 1;
-}
-const HOURLY_WORKOUT_WEIGHTS = [3,2,1.5,1.5,2.5,5,12,23,30,34,36,38,39,40,42,44,47,49,45,34,23,13,7,4];
-function dailyActivityProgress(date){
-  const hour = date.getHours();
-  const minutePart = (date.getMinutes()*60 + date.getSeconds()) / 3600;
-  const total = HOURLY_WORKOUT_WEIGHTS.reduce((sum,value)=>sum+value,0);
-  const before = HOURLY_WORKOUT_WEIGHTS.slice(0, hour).reduce((sum,value)=>sum+value,0);
-  return Math.min(1, (before + HOURLY_WORKOUT_WEIGHTS[hour] * minutePart) / total);
-}
-/* Мок-снепшот дневной статистики. Форма объекта — 1-в-1 модель, которую отдаёт бэк:
-   { "activities": 200, "xp": 3000, "exchange": 10000 } */
-function makeTodaySnapshot(){
-  const now = moscowNow();
-  const seeded = seededRandom(hashSeed(daySeed(now)));
-  const targetWorkouts = Math.round(6000 + seeded()*4000);   // 6000–10000 тренировок за сутки
-  const avgXp = 14 + seeded()*3;                             // каждая тренировка даёт 1–30 XP, в среднем ~15.5
-  const targetExchange = 80000 + seeded()*20000;            // 80 000–100 000 ₽ обменяно за сутки
-  const progress = dailyActivityProgress(now);
-  const workoutNoise = .985 + seeded()*0.03;
-  const activities = Math.max(0, Math.floor(targetWorkouts * progress * workoutNoise));
-  return {
-    activities,
-    xp: Math.round(activities * avgXp * (0.98 + seeded()*0.04)),        // суммарный XP = кол-во тренировок × средний XP
-    exchange: Math.round(targetExchange * progress * (0.98 + seeded()*0.04)) // ₽ — суточный итог, растёт по ходу дня
-  };
-}
-/* ВРЕМЕННО мок — когда бэк будет готов, заменить тело на реальный запрос
-   (эндпоинт должен отдавать ровно { activities, xp, exchange }), сигнатура и
-   форма ответа уже согласованы, остальной код трогать не придётся. */
+/* До первого события statistic.today.new показываем нули. */
 function fetchTodaySnapshot(){
-  return makeTodaySnapshot();
+  return { ...MONEYRUN_EMPTY_TODAY };
 }
 function applyTodayWorkout(detail){
   if (!window.MR_TODAY) return;
+  detail = detail || {};
   MR_TODAY.activities += 1;
-  MR_TODAY.xp += detail.xp;
+  MR_TODAY.xp += finiteNumber(detail.xp, 0);
   applyTodayPayout(detail.rub);
 }
 function applyTodayPayout(rub){
   if (!window.MR_TODAY) return;
-  MR_TODAY.exchange += rub;
+  MR_TODAY.exchange += finiteNumber(rub, 0);
 }
 
 /* Вариант оформления карты через ?map=outline|filled|constellation|line|ghost|clean */
@@ -895,76 +963,6 @@ function mobilePopPoint(){
   ];
 }
 
-function spawnPop(){
-  const city = pick(CITIES);
-  const name = pick(NAMES);
-  const ava = pickAvatar();
-  const {km, xp, rub} = mockWorkoutGains();
-  let [px, py] = svgToPx(city.x, city.y);
-  if (isMobileCompact()){
-    [px, py] = mobilePopPoint();
-  }
-
-  applyTodayWorkout({ km, xp, rub });
-
-  const ping = document.createElement('div');
-  ping.className = 'ping';
-  ping.style.left = px+'px'; ping.style.top = py+'px';
-  popsLayer.appendChild(ping);
-
-  const pop = document.createElement('div');
-  pop.className = 'pop';
-  pop.style.left = px+'px'; pop.style.top = py+'px';
-  pop.title = 'Открыть тренировку';
-  pop.innerHTML = `
-    <div class="pop-ava" style="background-image:url('${avatarSrc(ava)}')"></div>
-    <div class="pop-line"><span class="city">${city.name}</span><span class="sep">·</span><span class="km">${km}&nbsp;км</span><span class="gain gain-xp">+${xp}&nbsp;XP</span><span class="gain gain-rub">+${rub}&nbsp;₽</span></div>`;
-  popsLayer.appendChild(pop);
-  // clamp inside viewport (popup translates by -50% so we need half its width)
-  const popW = pop.offsetWidth, vw = window.innerWidth, margin = 12;
-  let dx = 0;
-  if (px - popW/2 < margin)        dx = margin - (px - popW/2);
-  else if (px + popW/2 > vw-margin) dx = (vw - margin) - (px + popW/2);
-  if (dx) pop.style.left = (px + dx) + 'px';
-
-  // приподнять карточки, чей «пузырь» налезает на надписи бренда (clean, десктоп)
-  if (isClean && !isMobileCompact()){
-    const bi = document.querySelector('.brand-inner');
-    if (bi){
-      const br = bi.getBoundingClientRect();
-      const H = pop.offsetHeight, cx = px + dx, gap = 16;
-      const capL = cx - popW/2, capR = cx + popW/2; // рамка пузыря (transform translate(-50%,-130%))
-      const capBot = py - 0.30*H;
-      const overlapX = capR > br.left - 6 && capL < br.right + 6;
-      if (overlapX && capBot > br.top - gap){
-        const dy = capBot - (br.top - gap);         // поднять так, чтобы низ пузыря был над брендом
-        if ((py - 1.30*H) - dy >= 8){
-          pop.style.top  = (py - dy) + 'px';
-          ping.style.top = (py - dy) + 'px';
-        } else {
-          pop.remove(); ping.remove(); return;       // сверху нет места — прячем
-        }
-      }
-    }
-  }
-  requestAnimationFrame(()=>pop.classList.add('in'));
-
-  const detail = { name, city:city.name, km, xp, rub, ava: avatarSrc(ava), seed:Math.floor(Math.random()*1e9)+1 };
-  let t1 = setTimeout(()=>{ pop.classList.remove('in'); pop.classList.add('out'); }, 3800);
-  let t2 = setTimeout(()=>{ pop.remove(); ping.remove(); }, 4600);
-  // клик — открыть большую карточку тренировки
-  pop.addEventListener('click', ()=> openWorkoutCard(detail));
-  // ховер удерживает карточку, чтобы удобно кликнуть
-  pop.addEventListener('mouseenter', ()=>{
-    clearTimeout(t1); clearTimeout(t2);
-    pop.classList.remove('out'); pop.classList.add('in');
-  });
-  pop.addEventListener('mouseleave', ()=>{
-    t1 = setTimeout(()=>{ pop.classList.remove('in'); pop.classList.add('out'); }, 1400);
-    t2 = setTimeout(()=>{ pop.remove(); ping.remove(); }, 2000);
-  });
-}
-
 /* ——— Большая карточка тренировки: маршрут-трек + статистика ——— */
 const wback = document.createElement('div');
 wback.className = 'wcard-back';
@@ -972,28 +970,6 @@ wback.innerHTML = '<div class="wcard" role="dialog" aria-modal="true" aria-label
 document.body.appendChild(wback);
 const wcard = wback.firstElementChild;
 
-/* правдоподобный «GPS-трек»: блуждание с лёгким возвратом к старту */
-function buildRoute(seed, W, H, pad){
-  const rnd = seededRandom(seed);
-  const steps = 30 + Math.floor(rnd()*22);
-  let ang = rnd()*Math.PI*2, x=0, y=0;
-  const pts = [[0,0]];
-  for (let i=0;i<steps;i++){
-    ang += (rnd()-0.5)*1.15;
-    const back = Math.atan2(-y,-x);
-    ang += Math.atan2(Math.sin(back-ang), Math.cos(back-ang)) * 0.11 * (i/steps);
-    const len = 6 + rnd()*5;
-    x += Math.cos(ang)*len; y += Math.sin(ang)*len;
-    pts.push([x,y]);
-  }
-  const xs = pts.map(p=>p[0]), ys = pts.map(p=>p[1]);
-  const minx=Math.min(...xs), maxx=Math.max(...xs), miny=Math.min(...ys), maxy=Math.max(...ys);
-  const sw=W-pad*2, sh=H-pad*2;
-  const scale = Math.min(sw/((maxx-minx)||1), sh/((maxy-miny)||1));
-  const ox = pad + (sw-(maxx-minx)*scale)/2 - minx*scale;
-  const oy = pad + (sh-(maxy-miny)*scale)/2 - miny*scale;
-  return pts.map(p=>[p[0]*scale+ox, p[1]*scale+oy]);
-}
 function catmullOpen(P){
   if (P.length<2) return '';
   const p = i => P[Math.max(0,Math.min(P.length-1,i))];
@@ -1015,14 +991,30 @@ function decodePolyline(encoded, precision){
   let index = 0, lat = 0, lng = 0;
   const coords = [];
   const len = encoded.length;
-  while (index < len){
-    let shift = 0, result = 0, b;
-    do { b = encoded.charCodeAt(index++) - 63; result |= (b & 0x1f) << shift; shift += 5; } while (b >= 0x20);
-    lat += (result & 1) ? ~(result >> 1) : (result >> 1);
-    shift = 0; result = 0;
-    do { b = encoded.charCodeAt(index++) - 63; result |= (b & 0x1f) << shift; shift += 5; } while (b >= 0x20);
-    lng += (result & 1) ? ~(result >> 1) : (result >> 1);
-    coords.push([lat / factor, lng / factor]);
+  try {
+    while (index < len){
+      let shift = 0, result = 0, b;
+      do {
+        if (index >= len) throw new Error('Unexpected end of latitude chunk');
+        b = encoded.charCodeAt(index++) - 63;
+        result |= (b & 0x1f) << shift;
+        shift += 5;
+      } while (b >= 0x20);
+      lat += (result & 1) ? ~(result >> 1) : (result >> 1);
+      shift = 0; result = 0;
+      do {
+        if (index >= len) throw new Error('Unexpected end of longitude chunk');
+        b = encoded.charCodeAt(index++) - 63;
+        result |= (b & 0x1f) << shift;
+        shift += 5;
+      } while (b >= 0x20);
+      lng += (result & 1) ? ~(result >> 1) : (result >> 1);
+      const point = [lat / factor, lng / factor];
+      if (!Number.isFinite(point[0]) || !Number.isFinite(point[1])) throw new Error('Decoded point is not finite');
+      coords.push(point);
+    }
+  } catch (error){
+    return [];
   }
   return coords;
 }
@@ -1035,7 +1027,7 @@ function decimatePoints(points, maxPoints){
   out.push(points[points.length-1]);
   return out;
 }
-/* [lat,lng] → пиксели карточки, вписываем в бокс с отступом (как buildRoute для мока) */
+/* [lat,lng] → пиксели карточки, вписываем в бокс с отступом */
 function projectGeoPoints(points, W, H, pad){
   const xs = points.map(p=>p[1]), ys = points.map(p=>-p[0]);
   const minx=Math.min(...xs), maxx=Math.max(...xs), miny=Math.min(...ys), maxy=Math.max(...ys);
@@ -1045,101 +1037,60 @@ function projectGeoPoints(points, W, H, pad){
   const oy = pad + (sh-(maxy-miny)*scale)/2 - miny*scale;
   return points.map((_,i)=>[xs[i]*scale+ox, ys[i]*scale+oy]);
 }
-/* единая точка входа: реальный polyline с бэка, если есть — иначе мок-блуждание по seed */
+/* Единая точка входа: только реальный polyline с бэка. Нет валидного трека — нет карточки. */
 function routePointsFromRecord(record, seed, W, H, pad, maxPoints){
   if (record && record.polyline){
     const geo = decodePolyline(record.polyline);
     if (geo.length >= 2) return projectGeoPoints(decimatePoints(geo, maxPoints || 90), W, H, pad);
   }
-  return buildRoute(seed, W, H, pad); // подстраховка на случай нерабочего polyline
+  return null;
 }
 /* точка начала трека в гео-координатах — по ней ставим карточку на карту */
 function recordStartGeo(record){
   if (!record || !record.polyline) return null;
   const geo = decodePolyline(record.polyline);
-  if (!geo.length) return null;
+  if (geo.length < 2) return null;
   return geo[0];
 }
-/* ——— Энкодер polyline (обратный decodePolyline) — только для мока: превращаем
-   случайное блуждание в НАСТОЯЩУЮ encoded-строку, чтобы мок шёл через тот же
-   декодер, что и данные с бэка, а не по отдельному пути ——— */
-function encodePolylineValue(num){
-  num = num < 0 ? ~(num << 1) : (num << 1);
-  let out = '';
-  while (num >= 0x20){ out += String.fromCharCode((0x20 | (num & 0x1f)) + 63); num >>= 5; }
-  out += String.fromCharCode(num + 63);
-  return out;
-}
-function encodePolyline(points, precision){
-  const factor = Math.pow(10, precision || 5);
-  let out = '', prevLat = 0, prevLng = 0;
-  points.forEach(([lat,lng])=>{
-    const lat5 = Math.round(lat*factor), lng5 = Math.round(lng*factor);
-    out += encodePolylineValue(lat5-prevLat) + encodePolylineValue(lng5-prevLng);
-    prevLat = lat5; prevLng = lng5;
-  });
-  return out;
-}
-/* случайное блуждание в градусах (та же механика, что buildRoute, только в geo-координатах) */
-function mockGeoWalk(seed, base){
-  const rnd = seededRandom(seed);
-  // база — реальные координаты города (чтобы позиция на карте совпала с подписью),
-  // иначе просто «где-то в России»: форма трека важна, не точность
-  const baseLat = base ? base[0] : 55 + rnd()*10;
-  const baseLng = base ? base[1] : 37 + rnd()*40;
-  const steps = 30 + Math.floor(rnd()*22);
-  let ang = rnd()*Math.PI*2, x=0, y=0;
-  // одинаковый делитель для lat и lng: реальная проекция ниже (projectGeoPoints) плоская,
-  // без поправки на широту, так что и здесь поправку не делаем — иначе фигура растягивается
-  const mPerDeg = 111320;
-  const pts = [[baseLat, baseLng]];
-  for (let i=0;i<steps;i++){
-    ang += (rnd()-0.5)*1.15;
-    const back = Math.atan2(-y,-x);
-    ang += Math.atan2(Math.sin(back-ang), Math.cos(back-ang)) * 0.11 * (i/steps);
-    const len = 6 + rnd()*5;
-    x += Math.cos(ang)*len; y += Math.sin(ang)*len;
-    pts.push([baseLat + y/mPerDeg, baseLng + x/mPerDeg]);
-  }
-  return pts;
-}
-
 /* ——— Мини-карточка тренировки: трек + инфо (Figma) ——— */
 /* 6 подложек-карт под трек — захардкожены на фронте (с бэка не приходят), выбираются
    в случайном порядке для каждой карточки/кластера, чтобы карта не повторялась */
 const TCARD_MAPS = ['img/tcard-map-1.png','img/tcard-map-2.png','img/tcard-map-3.png','img/tcard-map-4.png','img/tcard-map-5.png','img/tcard-map-6.png'];
 const randomMapImg = () => pick(TCARD_MAPS);
 
-const TCARD_TRACK_W = 140, TCARD_TRACK_H = 164, TCARD_TRACK_LEFT = -4, TCARD_TRACK_TOP = -16;
+const TCARD_TRACK_W = 132, TCARD_TRACK_H = 132, TCARD_TRACK_LEFT = 0, TCARD_TRACK_TOP = 0;
 function trainingCardTrack(seed, record){
   const pad = 11;
   const P = routePointsFromRecord(record, seed, TCARD_TRACK_W, TCARD_TRACK_H, pad, 70);
+  if (!P || P.length < 2) return null;
   const d = catmullOpen(P);
   const s = P[0], e = P[P.length-1];
-  let len = 0;
-  for (let i=1;i<P.length;i++){ len += Math.hypot(P[i][0]-P[i-1][0], P[i][1]-P[i-1][1]); }
-  len = Math.round(len * 1.06); // поправка на сглаживание catmull-rom
-  const dash = `stroke-dasharray:${len};stroke-dashoffset:${len}`;
+  // pathLength=1 нормализует любую реальную polyline: dash-анимация больше не зависит
+  // от примерной длины сглаженного SVG-пути, поэтому live-треки рисуются так же плавно, как моки.
+  const dash = 'stroke-dasharray:1;stroke-dashoffset:1';
   const svg = `<svg viewBox="0 0 ${TCARD_TRACK_W} ${TCARD_TRACK_H}" width="${TCARD_TRACK_W}" height="${TCARD_TRACK_H}" aria-hidden="true">
-    <path d="${d}" fill="none" stroke="rgba(189,255,118,.24)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" style="${dash}"/>
-    <path d="${d}" fill="none" stroke="#BDFF76" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="${dash}"/>
-    <circle cx="${s[0].toFixed(1)}" cy="${s[1].toFixed(1)}" r="3.2" fill="#0c0d13" stroke="#BDFF76" stroke-width="1.8"/>
+    <path d="${d}" pathLength="1" fill="none" stroke="rgba(176,237,109,.24)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" style="${dash}"/>
+    <path d="${d}" pathLength="1" fill="none" stroke="#B0ED6D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="${dash}"/>
+    <circle cx="${s[0].toFixed(1)}" cy="${s[1].toFixed(1)}" r="3.2" fill="#0c0d13" stroke="#B0ED6D" stroke-width="1.8"/>
   </svg>`;
   return { svg, end: e };
 }
 
 function trainingCardHTML(city, record){
-  const name = pick(NAMES); // мок-поле — придёт в расширенной модели для подробной карточки
-  const money = weightedPick(MONEY_TIERS);
-  const rub = Math.round(rand(money.rub)); // мок: обмена ₽ пока нет в модели бэка
+  const name = 'Атлет Moneyrun';
+  const rub = 0;
   const seed = Math.floor(Math.random()*1e9)+1;
-  const { svg, end } = trainingCardTrack(seed, record);
+  const track = trainingCardTrack(seed, record);
+  if (!track) return null;
+  const { svg, end } = track;
   const pinLeft = TCARD_TRACK_LEFT + end[0];
   const pinTop = TCARD_TRACK_TOP + end[1];
   const avaHTML = avatarImg(record.image, 'tcard-avatar'); // image с бэка = аватар атлета, заглушка если пусто
   const locationRu = translateLocation(record.location);
   const km = record.distance;
   const xp = record.xp;
+  const xpHTML = record.hasXp ? `<span class="tcard-xp">+${xp}&nbsp;XP</span>` : '';
+  const xpText = record.hasXp ? `, +${xp} XP` : '';
   const html = `
     <div class="tcard-glow"><img src="${randomMapImg()}" alt="" aria-hidden="true"></div>
     <div class="tcard-track">${svg}</div>
@@ -1148,31 +1099,32 @@ function trainingCardHTML(city, record){
       <div class="tcard-ava">${avaHTML}</div>
       <div class="tcard-body">
         <div class="tcard-city" title="${locationRu}">${locationRu}</div>
-        <div class="tcard-stats"><span class="tcard-km">${km}&nbsp;км</span><span class="tcard-xp">+${xp}&nbsp;XP</span></div>
+        <div class="tcard-stats"><span class="tcard-km">${km}&nbsp;км</span>${xpHTML}</div>
       </div>
     </div>
-    <span class="sr-only">${name}, ${locationRu}, ${km} км, +${xp} XP</span>`;
-  const detail = { name, city: locationRu, km, xp, rub, ava: avatarSrc(record.image), seed, polyline: record.polyline || null };
+    <span class="sr-only">${name}, ${locationRu}, ${km} км${xpText}</span>`;
+  const detail = { name, city: locationRu, km, xp, hasXp: record.hasXp, rub, ava: avatarSrc(record.image), seed, polyline: record.polyline || null };
   return { html, detail };
 }
 
 /* ── Жизненный цикл мини-карточки: появление (раскадровка) → пауза → исчезновение → следующая ── */
 const tcardsLayer = document.getElementById('tcards');
 const TCARD_W = 196, TCARD_H = 132;
-const TCARD_VISUAL_W = 200, TCARD_VISUAL_H = 156;
-const TCARD_ENTER_MS = 2700, TCARD_HOLD_MS = 4400, TCARD_EXIT_MS = 450;
+const TCARD_VISUAL_W = 200, TCARD_VISUAL_H = 132;
+const TCARD_ENTER_MS = 2700, TCARD_HOLD_MS = 20000, TCARD_EXIT_MS = 450;
 
 function spawnTrainingCard(){
   const city = pick(CITIES);
   const record = fetchTrainingRecord(city);
   if (!record || !record.polyline || !record.location) return; // нет трека/локации с бэка — не показываем и не считаем
 
-  const { html, detail } = trainingCardHTML(city, record);
-  applyTodayWorkout(detail); // данные всегда попадают в «Сегодня в движении», даже если тренировка не в РФ
+  const card = trainingCardHTML(city, record);
+  if (!card) return;
+  const { html, detail } = card;
 
   if (!isInRussia(record.location)) return; // тренировка не в РФ — на карте не показываем
 
-  // позиция на карте — из точки начала реального трека (polyline), а не из мок-списка
+  // позиция на карте — из точки начала реального трека (polyline)
   let [px, py] = svgToPx(city.x, city.y);
   if (isMobileCompact()){
     [px, py] = mobilePopPoint();
@@ -1205,84 +1157,6 @@ function spawnTrainingCard(){
   let t1 = setTimeout(()=> el.classList.add('out'), TCARD_ENTER_MS + TCARD_HOLD_MS);
   let t2 = setTimeout(()=> el.remove(), TCARD_ENTER_MS + TCARD_HOLD_MS + TCARD_EXIT_MS);
   if (ENABLE_WORKOUT_DETAIL_CARD) el.addEventListener('click', ()=> openWorkoutCard(detail));
-  el.addEventListener('mouseenter', ()=>{ clearTimeout(t1); clearTimeout(t2); el.classList.remove('out'); });
-  el.addEventListener('mouseleave', ()=>{
-    t1 = setTimeout(()=> el.classList.add('out'), 900);
-    t2 = setTimeout(()=> el.remove(), 900 + TCARD_EXIT_MS);
-  });
-}
-
-function spawnTrainingCardBurst(){
-  // изредка вместо одиночных карточек — большой забег: много тренировок в одной локации
-  // показываем одним кластер-маркером, а не стопкой карточек (иначе накладываются)
-  if (Math.random() < .07){ spawnRunCluster(); return; }
-  const count = Math.random() < .08 ? 2 : 1;
-  for (let i=0;i<count;i++){
-    setTimeout(spawnTrainingCard, i * rand([520,1200]));
-  }
-}
-
-/* Порог: 1–2 тренировки в точке — обычные карточки, 3+ — сливаются в кластер.
-   В моке скопление эмулируем целым «забегом»; при реальном бэке здесь будет
-   агрегация записей по локации. Число атлетов = размер забега. */
-const CLUSTER_MIN = 3;
-// склонение «тренировка» по числу: 1 тренировкА, 2–4 тренировкИ, 5–20 тренировОК, 21 тренировкА …
-function pluralTrainings(n){
-  const mod10 = n % 10, mod100 = n % 100;
-  if (mod10 === 1 && mod100 !== 11) return 'тренировка';
-  if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return 'тренировки';
-  return 'тренировок';
-}
-function clusterDotsHTML(seed){
-  const rnd = seededRandom(seed);
-  const cx = 66, cy = 66, R = 50; // в круге glow 132×132
-  const n = 8 + Math.floor(rnd()*6);
-  let out = '';
-  for (let i=0;i<n;i++){
-    const a = rnd()*Math.PI*2, r = Math.sqrt(rnd())*R;
-    const x = cx + Math.cos(a)*r, y = cy + Math.sin(a)*r;
-    const d = (4 + rnd()*3).toFixed(0);
-    const op = (0.5 + rnd()*0.5).toFixed(2);
-    out += `<span class="tcluster-dot" style="left:${x.toFixed(0)}px;top:${y.toFixed(0)}px;width:${d}px;height:${d}px;opacity:${op}"></span>`;
-  }
-  return out;
-}
-function runClusterHTML(city, count){
-  const loc = translateLocation(city.name);
-  const avaHTML = [pickAvatar(), pickAvatar(), pickAvatar()].map(a => avatarImg(a, '')).join('');
-  return `
-    <div class="tcluster-glow"><img src="${randomMapImg()}" alt="" aria-hidden="true"></div>
-    <div class="tcluster-dots">${clusterDotsHTML(count*7 + city.x)}</div>
-    <div class="tcluster-pill">
-      <div class="tcluster-avas">${avaHTML}</div>
-      <div class="tcluster-body">
-        <div class="tcluster-count"><b>${count.toLocaleString('ru-RU')}</b> ${pluralTrainings(count)}</div>
-        <div class="tcluster-loc" title="${loc}">${loc}</div>
-      </div>
-    </div>
-    <span class="sr-only">${loc}: ${count} ${pluralTrainings(count)}</span>`;
-}
-function spawnRunCluster(){
-  const city = pick(CITIES);
-  const count = CLUSTER_MIN + 40 + Math.floor(Math.random()*560); // ~40–600 атлетов
-  let [px, py] = svgToPx(city.x, city.y);
-  if (isMobileCompact()){ [px, py] = mobilePopPoint(); }
-  const margin = 12, halfW = TCARD_VISUAL_W/2, halfH = TCARD_VISUAL_H/2;
-  const mapBounds = !isMobileCompact() ? trainingCardMapBounds(halfW, halfH) : null;
-  const pos = resolveTrainingCardPosition(px, py, mapBounds, halfW, halfH, margin);
-  if (!pos) return;
-  [px, py] = pos;
-  const el = document.createElement('div');
-  el.className = 'tcluster';
-  el.style.left = px + 'px';
-  el.style.top = py + 'px';
-  el.dataset.x = px;
-  el.dataset.y = py;
-  el.innerHTML = runClusterHTML(city, count);
-  el.title = `${translateLocation(city.name)}: ${count} ${pluralTrainings(count)}`;
-  tcardsLayer.appendChild(el);
-  let t1 = setTimeout(()=> el.classList.add('out'), TCARD_ENTER_MS + TCARD_HOLD_MS);
-  let t2 = setTimeout(()=> el.remove(), TCARD_ENTER_MS + TCARD_HOLD_MS + TCARD_EXIT_MS);
   el.addEventListener('mouseenter', ()=>{ clearTimeout(t1); clearTimeout(t2); el.classList.remove('out'); });
   el.addEventListener('mouseleave', ()=>{
     t1 = setTimeout(()=> el.classList.add('out'), 900);
@@ -1383,6 +1257,7 @@ function openWorkoutCard(base){
   // поэтому в «листалке» только карта маршрута
   const slides = [`<div class="wc-slide wc-slide-map">${workoutMapSVG(base.seed, base)}</div>`];
   const dots = slides.map((_,i) => `<span class="d${i===0?' active':''}"></span>`).join('');
+  const xpChip = base.hasXp ? `<span class="wc-chip xp">+${base.xp} XP</span>` : '';
 
   wcard.scrollTop = 0;
   wcard.innerHTML = `
@@ -1401,7 +1276,7 @@ function openWorkoutCard(base){
         </div>
       </div>
       <div class="wc-chips">
-        <span class="wc-chip xp">+${base.xp} XP</span>
+        ${xpChip}
         <span class="wc-chip rub">+${base.rub} ₽</span>
         <span class="wc-chip ghost"><span class="ico">${ICO_DEVICE}</span>${device}</span>
         <span class="wc-chip ghost"><span class="ico">${weather.icon}</span>${temp}°</span>
@@ -1449,45 +1324,6 @@ function closeWorkoutCard(){
   wback.classList.remove('open');
   document.body.style.overflow = '';
 }
-// Темп всплывания карточек = реальный поток ~8000 тренировок/сутки, распределённый
-// по суточному профилю (ночью реже, днём и вечером чаще). Интервалы экспоненциальные —
-// пуассоновский поток, как настоящие независимые события, а не фиксированные «бакеты».
-const TARGET_DAILY_ACTIVITIES = 8000;
-function nextPopDelay(){
-  const weightsSum = HOURLY_WORKOUT_WEIGHTS.reduce((sum,value)=>sum+value,0);
-  const hourWeight = HOURLY_WORKOUT_WEIGHTS[moscowNow().getHours()];
-  const perHour = TARGET_DAILY_ACTIVITIES * hourWeight / weightsSum; // тренировок в текущий час
-  const meanMs = 3600000 / Math.max(1, perHour);                     // средний интервал сейчас
-  return Math.round(-Math.log(1 - Math.random()) * meanMs);          // экспоненциальный интервал
-}
-if (ENABLE_TRAINING_CARDS){
-  (function scheduleNextTrainingCard(){
-    setTimeout(()=>{
-      spawnTrainingCardBurst();
-      scheduleNextTrainingCard();
-    }, nextPopDelay());
-  })();
-  for (let i=0;i<(isMobileCompact() ? 1 : 2);i++) setTimeout(spawnTrainingCard, rand([700,3600]));
-}
-function spawnPopBurst(){
-  const count = Math.random() < .08 ? 2 : 1;
-  for (let i=0;i<count;i++){
-    setTimeout(spawnPop, i * rand([520,1200]));
-  }
-}
-/* ВРЕМЕННО отключено на время ревью новых мини-карточек (.tcard) — вернём с анимацией входа/выхода */
-const ENABLE_LEGACY_POPUPS = false;
-if (ENABLE_LEGACY_POPUPS){
-  (function scheduleNextPop(){
-    setTimeout(()=>{
-      spawnPopBurst();
-      scheduleNextPop();
-    }, nextPopDelay());
-  })();
-  for (let i=0;i<(isMobileCompact() ? 1 : 2);i++) setTimeout(spawnPop, rand([700,3600]));
-}
-
-
 const btn = document.getElementById('helpBtn');
 const pop = document.getElementById('helpPop');
 btn.addEventListener('click', e=>{
@@ -1508,12 +1344,11 @@ document.addEventListener('keydown', e=>{
   }
 });
 
-/* мини-дашборд «Сегодня»: стартует от московской полуночи и пополняется от карточек на карте.
-   today приходит в форме { activities, xp, exchange } — сейчас из мока (fetchTodaySnapshot),
-   позже эту же форму будет отдавать бэк. */
+/* Мини-дашборд «Сегодня»: стартует с нулей и ждёт statistic.today.new от SignalR. */
 (function(){
   var today = fetchTodaySnapshot();
   window.MR_TODAY = today;
+  window.MR_SET_TODAY = setTodaySnapshot;
   var elActivities=document.getElementById('tdActivities'), elXp=document.getElementById('tdXp'), elExchange=document.getElementById('tdExchange');
   if(!elActivities) return;
   var shown = { activities: Math.max(0, today.activities - 2), xp: Math.max(0, today.xp - 32), exchange: Math.max(0, today.exchange - 90) };
@@ -1525,6 +1360,9 @@ document.addEventListener('keydown', e=>{
     elActivities.textContent=fmt(shown.activities); elXp.textContent=fmt(shown.xp); elExchange.textContent=fmt(shown.exchange);
   }, 40);
 })();
+startMoneyrunLiveHub();
+window.MR_RECEIVE_TRAINING = receiveLiveTrainingRecord;
+window.MR_RECEIVE_TODAY = receiveLiveTodaySnapshot;
 </script>
 </body>
 </html>

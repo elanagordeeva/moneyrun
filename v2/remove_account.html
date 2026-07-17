@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="noindex, nofollow">
   <title>Как удалить аккаунт — Moneyrun</title>
   <meta name="description" content="Как удалить аккаунт в приложении Moneyrun: пошаговая инструкция и форма запроса на удаление данных.">
   <meta name="theme-color" content="#eef2ec">
@@ -47,6 +46,8 @@
     html{scroll-behavior:smooth;font-size:16px}
     @media(min-width:1600px){html{font-size:18px} :root{--maxw:1440px}}
     @media(min-width:1920px){html{font-size:20px} :root{--maxw:1600px}}
+    @media(min-width:2400px){html{font-size:24px} :root{--maxw:1900px}}
+    @media(min-width:3200px){html{font-size:28px} :root{--maxw:2200px}}
     body{background:var(--surface);color:var(--ink);font-family:var(--fb);line-height:1.65;-webkit-font-smoothing:antialiased}
     ::selection{background:var(--lime);color:var(--lime-ink)}
     img{max-width:100%;display:block}
@@ -56,7 +57,7 @@
     .nav-logo:hover{transform:translateY(-1px)}
     .nav-logo img.logo-mark{height:48px;width:auto;display:block;flex:none}
 
-    .legal{max-width:820px;margin:0 auto;padding:3rem clamp(1.25rem,5vw,4rem) 4rem}
+    .legal{max-width:var(--maxw);margin:0 auto;padding:3rem clamp(1.25rem,5vw,4rem) 4rem}
     .legal-back{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--fb);font-size:.9rem;color:var(--muted);text-decoration:none;margin-bottom:1.2rem;transition:color .2s}
     .legal-back:hover{color:var(--lime-deep)}
     .p-hero{position:relative;overflow:hidden;border-radius:var(--r-lg);background:#11121C;color:#f1f3ee;margin:0 0 2.4rem;padding:clamp(2.4rem,5vw,4.2rem) clamp(1.5rem,5vw,3rem);isolation:isolate}
@@ -127,7 +128,7 @@
 <body>
 
 <main class="legal">
-  <a href="index.html" class="legal-back">← На главную</a>
+  <a href="/" class="legal-back">← На главную</a>
   <header class="p-hero">
     <span class="p-hero-ghost">MR</span>
     <h1>Как удалить аккаунт</h1>
@@ -177,9 +178,9 @@
 </main>
 
 <footer><div class="foot-inner">
-  <div class="foot-c"><a href="index.html" class="nav-logo" style="margin-bottom:.4rem"><img class="logo-mark" src="img/logo-hor-black.svg" alt="Moneyrun" height="28"></a><p class="tagline">Социально-благотворительный проект по развитию бегового движения</p><p class="foot-slogan">Run, <span>Earn,</span> Enjoy!</p></div>
+  <div class="foot-c"><a href="/" class="nav-logo" style="margin-bottom:.4rem"><img class="logo-mark" src="img/logo-hor-black.svg" alt="Moneyrun" height="28"></a><p class="tagline">Социально-благотворительный проект по развитию бегового движения</p><p class="foot-slogan">Run, <span>Earn,</span> Enjoy!</p></div>
   <div class="foot-c"><span class="label">Связаться</span><a href="https://apps.apple.com/app/id6444129392" target="_blank" rel="noopener">App Store</a><a href="https://play.google.com/store/apps/details?id=tech.aml.moneyrun" target="_blank" rel="noopener">Google Play</a><a href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram · @moneyrun</a></div>
-</div><div class="foot-bottom"><span>© 2023 — 2026 Moneyrun</span><span><a href="guide.html">Правила платформы</a></span></div></footer>
+</div><div class="foot-bottom"><span>© 2023 — 2026 Moneyrun</span><span><a href="/guide">Правила платформы</a></span></div></footer>
 
 <script>
 /* Статический сайт: форма собирает поля и открывает письмо на support@moneyrun.tech.

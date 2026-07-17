@@ -1,23 +1,4 @@
-# ВЕРСИЯ ДЛЯ ЗАПУСКА. При открытии индексации:
-#   1) заменить содержимым этого файла активный robots.txt
-#   2) убрать <meta name="robots" content="noindex, nofollow"> со всех страниц
 User-agent: *
-Allow: /
-
-# AI-поисковики и ассистенты (нужны для цитирования в ответах)
-User-agent: GPTBot
-Allow: /
-User-agent: ChatGPT-User
-Allow: /
-User-agent: PerplexityBot
-Allow: /
-User-agent: ClaudeBot
-Allow: /
-User-agent: Google-Extended
-Allow: /
-User-agent: Bingbot
-Allow: /
-User-agent: YandexBot
 Allow: /
 
 Sitemap: https://moneyrun.tech/sitemap.xml
