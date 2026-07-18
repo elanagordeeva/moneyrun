@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>step-track variants · Moneyrun</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#eef2ec;--surface:#ffffff;--ink:#0e120e;--muted:#6b7068;--muted2:#9aa097;
+    --border:#e6eae3;--lime:#d0f85d;--lime2:#d5ffa8;--lime-deep:#bee14b;--lime-ink:#1f2a05;
+    --fd:'Manrope',system-ui,sans-serif;--fb:'Inter',system-ui,sans-serif;--fm:'JetBrains Mono',ui-monospace,monospace;
+    --sh-md:0 14px 30px -10px rgba(15,30,12,.10),0 8px 18px -6px rgba(15,30,12,.06);
+    --sh-lg:0 30px 70px -20px rgba(15,30,12,.16),0 18px 38px -14px rgba(15,30,12,.08);
+    --sh-card:0 36px 88px -28px rgba(15,40,12,.22),0 22px 44px -20px rgba(15,40,12,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--fb);line-height:1.65;-webkit-font-smoothing:antialiased}
+  img{display:block;max-width:100%}
+
+  .lab-header{padding:3rem clamp(1rem,4vw,3rem) 1rem;max-width:1240px;margin:0 auto}
+  .lab-header h1{font-family:var(--fd);font-weight:800;font-size:clamp(2rem,4vw,2.6rem);letter-spacing:-.03em;margin-bottom:.4rem}
+  .lab-header p{color:var(--muted);max-width:680px;font-size:1rem}
+
+  .variant{padding:3rem clamp(1rem,4vw,3rem);max-width:1240px;margin:0 auto}
+  .variant + .variant{border-top:1px dashed #c8cdc4}
+  .variant-tag{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem .85rem;border-radius:999px;background:var(--surface);border:1px solid var(--border);font-family:var(--fm);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
+  .variant-tag b{color:var(--ink)}
+  .variant h2{font-family:var(--fd);font-weight:800;font-size:clamp(1.3rem,2vw,1.7rem);letter-spacing:-.02em;margin-bottom:.4rem}
+  .variant .desc{color:var(--muted);max-width:680px;margin-bottom:2rem;font-size:.95rem}
+
+  /* ── block shell — высота определяется текстом ── */
+  .block{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,5rem);align-items:stretch;padding:1rem 0}
+  .t{display:flex;flex-direction:column;justify-content:center;min-width:0}
+  .t .step-num{display:inline-flex;align-items:center;gap:.7rem;margin-bottom:1rem}
+  .t .step-num .n{display:flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:14px;background:var(--lime);color:var(--lime-ink);font-family:var(--fd);font-weight:800;font-size:1.1rem;box-shadow:0 10px 24px -8px rgba(190,225,75,.6)}
+  .t .step-num .s{font-family:var(--fm);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+  .t .btitle{font-family:var(--fd);font-weight:800;font-size:clamp(1.5rem,2.6vw,2.2rem);line-height:1.1;letter-spacing:-.025em;margin-bottom:.7rem}
+  .t .bdesc{color:var(--muted);line-height:1.7;font-size:1rem;margin-bottom:1rem}
+  .t .facts{list-style:none;display:flex;flex-direction:column;gap:.7rem;margin-top:1rem}
+  .t .facts li{position:relative;padding-left:1.3rem;line-height:1.55;font-size:.95rem}
+  .t .facts li::before{content:'';position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--ink)}
+  .t .facts li b{font-weight:700}
+  .t .facts li .hl{color:var(--lime-ink);background:var(--lime);padding:0 .35em;border-radius:6px;font-weight:700;font-style:italic}
+
+  /* vbox занимает всю высоту блока (от text), без min-height */
+  .vbox{position:relative;display:flex;align-items:center;justify-content:center;min-width:0;min-height:0}
+  .vbox .deco-blob{position:absolute;width:80%;height:80%;border-radius:50%;background:var(--lime2);filter:blur(40px);opacity:.55;z-index:0;left:10%;top:10%}
+  .stage{position:relative;width:100%;height:100%;min-height:0;z-index:1}
+
+  /* phone screenshot base — высота от контейнера, ширина auto */
+  .ph{position:absolute;border-radius:28px;background:var(--surface);box-shadow:var(--sh-card);transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .35s ease;overflow:hidden;cursor:pointer}
+  .ph img{display:block;height:100%;width:auto;border-radius:28px}
+
+  /* ─── VARIANT C — оба прямые, бок-о-бок, лёгкий overlap ─── */
+  .v-c .ph{height:96%;top:2%}
+  .v-c .ph-1{left:6%;z-index:3}
+  .v-c .ph-2{right:6%;z-index:2}
+  .v-c .ph{animation:bob 8s ease-in-out infinite}
+  .v-c .ph-2{animation-delay:-4s}
+  .v-c .ph:hover{transform:translateY(-8px) scale(1.03);z-index:20;box-shadow:var(--sh-lg),0 50px 100px -20px rgba(15,30,12,.3);animation:none}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+  /* ─── VARIANT D — один доминант справа, второй маленький слева ─── */
+  .v-d .ph-1{right:4%;top:0;height:100%;z-index:2;transform:rotate(3deg);--rot:3deg}
+  .v-d .ph-2{left:18%;top:14%;height:74%;z-index:3;transform:rotate(-7deg);--rot:-7deg}
+  .v-d .ph{animation:floaty 9s ease-in-out infinite}
+  .v-d .ph-2{animation-delay:-3s}
+  .v-d .ph:hover{transform:rotate(0) translateY(-8px) scale(1.04);z-index:20;box-shadow:var(--sh-lg),0 50px 100px -20px rgba(15,30,12,.3);animation:none}
+  @keyframes floaty{0%,100%{transform:rotate(var(--rot)) translateY(0)}50%{transform:rotate(var(--rot)) translateY(-10px)}}
+
+  /* mobile — fallback: оставляем как есть, но даём min-height чтобы скрины не схлопывались */
+  @media(max-width:880px){
+    .block{grid-template-columns:1fr;gap:2rem}
+    .vbox{min-height:520px}
+  }
+</style>
+</head>
+<body>
+
+<header class="lab-header">
+  <h1>«Подключи трекер» — варианты C и D</h1>
+  <p>Высота блока определяется текстовой колонкой. Скрины используют <code>height:100%</code> и не выходят за пределы блока — ширина считается автоматически по соотношению сторон.</p>
+</header>
+
+<!-- ═══════════ VARIANT C ═══════════ -->
+<section class="variant v-c">
+  <span class="variant-tag"><b>Вариант C</b> · Прямые, бок-о-бок</span>
+  <h2>Два скрина без поворотов, с лёгким перекрытием</h2>
+  <p class="desc">Оба телефона стоят ровно (без rotate), занимают по 96% высоты блока. Левый чуть выезжает вправо, правый — влево, мягко накладываются друг на друга. Минималистично, продуктово, без декоративной «динамики».</p>
+
+  <div class="block">
+    <div class="t">
+      <div class="step-num"><span class="n">1</span><span class="s">Шаг первый</span></div>
+      <h3 class="btitle">Подключи трекер и начни бегать</h3>
+      <p class="bdesc">Привязываешь свой трекер за 30 секунд. Тренировки попадают в Moneyrun автоматически — никаких ручных вводов и скриншотов.</p>
+      <ul class="facts">
+        <li><b>Strava, Garmin, Apple Watch, Suunto, Polar, Coros</b> — авторизация в один тап</li>
+        <li>Учитываются только <span class="hl">беговые тренировки</span></li>
+        <li>Анализируй активность, ставь новые беговые цели и <b>следи за прогрессом в динамике</b></li>
+      </ul>
+    </div>
+
+    <div class="vbox">
+      <div class="deco-blob"></div>
+      <div class="stage">
+        <div class="ph ph-1"><img src="art/full_1-2.png.webp" alt="Dubai Бег — детальная карточка"></div>
+        <div class="ph ph-2"><img src="art/full_3.png.webp" alt="Пульсовые зоны"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ VARIANT D ═══════════ -->
+<section class="variant v-d">
+  <span class="variant-tag"><b>Вариант D</b> · Доминанта + спутник</span>
+  <h2>Большой скрин справа, маленький слева</h2>
+  <p class="desc">Главный — Dubai Бег (100% высоты блока, +3°). Маленький — Пульсовые зоны (70% высоты, −7°), сидит слева на уровне середины. Сильная иерархия, фокус на одном экране.</p>
+
+  <div class="block">
+    <div class="t">
+      <div class="step-num"><span class="n">1</span><span class="s">Шаг первый</span></div>
+      <h3 class="btitle">Подключи трекер и начни бегать</h3>
+      <p class="bdesc">Привязываешь свой трекер за 30 секунд. Тренировки попадают в Moneyrun автоматически — никаких ручных вводов и скриншотов.</p>
+      <ul class="facts">
+        <li><b>Strava, Garmin, Apple Watch, Suunto, Polar, Coros</b> — авторизация в один тап</li>
+        <li>Учитываются только <span class="hl">беговые тренировки</span></li>
+        <li>Анализируй активность, ставь новые беговые цели и <b>следи за прогрессом в динамике</b></li>
+      </ul>
+    </div>
+
+    <div class="vbox">
+      <div class="deco-blob"></div>
+      <div class="stage">
+        <div class="ph ph-2"><img src="art/full_3.png.webp" alt="Пульсовые зоны"></div>
+        <div class="ph ph-1"><img src="art/full_1-2.png.webp" alt="Dubai Бег — детальная карточка"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

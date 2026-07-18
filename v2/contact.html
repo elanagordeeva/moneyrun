@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Как удалить аккаунт — Moneyrun</title>
-  <meta name="description" content="Как удалить аккаунт в приложении Moneyrun: пошаговая инструкция и форма запроса на удаление данных.">
+  <title>Связаться с нами — Moneyrun</title>
+  <meta name="description" content="Свяжись с командой Moneyrun: поддержка проекта, сотрудничество, предложения по улучшению сервиса.">
   <meta name="theme-color" content="#eef2ec">
-  <link rel="canonical" href="https://moneyrun.tech/remove_account">
+  <link rel="canonical" href="https://moneyrun.tech/contact">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="apple-touch-icon" href="favicon.png">
@@ -15,9 +15,9 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Moneyrun">
   <meta property="og:locale" content="ru_RU">
-  <meta property="og:url" content="https://moneyrun.tech/remove_account">
-  <meta property="og:title" content="Как удалить аккаунт — Moneyrun">
-  <meta property="og:description" content="Пошаговая инструкция по удалению аккаунта Moneyrun и форма запроса.">
+  <meta property="og:url" content="https://moneyrun.tech/contact">
+  <meta property="og:title" content="Связаться с нами — Moneyrun">
+  <meta property="og:description" content="Форма связи Moneyrun для случаев, когда нет доступа к аккаунту в приложении.">
   <meta property="og:image" content="https://moneyrun.tech/og-moneyrun-preview.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -25,8 +25,8 @@
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Как удалить аккаунт — Moneyrun">
-  <meta name="twitter:description" content="Пошаговая инструкция по удалению аккаунта Moneyrun и форма запроса.">
+  <meta name="twitter:title" content="Связаться с нами — Moneyrun">
+  <meta name="twitter:description" content="Форма связи Moneyrun для случаев, когда нет доступа к аккаунту в приложении.">
   <meta name="twitter:image" content="https://moneyrun.tech/og-moneyrun-preview.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,44 +67,50 @@
     .p-hero-ghost{position:absolute;right:clamp(-1rem,2vw,2rem);top:50%;transform:translateY(-50%);font-family:var(--fd);font-weight:800;font-style:italic;font-variation-settings:'slnt' -10;font-size:clamp(9rem,26vw,22rem);line-height:.8;color:rgba(189,255,118,.07);z-index:0;letter-spacing:-.04em;pointer-events:none}
     .legal h1{font-family:var(--fd);font-weight:800;font-style:italic;font-variation-settings:'slnt' -10;font-size:clamp(2.4rem,6.5vw,5.2rem);letter-spacing:-.035em;line-height:1;margin:0 0 1.4rem;color:#fff}
     .p-hero .p-hero-lead{max-width:64ch;color:rgba(255,255,255,.82);font-size:clamp(1rem,1.5vw,1.16rem);line-height:1.6;margin:0}
+    .p-hero .wide-break{display:inline}
+    @media(min-width:760px){.p-hero .wide-break{display:block}}
 
-    .legal h2{font-family:var(--fd);font-weight:800;font-size:clamp(1.5rem,3vw,2rem);line-height:1.14;margin:3rem 0 1.2rem;padding-top:1.35rem;border-top:1px solid var(--border);color:var(--ink)}
-    .legal h2:first-of-type{margin-top:0}
     .legal p{color:var(--ink2);line-height:1.78;margin-bottom:1.05rem;font-size:1rem}
     .legal p a{color:inherit;text-decoration:underline;text-decoration-color:rgba(143,189,89,.72);text-decoration-thickness:1px;text-underline-offset:.16em;font-weight:700;transition:color .15s,text-decoration-color .15s}
     .legal p a:hover{color:#11121C;text-decoration-color:var(--lime-deep)}
 
-    /* шаги удаления */
-    .steps{list-style:none;counter-reset:st;margin:1.2rem 0 1.4rem;padding:0;display:grid;gap:.7rem}
-    .steps li{counter-increment:st;position:relative;padding:1rem 1.1rem 1rem 3.4rem;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-md);color:var(--ink2);line-height:1.6}
-    .steps li::before{content:counter(st);position:absolute;left:1rem;top:.95rem;width:1.7rem;height:1.7rem;border-radius:50%;background:var(--lime);color:var(--lime-ink);font-family:var(--fd);font-weight:800;font-size:.95rem;display:flex;align-items:center;justify-content:center}
-    .steps li b{color:var(--ink);font-weight:700}
-
-    /* блок-заметка про срок */
-    .note{border-left:3px solid var(--lime-deep);background:var(--surface2);border-radius:0 var(--r-md) var(--r-md) 0;padding:.95rem 1.1rem;margin:1.2rem 0 0}
-    .note p{margin:0;font-size:.96rem;line-height:1.65;color:var(--ink2)}
-    .note b{color:var(--ink)}
-
     /* форма */
-    .rm-form{display:grid;gap:1.1rem;max-width:580px;margin:1.4rem 0 .5rem}
-    .rm-field{display:grid;gap:.4rem}
-    .rm-field label{font-family:var(--fd);font-weight:700;font-size:.9rem;color:var(--ink)}
+    .rm-form{display:grid;gap:1.3rem;max-width:580px;margin:0 0 .5rem}
+    .rm-field{display:grid;gap:.45rem}
+    .rm-field>label,.rm-legend{font-family:var(--fd);font-weight:700;font-size:1rem;color:var(--ink)}
     .rm-field .req{color:var(--lime-deep)}
-    .rm-form input,.rm-form select,.rm-form textarea{font-family:var(--fb);font-size:1rem;color:var(--ink);background:var(--surface);border:1px solid var(--border2);border-radius:var(--r-sm);padding:.7rem .85rem;width:100%;outline:none;transition:border-color .15s,box-shadow .15s}
-    .rm-form input:focus,.rm-form select:focus,.rm-form textarea:focus{border-color:var(--ink);box-shadow:0 0 0 3px rgba(189,255,118,.35)}
-    .rm-form textarea{min-height:110px;resize:vertical;line-height:1.55}
-    .rm-form select{appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236b7068' stroke-width='2.4' stroke-linecap='round'><path d='M6 9l6 6 6-6'/></svg>");background-repeat:no-repeat;background-position:right .85rem center;padding-right:2.4rem;cursor:pointer}
+    .rm-hint-inline{font-size:.86rem;color:var(--muted);font-weight:400;margin-top:-.15rem}
+    .rm-form input[type=text],.rm-form input[type=tel],.rm-form textarea{font-family:var(--fb);font-size:1rem;color:var(--ink);background:var(--surface);border:1px solid var(--border2);border-radius:var(--r-sm);padding:.7rem .85rem;width:100%;outline:none;transition:border-color .15s,box-shadow .15s}
+    .rm-form input:focus,.rm-form textarea:focus{border-color:var(--ink);box-shadow:0 0 0 3px rgba(189,255,118,.35)}
+    .rm-form textarea{min-height:120px;resize:vertical;line-height:1.55}
+
+    /* радиокнопки выбора темы */
+    fieldset.rm-field{border:0;padding:0;margin:0}
+    .rm-radios{display:grid;gap:.1rem;margin-top:.15rem}
+    .rm-radio{display:flex;align-items:flex-start;gap:.65rem;cursor:pointer;padding:.55rem .35rem;border-radius:8px;font-size:1rem;color:var(--ink);line-height:1.5;transition:background .15s}
+    .rm-radio:hover{background:var(--surface2)}
+    .rm-radio input[type=radio]{width:1.15rem;height:1.15rem;margin-top:.18rem;accent-color:var(--lime-deep);flex:none;cursor:pointer}
+
     .rm-submit{justify-self:start;display:inline-flex;align-items:center;gap:.5rem;background:var(--ink);color:#fff;font-family:var(--fd);font-weight:700;font-size:1rem;border:0;border-radius:999px;padding:.85rem 1.6rem;cursor:pointer;transition:transform .18s,background .2s;margin-top:.2rem}
     .rm-submit:hover{transform:translateY(-1px);background:#000}
-    .rm-hint{font-size:.86rem;color:var(--muted);margin-top:.1rem}
-    .rm-contact{margin-top:1.1rem;font-size:1rem;color:var(--ink2)}
-    .rm-contact a{font-weight:700;color:var(--ink);text-decoration:underline;text-decoration-color:rgba(143,189,89,.72);text-underline-offset:.16em}
-    .rm-contact a:hover{color:var(--lime-deep)}
+    .rm-submit:disabled{opacity:.6;cursor:default;transform:none}
+    .rm-consent{font-size:.86rem;color:var(--muted);line-height:1.55;margin:0}
+    .rm-consent a{color:var(--ink2);text-decoration:underline;text-decoration-color:rgba(143,189,89,.72);text-underline-offset:.16em;font-weight:600}
+    .rm-consent a:hover{color:var(--lime-deep)}
+
+    /* сообщение после отправки */
+    .rm-state{display:none;border-left:3px solid var(--lime-deep);background:var(--surface2);border-radius:0 var(--r-md) var(--r-md) 0;padding:1.1rem 1.2rem;margin:0 0 .5rem;max-width:580px}
+    .rm-state.show{display:block}
+    .rm-state.err{border-left-color:#d9534f}
+    .rm-state strong{display:block;font-family:var(--fd);font-weight:800;color:var(--ink);margin-bottom:.35rem;font-size:1.05rem}
+    .rm-state p{margin:0;color:var(--ink2);font-size:.96rem;line-height:1.6}
+    .rm-state .tg-btn{display:inline-flex;align-items:center;gap:.4rem;margin-top:.8rem;background:var(--ink);color:#fff;font-family:var(--fd);font-weight:700;font-size:.92rem;border-radius:999px;padding:.6rem 1.15rem;text-decoration:none;transition:background .2s}
+    .rm-state .tg-btn:hover{background:#000;color:#fff}
+
 
     @media(max-width:680px){
       .p-hero{padding:2rem 1.4rem 1.8rem;border-radius:22px;min-height:370px}
       .legal h1{font-size:clamp(2rem,11vw,3rem)}
-      .steps li{padding:.9rem 1rem .9rem 3.2rem}
     }
 
     /* footer — тёмная тема (как на остальных страницах) */
@@ -131,62 +137,71 @@
   <a href="/" class="legal-back">← На главную</a>
   <header class="p-hero">
     <span class="p-hero-ghost">MR</span>
-    <h1>Как удалить аккаунт</h1>
-    <p class="p-hero-lead">Аккаунт Moneyrun можно удалить прямо в приложении за пару шагов. Если доступа к приложению нет — оставь запрос через форму ниже.</p>
+    <h1>Связаться с нами</h1>
+    <p class="p-hero-lead">Если нет доступа к аккаунту Moneyrun, заполни форму ниже.<br class="wide-break">По остальным вопросам пиши в службу Заботы внутри приложения.</p>
   </header>
 
-  <h2>Удаление в приложении</h2>
-  <ol class="steps">
-    <li>После авторизации в <b>Moneyrun</b> перейди в раздел <b>Профиль</b> (в приложении называется «Я»).</li>
-    <li>Внутри раздела открой подраздел <b>Настройки</b> — внизу страницы будет кнопка <b>«Удалить аккаунт»</b>.</li>
-    <li>Нажми кнопку и подтверди своё решение.</li>
-  </ol>
-  <div class="note">
-    <p>После подтверждения данные аккаунта будут удалены. <b>Срок хранения данных после запроса на удаление — 30 дней.</b></p>
-  </div>
+  <div class="rm-state" id="rmState" role="status" aria-live="polite"></div>
 
-  <h2>Нет доступа к приложению?</h2>
-  <p>Заполни форму — мы обработаем запрос на удаление аккаунта и связанных данных.</p>
   <form class="rm-form" id="rmForm" novalidate>
-    <div class="rm-field">
-      <label for="reason">Причина удаления <span class="req">*</span></label>
-      <select id="reason" name="reason" required>
-        <option value="" disabled selected>Выбери причину</option>
-        <option>Больше не пользуюсь приложением</option>
-        <option>Не устраивает функционал</option>
-        <option>Вопросы к монетизации</option>
-        <option>Беспокоюсь о приватности данных</option>
-        <option>Другое</option>
-      </select>
-    </div>
+    <fieldset class="rm-field">
+      <legend class="rm-legend">По какому вопросу хочешь связаться? <span class="req">*</span></legend>
+      <div class="rm-radios">
+        <label class="rm-radio"><input type="radio" name="topic" value="Хочу поддержать проект" required> Хочу поддержать проект</label>
+        <label class="rm-radio"><input type="radio" name="topic" value="Есть предложение по сотрудничеству"> Есть предложение по сотрудничеству</label>
+        <label class="rm-radio"><input type="radio" name="topic" value="Есть предложение по улучшению сервиса Moneyrun"> Есть предложение по улучшению сервиса Moneyrun</label>
+        <label class="rm-radio"><input type="radio" name="topic" value="Другой вопрос"> Другой вопрос</label>
+      </div>
+    </fieldset>
     <div class="rm-field">
       <label for="fio">ФИО <span class="req">*</span></label>
-      <input id="fio" name="fio" type="text" autocomplete="name" required>
+      <input id="fio" name="fio" type="text" autocomplete="name" placeholder="Представься, пожалуйста" required>
     </div>
     <div class="rm-field">
       <label for="phone">Номер телефона <span class="req">*</span></label>
-      <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="+7 (900) 000-00-00" maxlength="18" pattern="^\+7 \([0-9]{3}\) [0-9]{3}-[0-9]{2}-[0-9]{2}$" title="Введи номер в формате +7 (900) 000-00-00" required>
+      <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="+7 (900) 000-00-00" maxlength="18" pattern="^\+7 \([0-9]{3}\) [0-9]{3}-[0-9]{2}-[0-9]{2}$" title="Введите номер в формате +7 (900) 000-00-00" required>
     </div>
     <div class="rm-field">
       <label for="comment">Комментарий</label>
-      <textarea id="comment" name="comment" placeholder="Опиши ситуацию, если нужно"></textarea>
+      <textarea id="comment" name="comment" placeholder="Расскажи подробнее"></textarea>
     </div>
-    <button class="rm-submit" type="submit">Отправить запрос</button>
-    <p class="rm-hint">Отправка откроет твой почтовый клиент с готовым письмом на support@moneyrun.tech.</p>
+    <button class="rm-submit" id="rmSubmit" type="submit">Отправить заявку</button>
+    <p class="rm-consent">Нажимая кнопку, вы даёте согласие на обработку персональных данных и соглашаетесь с <a href="/privacypolicy">политикой конфиденциальности</a>.</p>
   </form>
-  <p class="rm-contact">Или напиши напрямую: <a href="mailto:support@moneyrun.tech">support@moneyrun.tech</a></p>
+
 </main>
 
 <footer><div class="foot-inner">
   <div class="foot-c"><a href="/" class="nav-logo" style="margin-bottom:.4rem"><img class="logo-mark" src="img/logo-hor-black.svg" alt="Moneyrun" height="28"></a><p class="tagline">Социально-благотворительный проект<br>по развитию бегового движения</p><p class="foot-slogan">Run, <span>Earn,</span> Enjoy!</p></div>
-  <div class="foot-c"><span class="label">Связаться</span><a href="https://apps.apple.com/app/id6444129392" target="_blank" rel="noopener">App Store</a><a href="https://play.google.com/store/apps/details?id=tech.aml.moneyrun" target="_blank" rel="noopener">Google Play</a><a href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram · @moneyrun</a><a href="/contact">Написать нам</a></div>
+  <div class="foot-c"><span class="label">Связаться</span><a href="https://apps.apple.com/app/id6444129392" target="_blank" rel="noopener">App Store</a><a href="https://play.google.com/store/apps/details?id=tech.aml.moneyrun" target="_blank" rel="noopener">Google Play</a><a href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram · @moneyrun</a></div>
 </div><div class="foot-bottom"><span>© 2023 — 2026 Moneyrun</span><span><a href="/guide">Правила платформы</a></span></div></footer>
 
 <script>
-/* Статический сайт: форма собирает поля и открывает письмо на support@moneyrun.tech.
-   Когда появится бэкенд — здесь можно заменить отправку на реальный POST-запрос. */
+/* ——— Отправка заявки обратной связи ———
+   Заявка уходит POST-запросом на бэкенд, который пересылает её в Telegram
+   (токен бота хранится на сервере — на фронте его быть не должно).
+
+   БЭКЕНДЕР: впиши URL своего эндпоинта в FEEDBACK_ENDPOINT. Эндпоинт получает
+   JSON { topic, name, phone, comment } и отправляет сообщение в Telegram-бот.
+   Пока строка пустая — форма показывает предложение написать в Telegram напрямую. */
+const FEEDBACK_ENDPOINT = '';
+
+async function submitFeedback(data){
+  const res = await fetch(FEEDBACK_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  if (!res.ok) throw new Error('HTTP ' + res.status);
+  return res;
+}
+
 (function(){
-  var form=document.getElementById('rmForm'); if(!form) return;
+  var form = document.getElementById('rmForm');
+  var stateEl = document.getElementById('rmState');
+  var submitBtn = document.getElementById('rmSubmit');
+  if (!form) return;
+
   function setupRuPhoneMask(input){
     if (!input) return;
 
@@ -237,19 +252,41 @@
 
   setupRuPhoneMask(form.phone);
 
-  form.addEventListener('submit',function(e){
+  function showState(kind, html){
+    stateEl.className = 'rm-state show' + (kind === 'err' ? ' err' : '');
+    stateEl.innerHTML = html;
+    stateEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  var TG = '<a class="tg-btn" href="https://t.me/moneyrun" target="_blank" rel="noopener">Написать в Telegram</a>';
+
+  form.addEventListener('submit', async function(e){
     e.preventDefault();
-    if(!form.reportValidity()) return;
-    var reason=form.reason.value, fio=form.fio.value.trim(), phone=form.phone.value.trim(), comment=form.comment.value.trim();
-    var body=
-      'Причина удаления: '+reason+'\n'+
-      'ФИО: '+fio+'\n'+
-      'Телефон: '+phone+'\n'+
-      'Комментарий: '+(comment||'—')+'\n';
-    var href='mailto:support@moneyrun.tech'
-      +'?subject='+encodeURIComponent('Запрос на удаление аккаунта Moneyrun')
-      +'&body='+encodeURIComponent(body);
-    window.location.href=href;
+    if (!form.reportValidity()) return;
+    var data = {
+      topic: (form.querySelector('input[name=topic]:checked') || {}).value || '',
+      name: form.fio.value.trim(),
+      phone: form.phone.value.trim(),
+      comment: form.comment.value.trim()
+    };
+
+    // бэкенд-эндпоинт ещё не подключён — предлагаем Telegram
+    if (!FEEDBACK_ENDPOINT){
+      showState('ok', '<strong>Форма скоро заработает</strong><p>Приём заявок ещё настраивается. Пока напишите нам напрямую в Telegram — ответим оперативно.</p>' + TG);
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Отправляем…';
+    try {
+      await submitFeedback(data);
+      form.reset();
+      showState('ok', '<strong>Спасибо! Заявка отправлена</strong><p>Мы получили обращение и свяжемся с вами в ближайшее время.</p>');
+    } catch (err) {
+      showState('err', '<strong>Не удалось отправить</strong><p>Попробуйте ещё раз или напишите нам в Telegram.</p>' + TG);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Отправить заявку';
+    }
   });
 })();
 </script>

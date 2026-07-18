@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Moneyrun — Версия 03 · Race</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0E1117;
+    --bg-2: #161A22;
+    --bg-3: #1E232D;
+    --line: rgba(255,255,255,0.10);
+    --line-strong: rgba(255,255,255,0.20);
+
+    --tx-salat-primary: #C5FF5C;
+    --tx-salat-secondary: rgba(197,255,92,0.16);
+    --tx-sky-primary: #6DCBFF;
+    --tx-sky-secondary: rgba(109,203,255,0.16);
+    --tx-tomato-primary: #FF6A5A;
+    --tx-tomato-secondary: rgba(255,106,90,0.16);
+    --tx-grey-primary: #F4F5F7;
+    --tx-grey-secondary: rgba(244,245,247,0.65);
+    --tx-grey-tertiary: rgba(244,245,247,0.40);
+    --tx-on-primary: #0A0D14;
+
+    --radius-card: 24px;
+    --radius-tile: 18px;
+    --radius-pill: 999px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--tx-grey-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  .display {
+    font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
+    font-style: italic; font-weight: 800;
+    letter-spacing: -0.028em; line-height: 0.92;
+  }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+  .container { max-width: 1320px; margin: 0 auto; padding: 0 32px; }
+  @media (max-width: 768px) { .container { padding: 0 20px; } }
+
+  /* ====== SWITCHER ====== */
+  .switcher {
+    position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+    z-index: 300;
+    display: flex; align-items: center; gap: 4px;
+    background: rgba(14,17,23,0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-pill);
+    padding: 5px;
+    box-shadow: 0 20px 50px -10px rgba(0,0,0,0.6);
+    font-size: 13px;
+  }
+  .switcher a { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; color: var(--tx-grey-secondary); border-radius: var(--radius-pill); transition: color .2s, background .2s; font-weight: 500; }
+  .switcher a:hover { color: var(--tx-grey-primary); }
+  .switcher a.active { background: var(--tx-salat-primary); color: var(--tx-on-primary); font-weight: 600; }
+  .switcher .label { color: var(--tx-grey-tertiary); font-size: 11px; padding: 0 10px 0 12px; text-transform: uppercase; letter-spacing: 0.08em; border-right: 1px solid var(--line); }
+  .switcher .badge { font-family: 'JetBrains Mono'; font-size: 10px; opacity: 0.7; }
+  @media (max-width: 760px) {
+    .switcher { left: 8px; right: 8px; transform: none; overflow-x: auto; }
+    .switcher .label { display: none; }
+    .switcher a { font-size: 12px; padding: 7px 10px; }
+  }
+
+  /* ====== NAV ====== */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(14,17,23,0.82);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line);
+    padding-top: 64px;
+  }
+  @media (max-width: 760px) { .nav { padding-top: 72px; } }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo-mark { width: 28px; height: 28px; color: var(--tx-salat-primary); }
+  .logo-text { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: 22px; letter-spacing: -0.02em; }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { color: var(--tx-grey-secondary); font-size: 14px; transition: color .2s; }
+  .nav-links a:hover { color: var(--tx-grey-primary); }
+  .nav-cta { background: var(--tx-salat-primary); color: var(--tx-on-primary); padding: 10px 18px; border-radius: var(--radius-pill); font-weight: 600; font-size: 14px; }
+  @media (max-width: 768px) { .nav-links { display: none; } }
+
+  /* ====== HERO ====== */
+  .hero { position: relative; padding: 56px 0 100px; overflow: hidden; border-bottom: 1px solid var(--line); }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 0% 0%, rgba(255,106,90,0.08), transparent 60%),
+                radial-gradient(ellipse 60% 50% at 100% 100%, rgba(109,203,255,0.06), transparent 60%);
+    pointer-events: none;
+  }
+  .hero-grid { position: relative; display: grid; grid-template-columns: 1.05fr 1fr; gap: 56px; align-items: stretch; }
+  @media (max-width: 980px) { .hero-grid { grid-template-columns: 1fr; gap: 32px; } }
+  .hero-left { display: flex; flex-direction: column; justify-content: center; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 10px; padding: 6px 14px; border-radius: var(--radius-pill); border: 1px solid var(--line-strong); font-size: 13px; color: var(--tx-grey-secondary); margin-bottom: 28px; }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--tx-tomato-primary); box-shadow: 0 0 12px var(--tx-tomato-primary); animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+  .hero h1 { font-size: clamp(56px, 8.5vw, 120px); margin-bottom: 24px; }
+  .hero h1 .salat { color: var(--tx-salat-primary); }
+  .hero h1 .tomato { color: var(--tx-tomato-primary); }
+  .hero-sub { font-size: clamp(17px, 1.6vw, 20px); color: var(--tx-grey-secondary); max-width: 540px; margin-bottom: 36px; }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: var(--radius-pill); font-weight: 600; font-size: 15px; transition: transform .2s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary { background: var(--tx-salat-primary); color: var(--tx-on-primary); }
+  .btn-ghost { background: transparent; color: var(--tx-grey-primary); border: 1px solid var(--line-strong); }
+
+  /* FEATURED RACE — большой карта с countdown */
+  .featured-race {
+    background: var(--bg-2); border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    padding: 32px;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column; gap: 20px;
+  }
+  .featured-race::before {
+    content: ''; position: absolute; top: 0; right: 0; width: 50%; height: 100%;
+    background: radial-gradient(circle at top right, var(--tx-tomato-secondary), transparent 60%);
+  }
+  .fr-tag { display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono'; font-size: 11px; color: var(--tx-tomato-primary); text-transform: uppercase; letter-spacing: 0.1em; }
+  .fr-tag::before { content: ''; width: 6px; height: 6px; background: var(--tx-tomato-primary); border-radius: 50%; box-shadow: 0 0 10px var(--tx-tomato-primary); }
+  .fr-title { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: clamp(32px, 4vw, 52px); letter-spacing: -0.02em; line-height: 0.95; position: relative; }
+  .fr-meta { display: flex; gap: 24px; flex-wrap: wrap; padding-top: 16px; border-top: 1px solid var(--line); }
+  .fr-meta div { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--tx-grey-tertiary); text-transform: uppercase; letter-spacing: 0.06em; }
+  .fr-meta strong { display: block; font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700; font-size: 18px; color: var(--tx-grey-primary); letter-spacing: -0.01em; margin-bottom: 4px; }
+  .countdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .cd-cell { background: var(--bg-3); border-radius: var(--radius-tile); padding: 20px 12px; text-align: center; border: 1px solid var(--line); position: relative; }
+  .cd-num { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: clamp(36px, 4.5vw, 56px); color: var(--tx-salat-primary); letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+  .cd-lbl { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--tx-grey-tertiary); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 6px; }
+  .fr-cta { display: flex; gap: 8px; }
+  .fr-cta .btn { flex: 1; justify-content: center; }
+  .fr-progress { padding-top: 12px; }
+  .fr-progress-bar { height: 8px; background: var(--bg-3); border-radius: 4px; overflow: hidden; }
+  .fr-progress-fill { height: 100%; background: linear-gradient(90deg, var(--tx-salat-primary), var(--tx-tomato-primary)); border-radius: 4px; width: 62%; }
+  .fr-progress-lbl { display: flex; justify-content: space-between; font-family: 'JetBrains Mono'; font-size: 11px; color: var(--tx-grey-tertiary); margin-top: 8px; }
+
+  /* SECTION */
+  .section { padding: 120px 0; }
+  .section-head { margin-bottom: 56px; max-width: 720px; }
+  .section-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'JetBrains Mono'; font-size: 12px; color: var(--tx-salat-primary);
+    text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 16px;
+  }
+  .section-eyebrow.sky { color: var(--tx-sky-primary); }
+  .section-eyebrow.tomato { color: var(--tx-tomato-primary); }
+  .section-title { font-size: clamp(40px, 5.5vw, 72px); }
+  .section-sub { font-size: 18px; color: var(--tx-grey-secondary); margin-top: 18px; max-width: 580px; }
+
+  /* RACES — большая сетка */
+  .races-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 980px) { .races-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) { .races-grid { grid-template-columns: 1fr; } }
+  .race {
+    background: var(--bg-2); border: 1px solid var(--line);
+    border-radius: var(--radius-card); padding: 24px;
+    position: relative;
+    transition: transform .3s, border-color .3s;
+    display: flex; flex-direction: column;
+  }
+  .race:hover { transform: translateY(-6px); border-color: var(--tx-salat-primary); }
+  .race-banner {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 16px;
+  }
+  .race-dist {
+    font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800;
+    font-size: 48px; letter-spacing: -0.03em; line-height: 0.9;
+  }
+  .race-dist.salat { color: var(--tx-salat-primary); }
+  .race-dist.sky { color: var(--tx-sky-primary); }
+  .race-dist.tomato { color: var(--tx-tomato-primary); }
+  .race-status { font-family: 'JetBrains Mono'; font-size: 10px; padding: 5px 10px; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
+  .race-status.open { background: var(--tx-salat-secondary); color: var(--tx-salat-primary); }
+  .race-status.few { background: var(--tx-tomato-secondary); color: var(--tx-tomato-primary); }
+  .race-status.soon { background: var(--tx-sky-secondary); color: var(--tx-sky-primary); }
+  .race h3 { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700; font-size: 24px; letter-spacing: -0.01em; margin-bottom: 8px; line-height: 1.1; }
+  .race p { color: var(--tx-grey-secondary); font-size: 14px; margin-bottom: 16px; }
+  .race-meta-row { display: flex; gap: 16px; padding-top: 14px; border-top: 1px solid var(--line); margin-top: auto; font-family: 'JetBrains Mono'; font-size: 11px; color: var(--tx-grey-tertiary); text-transform: uppercase; letter-spacing: 0.06em; }
+  .race-meta-row strong { color: var(--tx-grey-primary); font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700; }
+  .race-cta { margin-top: 16px; padding: 10px 14px; border-radius: var(--radius-pill); background: transparent; color: var(--tx-grey-primary); border: 1px solid var(--line-strong); font-size: 13px; font-weight: 600; text-align: center; }
+  .race-cta:hover { background: var(--tx-salat-primary); color: var(--tx-on-primary); border-color: var(--tx-salat-primary); }
+  .race-cta.urgent { background: var(--tx-tomato-primary); color: var(--tx-on-primary); border-color: var(--tx-tomato-primary); }
+
+  /* LEADERBOARD */
+  .leaderboard { padding: 120px 0; background: var(--bg-2); }
+  .lb-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; flex-wrap: wrap; gap: 24px; }
+  .lb-head h2 { font-size: clamp(40px, 5vw, 72px); }
+  .lb-tabs { display: flex; gap: 4px; background: var(--bg); padding: 4px; border-radius: var(--radius-pill); border: 1px solid var(--line); }
+  .lb-tabs button { padding: 8px 14px; border-radius: var(--radius-pill); font-size: 13px; font-weight: 600; color: var(--tx-grey-secondary); }
+  .lb-tabs button.on { background: var(--tx-salat-primary); color: var(--tx-on-primary); }
+  .lb-table { background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius-card); overflow: hidden; }
+  .lb-row { display: grid; grid-template-columns: 56px 1fr 1fr 1fr 100px; gap: 20px; align-items: center; padding: 18px 24px; border-top: 1px solid var(--line); }
+  .lb-row:first-child { border-top: none; }
+  .lb-row.head { background: rgba(255,255,255,0.03); }
+  .lb-row.head > div { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--tx-grey-tertiary); text-transform: uppercase; letter-spacing: 0.08em; }
+  .lb-rank { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: 24px; letter-spacing: -0.02em; text-align: center; }
+  .lb-rank.gold { color: var(--tx-salat-primary); }
+  .lb-rank.silver { color: var(--tx-sky-primary); }
+  .lb-rank.bronze { color: var(--tx-tomato-primary); }
+  .lb-athlete { display: flex; align-items: center; gap: 12px; }
+  .lb-av { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--tx-salat-primary), var(--tx-sky-primary)); }
+  .lb-name strong { display: block; font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700; }
+  .lb-name span { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--tx-grey-tertiary); text-transform: uppercase; letter-spacing: 0.06em; }
+  .lb-val { font-family: 'JetBrains Mono'; font-size: 14px; font-weight: 500; }
+  .lb-val.hi { color: var(--tx-salat-primary); }
+  .lb-club { color: var(--tx-grey-secondary); font-size: 13px; }
+  @media (max-width: 880px) { .lb-row { grid-template-columns: 40px 1fr 60px; gap: 12px; padding: 14px 16px; } .lb-row > div:nth-child(3), .lb-row > div:nth-child(4) { display: none; } }
+
+  /* CLUB CUPS — командные соревнования */
+  .cups { padding: 120px 0; }
+  .cups-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+  @media (max-width: 880px) { .cups-grid { grid-template-columns: 1fr; } }
+  .cup-main {
+    background: var(--bg-2); border: 1px solid var(--line);
+    border-radius: var(--radius-card); padding: 40px;
+    position: relative; overflow: hidden;
+  }
+  .cup-main::before { content: ''; position: absolute; bottom: -100px; left: -100px; width: 360px; height: 360px; background: radial-gradient(circle, var(--tx-sky-secondary), transparent 70%); }
+  .cup-tag { display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono'; font-size: 11px; color: var(--tx-sky-primary); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 18px; }
+  .cup-tag::before { content: ''; width: 6px; height: 6px; background: var(--tx-sky-primary); border-radius: 50%; box-shadow: 0 0 10px var(--tx-sky-primary); }
+  .cup-main h3 { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: clamp(32px, 4.5vw, 56px); letter-spacing: -0.02em; line-height: 0.95; margin-bottom: 16px; position: relative; }
+  .cup-main p { color: var(--tx-grey-secondary); margin-bottom: 32px; max-width: 480px; position: relative; }
+  .cup-bracket { display: flex; gap: 12px; flex-wrap: wrap; position: relative; }
+  .bracket-club { background: var(--bg-3); border: 1px solid var(--line); border-radius: var(--radius-tile); padding: 16px 20px; flex: 1; min-width: 180px; }
+  .bracket-rank { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--tx-grey-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .bracket-club h4 { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700; font-size: 17px; letter-spacing: -0.01em; margin-bottom: 6px; }
+  .bracket-stat { font-family: 'JetBrains Mono'; font-size: 13px; color: var(--tx-salat-primary); }
+  .cup-side {
+    background: var(--bg-2); border: 1px solid var(--line);
+    border-radius: var(--radius-card); padding: 32px;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .cup-side h4 { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700; font-size: 22px; letter-spacing: -0.01em; }
+  .cup-side p { color: var(--tx-grey-secondary); font-size: 14px; }
+  .cup-side .stat { display: flex; justify-content: space-between; padding: 10px 0; border-top: 1px solid var(--line); font-size: 13px; }
+  .cup-side .stat:first-of-type { border-top: none; }
+  .cup-side .stat strong { color: var(--tx-salat-primary); font-family: 'JetBrains Mono'; font-weight: 500; }
+
+  /* PREP — тренировочные планы */
+  .prep { padding: 120px 0; background: var(--bg-2); }
+  .prep-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  @media (max-width: 980px) { .prep-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .prep-grid { grid-template-columns: 1fr; } }
+  .prep-card {
+    background: var(--bg); border: 1px solid var(--line);
+    border-radius: var(--radius-tile); padding: 28px;
+    transition: transform .3s, border-color .3s;
+  }
+  .prep-card:hover { transform: translateY(-4px); border-color: var(--tx-salat-primary); }
+  .prep-dist { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: 56px; line-height: 0.9; letter-spacing: -0.03em; color: var(--tx-salat-primary); margin-bottom: 16px; }
+  .prep-card h4 { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700; font-size: 20px; letter-spacing: -0.01em; margin-bottom: 8px; }
+  .prep-card p { color: var(--tx-grey-secondary); font-size: 13px; margin-bottom: 16px; }
+  .prep-meta { padding-top: 14px; border-top: 1px solid var(--line); font-family: 'JetBrains Mono'; font-size: 11px; color: var(--tx-grey-tertiary); display: flex; justify-content: space-between; }
+  .prep-meta strong { color: var(--tx-grey-primary); }
+
+  /* BONUS — призовой фонд */
+  .bonus-strip {
+    background: linear-gradient(135deg, var(--bg-2), var(--bg-3));
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    padding: 48px;
+    display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .bonus-strip::before { content: ''; position: absolute; top: -100px; right: -100px; width: 320px; height: 320px; background: radial-gradient(circle, var(--tx-salat-secondary), transparent 70%); }
+  @media (max-width: 880px) { .bonus-strip { grid-template-columns: 1fr; padding: 32px; } }
+  .bonus-tag { display: inline-block; padding: 5px 12px; border-radius: 999px; background: var(--tx-salat-secondary); color: var(--tx-salat-primary); font-family: 'JetBrains Mono'; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 18px; }
+  .bonus-strip h3 { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: clamp(28px, 3.5vw, 48px); letter-spacing: -0.02em; line-height: 1; margin-bottom: 16px; position: relative; }
+  .bonus-strip p { color: var(--tx-grey-secondary); margin-bottom: 24px; position: relative; }
+  .bonus-vis { position: relative; }
+  .bonus-vis ul { list-style: none; }
+  .bonus-vis li { display: flex; justify-content: space-between; padding: 12px 0; border-top: 1px solid var(--line); font-size: 14px; color: var(--tx-grey-secondary); }
+  .bonus-vis li:first-child { border-top: none; }
+  .bonus-vis li strong { color: var(--tx-salat-primary); font-family: 'JetBrains Mono'; font-weight: 500; }
+
+  /* FINAL */
+  .final {
+    border-radius: var(--radius-card);
+    padding: 96px 56px;
+    background: linear-gradient(135deg, var(--tx-tomato-primary), var(--tx-salat-primary));
+    color: var(--tx-on-primary);
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .final h2 { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: clamp(48px, 7vw, 100px); line-height: 0.95; letter-spacing: -0.025em; margin-bottom: 24px; }
+  .final p { font-size: 18px; margin-bottom: 36px; opacity: 0.82; max-width: 540px; margin-left: auto; margin-right: auto; }
+  .final .btn-primary { background: var(--tx-on-primary); color: var(--tx-grey-primary); }
+  .final .btn-ghost { border-color: rgba(10,13,20,0.4); color: var(--tx-on-primary); }
+  .final .btn-ghost:hover { background: rgba(10,13,20,0.08); }
+
+  /* FOOTER */
+  .footer { padding: 80px 0 48px; border-top: 1px solid var(--line); margin-top: 80px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 56px; }
+  @media (max-width: 800px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  .footer-brand p { color: var(--tx-grey-secondary); font-size: 14px; margin-top: 16px; max-width: 320px; }
+  .footer-col h5 { font-family: 'JetBrains Mono'; font-size: 12px; color: var(--tx-grey-tertiary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 18px; font-weight: 500; }
+  .footer-col a { display: block; color: var(--tx-grey-secondary); font-size: 14px; padding: 6px 0; }
+  .footer-col a:hover { color: var(--tx-grey-primary); }
+  .footer-bottom { padding-top: 32px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; color: var(--tx-grey-tertiary); font-family: 'JetBrains Mono'; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<!-- ====== SWITCHER ====== -->
+<nav class="switcher" aria-label="Версии редизайна">
+  <span class="label">Версия</span>
+  <a href="option-1.html"><span class="badge">01</span> Atlet</a>
+  <a href="option-2.html"><span class="badge">02</span> Club</a>
+  <a href="option-3.html" class="active"><span class="badge">03</span> Race</a>
+  <a href="option-4.html"><span class="badge">04</span> Bonus</a>
+</nav>
+
+<!-- ====== NAV ====== -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="#" class="logo">
+      <svg class="logo-mark" viewBox="0 0 60 60" fill="currentColor"><ellipse cx="22" cy="32" rx="11" ry="22" transform="rotate(-12 22 32)"/><ellipse cx="38" cy="32" rx="11" ry="22" transform="rotate(12 38 32)"/></svg>
+      <span class="logo-text">Moneyrun</span>
+    </a>
+    <div class="nav-links">
+      <a href="#calendar">Календарь</a>
+      <a href="#leaderboard">Рейтинг</a>
+      <a href="#cups">Кубки</a>
+      <a href="#prep">Подготовка</a>
+    </div>
+    <a href="#" class="nav-cta">Скачать</a>
+  </div>
+</nav>
+
+<!-- ====== HERO ====== -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="hero-left">
+      <div class="eyebrow"><span class="dot"></span>Сезон 2026 · открыт</div>
+      <h1 class="display">
+        От первой пробежки —<br>
+        до первого <span class="salat">финиша</span>.
+      </h1>
+      <p class="hero-sub">Календарь забегов, кубки клубов, рейтинги недели. Регистрация в один тап, результат — в твою статистику автоматически.</p>
+      <div class="cta-row">
+        <a href="#calendar" class="btn btn-primary">Смотреть календарь →</a>
+        <a href="#" class="btn btn-ghost">Скачать приложение</a>
+      </div>
+    </div>
+    <div class="featured-race">
+      <div class="fr-tag">●&nbsp; Главный забег недели</div>
+      <h3 class="fr-title">Moneyrun Half<br>Москва · 21.1 км</h3>
+      <div class="countdown">
+        <div class="cd-cell"><div class="cd-num" id="cd-d">12</div><div class="cd-lbl">дней</div></div>
+        <div class="cd-cell"><div class="cd-num" id="cd-h">04</div><div class="cd-lbl">часов</div></div>
+        <div class="cd-cell"><div class="cd-num" id="cd-m">32</div><div class="cd-lbl">минут</div></div>
+        <div class="cd-cell"><div class="cd-num" id="cd-s">17</div><div class="cd-lbl">сек</div></div>
+      </div>
+      <div class="fr-progress">
+        <div class="fr-progress-bar"><div class="fr-progress-fill"></div></div>
+        <div class="fr-progress-lbl"><span>1 240 из 2 000 мест</span><span>760 осталось</span></div>
+      </div>
+      <div class="fr-meta">
+        <div><strong>14 июня</strong>08:00 старт</div>
+        <div><strong>21.1 км</strong>дистанция</div>
+        <div><strong>1:30–2:15</strong>пейс-группы</div>
+      </div>
+      <div class="fr-cta">
+        <a href="#" class="btn btn-primary">Зарегистрироваться</a>
+        <a href="#" class="btn btn-ghost">Маршрут</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== RACE CALENDAR ====== -->
+<section class="section" id="calendar">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">— Календарь забегов</span>
+      <h2 class="display section-title">Лето 2026. 28 забегов в 14 городах.</h2>
+      <p class="section-sub">Городские полумарафоны, кубки клубов, трейлы, ночные забеги. Регистрация и результат — в одном месте.</p>
+    </div>
+    <div class="races-grid">
+      <article class="race">
+        <div class="race-banner"><div class="race-dist salat">21.1</div><span class="race-status few">мало мест</span></div>
+        <h3>Moneyrun Half · Москва</h3>
+        <p>Полумарафон по набережной, 8:00 старт, пейс-группы.</p>
+        <div class="race-meta-row"><div><strong>14 июн</strong></div><div><strong>1 240/2 000</strong></div></div>
+        <a href="#" class="race-cta urgent">Регистрация</a>
+      </article>
+      <article class="race">
+        <div class="race-banner"><div class="race-dist sky">4×5</div><span class="race-status open">открыта</span></div>
+        <h3>Кубок клубов · СПб</h3>
+        <p>Командная эстафета 4×5 км. Только для членов клубов.</p>
+        <div class="race-meta-row"><div><strong>22 июн</strong></div><div><strong>86 команд</strong></div></div>
+        <a href="#" class="race-cta">Регистрация</a>
+      </article>
+      <article class="race">
+        <div class="race-banner"><div class="race-dist tomato">10</div><span class="race-status open">открыта</span></div>
+        <h3>Night Run · Казань</h3>
+        <p>10 км по ночному городу, старт 22:00, музыка на маршруте.</p>
+        <div class="race-meta-row"><div><strong>6 июл</strong></div><div><strong>пейс свободный</strong></div></div>
+        <a href="#" class="race-cta">Регистрация</a>
+      </article>
+      <article class="race">
+        <div class="race-banner"><div class="race-dist sky">42.2</div><span class="race-status soon">скоро</span></div>
+        <h3>Сочи Марафон</h3>
+        <p>Полный марафон по набережной, профильный по высоте.</p>
+        <div class="race-meta-row"><div><strong>14 сен</strong></div><div><strong>скоро</strong></div></div>
+        <a href="#" class="race-cta">Подписаться</a>
+      </article>
+      <article class="race">
+        <div class="race-banner"><div class="race-dist salat">25</div><span class="race-status open">открыта</span></div>
+        <h3>Trail Серебро · Алтай</h3>
+        <p>Технический трейл 25 км по Чемалу. Допуск — Бронза+.</p>
+        <div class="race-meta-row"><div><strong>19 авг</strong></div><div><strong>Бронза+</strong></div></div>
+        <a href="#" class="race-cta">Регистрация</a>
+      </article>
+      <article class="race">
+        <div class="race-banner"><div class="race-dist tomato">5</div><span class="race-status open">открыта</span></div>
+        <h3>Sprint × 5 · Екатеринбург</h3>
+        <p>Серия из пяти 5-км забегов в течение лета.</p>
+        <div class="race-meta-row"><div><strong>с 1 июн</strong></div><div><strong>серия</strong></div></div>
+        <a href="#" class="race-cta">Подробнее</a>
+      </article>
+    </div>
+    <div style="margin-top: 32px; text-align: center;">
+      <a href="#" class="btn btn-ghost">Все 28 забегов →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ====== LEADERBOARD ====== -->
+<section class="leaderboard" id="leaderboard">
+  <div class="container">
+    <div class="lb-head">
+      <div>
+        <span class="section-eyebrow sky">— Рейтинг</span>
+        <h2 class="display">Кто впереди на этой неделе.</h2>
+      </div>
+      <div class="lb-tabs">
+        <button class="on">Объём</button>
+        <button>Темп</button>
+        <button>PR</button>
+        <button>Клубы</button>
+      </div>
+    </div>
+    <div class="lb-table">
+      <div class="lb-row head">
+        <div>#</div><div>Атлет</div><div>Клуб</div><div>Темп</div><div>Объём</div>
+      </div>
+      <div class="lb-row">
+        <div class="lb-rank gold">1</div>
+        <div class="lb-athlete"><div class="lb-av"></div><div class="lb-name"><strong>Никита К.</strong><span>Москва</span></div></div>
+        <div class="lb-club">Patriarchs Pace</div>
+        <div class="lb-val hi">4:12</div>
+        <div class="lb-val">112 км</div>
+      </div>
+      <div class="lb-row">
+        <div class="lb-rank silver">2</div>
+        <div class="lb-athlete"><div class="lb-av" style="background: linear-gradient(135deg, var(--tx-sky-primary), var(--tx-tomato-primary));"></div><div class="lb-name"><strong>Ольга М.</strong><span>СПб</span></div></div>
+        <div class="lb-club">Neva Pacers</div>
+        <div class="lb-val">4:28</div>
+        <div class="lb-val">98 км</div>
+      </div>
+      <div class="lb-row">
+        <div class="lb-rank bronze">3</div>
+        <div class="lb-athlete"><div class="lb-av" style="background: linear-gradient(135deg, var(--tx-tomato-primary), var(--tx-salat-primary));"></div><div class="lb-name"><strong>Илья В.</strong><span>Казань</span></div></div>
+        <div class="lb-club">Kazan Trail</div>
+        <div class="lb-val">4:35</div>
+        <div class="lb-val">94 км</div>
+      </div>
+      <div class="lb-row">
+        <div class="lb-rank">4</div>
+        <div class="lb-athlete"><div class="lb-av" style="background: linear-gradient(135deg, var(--tx-grey-primary), var(--tx-sky-primary));"></div><div class="lb-name"><strong>Анна П.</strong><span>Москва</span></div></div>
+        <div class="lb-club">Sokolniki Run</div>
+        <div class="lb-val">4:48</div>
+        <div class="lb-val">86 км</div>
+      </div>
+      <div class="lb-row">
+        <div class="lb-rank">5</div>
+        <div class="lb-athlete"><div class="lb-av" style="background: linear-gradient(135deg, var(--tx-salat-primary), var(--tx-tomato-primary));"></div><div class="lb-name"><strong>Дмитрий Р.</strong><span>Екб</span></div></div>
+        <div class="lb-club">Ural Runners</div>
+        <div class="lb-val">4:52</div>
+        <div class="lb-val">82 км</div>
+      </div>
+    </div>
+    <div style="text-align: center; margin-top: 24px;">
+      <a href="#" class="btn btn-ghost">Полный рейтинг →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ====== CUPS ====== -->
+<section class="section cups" id="cups">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow sky">— Кубок клубов</span>
+      <h2 class="display section-title">Лето 2026. 86 клубов борются за кубок.</h2>
+    </div>
+    <div class="cups-grid">
+      <div class="cup-main">
+        <div class="cup-tag">●&nbsp; Турнирная таблица — топ-3</div>
+        <h3>Sub-3 Marathon ведёт.<br>Patriarchs догоняет.</h3>
+        <p>Очки начисляются за совместные тренировки, общий объём и финиши на забегах сезона. Финал — 28 сентября.</p>
+        <div class="cup-bracket">
+          <div class="bracket-club">
+            <div class="bracket-rank">№ 1</div>
+            <h4>Sub-3 Marathon</h4>
+            <div class="bracket-stat">2 480 очков</div>
+          </div>
+          <div class="bracket-club">
+            <div class="bracket-rank">№ 2</div>
+            <h4>Patriarchs Pace</h4>
+            <div class="bracket-stat">2 240 очков</div>
+          </div>
+          <div class="bracket-club">
+            <div class="bracket-rank">№ 3</div>
+            <h4>Sokolniki Run</h4>
+            <div class="bracket-stat">2 080 очков</div>
+          </div>
+        </div>
+      </div>
+      <div class="cup-side">
+        <h4>Как набрать очки</h4>
+        <p>Простая система: всё, что вы и так делаете в клубе.</p>
+        <div class="stat"><span>Совместная тренировка</span><strong>+10</strong></div>
+        <div class="stat"><span>Финиш на забеге</span><strong>+25</strong></div>
+        <div class="stat"><span>Личный рекорд</span><strong>+50</strong></div>
+        <div class="stat"><span>Победа в кубке города</span><strong>+200</strong></div>
+        <a href="#" class="btn btn-ghost" style="margin-top: 12px;">Полные правила →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== PREP — тренировочные планы ====== -->
+<section class="prep" id="prep">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow tomato">— Подготовка</span>
+      <h2 class="display section-title">Не первый раз — но всё ещё страшно?</h2>
+      <p class="section-sub">Готовые тренировочные планы под дистанцию. Подстраиваются под твою форму и расписание клуба.</p>
+    </div>
+    <div class="prep-grid">
+      <div class="prep-card">
+        <div class="prep-dist">5K</div>
+        <h4>Первая пятёрка</h4>
+        <p>С нуля до 5 км без боли. 8 недель, 3 тренировки в неделю.</p>
+        <div class="prep-meta"><span>8 недель</span><strong>3 / неделю</strong></div>
+      </div>
+      <div class="prep-card">
+        <div class="prep-dist">10K</div>
+        <h4>Десятка из 50</h4>
+        <p>Уверенная десятка из 50 минут. 10 недель, 4 тренировки.</p>
+        <div class="prep-meta"><span>10 недель</span><strong>4 / неделю</strong></div>
+      </div>
+      <div class="prep-card">
+        <div class="prep-dist">21K</div>
+        <h4>Полу из 2:00</h4>
+        <p>Полумарафон из 2:00. 12 недель, 4 тренировки в неделю.</p>
+        <div class="prep-meta"><span>12 недель</span><strong>4 / неделю</strong></div>
+      </div>
+      <div class="prep-card">
+        <div class="prep-dist">42K</div>
+        <h4>Первый марафон</h4>
+        <p>Дойти до финиша на ногах. 16 недель, 5 тренировок.</p>
+        <div class="prep-meta"><span>16 недель</span><strong>5 / неделю</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== BONUS ====== -->
+<section class="section" id="bonus">
+  <div class="container">
+    <div class="bonus-strip">
+      <div>
+        <span class="bonus-tag">+ призовой фонд</span>
+        <h3>На каждом забеге — фонд от Moneyrun.</h3>
+        <p>Топ-30 финишеров получают часть призового фонда — XP конвертируется в рубли по повышенному курсу. Плюс регулярные участники забегов получают «бонус регулярности» в конце сезона.</p>
+        <a href="#" class="btn btn-ghost">Как считается фонд →</a>
+      </div>
+      <div class="bonus-vis">
+        <ul>
+          <li>Призовой фонд Moneyrun Half <strong>500 000 ₽</strong></li>
+          <li>Топ-30 получают долю <strong>от 4 000 ₽</strong></li>
+          <li>Бонус за финиш всем участникам <strong>+200 ₽</strong></li>
+          <li>Бонус регулярности (5+ забегов / сезон) <strong>+10 000 ₽</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FINAL ====== -->
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div class="final">
+      <h2>Финиш ждёт.</h2>
+      <p>Скачай приложение, выбери забег в своём городе и зарегистрируйся. До старта — недели на подготовку.</p>
+      <div class="cta-row" style="justify-content: center;">
+        <a href="#" class="btn btn-primary">App Store</a>
+        <a href="#" class="btn btn-ghost">Google Play</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <svg class="logo-mark" viewBox="0 0 60 60" fill="currentColor"><ellipse cx="22" cy="32" rx="11" ry="22" transform="rotate(-12 22 32)"/><ellipse cx="38" cy="32" rx="11" ry="22" transform="rotate(12 38 32)"/></svg>
+          <span class="logo-text">Moneyrun</span>
+        </a>
+        <p>Беговой сервис: от первой пробежки до первого финиша.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Забеги</h5>
+        <a href="#">Календарь</a>
+        <a href="#">Рейтинг</a>
+        <a href="#">Кубки клубов</a>
+        <a href="#">Тренировочные планы</a>
+      </div>
+      <div class="footer-col">
+        <h5>Поддержка</h5>
+        <a href="#">Правила сервиса</a>
+        <a href="#">Политика</a>
+        <a href="#">Telegram</a>
+        <a href="#">Связаться</a>
+      </div>
+      <div class="footer-col">
+        <h5>Скачать</h5>
+        <a href="#">App Store</a>
+        <a href="#">Google Play</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© Moneyrun, 2026</span>
+      <span>Сделано для тех, кто бежит до финиша.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // countdown
+  let s = 17, m = 32, h = 4, d = 12;
+  setInterval(() => {
+    s--;
+    if (s < 0) { s = 59; m--; }
+    if (m < 0) { m = 59; h--; }
+    if (h < 0) { h = 23; d--; }
+    document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+    document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-d').textContent = String(d).padStart(2,'0');
+  }, 1000);
+  // leaderboard tabs
+  document.querySelectorAll('.lb-tabs button').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.lb-tabs button').forEach(x => x.classList.remove('on'));
+      b.classList.add('on');
+    });
+  });
+</script>
+</body>
+</html>

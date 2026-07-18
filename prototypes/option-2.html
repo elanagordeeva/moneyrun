@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Moneyrun — Версия 02 · Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0E1117;
+    --bg-2: #161A22;
+    --bg-3: #1E232D;
+    --line: rgba(255,255,255,0.10);
+    --line-strong: rgba(255,255,255,0.20);
+
+    --tx-salat-primary: #C5FF5C;
+    --tx-salat-secondary: rgba(197,255,92,0.16);
+    --tx-sky-primary: #6DCBFF;
+    --tx-tomato-primary: #FF6A5A;
+    --tx-grey-primary: #F4F5F7;
+    --tx-grey-secondary: rgba(244,245,247,0.65);
+    --tx-grey-tertiary: rgba(244,245,247,0.40);
+    --tx-on-primary: #0A0D14;
+
+    --paper: #F0EDE6;
+    --paper-ink: #14171E;
+    --paper-mute: rgba(20,23,30,0.55);
+    --paper-line: rgba(20,23,30,0.12);
+
+    --radius-card: 20px;
+    --radius-pill: 999px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--tx-grey-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  .display {
+    font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
+    font-style: italic; font-weight: 800;
+    letter-spacing: -0.025em; line-height: 0.95;
+  }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+  @media (max-width: 768px) { .container { padding: 0 20px; } }
+
+  /* ====== SWITCHER ====== */
+  .switcher {
+    position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+    z-index: 300;
+    display: flex; align-items: center; gap: 4px;
+    background: rgba(14,17,23,0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-pill);
+    padding: 5px;
+    box-shadow: 0 20px 50px -10px rgba(0,0,0,0.6);
+    font-size: 13px;
+  }
+  .switcher a {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 14px;
+    color: var(--tx-grey-secondary);
+    border-radius: var(--radius-pill);
+    transition: color .2s, background .2s;
+    font-weight: 500;
+  }
+  .switcher a:hover { color: var(--tx-grey-primary); }
+  .switcher a.active {
+    background: var(--tx-salat-primary);
+    color: var(--tx-on-primary);
+    font-weight: 600;
+  }
+  .switcher .label {
+    color: var(--tx-grey-tertiary); font-size: 11px;
+    padding: 0 10px 0 12px; text-transform: uppercase; letter-spacing: 0.08em;
+    border-right: 1px solid var(--line);
+  }
+  .switcher .badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; opacity: 0.7; }
+  @media (max-width: 760px) {
+    .switcher { left: 8px; right: 8px; transform: none; overflow-x: auto; }
+    .switcher .label { display: none; }
+    .switcher a { font-size: 12px; padding: 7px 10px; }
+  }
+
+  /* ====== NAV ====== */
+  .nav { position: absolute; top: 64px; left: 0; right: 0; z-index: 100; }
+  .nav.scrolled {
+    position: fixed; top: 64px;
+    background: rgba(14,17,23,0.86);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line);
+    top: 56px;
+  }
+  @media (max-width: 760px) { .nav { top: 72px; } .nav.scrolled { top: 64px; } }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo-mark { width: 30px; height: 30px; color: var(--tx-salat-primary); }
+  .logo-text { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: 22px; letter-spacing: -0.02em; }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a { color: rgba(244,245,247,0.78); font-size: 14px; }
+  .nav-links a:hover { color: var(--tx-salat-primary); }
+  .nav-cta { background: var(--tx-salat-primary); color: var(--tx-on-primary); padding: 10px 18px; border-radius: var(--radius-pill); font-weight: 600; font-size: 14px; }
+  @media (max-width: 768px) { .nav-links { display: none; } }
+
+  /* ====== HERO ====== */
+  .hero {
+    position: relative; min-height: 100vh;
+    background-image: linear-gradient(180deg, rgba(14,17,23,0.4) 0%, rgba(14,17,23,0.55) 50%, rgba(14,17,23,0.95) 100%), url('https://images.unsplash.com/photo-1530549387789-4c1017266635?w=2400&q=80&auto=format&fit=crop');
+    background-size: cover; background-position: center;
+    display: flex; align-items: flex-end;
+    padding: 200px 0 80px;
+    overflow: hidden;
+  }
+  .hero-grid { position: relative; display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; align-items: flex-end; }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+  .hero-issue {
+    display: flex; align-items: center; gap: 12px;
+    font-family: 'JetBrains Mono'; font-size: 12px; color: var(--tx-grey-secondary); margin-bottom: 24px;
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .hero-issue .salat { color: var(--tx-salat-primary); }
+  .hero h1 { font-size: clamp(56px, 9.5vw, 156px); margin-bottom: 24px; }
+  .hero h1 em { font-style: italic; color: var(--tx-salat-primary); }
+  .hero-tagline { font-size: clamp(18px, 1.8vw, 22px); max-width: 540px; color: rgba(244,245,247,0.88); margin-bottom: 36px; }
+  .hero-meta { display: flex; gap: 32px; flex-wrap: wrap; padding-top: 24px; border-top: 1px solid var(--line); }
+  .hero-meta div { font-family: 'JetBrains Mono'; font-size: 12px; color: var(--tx-grey-secondary); text-transform: uppercase; letter-spacing: 0.08em; }
+  .hero-meta strong { display: block; font-family: 'Bricolage Grotesque'; font-style: italic; font-size: 28px; color: var(--tx-grey-primary); letter-spacing: -0.02em; line-height: 1; margin-bottom: 6px; font-weight: 800; }
+  .hero-side { background: rgba(14,17,23,0.86); border: 1px solid var(--line); border-radius: var(--radius-card); padding: 28px; backdrop-filter: blur(12px); }
+  .hero-side-label { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--tx-salat-primary); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; }
+  .hero-side h4 { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700; font-size: 20px; letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 18px; }
+  .cta-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 24px; border-radius: var(--radius-pill); font-weight: 600; font-size: 15px; transition: transform .2s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-lime { background: var(--tx-salat-primary); color: var(--tx-on-primary); }
+  .btn-ghost { background: transparent; color: var(--tx-grey-primary); border: 1px solid var(--line-strong); }
+  .hero-side .btn { padding: 10px 16px; font-size: 13px; }
+
+  /* ====== MANIFESTO ====== */
+  .manifesto { background: var(--paper); color: var(--paper-ink); padding: 140px 0; }
+  .manifesto-text {
+    max-width: 1040px; margin: 0 auto;
+    font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700;
+    font-size: clamp(28px, 3.8vw, 52px); line-height: 1.1; letter-spacing: -0.02em;
+  }
+  .manifesto-text em { background: var(--paper-ink); color: var(--tx-salat-primary); font-style: italic; padding: 0 8px; border-radius: 4px; }
+  .manifesto-sign {
+    margin-top: 56px; padding-top: 24px;
+    border-top: 1px solid var(--paper-line);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+    max-width: 1040px; margin-left: auto; margin-right: auto;
+    color: var(--paper-mute); font-family: 'JetBrains Mono'; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em;
+  }
+
+  /* ====== CITIES MAP — карта клубов по городам ====== */
+  .cities { padding: 120px 0; }
+  .cities-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; flex-wrap: wrap; gap: 24px; }
+  .cities-title { font-size: clamp(40px, 5vw, 72px); max-width: 720px; }
+  .cities-sub { color: var(--tx-grey-secondary); font-size: 17px; max-width: 320px; }
+  .city-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  @media (max-width: 980px) { .city-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .city-grid { grid-template-columns: 1fr; } }
+  .city {
+    background: var(--bg-2); border: 1px solid var(--line);
+    border-radius: var(--radius-card); padding: 28px;
+    transition: transform .3s, border-color .3s, background .3s;
+    position: relative;
+  }
+  .city:hover { transform: translateY(-4px); background: var(--bg-3); border-color: var(--tx-salat-primary); }
+  .city .num { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--tx-grey-tertiary); margin-bottom: 12px; letter-spacing: 0.06em; }
+  .city h3 { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: 28px; letter-spacing: -0.02em; margin-bottom: 16px; }
+  .city .clubs-count { display: flex; align-items: baseline; gap: 8px; }
+  .city .clubs-count strong { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: 36px; color: var(--tx-salat-primary); letter-spacing: -0.02em; line-height: 1; }
+  .city .clubs-count span { color: var(--tx-grey-secondary); font-size: 13px; }
+  .city .athletes { margin-top: 14px; color: var(--tx-grey-tertiary); font-size: 13px; padding-top: 14px; border-top: 1px solid var(--line); }
+
+  /* ====== ATHLETE STORIES ====== */
+  .stories { padding: 120px 0; background: var(--bg-2); }
+  .stories-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; flex-wrap: wrap; gap: 24px; }
+  .stories-head h2 { font-size: clamp(40px, 5vw, 72px); max-width: 720px; }
+  .stories-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 980px) { .stories-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) { .stories-grid { grid-template-columns: 1fr; } }
+  .story {
+    background: var(--bg); border: 1px solid var(--line);
+    border-radius: var(--radius-card); overflow: hidden;
+    transition: transform .3s, border-color .3s;
+  }
+  .story:hover { transform: translateY(-6px); border-color: var(--tx-salat-primary); }
+  .story-photo { aspect-ratio: 4/3; background-size: cover; background-position: center; }
+  .story-body { padding: 28px; }
+  .story-quote { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700; font-size: 20px; line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 24px; }
+  .story-byline { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid var(--line); }
+  .story-name strong { display: block; font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700; color: var(--tx-grey-primary); }
+  .story-name span { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--tx-grey-tertiary); text-transform: uppercase; letter-spacing: 0.06em; }
+  .story-tag {
+    font-family: 'JetBrains Mono'; font-size: 10px;
+    color: var(--tx-salat-primary);
+    padding: 4px 10px; background: var(--tx-salat-secondary);
+    border-radius: var(--radius-pill);
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+
+  /* ====== EVENTS — совместные тренировки ====== */
+  .events { padding: 120px 0; }
+  .events-head { max-width: 720px; margin-bottom: 56px; }
+  .events-head h2 { font-size: clamp(40px, 5vw, 72px); margin-bottom: 16px; }
+  .events-head p { color: var(--tx-grey-secondary); font-size: 17px; }
+  .events-list { display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius-card); overflow: hidden; }
+  .event {
+    background: var(--bg);
+    display: grid; grid-template-columns: 90px 1fr 1fr auto;
+    gap: 24px; padding: 24px 32px;
+    align-items: center; transition: background .2s;
+  }
+  .event:hover { background: var(--bg-2); }
+  @media (max-width: 760px) { .event { grid-template-columns: 70px 1fr; gap: 16px; row-gap: 8px; } .event .ev-where, .event .ev-cta { grid-column: 1/-1; } .event .ev-cta { justify-self: stretch; text-align: center; } }
+  .event .ev-date { text-align: center; padding-right: 24px; border-right: 1px solid var(--line); }
+  .event .ev-day { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: 32px; line-height: 1; letter-spacing: -0.02em; color: var(--tx-salat-primary); }
+  .event .ev-time { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--tx-grey-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
+  .event .ev-title { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700; font-size: 20px; letter-spacing: -0.01em; line-height: 1.1; margin-bottom: 4px; }
+  .event .ev-club { color: var(--tx-grey-secondary); font-size: 13px; }
+  .event .ev-where { color: var(--tx-grey-tertiary); font-size: 13px; font-family: 'JetBrains Mono'; }
+  .event .ev-cta { padding: 10px 16px; border-radius: var(--radius-pill); background: transparent; color: var(--tx-grey-primary); border: 1px solid var(--line-strong); font-size: 13px; font-weight: 600; }
+  .event .ev-cta:hover { background: var(--tx-salat-primary); color: var(--tx-on-primary); border-color: var(--tx-salat-primary); }
+
+  /* ====== PULL QUOTE ====== */
+  .pull-quote { padding: 120px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .pull-quote-text { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700; font-size: clamp(36px, 5vw, 72px); line-height: 1.05; letter-spacing: -0.02em; max-width: 1040px; margin: 0 auto; text-align: center; }
+  .pull-quote-text em { color: var(--tx-salat-primary); }
+  .pull-quote-meta { text-align: center; margin-top: 40px; }
+  .pull-quote-meta strong { font-style: italic; font-family: 'Bricolage Grotesque'; font-weight: 700; color: var(--tx-salat-primary); }
+  .pull-quote-meta div { color: var(--tx-grey-tertiary); font-family: 'JetBrains Mono'; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+
+  /* ====== BONUS — скромно ====== */
+  .bonus-mini { padding: 80px 0; }
+  .bonus-card {
+    background: var(--bg-2); border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    padding: 48px;
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  @media (max-width: 880px) { .bonus-card { grid-template-columns: 1fr; padding: 36px; } }
+  .bonus-tag { display: inline-block; padding: 5px 12px; border-radius: 999px; background: var(--tx-salat-secondary); color: var(--tx-salat-primary); font-family: 'JetBrains Mono'; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 18px; }
+  .bonus-card h3 { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: clamp(28px, 3.5vw, 44px); letter-spacing: -0.02em; line-height: 1; margin-bottom: 16px; }
+  .bonus-card p { color: var(--tx-grey-secondary); margin-bottom: 24px; }
+  .bonus-vis ul { list-style: none; }
+  .bonus-vis li { display: flex; justify-content: space-between; padding: 12px 0; border-top: 1px solid var(--line); font-size: 14px; color: var(--tx-grey-secondary); }
+  .bonus-vis li:first-child { border-top: none; }
+  .bonus-vis li strong { color: var(--tx-salat-primary); font-family: 'JetBrains Mono'; font-weight: 500; }
+
+  /* ====== NUMBERS ====== */
+  .numbers { padding: 140px 0; background: var(--paper); color: var(--paper-ink); }
+  .numbers-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 80px; flex-wrap: wrap; gap: 24px; }
+  .numbers-head h2 { font-size: clamp(56px, 8vw, 120px); line-height: 0.9; }
+  .numbers-head p { color: var(--paper-mute); font-size: 18px; max-width: 360px; }
+  .numbers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; border-top: 2px solid var(--paper-ink); padding-top: 48px; }
+  @media (max-width: 880px) { .numbers-grid { grid-template-columns: 1fr; } }
+  .number-cell .big { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: clamp(72px, 11vw, 180px); line-height: 0.85; letter-spacing: -0.04em; margin-bottom: 16px; }
+  .number-cell .lbl { color: var(--paper-mute); font-family: 'JetBrains Mono'; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* ====== JOIN / FINAL ====== */
+  .join {
+    padding: 140px 0;
+    background-image: linear-gradient(180deg, rgba(14,17,23,0.5), rgba(14,17,23,0.92)), url('https://images.unsplash.com/photo-1486218119243-13883505764c?w=2400&q=80&auto=format&fit=crop');
+    background-size: cover; background-position: center;
+    text-align: center;
+  }
+  .join h2 { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: clamp(56px, 9vw, 140px); line-height: 0.9; letter-spacing: -0.025em; margin-bottom: 24px; }
+  .join h2 em { color: var(--tx-salat-primary); font-style: italic; }
+  .join p { font-size: 20px; color: rgba(244,245,247,0.78); max-width: 560px; margin: 0 auto 40px; }
+  .join .cta-row { justify-content: center; }
+
+  /* ====== FOOTER ====== */
+  .footer { padding: 80px 0 48px; background: var(--bg); border-top: 1px solid var(--line); }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 56px; }
+  @media (max-width: 800px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  .footer-brand p { color: var(--tx-grey-secondary); font-size: 14px; margin-top: 16px; max-width: 320px; }
+  .footer-col h5 { font-family: 'JetBrains Mono'; font-size: 12px; color: var(--tx-grey-tertiary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 18px; font-weight: 500; }
+  .footer-col a { display: block; color: var(--tx-grey-secondary); font-size: 14px; padding: 6px 0; }
+  .footer-col a:hover { color: var(--tx-grey-primary); }
+  .footer-bottom { padding-top: 32px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; color: var(--tx-grey-tertiary); font-family: 'JetBrains Mono'; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<!-- ====== SWITCHER ====== -->
+<nav class="switcher" aria-label="Версии редизайна">
+  <span class="label">Версия</span>
+  <a href="option-1.html"><span class="badge">01</span> Atlet</a>
+  <a href="option-2.html" class="active"><span class="badge">02</span> Club</a>
+  <a href="option-3.html"><span class="badge">03</span> Race</a>
+  <a href="option-4.html"><span class="badge">04</span> Bonus</a>
+</nav>
+
+<!-- ====== NAV ====== -->
+<nav class="nav" id="nav">
+  <div class="container nav-inner">
+    <a href="#" class="logo">
+      <svg class="logo-mark" viewBox="0 0 60 60" fill="currentColor"><ellipse cx="22" cy="32" rx="11" ry="22" transform="rotate(-12 22 32)"/><ellipse cx="38" cy="32" rx="11" ry="22" transform="rotate(12 38 32)"/></svg>
+      <span class="logo-text">Moneyrun</span>
+    </a>
+    <div class="nav-links">
+      <a href="#cities">Города</a>
+      <a href="#stories">Истории</a>
+      <a href="#events">Тренировки</a>
+      <a href="#numbers">Сообщество</a>
+    </div>
+    <a href="#join" class="nav-cta">Скачать</a>
+  </div>
+</nav>
+
+<!-- ====== HERO ====== -->
+<header class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="hero-issue">
+        <span>Выпуск 04</span><span>/</span><span class="salat">Лето · 2026</span><span>/</span><span>Беговой журнал</span>
+      </div>
+      <h1 class="display">
+        Беговое сообщество,<br>
+        в которое <em>легко войти</em>.
+      </h1>
+      <p class="hero-tagline">1 240 клубов в РФ и СНГ. Утренние пробежки в парке, совместные тренировки, забеги, чат, общий чай после. Найди свой клуб в один тап.</p>
+      <div class="hero-meta">
+        <div><strong>412k</strong>атлетов</div>
+        <div><strong>1 240</strong>клубов</div>
+        <div><strong>26</strong>городов</div>
+      </div>
+    </div>
+    <aside class="hero-side">
+      <div class="hero-side-label">★ Главное в этом выпуске</div>
+      <h4>Открыли клубы в Иркутске, Чебоксарах и Калининграде.</h4>
+      <div class="cta-row">
+        <a href="#" class="btn btn-lime">App Store</a>
+        <a href="#" class="btn btn-ghost">Google Play</a>
+      </div>
+    </aside>
+  </div>
+</header>
+
+<!-- ====== MANIFESTO ====== -->
+<section class="manifesto">
+  <div class="container">
+    <p class="manifesto-text">
+      Бежать одному — это бег. Бежать вместе — это <em>клуб</em>. Moneyrun собирает атлетов: тех, кто уже подсел, и тех, кто только впервые шнурует кроссовки. Мы делаем так, чтобы рядом всегда был кто-то быстрее, кто-то медленнее, кто-то впервые на 10 км.
+    </p>
+    <div class="manifesto-sign">
+      <span>Команда Moneyrun</span>
+      <span>Москва · СПб · Казань · Алматы · Тбилиси</span>
+    </div>
+  </div>
+</section>
+
+<!-- ====== CITIES ====== -->
+<section class="cities" id="cities">
+  <div class="container">
+    <div class="cities-head">
+      <h2 class="display cities-title">Клубы там, где ты бежишь.</h2>
+      <p class="cities-sub">26 городов, 1 240 клубов. Если твоего города пока нет — открой свой первым.</p>
+    </div>
+    <div class="city-grid">
+      <div class="city">
+        <div class="num">01 — RU</div>
+        <h3>Москва</h3>
+        <div class="clubs-count"><strong>184</strong><span>клуба</span></div>
+        <div class="athletes">112 400 атлетов · 64 ежедневных встречи</div>
+      </div>
+      <div class="city">
+        <div class="num">02 — RU</div>
+        <h3>Санкт-Петербург</h3>
+        <div class="clubs-count"><strong>96</strong><span>клубов</span></div>
+        <div class="athletes">58 200 атлетов · 32 встречи / день</div>
+      </div>
+      <div class="city">
+        <div class="num">03 — RU</div>
+        <h3>Казань</h3>
+        <div class="clubs-count"><strong>42</strong><span>клуба</span></div>
+        <div class="athletes">19 800 атлетов · набирает обороты</div>
+      </div>
+      <div class="city">
+        <div class="num">04 — RU</div>
+        <h3>Екатеринбург</h3>
+        <div class="clubs-count"><strong>38</strong><span>клубов</span></div>
+        <div class="athletes">17 200 атлетов</div>
+      </div>
+      <div class="city">
+        <div class="num">05 — RU</div>
+        <h3>Новосибирск</h3>
+        <div class="clubs-count"><strong>34</strong><span>клуба</span></div>
+        <div class="athletes">14 600 атлетов</div>
+      </div>
+      <div class="city">
+        <div class="num">06 — KZ</div>
+        <h3>Алматы</h3>
+        <div class="clubs-count"><strong>48</strong><span>клубов</span></div>
+        <div class="athletes">22 300 атлетов · сильное трейл-сообщество</div>
+      </div>
+      <div class="city">
+        <div class="num">07 — GE</div>
+        <h3>Тбилиси</h3>
+        <div class="clubs-count"><strong>21</strong><span>клуб</span></div>
+        <div class="athletes">9 100 атлетов · мультиязычные клубы</div>
+      </div>
+      <div class="city" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+        <div style="font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700; font-size: 22px; margin-bottom: 12px;">+19 городов</div>
+        <a href="#" style="color: var(--tx-salat-primary); font-size: 13px; font-family: 'JetBrains Mono';">смотреть все →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== STORIES ====== -->
+<section class="stories" id="stories">
+  <div class="container">
+    <div class="stories-head">
+      <h2 class="display">Истории, ради которых мы это делаем.</h2>
+      <p style="color: var(--tx-grey-secondary); font-size: 17px; max-width: 360px;">Атлеты, которые год назад впервые открыли приложение.</p>
+    </div>
+    <div class="stories-grid">
+      <article class="story">
+        <div class="story-photo" style="background-image: url('https://images.unsplash.com/photo-1502230831726-fe5549140034?w=1000&q=80&auto=format&fit=crop');"></div>
+        <div class="story-body">
+          <p class="story-quote">«В первый день в клубе была уверена, что не выдержу. Сейчас веду пейс-группу 5:30 по средам».</p>
+          <div class="story-byline">
+            <div class="story-name"><strong>Марина, 28</strong><span>Sokolniki Run · Москва</span></div>
+            <span class="story-tag">2 года в клубе</span>
+          </div>
+        </div>
+      </article>
+      <article class="story">
+        <div class="story-photo" style="background-image: url('https://images.unsplash.com/photo-1483721310020-03333e577078?w=1000&q=80&auto=format&fit=crop');"></div>
+        <div class="story-body">
+          <p class="story-quote">«Переехал в новый город, не знал никого. Через неделю — клуб, общий чат и тренировки три раза в неделю».</p>
+          <div class="story-byline">
+            <div class="story-name"><strong>Илья, 41</strong><span>Neva Pacers · СПб</span></div>
+            <span class="story-tag">8 мес в клубе</span>
+          </div>
+        </div>
+      </article>
+      <article class="story">
+        <div class="story-photo" style="background-image: url('https://images.unsplash.com/photo-1530143584546-02191bc84eb5?w=1000&q=80&auto=format&fit=crop');"></div>
+        <div class="story-body">
+          <p class="story-quote">«Бегала всегда одна. Теперь в субботу собираемся 30 человек и потом завтракаем в одном кафе».</p>
+          <div class="story-byline">
+            <div class="story-name"><strong>Дарья, 25</strong><span>Kazan Trail · Казань</span></div>
+            <span class="story-tag">1 год в клубе</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ====== EVENTS — недельное расписание совместных тренировок ====== -->
+<section class="events" id="events">
+  <div class="container">
+    <div class="events-head">
+      <h2 class="display">Совместные тренировки. Эта неделя.</h2>
+      <p>Расписание сводится автоматически от клубов твоего города. Можно просто прийти.</p>
+    </div>
+    <div class="events-list">
+      <div class="event">
+        <div class="ev-date"><div class="ev-day">Пн</div><div class="ev-time">07:00</div></div>
+        <div><div class="ev-title">Лёгкая 7 км</div><div class="ev-club">Sokolniki Run · открытая</div></div>
+        <div class="ev-where">Сокольники, фонтан</div>
+        <a href="#" class="ev-cta">Иду →</a>
+      </div>
+      <div class="event">
+        <div class="ev-date"><div class="ev-day">Вт</div><div class="ev-time">19:30</div></div>
+        <div><div class="ev-title">Интервалы 6×800</div><div class="ev-club">Sub-3 Marathon · закрытая</div></div>
+        <div class="ev-where">Лужники, стадион</div>
+        <a href="#" class="ev-cta">Иду →</a>
+      </div>
+      <div class="event">
+        <div class="ev-date"><div class="ev-day">Ср</div><div class="ev-time">07:00</div></div>
+        <div><div class="ev-title">Темповая 10 км</div><div class="ev-club">Patriarchs Pace · открытая</div></div>
+        <div class="ev-where">Патриаршие пруды</div>
+        <a href="#" class="ev-cta">Иду →</a>
+      </div>
+      <div class="event">
+        <div class="ev-date"><div class="ev-day">Чт</div><div class="ev-time">20:00</div></div>
+        <div><div class="ev-title">Восстановление 5 км</div><div class="ev-club">Sokolniki Run · открытая</div></div>
+        <div class="ev-where">Сокольники, фонтан</div>
+        <a href="#" class="ev-cta">Иду →</a>
+      </div>
+      <div class="event">
+        <div class="ev-date"><div class="ev-day">Сб</div><div class="ev-time">09:00</div></div>
+        <div><div class="ev-title">Long run 18 км + завтрак</div><div class="ev-club">Crimea Trail · открытая</div></div>
+        <div class="ev-where">Воробьёвы горы</div>
+        <a href="#" class="ev-cta">Иду →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== PULL QUOTE ====== -->
+<section class="pull-quote">
+  <div class="container">
+    <p class="pull-quote-text">«Я думал, бег — это про километры. Оказалось, <em>это про людей</em>».</p>
+    <div class="pull-quote-meta">
+      <strong>— Никита, 34</strong>
+      <div>Тренер клуба Patriarchs Pace · Москва</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== BONUS (скромно, в одном блоке) ====== -->
+<section class="bonus-mini">
+  <div class="container">
+    <div class="bonus-card">
+      <div>
+        <span class="bonus-tag">+ ещё одна причина</span>
+        <h3>За регулярность даём рубли.</h3>
+        <p>Этим вы не разбогатеете, но компенсация за кроссовки и регистрационные взносы выходит реальная. XP за километры, обмен на ₽, вывод через СБП.</p>
+        <a href="#" class="btn btn-ghost">Как считаются бонусы →</a>
+      </div>
+      <div class="bonus-vis">
+        <ul>
+          <li>В среднем 5 пробежек в неделю <strong>~ 850 ₽ / мес</strong></li>
+          <li>Активный участник клуба <strong>~ 2 400 ₽ / мес</strong></li>
+          <li>Минимальный вывод <strong>100 ₽</strong></li>
+          <li>Скорость СБП <strong>~ 60 сек</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== NUMBERS ====== -->
+<section class="numbers" id="numbers">
+  <div class="container">
+    <div class="numbers-head">
+      <h2 class="display">Сообщество<br>в цифрах.</h2>
+      <p>За последний год сообщество выросло в 3.2 раза. Спасибо тем, кто шнурует кроссовки.</p>
+    </div>
+    <div class="numbers-grid">
+      <div class="number-cell">
+        <div class="big">412K</div>
+        <div class="lbl">атлетов в Moneyrun</div>
+      </div>
+      <div class="number-cell">
+        <div class="big">1 240</div>
+        <div class="lbl">клубов в РФ и СНГ</div>
+      </div>
+      <div class="number-cell">
+        <div class="big">6.4М</div>
+        <div class="lbl">км пробежано вместе</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== JOIN ====== -->
+<section class="join" id="join">
+  <div class="container">
+    <h2>Беги.<br><em>Не один.</em></h2>
+    <p>Скачай приложение, найди клуб в своём городе. Первая тренировка — уже завтра утром.</p>
+    <div class="cta-row">
+      <a href="#" class="btn btn-lime">App Store →</a>
+      <a href="#" class="btn btn-ghost">Google Play</a>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <svg class="logo-mark" viewBox="0 0 60 60" fill="currentColor"><ellipse cx="22" cy="32" rx="11" ry="22" transform="rotate(-12 22 32)"/><ellipse cx="38" cy="32" rx="11" ry="22" transform="rotate(12 38 32)"/></svg>
+          <span class="logo-text">Moneyrun</span>
+        </a>
+        <p>Беговое сообщество, в котором легко найти своих.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Сообщество</h5>
+        <a href="#">Клубы</a>
+        <a href="#">Города</a>
+        <a href="#">Тренировки</a>
+        <a href="#">Истории</a>
+      </div>
+      <div class="footer-col">
+        <h5>Поддержка</h5>
+        <a href="#">Правила сервиса</a>
+        <a href="#">Политика</a>
+        <a href="#">Telegram</a>
+        <a href="#">Связаться</a>
+      </div>
+      <div class="footer-col">
+        <h5>Скачать</h5>
+        <a href="#">App Store</a>
+        <a href="#">Google Play</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© Moneyrun, 2026</span>
+      <span>Сделано для тех, кто бежит вместе.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+</script>
+</body>
+</html>

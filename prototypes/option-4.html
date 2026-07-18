@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Moneyrun — Версия 04 · Bonus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0E1117;
+    --bg-2: #161A22;
+    --bg-3: #1E232D;
+    --line: rgba(255,255,255,0.10);
+    --line-strong: rgba(255,255,255,0.20);
+
+    --tx-salat-primary: #C5FF5C;
+    --tx-salat-deep: #A4DC42;
+    --tx-salat-secondary: rgba(197,255,92,0.16);
+    --tx-sky-primary: #6DCBFF;
+    --tx-tomato-primary: #FF6A5A;
+    --tx-grey-primary: #F4F5F7;
+    --tx-grey-secondary: rgba(244,245,247,0.65);
+    --tx-grey-tertiary: rgba(244,245,247,0.40);
+    --tx-on-primary: #0A0D14;
+    --tx-on-secondary: rgba(10,13,20,0.62);
+    --tx-on-tertiary: rgba(10,13,20,0.38);
+
+    --radius-card: 28px;
+    --radius-pill: 999px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--tx-grey-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  .display { font-family: 'Bricolage Grotesque', 'Inter', sans-serif; font-style: italic; font-weight: 800; letter-spacing: -0.03em; line-height: 0.9; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+  .container { max-width: 1320px; margin: 0 auto; padding: 0 32px; }
+  @media (max-width: 768px) { .container { padding: 0 20px; } }
+
+  /* ====== SWITCHER ====== */
+  .switcher { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 300; display: flex; align-items: center; gap: 4px; background: rgba(14,17,23,0.7); backdrop-filter: blur(20px) saturate(180%); border: 1px solid var(--line-strong); border-radius: var(--radius-pill); padding: 5px; box-shadow: 0 20px 50px -10px rgba(0,0,0,0.6); font-size: 13px; }
+  .switcher a { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; color: var(--tx-grey-secondary); border-radius: var(--radius-pill); transition: color .2s, background .2s; font-weight: 500; }
+  .switcher a:hover { color: var(--tx-grey-primary); }
+  .switcher a.active { background: var(--tx-salat-primary); color: var(--tx-on-primary); font-weight: 600; }
+  .switcher .label { color: var(--tx-grey-tertiary); font-size: 11px; padding: 0 10px 0 12px; text-transform: uppercase; letter-spacing: 0.08em; border-right: 1px solid var(--line); }
+  .switcher .badge { font-family: 'JetBrains Mono'; font-size: 10px; opacity: 0.7; }
+  @media (max-width: 760px) {
+    .switcher { left: 8px; right: 8px; transform: none; overflow-x: auto; }
+    .switcher .label { display: none; }
+    .switcher a { font-size: 12px; padding: 7px 10px; }
+  }
+
+  /* ====== NAV ====== */
+  .nav { position: sticky; top: 0; z-index: 100; background: rgba(14,17,23,0.86); backdrop-filter: blur(20px); border-bottom: 1px solid var(--line); padding-top: 64px; }
+  @media (max-width: 760px) { .nav { padding-top: 72px; } }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo-mark { width: 30px; height: 30px; color: var(--tx-salat-primary); }
+  .logo-text { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: 22px; letter-spacing: -0.02em; }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { color: var(--tx-grey-secondary); font-size: 14px; }
+  .nav-links a:hover { color: var(--tx-grey-primary); }
+  .nav-cta { background: var(--tx-salat-primary); color: var(--tx-on-primary); padding: 11px 22px; border-radius: var(--radius-pill); font-weight: 700; font-size: 14px; }
+  @media (max-width: 768px) { .nav-links { display: none; } }
+
+  /* ====== HERO ====== */
+  .hero { position: relative; padding: 60px 0 0; overflow: hidden; }
+  .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: center; min-height: 78vh; }
+  @media (max-width: 980px) { .hero-grid { grid-template-columns: 1fr; gap: 48px; padding: 32px 0 60px; } }
+  .hero-tag { display: inline-flex; align-items: center; gap: 10px; padding: 8px 16px; border-radius: var(--radius-pill); background: var(--tx-salat-secondary); color: var(--tx-salat-primary); font-size: 13px; font-weight: 600; margin-bottom: 32px; }
+  .hero h1 { font-size: clamp(56px, 10vw, 156px); margin-bottom: 28px; }
+  .hero h1 .outline { -webkit-text-stroke: 2px var(--tx-salat-primary); color: transparent; }
+  .hero h1 .salat { color: var(--tx-salat-primary); }
+  .hero-sub { font-size: clamp(18px, 1.8vw, 22px); color: var(--tx-grey-secondary); max-width: 520px; margin-bottom: 36px; }
+  .hero-fineprint { font-family: 'JetBrains Mono'; font-size: 12px; color: var(--tx-grey-tertiary); max-width: 480px; margin-top: 24px; line-height: 1.6; }
+
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 16px 26px; border-radius: var(--radius-pill); font-weight: 700; font-size: 15px; transition: transform .2s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-lime { background: var(--tx-salat-primary); color: var(--tx-on-primary); }
+  .btn-ink { background: var(--tx-on-primary); color: var(--tx-salat-primary); border: 1px solid var(--tx-on-primary); }
+  .btn-ghost-dark { background: transparent; color: var(--tx-grey-primary); border: 1px solid var(--line-strong); }
+  .btn-ghost-light { background: transparent; color: var(--tx-on-primary); border: 1px solid var(--tx-on-primary); }
+
+  /* PHONE — XP/balance app preview */
+  .phone-wrap { position: relative; height: 700px; display: flex; align-items: center; justify-content: center; }
+  .wing-bg { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--tx-salat-primary); opacity: 0.16; animation: floaty 7s ease-in-out infinite; }
+  @keyframes floaty { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-14px) rotate(2deg); } }
+  .phone { position: relative; width: 340px; height: 680px; border-radius: 44px; background: linear-gradient(160deg, #1A1F2A, #0E1117); border: 1px solid var(--line-strong); padding: 14px; box-shadow: 0 60px 120px -30px rgba(0,0,0,0.6), 0 0 80px -30px rgba(197,255,92,0.35); transform: rotate(-3deg); z-index: 2; }
+  .phone-screen { width: 100%; height: 100%; background: var(--bg-2); border-radius: 32px; padding: 22px 20px; overflow: hidden; position: relative; }
+  .phone-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .phone-pill { background: var(--tx-salat-secondary); color: var(--tx-salat-primary); padding: 6px 12px; border-radius: 999px; font-family: 'JetBrains Mono'; font-size: 11px; font-weight: 600; }
+  .phone-av { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, var(--tx-salat-primary), var(--tx-sky-primary)); }
+  .phone-after { background: var(--bg-3); border: 1px solid var(--line); border-radius: 18px; padding: 14px 16px; margin-bottom: 14px; }
+  .pa-lbl { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--tx-grey-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .pa-row { display: flex; justify-content: space-between; align-items: baseline; }
+  .pa-route { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700; font-size: 17px; }
+  .pa-dist { font-family: 'JetBrains Mono'; font-size: 13px; color: var(--tx-sky-primary); }
+  .phone-balance-card { background: linear-gradient(135deg, var(--tx-salat-primary), var(--tx-salat-deep)); border-radius: 18px; padding: 18px 20px; margin-bottom: 14px; color: var(--tx-on-primary); }
+  .pbc-lbl { font-family: 'JetBrains Mono'; font-size: 10px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .pbc-amt { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: 40px; line-height: 1; letter-spacing: -0.03em; }
+  .pbc-delta { font-family: 'JetBrains Mono'; font-size: 11px; opacity: 0.75; margin-top: 6px; }
+  .phone-list { background: var(--bg-3); border: 1px solid var(--line); border-radius: 18px; padding: 8px 0; }
+  .pl-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; font-size: 13px; }
+  .pl-row + .pl-row { border-top: 1px solid var(--line); }
+  .pl-row .amt { color: var(--tx-salat-primary); font-family: 'JetBrains Mono'; font-weight: 500; }
+  .phone-cta-bar { position: absolute; left: 18px; right: 18px; bottom: 18px; background: var(--tx-salat-primary); color: var(--tx-on-primary); padding: 13px; border-radius: 16px; text-align: center; font-weight: 700; font-size: 13px; }
+
+  /* SECTION BASE */
+  .section { padding: 140px 0; position: relative; }
+  @media (max-width: 768px) { .section { padding: 80px 0; } }
+  .lime-section { background: var(--tx-salat-primary); color: var(--tx-on-primary); position: relative; overflow: hidden; }
+  .lime-section .display { color: var(--tx-on-primary); }
+  .lime-section .section-title { color: var(--tx-on-primary); }
+
+  /* LIME LOOP SECTION */
+  .loop-wing { position: absolute; right: -120px; top: -80px; width: 480px; height: 480px; color: var(--tx-on-primary); opacity: 0.06; transform: rotate(15deg); }
+  .loop-head { max-width: 720px; margin-bottom: 64px; }
+  .loop-tag { display: inline-block; padding: 6px 14px; border-radius: 999px; background: var(--tx-on-primary); color: var(--tx-salat-primary); font-family: 'JetBrains Mono'; font-size: 12px; font-weight: 600; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .loop-title { font-size: clamp(48px, 8vw, 120px); }
+  .loop-sub { font-size: 20px; color: var(--tx-on-secondary); max-width: 540px; margin-top: 20px; }
+  .loop-flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; align-items: stretch; }
+  @media (max-width: 980px) { .loop-flow { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .loop-flow { grid-template-columns: 1fr; } }
+  .loop-step { background: var(--tx-on-primary); color: var(--tx-grey-primary); padding: 32px 26px; border-radius: var(--radius-card); transition: transform .3s; }
+  .loop-step:hover { transform: translateY(-6px); }
+  .loop-step-num { font-family: 'JetBrains Mono'; font-size: 12px; color: var(--tx-salat-primary); margin-bottom: 28px; letter-spacing: 0.06em; }
+  .loop-step h3 { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: 30px; letter-spacing: -0.02em; line-height: 0.95; margin-bottom: 12px; }
+  .loop-step p { color: var(--tx-grey-secondary); font-size: 14px; }
+
+  /* FRAMING — честный блок про мотивацию */
+  .framing { padding: 100px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--bg); }
+  .framing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  @media (max-width: 880px) { .framing-grid { grid-template-columns: 1fr; gap: 32px; } }
+  .framing h2 { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: clamp(36px, 5vw, 64px); letter-spacing: -0.02em; line-height: 1; }
+  .framing h2 em { color: var(--tx-salat-primary); }
+  .framing-points { display: grid; gap: 16px; }
+  .fp { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .fp:last-child { border-bottom: none; }
+  .fp-num { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: 14px; color: var(--tx-salat-primary); width: 36px; flex-shrink: 0; padding-top: 2px; }
+  .fp-text strong { display: block; font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700; font-size: 18px; letter-spacing: -0.01em; margin-bottom: 4px; }
+  .fp-text p { color: var(--tx-grey-secondary); font-size: 14px; }
+
+  /* GRADES LADDER (lime) */
+  .ladder-head { max-width: 760px; margin-bottom: 64px; }
+  .ladder-title { font-size: clamp(56px, 9vw, 140px); }
+  .ladder { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  @media (max-width: 880px) { .ladder { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .ladder { grid-template-columns: 1fr; } }
+  .rung { background: var(--tx-on-primary); color: var(--tx-grey-primary); border-radius: var(--radius-card); padding: 32px 24px; transition: transform .3s; }
+  .rung:hover { transform: translateY(-8px); }
+  .rung-pill { display: inline-block; padding: 6px 12px; border-radius: 999px; background: var(--tx-salat-primary); color: var(--tx-on-primary); font-family: 'JetBrains Mono'; font-size: 11px; font-weight: 600; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .rung h3 { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: clamp(32px, 3vw, 44px); letter-spacing: -0.02em; margin-bottom: 12px; line-height: 0.95; }
+  .rung-rate { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: 68px; color: var(--tx-salat-primary); letter-spacing: -0.03em; line-height: 1; margin-bottom: 14px; }
+  .rung-rate-lbl { color: var(--tx-grey-secondary); font-family: 'JetBrains Mono'; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 24px; }
+  .rung ul { list-style: none; }
+  .rung li { color: var(--tx-grey-secondary); padding: 8px 0; font-size: 14px; border-top: 1px solid var(--line); }
+  .rung li:first-child { border-top: none; }
+
+  /* WITHDRAW frames (lime) */
+  .withdraw-head { max-width: 760px; margin-bottom: 56px; }
+  .withdraw-frames { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  @media (max-width: 880px) { .withdraw-frames { grid-template-columns: 1fr; } }
+  .frame { background: var(--tx-on-primary); color: var(--tx-grey-primary); border-radius: var(--radius-card); padding: 32px; aspect-ratio: 1.05; display: flex; flex-direction: column; justify-content: space-between; }
+  .frame-num { font-family: 'JetBrains Mono'; font-size: 12px; color: var(--tx-salat-primary); letter-spacing: 0.06em; }
+  .frame-title { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: 30px; letter-spacing: -0.02em; line-height: 1; }
+  .frame-meta { color: var(--tx-grey-secondary); font-size: 13px; }
+  .frame-vis { background: var(--bg-2); border-radius: 16px; padding: 16px 18px; margin: 16px 0; }
+  .frame-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 13px; }
+  .frame-row:last-child { margin-bottom: 0; }
+  .frame-row .key { color: var(--tx-grey-tertiary); font-family: 'JetBrains Mono'; }
+  .frame-row .val { color: var(--tx-salat-primary); font-family: 'JetBrains Mono'; font-weight: 500; }
+
+  /* FAQ (dark) */
+  .faq-section { background: var(--bg); padding: 140px 0; }
+  .faq-head { text-align: center; margin-bottom: 56px; }
+  .faq-title { font-size: clamp(40px, 7vw, 80px); }
+  .faq-list { max-width: 880px; margin: 0 auto; }
+  .faq-item { border: 1px solid var(--line); border-radius: 20px; margin-bottom: 8px; overflow: hidden; transition: background .2s; }
+  .faq-item:hover { background: var(--bg-2); }
+  .faq-q { display: flex; justify-content: space-between; align-items: center; padding: 26px 28px; width: 100%; text-align: left; font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700; font-size: 20px; letter-spacing: -0.01em; }
+  .faq-q::after { content: '→'; color: var(--tx-salat-primary); font-style: normal; transition: transform .3s; }
+  .faq-item.open .faq-q::after { transform: rotate(90deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease; color: var(--tx-grey-secondary); font-size: 15px; padding: 0 28px; }
+  .faq-item.open .faq-a { max-height: 280px; padding-bottom: 26px; }
+
+  /* FINAL */
+  .final { background: var(--tx-salat-primary); color: var(--tx-on-primary); text-align: center; padding: 120px 32px; position: relative; overflow: hidden; }
+  .final-title { font-size: clamp(56px, 11vw, 180px); line-height: 0.85; margin-bottom: 32px; }
+  .final p { font-size: 20px; opacity: 0.78; margin-bottom: 40px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+  /* FOOTER */
+  .footer { background: var(--tx-on-primary); padding: 80px 0 40px; color: var(--tx-grey-primary); }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 56px; }
+  @media (max-width: 800px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  .footer-brand p { color: var(--tx-grey-secondary); font-size: 14px; margin-top: 16px; max-width: 320px; }
+  .footer-col h5 { font-family: 'JetBrains Mono'; font-size: 12px; color: var(--tx-grey-tertiary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 18px; font-weight: 500; }
+  .footer-col a { display: block; color: var(--tx-grey-secondary); font-size: 14px; padding: 6px 0; }
+  .footer-col a:hover { color: var(--tx-grey-primary); }
+  .footer-bottom { padding-top: 32px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; color: var(--tx-grey-tertiary); font-family: 'JetBrains Mono'; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<!-- ====== SWITCHER ====== -->
+<nav class="switcher" aria-label="Версии редизайна">
+  <span class="label">Версия</span>
+  <a href="option-1.html"><span class="badge">01</span> Atlet</a>
+  <a href="option-2.html"><span class="badge">02</span> Club</a>
+  <a href="option-3.html"><span class="badge">03</span> Race</a>
+  <a href="option-4.html" class="active"><span class="badge">04</span> Bonus</a>
+</nav>
+
+<!-- ====== NAV ====== -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="#" class="logo">
+      <svg class="logo-mark" viewBox="0 0 60 60" fill="currentColor"><ellipse cx="22" cy="32" rx="11" ry="22" transform="rotate(-12 22 32)"/><ellipse cx="38" cy="32" rx="11" ry="22" transform="rotate(12 38 32)"/></svg>
+      <span class="logo-text">Moneyrun</span>
+    </a>
+    <div class="nav-links">
+      <a href="#loop">Как работает</a>
+      <a href="#framing">Что важно</a>
+      <a href="#grades">Грейды</a>
+      <a href="#withdraw">Вывод</a>
+    </div>
+    <a href="#" class="nav-cta">Скачать →</a>
+  </div>
+</nav>
+
+<!-- ====== HERO ====== -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="hero-tag">⚡ XP → ₽ через СБП</div>
+      <h1 class="display">
+        Беги ради бега.<br>
+        Деньги — <span class="salat">приятный бонус</span>.
+      </h1>
+      <p class="hero-sub">Бонус-механика поверх обычного бегового приложения: за километры даём XP, XP меняется на рубли. Не вместо тренировок и клуба — а вдобавок.</p>
+      <div class="cta-row">
+        <a href="#" class="btn btn-lime">Скачать в App Store →</a>
+        <a href="#" class="btn btn-ghost-dark">Google Play</a>
+      </div>
+      <p class="hero-fineprint">* Moneyrun — это в первую очередь беговое сообщество с клубами и забегами. Бонус-рубли — дополнительная мотивация, не основная механика.</p>
+    </div>
+    <div class="phone-wrap">
+      <svg class="wing-bg" viewBox="0 0 200 200"><ellipse cx="80" cy="100" rx="40" ry="80" transform="rotate(-12 80 100)" fill="currentColor"/><ellipse cx="130" cy="100" rx="40" ry="80" transform="rotate(12 130 100)" fill="currentColor"/></svg>
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="phone-bar">
+            <span class="phone-pill">+ 148 XP сегодня</span>
+            <div class="phone-av"></div>
+          </div>
+          <div class="phone-after">
+            <div class="pa-lbl">Утренняя пробежка</div>
+            <div class="pa-row">
+              <div class="pa-route">Сокольники</div>
+              <div class="pa-dist">7.4 км · 5:12</div>
+            </div>
+          </div>
+          <div class="phone-balance-card">
+            <div class="pbc-lbl">Бонус-баланс</div>
+            <div class="pbc-amt">3 240 ₽</div>
+            <div class="pbc-delta">+ 320 ₽ на этой неделе</div>
+          </div>
+          <div class="phone-list">
+            <div class="pl-row"><span>Утренняя 7.4 км</span><span class="amt">+ 220 ₽</span></div>
+            <div class="pl-row"><span>Челлендж клуба</span><span class="amt">+ 90 ₽</span></div>
+            <div class="pl-row"><span>Бонус регулярности</span><span class="amt">+ 10 ₽</span></div>
+          </div>
+          <div class="phone-cta-bar">Вывести через СБП →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== LOOP (lime) ====== -->
+<section class="section lime-section" id="loop">
+  <svg class="loop-wing" viewBox="0 0 200 200"><ellipse cx="80" cy="100" rx="40" ry="80" transform="rotate(-12 80 100)" fill="currentColor"/><ellipse cx="130" cy="100" rx="40" ry="80" transform="rotate(12 130 100)" fill="currentColor"/></svg>
+  <div class="container" style="position: relative;">
+    <div class="loop-head">
+      <span class="loop-tag">— Как работает бонус</span>
+      <h2 class="display loop-title">Беги → XP → ₽ → Снова на пробежку.</h2>
+      <p class="loop-sub">Простой цикл поверх ваших обычных тренировок. Ничего не нужно делать сверх — просто бегаете как раньше.</p>
+    </div>
+    <div class="loop-flow">
+      <div class="loop-step">
+        <div class="loop-step-num">01 →</div>
+        <h3>Тренируйся</h3>
+        <p>Трекер сам пишет километры. Strava, Garmin, Apple Watch и другие.</p>
+      </div>
+      <div class="loop-step">
+        <div class="loop-step-num">02 →</div>
+        <h3>Получи XP</h3>
+        <p>За километры, регулярность, участие в клубе и финиш на забегах.</p>
+      </div>
+      <div class="loop-step">
+        <div class="loop-step-num">03 →</div>
+        <h3>Поменяй на ₽</h3>
+        <p>По курсу твоего грейда. Чем выше — тем выгоднее.</p>
+      </div>
+      <div class="loop-step">
+        <div class="loop-step-num">04 →</div>
+        <h3>Выведи</h3>
+        <p>СБП за минуту, карта за день. Без комиссии сервиса.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FRAMING — честный блок про мотивацию ====== -->
+<section class="framing" id="framing">
+  <div class="container framing-grid">
+    <div>
+      <h2 class="display">Это <em>не основная мотивация</em>. И мы за этим следим.</h2>
+      <p style="color: var(--tx-grey-secondary); margin-top: 24px; max-width: 480px;">Деньги хорошо работают как «приятная неожиданность», но плохо — как единственная причина бежать. Мы специально проектируем продукт, чтобы бонус-рубли не вытеснили саму радость от тренировок.</p>
+    </div>
+    <div class="framing-points">
+      <div class="fp">
+        <div class="fp-num">01</div>
+        <div class="fp-text"><strong>Бонус ограничен сверху</strong><p>В среднем 1 500–3 000 ₽ в месяц. Это компенсация за кроссовки, не вторая зарплата.</p></div>
+      </div>
+      <div class="fp">
+        <div class="fp-num">02</div>
+        <div class="fp-text"><strong>Без штрафов за пропуски</strong><p>Грейд не сгорает. Если неделя без тренировок — ничего страшного.</p></div>
+      </div>
+      <div class="fp">
+        <div class="fp-num">03</div>
+        <div class="fp-text"><strong>Премия за клуб и забеги</strong><p>Повышенный курс — у тех, кто бегает с людьми и финиширует на стартах. Не у одиночек на дорожке.</p></div>
+      </div>
+      <div class="fp">
+        <div class="fp-num">04</div>
+        <div class="fp-text"><strong>Прозрачные правила</strong><p>Курс публикуется заранее, лотерей и сюрпризов нет. Источник выплат — спонсоры и партнёры.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== GRADES LADDER (lime) ====== -->
+<section class="section lime-section" id="grades">
+  <div class="container">
+    <div class="ladder-head">
+      <span class="loop-tag">— Грейды</span>
+      <h2 class="display ladder-title">Лучше клуб — лучше курс.</h2>
+      <p class="loop-sub">Грейд растёт от регулярности, активности в клубе и финишей на забегах — не от того, сколько вы готовы добежать ради рубля.</p>
+    </div>
+    <div class="ladder">
+      <div class="rung">
+        <span class="rung-pill">Старт</span>
+        <h3>Старт</h3>
+        <div class="rung-rate">×1.0</div>
+        <div class="rung-rate-lbl">базовый курс</div>
+        <ul>
+          <li>Свободный вход</li>
+          <li>Открытые клубы</li>
+          <li>Базовая статистика</li>
+        </ul>
+      </div>
+      <div class="rung">
+        <span class="rung-pill">Бронза</span>
+        <h3>Бронза</h3>
+        <div class="rung-rate">×1.3</div>
+        <div class="rung-rate-lbl">+30% к курсу</div>
+        <ul>
+          <li>Совместные тренировки</li>
+          <li>Челленджи недели</li>
+          <li>Рейтинг города</li>
+        </ul>
+      </div>
+      <div class="rung">
+        <span class="rung-pill">Серебро</span>
+        <h3>Серебро</h3>
+        <div class="rung-rate">×1.7</div>
+        <div class="rung-rate-lbl">+70% к курсу</div>
+        <ul>
+          <li>Закрытые клубы</li>
+          <li>Финиши на забегах</li>
+          <li>Бонусы клуба</li>
+        </ul>
+      </div>
+      <div class="rung">
+        <span class="rung-pill">Золото</span>
+        <h3>Золото</h3>
+        <div class="rung-rate">×2.2</div>
+        <div class="rung-rate-lbl">+120% к курсу</div>
+        <ul>
+          <li>Все клубы открыты</li>
+          <li>Призовые забеги</li>
+          <li>Личный куратор</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== WITHDRAW (lime) ====== -->
+<section class="section lime-section" id="withdraw">
+  <div class="container">
+    <div class="withdraw-head">
+      <span class="loop-tag">— Вывод</span>
+      <h2 class="display" style="font-size: clamp(48px, 8vw, 120px);">Деньги — за 90 секунд.</h2>
+      <p class="loop-sub">Через СБП. На карту. Без комиссии сервиса.</p>
+    </div>
+    <div class="withdraw-frames">
+      <div class="frame">
+        <div>
+          <div class="frame-num">01 →</div>
+          <div class="frame-title">Выбери сумму</div>
+        </div>
+        <div class="frame-vis">
+          <div class="frame-row"><span class="key">К выводу</span><span class="val">3 240 ₽</span></div>
+          <div class="frame-row"><span class="key">XP</span><span class="val">1 472</span></div>
+          <div class="frame-row"><span class="key">Курс</span><span class="val">×1.7</span></div>
+        </div>
+        <div class="frame-meta">Минимальная сумма вывода — 100 ₽.</div>
+      </div>
+      <div class="frame">
+        <div>
+          <div class="frame-num">02 →</div>
+          <div class="frame-title">Выбери способ</div>
+        </div>
+        <div class="frame-vis">
+          <div class="frame-row"><span class="key">СБП</span><span class="val">~60 сек</span></div>
+          <div class="frame-row"><span class="key">Карта</span><span class="val">до 24 ч</span></div>
+          <div class="frame-row"><span class="key">Комиссия</span><span class="val">0 ₽</span></div>
+        </div>
+        <div class="frame-meta">Привязка карты — один раз.</div>
+      </div>
+      <div class="frame">
+        <div>
+          <div class="frame-num">03 →</div>
+          <div class="frame-title">Получи на карту</div>
+        </div>
+        <div class="frame-vis" style="background: var(--tx-salat-primary); color: var(--tx-on-primary);">
+          <div class="frame-row"><span class="key" style="color: var(--tx-on-secondary);">Зачислено</span><span class="val" style="color: var(--tx-on-primary);">3 240 ₽</span></div>
+          <div class="frame-row"><span class="key" style="color: var(--tx-on-secondary);">Статус</span><span class="val" style="color: var(--tx-on-primary);">Готово ✓</span></div>
+        </div>
+        <div class="frame-meta">Чек приходит в Telegram-бот и на e-mail.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FAQ ====== -->
+<section class="faq-section">
+  <div class="container">
+    <div class="faq-head">
+      <span style="display: inline-block; padding: 6px 14px; border-radius: 999px; background: var(--tx-salat-secondary); color: var(--tx-salat-primary); font-family: 'JetBrains Mono'; font-size: 12px; font-weight: 500; margin-bottom: 24px;">— Вопросы про бонус</span>
+      <h2 class="display faq-title">Без звёздочек и петита.</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item"><button class="faq-q">Сколько реально можно получить в месяц?</button><div class="faq-a">В среднем 1 500–3 000 ₽ для активного бегуна (4–5 тренировок в неделю + участие в клубе). Это компенсация за кроссовки и регистрацию на забеги, а не вторая зарплата.</div></div>
+      <div class="faq-item"><button class="faq-q">Это не пирамида?</button><div class="faq-a">Нет. Источник выплат — рекламные и партнёрские контракты (бренды экипировки, регистрация на сторонние забеги), плюс комиссия закрытых клубов. Никаких приглашений и многоуровневых выплат.</div></div>
+      <div class="faq-item"><button class="faq-q">А если я не хочу выводить деньги?</button><div class="faq-a">XP можно тратить внутри Moneyrun: вход в закрытый клуб, регистрация на забег, скидки у партнёров на экипировку. Деньгами выводить — необязательно.</div></div>
+      <div class="faq-item"><button class="faq-q">А что если бегать только ради бонусов?</button><div class="faq-a">Курс посчитан так, что «бегать только за деньги» — невыгодная стратегия. Реальный плюс от Moneyrun — это сообщество и забеги, бонус-рубли работают как приятная компенсация, а не как мотиватор.</div></div>
+      <div class="faq-item"><button class="faq-q">Какие приложения поддерживаются?</button><div class="faq-a">Strava, Garmin Connect, Apple Health / Apple Watch, Coros, Polar, Suunto. И внутренний трекер в приложении.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FINAL ====== -->
+<section class="final">
+  <h2 class="display final-title">Беги.<br>Бонус — придёт.</h2>
+  <p>Скачай приложение, подключи трекер, найди клуб. Бонус-рубли подтянутся сами в фоне.</p>
+  <div class="cta-row" style="justify-content: center;">
+    <a href="#" class="btn btn-ink">App Store →</a>
+    <a href="#" class="btn btn-ghost-light">Google Play</a>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <svg class="logo-mark" viewBox="0 0 60 60" fill="currentColor"><ellipse cx="22" cy="32" rx="11" ry="22" transform="rotate(-12 22 32)"/><ellipse cx="38" cy="32" rx="11" ry="22" transform="rotate(12 38 32)"/></svg>
+          <span class="logo-text">Moneyrun</span>
+        </a>
+        <p>Беговое приложение, в котором за регулярность дают приятный бонус.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Бонус</h5>
+        <a href="#">Цикл</a>
+        <a href="#">Грейды</a>
+        <a href="#">Вывод</a>
+        <a href="#">FAQ</a>
+      </div>
+      <div class="footer-col">
+        <h5>Поддержка</h5>
+        <a href="#">Правила сервиса</a>
+        <a href="#">Политика</a>
+        <a href="#">Telegram</a>
+        <a href="#">Связаться</a>
+      </div>
+      <div class="footer-col">
+        <h5>Скачать</h5>
+        <a href="#">App Store</a>
+        <a href="#">Google Play</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© Moneyrun, 2026</span>
+      <span>Бегайте на здоровье. Бонус — в подарок.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+  });
+</script>
+</body>
+</html>

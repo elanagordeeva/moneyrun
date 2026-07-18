@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guide hero — варианты · Moneyrun</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,slnt,wght@8..144,-10..0,300..1000&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#eef2ec;--bg2:#f4f7f3;--surface:#ffffff;--ink:#0e120e;--ink2:#1b1b21;--muted:#6b7068;--muted2:#9aa097;
+    --border:#e6eae3;--border2:#dadfd6;
+    --lime:#BDFF76;--lime2:#D5FFA8;--lime-deep:#9CD161;--lime-ink:#1f2a05;
+    --c-blue:#B6D8FF;--c-blue-ink:#133C6F;--blue:#3363E9;
+    --fd:'Roboto Flex',system-ui,sans-serif;--fb:'Roboto Flex',system-ui,sans-serif;--fm:'Roboto Flex',ui-monospace,monospace;
+    --maxw:1240px;--r-sm:12px;--r-md:18px;--r-lg:24px;--r-xl:30px;
+    --sh-sm:0 2px 6px rgba(15,20,15,.05),0 1px 2px rgba(15,20,15,.04);
+    --sh-md:0 14px 30px -10px rgba(15,30,12,.10),0 8px 18px -6px rgba(15,30,12,.06);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--surface);color:var(--ink);font-family:var(--fb);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+  .lab-head{max-width:var(--maxw);margin:0 auto;padding:3.5rem clamp(1.25rem,5vw,4rem) .5rem}
+  .lab-head h1{font-family:var(--fd);font-weight:800;font-style:italic;font-variation-settings:'slnt' -10;font-size:clamp(2rem,4vw,2.8rem);letter-spacing:-.03em}
+  .lab-head p{color:var(--muted);max-width:680px;margin-top:.5rem}
+  .variant{padding:2.6rem 0}
+  .variant+.variant{border-top:1px dashed #c8cdc4}
+  .v-tag{max-width:var(--maxw);margin:0 auto 1.1rem;padding:0 clamp(1.25rem,5vw,4rem);font-family:var(--fm);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .v-tag b{color:var(--ink)}
+  .v-tag i{font-style:normal;color:var(--muted2)}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(1.25rem,5vw,4rem)}
+
+  /* shared title slant */
+  .hx h1{font-family:var(--fd);font-weight:800;font-style:italic;font-variation-settings:'slnt' -10;letter-spacing:-.035em;line-height:1}
+
+  /* ───────────────────────── V1 · Watermark grade ───────────────────────── */
+  .v1{position:relative;overflow:hidden;border-radius:var(--r-lg);background:#0e120e;color:#f1f3ee;padding:clamp(2.6rem,6vw,4.4rem) clamp(1.6rem,5vw,3rem);isolation:isolate}
+  .v1::before{content:'';position:absolute;inset:0;background:radial-gradient(120% 100% at 88% -10%,rgba(189,255,118,.20),transparent 55%);z-index:0}
+  .v1::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--lime);z-index:1}
+  .v1 .ghost{position:absolute;right:clamp(-1rem,2vw,2rem);top:50%;transform:translateY(-50%);font-family:var(--fd);font-weight:800;font-style:italic;font-variation-settings:'slnt' -10;font-size:clamp(9rem,26vw,22rem);line-height:.8;color:rgba(189,255,118,.07);z-index:0;letter-spacing:-.04em;pointer-events:none}
+  .v1>*{position:relative;z-index:2}
+  .eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--fm);font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--lime);background:rgba(189,255,118,.10);border:1px solid rgba(189,255,118,.35);border-radius:999px;padding:.4rem .9rem}
+  .eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 3px rgba(189,255,118,.22)}
+  .v1 h1{font-size:clamp(2.4rem,6.5vw,5rem);margin:1.5rem 0 1.3rem;color:#fff}
+  .v1 .accent{color:var(--lime)}
+  .meta{display:flex;gap:.6rem;flex-wrap:wrap}
+  .meta .chip{display:inline-flex;align-items:center;gap:.45rem;font-family:var(--fm);font-size:.74rem;letter-spacing:.03em;color:#f1f3ee;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:999px;padding:.4rem .85rem}
+  .meta .chip span{color:rgba(255,255,255,.5)}
+
+  /* ───────────────────────── V2 · Light editorial ───────────────────────── */
+  .v2{position:relative;border:1px solid var(--border);border-radius:var(--r-lg);background:linear-gradient(180deg,#fff,var(--bg2));padding:clamp(2.4rem,5vw,3.6rem) clamp(1.6rem,5vw,3rem);box-shadow:var(--sh-sm)}
+  .eyebrow-l{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--fm);font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--lime-ink);background:var(--lime);border-radius:999px;padding:.42rem .9rem;font-weight:600}
+  .v2 h1{font-size:clamp(2.3rem,6vw,4.6rem);margin:1.4rem 0 1.3rem;color:var(--ink)}
+  .v2 .mark{position:relative;display:inline-block;color:var(--lime-ink);padding:0 .12em;z-index:0}
+  .v2 .mark::before{content:'';position:absolute;inset:.08em -.05em;background:var(--lime);border-radius:12px;transform:rotate(-1.2deg);z-index:-1}
+  .meta-l{display:flex;gap:1.4rem;flex-wrap:wrap;color:var(--muted);font-family:var(--fm);font-size:.78rem}
+  .meta-l b{color:var(--ink);font-weight:600}
+  .meta-l span{display:inline-flex;align-items:center;gap:.45rem}
+
+  /* ───────────────────────── V3 · Split + progress card ───────────────────────── */
+  .v3{display:grid;grid-template-columns:1.3fr .9fr;gap:0;border-radius:var(--r-lg);overflow:hidden;background:#0e120e;color:#f1f3ee;isolation:isolate}
+  @media(max-width:720px){.v3{grid-template-columns:1fr}}
+  .v3 .left{position:relative;padding:clamp(2.4rem,5vw,3.6rem) clamp(1.6rem,4vw,2.6rem);overflow:hidden}
+  .v3 .left::before{content:'';position:absolute;left:-20%;bottom:-40%;width:70%;height:140%;background:radial-gradient(closest-side,rgba(189,255,118,.18),transparent 70%);z-index:0}
+  .v3 .left>*{position:relative;z-index:1}
+  .v3 h1{font-size:clamp(2.1rem,5vw,3.8rem);margin:1.4rem 0 1.2rem;color:#fff}
+  .v3 .accent{color:var(--lime)}
+  .v3 .right{background:rgba(255,255,255,.04);border-left:1px solid rgba(255,255,255,.08);padding:clamp(1.6rem,3vw,2.2rem);display:flex;flex-direction:column;gap:.7rem;justify-content:center}
+  .v3 .rh{font-family:var(--fm);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:.2rem}
+  .v3 .row{display:flex;align-items:center;justify-content:space-between;gap:1rem;font-size:.85rem;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.07)}
+  .v3 .row:last-child{border-bottom:none}
+  .v3 .row b{font-family:var(--fd);font-weight:700}
+  .v3 .dot{width:7px;height:7px;border-radius:50%;background:var(--lime);display:inline-block;margin-right:.5rem;box-shadow:0 0 0 3px rgba(189,255,118,.2)}
+
+  /* ───────────────────────── V4 · Lime forward (sporty) ───────────────────────── */
+  .v4{position:relative;overflow:hidden;border-radius:var(--r-lg);background:var(--lime);color:var(--lime-ink);padding:clamp(2.6rem,6vw,4.2rem) clamp(1.6rem,5vw,3rem)}
+  .v4::before{content:'';position:absolute;right:-8%;top:-30%;width:46%;height:180%;background:radial-gradient(closest-side,rgba(15,20,15,.10),transparent 70%)}
+  .v4 .eyebrow-d{display:inline-flex;align-items:center;gap:.5rem;position:relative;font-family:var(--fm);font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--lime);background:var(--ink);border-radius:999px;padding:.42rem .9rem;font-weight:600}
+  .v4 h1{position:relative;font-size:clamp(2.4rem,6.5vw,5rem);margin:1.5rem 0 1.3rem;color:var(--ink)}
+  .v4 .accent{-webkit-text-stroke:2px var(--ink);color:transparent;font-style:italic}
+  .meta-d{display:flex;gap:.6rem;flex-wrap:wrap;position:relative}
+  .meta-d .chip{display:inline-flex;align-items:center;gap:.45rem;font-family:var(--fm);font-size:.74rem;color:var(--ink);background:rgba(15,20,15,.06);border:1px solid rgba(15,20,15,.14);border-radius:999px;padding:.4rem .85rem}
+  .meta-d .chip span{opacity:.55}
+
+  /* ───────────────────────── V5 · Blueprint / technical ───────────────────────── */
+  .v5{position:relative;overflow:hidden;border-radius:var(--r-lg);background:#0c100c;color:#e8eee2;padding:clamp(2.6rem,6vw,4.2rem) clamp(1.6rem,5vw,3rem);isolation:isolate}
+  .v5::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(189,255,118,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(189,255,118,.06) 1px,transparent 1px);background-size:34px 34px;z-index:0;mask-image:radial-gradient(120% 90% at 30% 0%,#000 40%,transparent 80%)}
+  .v5>*{position:relative;z-index:1}
+  .v5 .corner{position:absolute;width:14px;height:14px;border:2px solid var(--lime);z-index:2}
+  .v5 .corner.tl{left:14px;top:14px;border-right:0;border-bottom:0}
+  .v5 .corner.tr{right:14px;top:14px;border-left:0;border-bottom:0}
+  .v5 .corner.bl{left:14px;bottom:14px;border-right:0;border-top:0}
+  .v5 .corner.br{right:14px;bottom:14px;border-left:0;border-top:0}
+  .v5 .eyebrow-t{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--fm);font-size:.64rem;letter-spacing:.24em;text-transform:uppercase;color:var(--lime)}
+  .v5 .eyebrow-t::before{content:'';width:18px;height:1px;background:var(--lime)}
+  .v5 h1{font-size:clamp(2.3rem,6vw,4.8rem);margin:1.3rem 0 1.2rem;color:#fff}
+  .v5 .accent{color:var(--lime)}
+  .meta-t{display:flex;gap:1.6rem;flex-wrap:wrap;font-family:var(--fm);font-size:.72rem;letter-spacing:.05em;color:rgba(232,238,226,.5)}
+  .meta-t b{color:#e8eee2;font-weight:600}
+
+  /* ───────────────────────── V6 · Oversized minimal ───────────────────────── */
+  .v6{position:relative;border-radius:var(--r-lg);background:#fff;border:1px solid var(--border);padding:clamp(2.2rem,5vw,3.4rem) clamp(1.6rem,5vw,3rem) clamp(2rem,4vw,2.6rem);overflow:hidden}
+  .v6 .top{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;border-bottom:1px solid var(--border);padding-bottom:1rem;margin-bottom:1.4rem}
+  .v6 .eyebrow-min{font-family:var(--fm);font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+  .v6 .eyebrow-min b{color:var(--lime-deep)}
+  .v6 .meta-min{font-family:var(--fm);font-size:.72rem;color:var(--muted2)}
+  .v6 h1{font-size:clamp(2.8rem,9vw,6.4rem);margin:0;color:var(--ink);letter-spacing:-.045em}
+  .v6 .accent{color:var(--lime-deep)}
+  .v6 .rule{height:4px;background:linear-gradient(90deg,var(--lime),transparent);border-radius:4px;margin-top:1.4rem;width:min(280px,55%)}
+</style>
+</head>
+<body>
+
+<div class="lab-head">
+  <h1>Hero-блок «Правила сервиса» — варианты</h1>
+  <p>Шесть направлений для шапки страницы guide.html. Все на ваших токенах и шрифте Roboto Flex — любой блок переносится в страницу как есть. Скажите номер, который нравится, и я вставлю его в v2/guide.html.</p>
+</div>
+
+<!-- V1 -->
+<section class="variant hx">
+  <div class="v-tag"><b>Вариант 1</b> — Watermark Grade <i>· тёмный, как сейчас + гигантский «призрак» буквы на фоне, мета в чипах</i></div>
+  <div class="wrap">
+    <header class="v1">
+      <span class="ghost">MR</span>
+      <span class="eyebrow">Документация</span>
+      <h1>Правила <span class="accent">сервиса</span></h1>
+      <div class="meta">
+        <span class="chip"><span>Версия</span> 16.02.26</span>
+        <span class="chip"><span>Чтение</span> ~15 мин</span>
+      </div>
+    </header>
+  </div>
+</section>
+
+<!-- V2 -->
+<section class="variant hx">
+  <div class="v-tag"><b>Вариант 2</b> — Light Editorial <i>· светлая карточка, лаймовый маркер на слове, легче и «бумажнее»</i></div>
+  <div class="wrap">
+    <header class="v2">
+      <span class="eyebrow-l">Документация</span>
+      <h1>Правила <span class="mark">сервиса</span></h1>
+      <div class="meta-l">
+        <span><b>Версия</b> 16.02.26</span>
+        <span><b>Чтение</b> ~15 мин</span>
+      </div>
+    </header>
+  </div>
+</section>
+
+<!-- V3 -->
+<section class="variant hx">
+  <div class="v-tag"><b>Вариант 3</b> — Split + панель <i>· слева заголовок, справа панель с метаданными документа</i></div>
+  <div class="wrap">
+    <header class="v3">
+      <div class="left">
+        <span class="eyebrow">Документация</span>
+        <h1>Правила <span class="accent">сервиса</span></h1>
+        <p style="color:rgba(255,255,255,.55);max-width:420px;font-size:.95rem">Игровой модуль, начисление XP, монетизация и финансирование платформы.</p>
+      </div>
+      <div class="right">
+        <div class="rh">О документе</div>
+        <div class="row"><span><span class="dot"></span>Версия</span><b>16.02.26</b></div>
+        <div class="row"><span><span class="dot"></span>Чтение</span><b>~15 мин</b></div>
+        <div class="row"><span><span class="dot"></span>Разделов</span><b>13</b></div>
+        <div class="row"><span><span class="dot"></span>Язык</span><b>RU</b></div>
+      </div>
+    </header>
+  </div>
+</section>
+
+<!-- V4 -->
+<section class="variant hx">
+  <div class="v-tag"><b>Вариант 4</b> — Lime Forward <i>· сплошной лайм, контурный текст-акцент, спортивно и ярко</i></div>
+  <div class="wrap">
+    <header class="v4">
+      <span class="eyebrow-d">Документация</span>
+      <h1>Правила <span class="accent">сервиса</span></h1>
+      <div class="meta-d">
+        <span class="chip"><span>Версия</span> 16.02.26</span>
+        <span class="chip"><span>Чтение</span> ~15 мин</span>
+      </div>
+    </header>
+  </div>
+</section>
+
+<!-- V5 -->
+<section class="variant hx">
+  <div class="v-tag"><b>Вариант 5</b> — Blueprint <i>· техническая сетка, угловые засечки, «чертёжный» вайб</i></div>
+  <div class="wrap">
+    <header class="v5">
+      <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <span class="eyebrow-t">Документация</span>
+      <h1>Правила <span class="accent">сервиса</span></h1>
+      <div class="meta-t">
+        <span>ВЕРСИЯ&nbsp;&nbsp;<b>16.02.26</b></span>
+        <span>ЧТЕНИЕ&nbsp;&nbsp;<b>~15 мин</b></span>
+      </div>
+    </header>
+  </div>
+</section>
+
+<!-- V6 -->
+<section class="variant hx">
+  <div class="v-tag"><b>Вариант 6</b> — Oversized Minimal <i>· светлый, максимально крупный заголовок, мета в одну строку сверху</i></div>
+  <div class="wrap">
+    <header class="v6">
+      <div class="top">
+        <span class="eyebrow-min"><b>●</b> Документация</span>
+        <span class="meta-min">16.02.26 · ~15 мин чтения</span>
+      </div>
+      <h1>Правила <span class="accent">сервиса</span></h1>
+      <div class="rule"></div>
+    </header>
+  </div>
+</section>
+
+</body>
+</html>

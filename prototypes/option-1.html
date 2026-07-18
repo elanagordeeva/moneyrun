@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Moneyrun — Версия 01 · Atlet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Извлечено из Figma library «Moneyrun [Design –> Library]» */
+    --bg: #0E1117;             /* primary surface */
+    --bg-2: #161A22;           /* card / surface-2 */
+    --bg-3: #1E232D;           /* surface-3 */
+    --line: rgba(255,255,255,0.08);
+    --line-strong: rgba(255,255,255,0.16);
+
+    /* tx-salat (лайм) — основной акцент бренда */
+    --tx-salat-primary: #C5FF5C;
+    --tx-salat-secondary: rgba(197,255,92,0.16);
+
+    /* tx-sky (голубой) — для метрик и данных */
+    --tx-sky-primary: #6DCBFF;
+    --tx-sky-secondary: rgba(109,203,255,0.16);
+
+    /* tx-tomato (томатный) — рекорды, акценты */
+    --tx-tomato-primary: #FF6A5A;
+    --tx-tomato-secondary: rgba(255,106,90,0.16);
+
+    /* tx-grey */
+    --tx-grey-primary: #F4F5F7;
+    --tx-grey-secondary: rgba(244,245,247,0.62);
+    --tx-grey-tertiary: rgba(244,245,247,0.38);
+
+    /* on-color (на ярком фоне) */
+    --tx-on-primary: #0A0D14;
+    --tx-on-secondary: rgba(10,13,20,0.62);
+
+    --radius-pill: 999px;
+    --radius-card: 24px;
+    --radius-tile: 20px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--tx-grey-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  .display {
+    font-family: 'Bricolage Grotesque', 'Inter', sans-serif;
+    font-style: italic; font-weight: 800;
+    letter-spacing: -0.025em; line-height: 0.95;
+  }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+  @media (max-width: 768px) { .container { padding: 0 20px; } }
+
+  /* ============ VERSION SWITCHER (общий блок для всех 4 файлов) ============ */
+  .switcher {
+    position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+    z-index: 300;
+    display: flex; align-items: center; gap: 4px;
+    background: rgba(14,17,23,0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-pill);
+    padding: 5px;
+    box-shadow: 0 20px 50px -10px rgba(0,0,0,0.6);
+    font-size: 13px;
+  }
+  .switcher a {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 14px;
+    color: var(--tx-grey-secondary);
+    border-radius: var(--radius-pill);
+    transition: color .2s, background .2s;
+    font-weight: 500;
+  }
+  .switcher a:hover { color: var(--tx-grey-primary); }
+  .switcher a.active {
+    background: var(--tx-salat-primary);
+    color: var(--tx-on-primary);
+    font-weight: 600;
+  }
+  .switcher .label {
+    color: var(--tx-grey-tertiary); font-size: 11px;
+    padding: 0 10px 0 12px; text-transform: uppercase; letter-spacing: 0.08em;
+    border-right: 1px solid var(--line);
+  }
+  .switcher .badge { font-family: 'JetBrains Mono', monospace; font-size: 10px; opacity: 0.7; }
+  @media (max-width: 760px) {
+    .switcher { left: 8px; right: 8px; transform: none; overflow-x: auto; }
+    .switcher .label { display: none; }
+    .switcher a { font-size: 12px; padding: 7px 10px; }
+  }
+
+  /* ============ NAV ============ */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(14,17,23,0.82);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line);
+    padding-top: 64px; /* room for switcher */
+  }
+  @media (max-width: 760px) { .nav { padding-top: 72px; } }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { display: flex; align-items: center; gap: 10px; }
+  .logo-mark { width: 28px; height: 28px; color: var(--tx-salat-primary); }
+  .logo-text { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: 22px; letter-spacing: -0.02em; }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a { color: var(--tx-grey-secondary); font-size: 14px; transition: color .2s; }
+  .nav-links a:hover { color: var(--tx-grey-primary); }
+  .nav-cta {
+    background: var(--tx-salat-primary); color: var(--tx-on-primary);
+    padding: 10px 18px; border-radius: var(--radius-pill);
+    font-weight: 600; font-size: 14px;
+  }
+  @media (max-width: 768px) { .nav-links { display: none; } }
+
+  /* ============ HERO ============ */
+  .hero { position: relative; padding: 80px 0 100px; overflow: hidden; }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 70% 50% at 30% 0%, rgba(109,203,255,0.06), transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 30%, rgba(197,255,92,0.06), transparent 60%);
+    pointer-events: none;
+  }
+  .hero-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; position: relative; align-items: center; }
+  @media (max-width: 980px) { .hero-grid { grid-template-columns: 1fr; gap: 48px; } }
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 6px 14px; border-radius: var(--radius-pill);
+    border: 1px solid var(--line-strong);
+    font-size: 13px; color: var(--tx-grey-secondary);
+    margin-bottom: 28px;
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--tx-salat-primary); box-shadow: 0 0 10px var(--tx-salat-primary); }
+  .hero h1 { font-size: clamp(56px, 9vw, 124px); margin-bottom: 28px; }
+  .hero h1 .salat { color: var(--tx-salat-primary); }
+  .hero h1 .sky { color: var(--tx-sky-primary); }
+  .hero-sub { font-size: clamp(17px, 1.6vw, 20px); color: var(--tx-grey-secondary); max-width: 540px; margin-bottom: 36px; }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 22px;
+    border-radius: var(--radius-pill);
+    font-weight: 600; font-size: 15px;
+    transition: transform .2s, background .2s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary { background: var(--tx-salat-primary); color: var(--tx-on-primary); }
+  .btn-ghost { background: transparent; color: var(--tx-grey-primary); border: 1px solid var(--line-strong); }
+  .btn-ghost:hover { background: var(--bg-2); }
+
+  .hero-meta {
+    margin-top: 40px; padding-top: 24px;
+    border-top: 1px solid var(--line);
+    display: flex; gap: 36px; flex-wrap: wrap;
+  }
+  .hero-meta div { font-size: 12px; color: var(--tx-grey-tertiary); text-transform: uppercase; letter-spacing: 0.08em; }
+  .hero-meta strong { display: block; font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: 28px; color: var(--tx-grey-primary); letter-spacing: -0.02em; line-height: 1; margin-bottom: 6px; }
+
+  /* PHONE — WeekStat preview */
+  .phone {
+    position: relative;
+    width: 340px; height: 680px;
+    border-radius: 44px;
+    background: linear-gradient(160deg, #1A1F2A, #0E1117);
+    border: 1px solid var(--line-strong);
+    padding: 14px;
+    margin: 0 auto;
+    box-shadow: 0 50px 100px -25px rgba(0,0,0,0.6), 0 0 80px -30px rgba(109,203,255,0.2);
+    transform: rotate(-2deg);
+    transition: transform .4s ease;
+  }
+  .phone:hover { transform: rotate(0) translateY(-6px); }
+  .phone-screen {
+    width: 100%; height: 100%;
+    background: var(--bg-2); border-radius: 32px;
+    padding: 22px 20px; overflow: hidden; position: relative;
+  }
+  .phone-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+  .phone-greet { font-size: 12px; color: var(--tx-grey-tertiary); }
+  .phone-name { font-weight: 700; font-size: 17px; margin-top: 2px; }
+  .phone-av { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--tx-salat-primary), var(--tx-sky-primary)); }
+
+  /* WeekStat (на основе компонента WeekSatistic в Figma) */
+  .ws-card {
+    background: var(--bg-3); border-radius: 18px;
+    padding: 16px; margin-bottom: 12px;
+    border: 1px solid var(--line);
+  }
+  .ws-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .ws-title { font-size: 11px; color: var(--tx-grey-tertiary); text-transform: uppercase; letter-spacing: 0.08em; }
+  .ws-pill { background: var(--tx-salat-secondary); color: var(--tx-salat-primary); padding: 3px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; }
+  .ws-chart { height: 70px; display: flex; align-items: flex-end; gap: 6px; padding-top: 8px; }
+  .ws-bar { flex: 1; border-radius: 3px 3px 0 0; background: var(--tx-grey-tertiary); position: relative; }
+  .ws-bar.on { background: var(--tx-salat-primary); }
+  .ws-bar.peak { background: var(--tx-sky-primary); }
+  .ws-bar.peak::after { content: '★'; color: var(--tx-sky-primary); position: absolute; top: -16px; left: 50%; transform: translateX(-50%); font-size: 9px; }
+  .ws-labels { display: flex; justify-content: space-between; margin-top: 6px; }
+  .ws-labels span { font-family: 'JetBrains Mono'; font-size: 9px; color: var(--tx-grey-tertiary); flex: 1; text-align: center; }
+
+  .phone-metric {
+    background: var(--bg-3); border-radius: 18px;
+    padding: 16px; margin-bottom: 12px;
+    border: 1px solid var(--line);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+  }
+  .pm-cell .lbl { font-size: 10px; color: var(--tx-grey-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .pm-cell .val { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: 22px; letter-spacing: -0.02em; }
+  .pm-cell .val.salat { color: var(--tx-salat-primary); }
+  .pm-cell .val.sky { color: var(--tx-sky-primary); }
+
+  .phone-bonus {
+    position: absolute; left: 18px; right: 18px; bottom: 18px;
+    background: var(--bg-3); border: 1px solid var(--line);
+    border-radius: 18px; padding: 12px 14px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .pb-lbl { font-size: 11px; color: var(--tx-grey-tertiary); text-transform: uppercase; letter-spacing: 0.06em; }
+  .pb-amt { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: 18px; color: var(--tx-salat-primary); letter-spacing: -0.01em; }
+
+  /* TRACKER STRIP */
+  .tracker-strip { padding: 32px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .tracker-strip-inner { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; justify-content: space-between; }
+  .tracker-label { font-size: 12px; color: var(--tx-grey-tertiary); text-transform: uppercase; letter-spacing: 0.1em; }
+  .tracker-logos { display: flex; gap: 28px; flex-wrap: wrap; align-items: center; }
+  .tracker-logo { color: var(--tx-grey-secondary); font-weight: 600; font-size: 17px; }
+  .tracker-logo:hover { color: var(--tx-grey-primary); }
+
+  /* SECTION */
+  .section { padding: 120px 0; }
+  .section-head { margin-bottom: 56px; max-width: 720px; }
+  .section-eyebrow {
+    display: inline-block; font-size: 12px; color: var(--tx-salat-primary);
+    text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 16px; font-family: 'JetBrains Mono'; font-weight: 500;
+  }
+  .section-title { font-size: clamp(40px, 5.5vw, 72px); }
+  .section-sub { font-size: 18px; color: var(--tx-grey-secondary); margin-top: 18px; max-width: 580px; }
+
+  /* METRICS BENTO */
+  .bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 240px; gap: 12px; }
+  @media (max-width: 980px) { .bento { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .bento { grid-template-columns: 1fr; grid-auto-rows: auto; } }
+  .tile {
+    background: var(--bg-2); border: 1px solid var(--line);
+    border-radius: var(--radius-tile); padding: 28px;
+    position: relative; overflow: hidden;
+    transition: transform .3s, border-color .3s;
+  }
+  .tile:hover { transform: translateY(-4px); border-color: var(--line-strong); }
+  .tile-lg { grid-column: span 2; grid-row: span 2; }
+  .tile-wide { grid-column: span 2; }
+  @media (max-width: 980px) { .tile-lg, .tile-wide { grid-column: span 2; grid-row: span 1; } }
+  @media (max-width: 560px) { .tile-lg, .tile-wide { grid-column: span 1; } }
+  .tile-tag { display: inline-block; font-family: 'JetBrains Mono'; font-size: 11px; color: var(--tx-salat-primary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; }
+  .tile-tag.sky { color: var(--tx-sky-primary); }
+  .tile-tag.tomato { color: var(--tx-tomato-primary); }
+  .tile h3 {
+    font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700;
+    font-size: 24px; line-height: 1.05; letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .tile-lg h3 { font-size: 40px; }
+  .tile p { color: var(--tx-grey-secondary); font-size: 15px; }
+  .tile-num { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: 64px; line-height: 1; letter-spacing: -0.03em; margin-top: 16px; }
+  .tile-num.salat { color: var(--tx-salat-primary); }
+  .tile-num.sky { color: var(--tx-sky-primary); }
+
+  /* Live chart inside tile */
+  .tile-chart { position: absolute; left: 28px; right: 28px; bottom: 28px; height: 90px; display: flex; align-items: flex-end; gap: 4px; }
+  .tile-chart .b { flex: 1; background: var(--tx-sky-primary); border-radius: 2px 2px 0 0; opacity: 0.6; }
+  .tile-chart .b.high { opacity: 1; }
+
+  /* CLUBS — карточки на тёмном с фото-плейсхолдером */
+  .clubs { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 880px) { .clubs { grid-template-columns: 1fr; } }
+  .club {
+    background: var(--bg-2); border: 1px solid var(--line);
+    border-radius: var(--radius-card); overflow: hidden;
+    transition: transform .3s, border-color .3s;
+  }
+  .club:hover { transform: translateY(-4px); border-color: var(--tx-salat-primary); }
+  .club-cover {
+    aspect-ratio: 16/9;
+    background-size: cover; background-position: center;
+    position: relative;
+  }
+  .club-cover::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(14,17,23,0.92));
+  }
+  .club-tag {
+    position: absolute; top: 16px; left: 16px;
+    background: var(--tx-salat-primary); color: var(--tx-on-primary);
+    padding: 6px 12px; border-radius: var(--radius-pill);
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+    z-index: 1;
+  }
+  .club-name {
+    position: absolute; bottom: 18px; left: 20px; right: 20px;
+    font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800;
+    font-size: 32px; letter-spacing: -0.02em; line-height: 1; z-index: 1;
+  }
+  .club-body { padding: 24px 28px 28px; }
+  .club-meta { display: flex; justify-content: space-between; padding-top: 14px; border-top: 1px solid var(--line); margin-top: 18px; font-size: 13px; color: var(--tx-grey-tertiary); }
+  .club-meta span { display: flex; align-items: center; gap: 6px; }
+  .club-meta strong { color: var(--tx-grey-primary); font-family: 'Bricolage Grotesque'; font-style: italic; }
+
+  /* RACE CALENDAR — события */
+  .races { display: grid; grid-template-columns: 1fr; gap: 8px; }
+  .race {
+    display: grid; grid-template-columns: 100px 1fr auto auto;
+    gap: 24px; align-items: center;
+    padding: 24px 28px;
+    background: var(--bg-2); border: 1px solid var(--line);
+    border-radius: var(--radius-tile);
+    transition: border-color .2s, transform .2s;
+  }
+  .race:hover { border-color: var(--tx-sky-primary); transform: translateX(4px); }
+  @media (max-width: 760px) { .race { grid-template-columns: 80px 1fr; row-gap: 12px; } .race .race-cta { grid-column: 1/-1; justify-self: stretch; text-align: center; } .race .race-meta { grid-column: 1/-1; } }
+  .race-date {
+    text-align: center;
+    border-right: 1px solid var(--line); padding-right: 24px;
+  }
+  .race-date .day { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: 36px; line-height: 1; letter-spacing: -0.02em; color: var(--tx-sky-primary); }
+  .race-date .mo { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--tx-grey-tertiary); text-transform: uppercase; margin-top: 4px; letter-spacing: 0.06em; }
+  .race-info h4 { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700; font-size: 22px; letter-spacing: -0.01em; margin-bottom: 6px; }
+  .race-info p { color: var(--tx-grey-secondary); font-size: 14px; }
+  .race-meta { color: var(--tx-grey-tertiary); font-size: 13px; text-align: right; font-family: 'JetBrains Mono'; }
+  .race-cta { padding: 10px 16px; border-radius: var(--radius-pill); background: transparent; color: var(--tx-grey-primary); border: 1px solid var(--line-strong); font-size: 13px; font-weight: 600; }
+  .race-cta:hover { background: var(--tx-salat-primary); color: var(--tx-on-primary); border-color: var(--tx-salat-primary); }
+
+  /* BONUS STRIP — деньги поданы как бонус, не как герой */
+  .bonus-strip {
+    background: var(--bg-2); border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+    padding: 56px;
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  @media (max-width: 880px) { .bonus-strip { grid-template-columns: 1fr; padding: 40px; } }
+  .bonus-strip::before {
+    content: ''; position: absolute; right: -120px; top: -120px;
+    width: 360px; height: 360px;
+    background: radial-gradient(circle, var(--tx-salat-secondary), transparent 70%);
+    pointer-events: none;
+  }
+  .bonus-tag { display: inline-block; padding: 5px 12px; border-radius: 999px; background: var(--tx-salat-secondary); color: var(--tx-salat-primary); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 18px; font-family: 'JetBrains Mono'; }
+  .bonus-strip h3 { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: clamp(32px, 4vw, 52px); letter-spacing: -0.02em; line-height: 1; margin-bottom: 16px; }
+  .bonus-strip p { color: var(--tx-grey-secondary); margin-bottom: 24px; }
+  .bonus-vis { position: relative; }
+  .bonus-vis ul { list-style: none; }
+  .bonus-vis li { display: flex; justify-content: space-between; padding: 14px 0; border-top: 1px solid var(--line); font-size: 14px; color: var(--tx-grey-secondary); }
+  .bonus-vis li:first-child { border-top: none; }
+  .bonus-vis li strong { color: var(--tx-salat-primary); font-family: 'JetBrains Mono'; font-weight: 500; }
+
+  /* STATS */
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  @media (max-width: 760px) { .stats { grid-template-columns: 1fr; } }
+  .stat { padding: 56px 32px; border-right: 1px solid var(--line); }
+  .stats .stat:last-child { border-right: none; }
+  @media (max-width: 760px) { .stat { border-right: none; border-bottom: 1px solid var(--line); padding: 36px 0; } .stats .stat:last-child { border-bottom: none; } }
+  .stat-num { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: clamp(56px, 7vw, 88px); line-height: 0.95; letter-spacing: -0.03em; margin-bottom: 12px; }
+  .stat-num.salat { color: var(--tx-salat-primary); }
+  .stat-num.sky { color: var(--tx-sky-primary); }
+  .stat-num.tomato { color: var(--tx-tomato-primary); }
+  .stat-label { color: var(--tx-grey-secondary); font-size: 15px; }
+
+  /* FAQ */
+  .faq { max-width: 880px; margin: 0 auto; }
+  .faq-item { border-bottom: 1px solid var(--line); }
+  .faq-q { display: flex; justify-content: space-between; align-items: center; padding: 26px 0; width: 100%; text-align: left; font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700; font-size: 22px; letter-spacing: -0.01em; }
+  .faq-q::after { content: '+'; font-size: 28px; color: var(--tx-salat-primary); font-style: normal; transition: transform .3s; }
+  .faq-item.open .faq-q::after { transform: rotate(45deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease; color: var(--tx-grey-secondary); font-size: 16px; }
+  .faq-item.open .faq-a { max-height: 220px; padding-bottom: 26px; }
+
+  /* FINAL CTA */
+  .final {
+    border-radius: var(--radius-card);
+    padding: 80px 56px;
+    background: linear-gradient(135deg, var(--tx-salat-primary), #A4DC42);
+    color: var(--tx-on-primary);
+    text-align: center; position: relative; overflow: hidden;
+  }
+  .final h2 { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: clamp(40px, 6vw, 88px); line-height: 0.95; letter-spacing: -0.025em; margin-bottom: 24px; }
+  .final p { font-size: 18px; margin-bottom: 36px; opacity: 0.78; max-width: 540px; margin-left: auto; margin-right: auto; }
+  .final .btn-primary { background: var(--tx-on-primary); color: var(--tx-salat-primary); }
+  .final .btn-ghost { border-color: rgba(10,13,20,0.3); color: var(--tx-on-primary); }
+  .final .btn-ghost:hover { background: rgba(10,13,20,0.05); }
+
+  /* FOOTER */
+  .footer { padding: 80px 0 48px; border-top: 1px solid var(--line); margin-top: 80px; }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 56px; }
+  @media (max-width: 800px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  .footer-brand p { color: var(--tx-grey-secondary); font-size: 14px; margin-top: 16px; max-width: 320px; }
+  .footer-col h5 { font-size: 12px; color: var(--tx-grey-tertiary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 18px; font-weight: 500; font-family: 'JetBrains Mono'; }
+  .footer-col a { display: block; color: var(--tx-grey-secondary); font-size: 14px; padding: 6px 0; }
+  .footer-col a:hover { color: var(--tx-grey-primary); }
+  .footer-bottom { padding-top: 32px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; color: var(--tx-grey-tertiary); font-size: 13px; }
+</style>
+</head>
+<body>
+
+<!-- ====== VERSION SWITCHER ====== -->
+<nav class="switcher" aria-label="Версии редизайна">
+  <span class="label">Версия</span>
+  <a href="option-1.html" class="active"><span class="badge">01</span> Atlet</a>
+  <a href="option-2.html"><span class="badge">02</span> Club</a>
+  <a href="option-3.html"><span class="badge">03</span> Race</a>
+  <a href="option-4.html"><span class="badge">04</span> Bonus</a>
+</nav>
+
+<!-- ====== NAV ====== -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="#" class="logo">
+      <svg class="logo-mark" viewBox="0 0 60 60" fill="currentColor"><ellipse cx="22" cy="32" rx="11" ry="22" transform="rotate(-12 22 32)"/><ellipse cx="38" cy="32" rx="11" ry="22" transform="rotate(12 38 32)"/></svg>
+      <span class="logo-text">Moneyrun</span>
+    </a>
+    <div class="nav-links">
+      <a href="#metrics">Метрики</a>
+      <a href="#clubs">Клубы</a>
+      <a href="#races">Забеги</a>
+      <a href="#bonus">Бонус</a>
+      <a href="#faq">Вопросы</a>
+    </div>
+    <a href="#" class="nav-cta">Скачать</a>
+  </div>
+</nav>
+
+<!-- ====== HERO ====== -->
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="eyebrow"><span class="dot"></span>Беговое сообщество Moneyrun</div>
+      <h1 class="display">
+        Бегай <span class="salat">лучше</span>.<br>
+        С теми, кто бежит <span class="sky">рядом</span>.
+      </h1>
+      <p class="hero-sub">Тренировки, клубы, забеги — в одном приложении. Плюс лёгкий бонус в рублях за регулярность, потому что почему бы и нет.</p>
+      <div class="cta-row">
+        <a href="#" class="btn btn-primary">App Store</a>
+        <a href="#" class="btn btn-ghost">Google Play</a>
+      </div>
+      <div class="hero-meta">
+        <div><strong>412k</strong>атлетов</div>
+        <div><strong>1 240</strong>клубов в РФ и СНГ</div>
+        <div><strong>6.4 млн</strong>км за год</div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="phone">
+        <div class="phone-screen">
+          <div class="phone-top">
+            <div>
+              <div class="phone-greet">Доброе утро,</div>
+              <div class="phone-name">Алексей</div>
+            </div>
+            <div class="phone-av"></div>
+          </div>
+          <div class="ws-card">
+            <div class="ws-row">
+              <span class="ws-title">Неделя — 38.2 км</span>
+              <span class="ws-pill">+12%</span>
+            </div>
+            <div class="ws-chart">
+              <div class="ws-bar on" style="height: 40%;"></div>
+              <div class="ws-bar on" style="height: 55%;"></div>
+              <div class="ws-bar" style="height: 20%;"></div>
+              <div class="ws-bar on" style="height: 65%;"></div>
+              <div class="ws-bar on" style="height: 50%;"></div>
+              <div class="ws-bar peak" style="height: 95%;"></div>
+              <div class="ws-bar" style="height: 0%;"></div>
+            </div>
+            <div class="ws-labels"><span>Пн</span><span>Вт</span><span>Ср</span><span>Чт</span><span>Пт</span><span>Сб</span><span>Вс</span></div>
+          </div>
+          <div class="phone-metric">
+            <div class="pm-cell"><div class="lbl">Темп</div><div class="val sky">5:12</div></div>
+            <div class="pm-cell"><div class="lbl">Пульс ср.</div><div class="val">148</div></div>
+            <div class="pm-cell"><div class="lbl">PR месяца</div><div class="val salat">10 км</div></div>
+            <div class="pm-cell"><div class="lbl">Грейд</div><div class="val">Серебро</div></div>
+          </div>
+          <div class="phone-bonus">
+            <div>
+              <div class="pb-lbl">Бонус недели</div>
+              <div class="pb-amt">+ 320 ₽</div>
+            </div>
+            <div style="font-size: 11px; color: var(--tx-grey-tertiary);">за регулярность →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== TRACKERS ====== -->
+<div class="tracker-strip">
+  <div class="container tracker-strip-inner">
+    <span class="tracker-label">Синхронизация</span>
+    <div class="tracker-logos">
+      <span class="tracker-logo">Strava</span>
+      <span class="tracker-logo">Garmin</span>
+      <span class="tracker-logo">Apple Watch</span>
+      <span class="tracker-logo">Coros</span>
+      <span class="tracker-logo">Polar</span>
+      <span class="tracker-logo">Suunto</span>
+    </div>
+  </div>
+</div>
+
+<!-- ====== METRICS (bento) ====== -->
+<section class="section" id="metrics">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">— Что измеряем</span>
+      <h2 class="display section-title">Не «прошёл шагов».<br>Темп, нагрузка, форма.</h2>
+      <p class="section-sub">Профессиональная аналитика, которая раньше жила в Garmin Connect и TrainingPeaks — теперь в одном приложении вместе с клубом и забегами.</p>
+    </div>
+    <div class="bento">
+      <div class="tile tile-lg">
+        <span class="tile-tag sky">— Аналитика недели</span>
+        <h3>Объём, темп, нагрузка по дням — без шума.</h3>
+        <p>График строится автоматически из ваших тренировок в Strava / Garmin / Apple Watch.</p>
+        <div class="tile-chart">
+          <div class="b" style="height: 40%;"></div>
+          <div class="b high" style="height: 65%;"></div>
+          <div class="b" style="height: 30%;"></div>
+          <div class="b high" style="height: 78%;"></div>
+          <div class="b" style="height: 55%;"></div>
+          <div class="b high" style="height: 90%;"></div>
+          <div class="b" style="height: 20%;"></div>
+          <div class="b high" style="height: 70%;"></div>
+          <div class="b" style="height: 45%;"></div>
+          <div class="b high" style="height: 60%;"></div>
+          <div class="b" style="height: 35%;"></div>
+          <div class="b high" style="height: 80%;"></div>
+        </div>
+      </div>
+      <div class="tile">
+        <span class="tile-tag">— Личные рекорды</span>
+        <h3>PR на 5, 10, 21, 42</h3>
+        <p>Отслеживаем сами, подсвечиваем, поздравляем.</p>
+        <div class="tile-num salat">17</div>
+      </div>
+      <div class="tile">
+        <span class="tile-tag sky">— Темп</span>
+        <h3>Средний темп по неделям</h3>
+        <div class="tile-num sky">5:08</div>
+      </div>
+      <div class="tile tile-wide">
+        <span class="tile-tag tomato">— Восстановление</span>
+        <h3>Не загнать себя — тоже навык.</h3>
+        <p>Совет тренеру: «снизь объём» или «можно прибавить» — на основе пульса и сна.</p>
+      </div>
+      <div class="tile">
+        <span class="tile-tag">— Цели</span>
+        <h3>Цель сезона</h3>
+        <p>Полумарафон осенью? Поставь — и план сам подстроится.</p>
+      </div>
+      <div class="tile">
+        <span class="tile-tag">— Друзья</span>
+        <h3>Кто бежит со мной</h3>
+        <p>Видишь, кто из клуба сегодня выходил, и какой темп держит.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== CLUBS ====== -->
+<section class="section" id="clubs" style="padding-top: 0;">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">— Клубы Moneyrun</span>
+      <h2 class="display section-title">Беговое сообщество, у которого есть имя.</h2>
+      <p class="section-sub">1 240 клубов в РФ и СНГ — от утренних встреч в парке до пейс-групп по подготовке к марафону.</p>
+    </div>
+    <div class="clubs">
+      <div class="club">
+        <div class="club-cover" style="background-image: linear-gradient(180deg, rgba(14,17,23,0) 0%, rgba(14,17,23,0.4) 100%), url('https://images.unsplash.com/photo-1486218119243-13883505764c?w=1400&q=80&auto=format&fit=crop');">
+          <span class="club-tag">Открытый клуб</span>
+          <h3 class="club-name">Sokolniki Run</h3>
+        </div>
+        <div class="club-body">
+          <p style="color: var(--tx-grey-secondary); font-size: 15px;">Каждое утро среды и субботы. 5–10 км, разный темп, общий брифинг и совместный кофе после.</p>
+          <div class="club-meta">
+            <span><strong>284</strong>атлета</span>
+            <span><strong>3</strong>тренировки / нед</span>
+            <span><strong>Москва</strong></span>
+          </div>
+        </div>
+      </div>
+      <div class="club">
+        <div class="club-cover" style="background-image: linear-gradient(180deg, rgba(14,17,23,0) 0%, rgba(14,17,23,0.4) 100%), url('https://images.unsplash.com/photo-1502230831726-fe5549140034?w=1400&q=80&auto=format&fit=crop');">
+          <span class="club-tag">Закрытый клуб</span>
+          <h3 class="club-name">Sub-3 Marathon</h3>
+        </div>
+        <div class="club-body">
+          <p style="color: var(--tx-grey-secondary); font-size: 15px;">Подготовка к марафону из 3 часов. Закрытый сет — допуск по результату полумарафона за 1:25.</p>
+          <div class="club-meta">
+            <span><strong>42</strong>атлета</span>
+            <span><strong>5</strong>тренировок / нед</span>
+            <span><strong>СПб</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: 32px; text-align: center;">
+      <a href="#" class="btn btn-ghost">Посмотреть все клубы →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ====== RACES ====== -->
+<section class="section" id="races" style="padding-top: 0;">
+  <div class="container">
+    <div class="section-head">
+      <span class="section-eyebrow">— Календарь забегов</span>
+      <h2 class="display section-title">От первой пробежки до первого финиша.</h2>
+      <p class="section-sub">Городские забеги, кубки клубов, испытания. Регистрация в один тап, результат — сразу в твою статистику.</p>
+    </div>
+    <div class="races">
+      <div class="race">
+        <div class="race-date"><div class="day">14</div><div class="mo">июн</div></div>
+        <div class="race-info">
+          <h4>Moneyrun Half · Москва</h4>
+          <p>Полумарафон по набережной. 21.1 км, 8:00 старт, пейс-группы от 1:30 до 2:15.</p>
+        </div>
+        <div class="race-meta">1 240 / 2 000<br><span style="color: var(--tx-tomato-primary);">мало мест</span></div>
+        <a href="#" class="race-cta">Регистрация</a>
+      </div>
+      <div class="race">
+        <div class="race-date"><div class="day">22</div><div class="mo">июн</div></div>
+        <div class="race-info">
+          <h4>Кубок клубов · СПб</h4>
+          <p>Командная гонка 4×5 км. Только для участников клубов Moneyrun.</p>
+        </div>
+        <div class="race-meta">86 команд</div>
+        <a href="#" class="race-cta">Регистрация</a>
+      </div>
+      <div class="race">
+        <div class="race-date"><div class="day">06</div><div class="mo">июл</div></div>
+        <div class="race-info">
+          <h4>Night Run · Казань</h4>
+          <p>10 км по ночному городу. Старт 22:00, свет и музыка на каждом километре.</p>
+        </div>
+        <div class="race-meta">открыта</div>
+        <a href="#" class="race-cta">Регистрация</a>
+      </div>
+      <div class="race">
+        <div class="race-date"><div class="day">19</div><div class="mo">авг</div></div>
+        <div class="race-info">
+          <h4>Trail Серебро · Алтай</h4>
+          <p>Трейл 25 км по Чемалу. Допуск — Бронза и выше.</p>
+        </div>
+        <div class="race-meta">скоро</div>
+        <a href="#" class="race-cta">Подписаться</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== BONUS (XP → деньги, скромно) ====== -->
+<section class="section" id="bonus" style="padding-top: 0;">
+  <div class="container">
+    <div class="bonus-strip">
+      <div>
+        <span class="bonus-tag">+ бонус</span>
+        <h3>И да — за километры даём рубли.</h3>
+        <p>Не главное в Moneyrun, но приятно. Каждый километр — это XP, XP меняется на рубли по курсу клуба, рубли выводятся через СБП. Считайте это компенсацией за кроссовки.</p>
+        <a href="#" class="btn btn-ghost">Как работает бонус →</a>
+      </div>
+      <div class="bonus-vis">
+        <ul>
+          <li>10 км в неделю <strong>~ 180 ₽</strong></li>
+          <li>25 км в неделю <strong>~ 520 ₽</strong></li>
+          <li>50 км в неделю <strong>~ 1 200 ₽</strong></li>
+          <li>Вывод через СБП <strong>~ 60 сек</strong></li>
+          <li>Комиссия сервиса <strong>0 ₽</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== STATS ====== -->
+<div class="container">
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num salat">412k</div>
+      <div class="stat-label">атлетов в сообществе</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num sky">6.4 млн</div>
+      <div class="stat-label">км пробежано за год</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num tomato">1 240</div>
+      <div class="stat-label">клубов в РФ и СНГ</div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== FAQ ====== -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-head" style="text-align: center; margin-left: auto; margin-right: auto;">
+      <span class="section-eyebrow">— Частые вопросы</span>
+      <h2 class="display section-title">Коротко о главном.</h2>
+    </div>
+    <div class="faq">
+      <div class="faq-item"><button class="faq-q">Это бесплатно?</button><div class="faq-a">Да. Базовое приложение, синхронизация трекеров, участие в открытых клубах, доступ к статистике — без подписки. Платными могут быть отдельные забеги и закрытые клубы.</div></div>
+      <div class="faq-item"><button class="faq-q">Какие приложения подключаются?</button><div class="faq-a">Strava, Garmin Connect, Apple Health / Apple Watch, Coros, Polar, Suunto. Плюс собственный трекер.</div></div>
+      <div class="faq-item"><button class="faq-q">Как попасть в клуб?</button><div class="faq-a">В открытый — в один тап из карты клубов. В закрытый — по приглашению или после квалификационного забега.</div></div>
+      <div class="faq-item"><button class="faq-q">А что с «деньгами за километры»?</button><div class="faq-a">Это бонус, а не основная механика. XP → ₽ по курсу клуба, минимальный вывод 100 ₽, СБП до 60 сек. Большинство атлетов используют как компенсацию за регистрационные взносы и экипировку.</div></div>
+      <div class="faq-item"><button class="faq-q">Я не бегаю каждый день, мне сюда?</button><div class="faq-a">Да. В Moneyrun одинаково место и тем, кто бегает 3 раза в неделю в парке, и тем, кто готовится к марафону. Грейд растёт от регулярности, а не от количества километров.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FINAL ====== -->
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div class="final">
+      <h2>Беги. Сегодня.</h2>
+      <p>Скачай приложение, подключи трекер, найди клуб рядом с домом. Первая пробежка — уже завтра утром.</p>
+      <div class="cta-row" style="justify-content: center;">
+        <a href="#" class="btn btn-primary">App Store</a>
+        <a href="#" class="btn btn-ghost">Google Play</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo">
+          <svg class="logo-mark" viewBox="0 0 60 60" fill="currentColor"><ellipse cx="22" cy="32" rx="11" ry="22" transform="rotate(-12 22 32)"/><ellipse cx="38" cy="32" rx="11" ry="22" transform="rotate(12 38 32)"/></svg>
+          <span class="logo-text">Moneyrun</span>
+        </a>
+        <p>Беговое сообщество, в котором есть твой клуб, твои забеги и твой темп.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Продукт</h5>
+        <a href="#">Метрики</a>
+        <a href="#">Клубы</a>
+        <a href="#">Забеги</a>
+        <a href="#">Бонус-рубли</a>
+      </div>
+      <div class="footer-col">
+        <h5>Поддержка</h5>
+        <a href="#">Правила сервиса</a>
+        <a href="#">Политика</a>
+        <a href="#">Telegram</a>
+        <a href="#">Связаться</a>
+      </div>
+      <div class="footer-col">
+        <h5>Скачать</h5>
+        <a href="#">App Store</a>
+        <a href="#">Google Play</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© Moneyrun, 2026</span>
+      <span>Сделано для атлетов.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+  });
+</script>
+</body>
+</html>

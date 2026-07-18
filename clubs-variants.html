@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clubs variants · Moneyrun</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#eef2ec;--bg2:#f4f7f3;--surface:#ffffff;--ink:#0e120e;--muted:#6b7068;--muted2:#9aa097;
+    --border:#e6eae3;--border2:#dadfd6;
+    --lime:#d0f85d;--lime2:#d5ffa8;--lime-deep:#bee14b;--lime-ink:#1f2a05;
+    --c-blue:#bcdcff;--c-blue-ink:#143b6b;--c-mint:#bff0c9;--c-mint-ink:#1a4d2a;
+    --tx-sky-primary:#5b9bff;--tx-tomato-primary:#ff6a5a;
+    --fd:'Manrope',system-ui,sans-serif;--fb:'Inter',system-ui,sans-serif;--fm:'JetBrains Mono',ui-monospace,monospace;
+    --maxw:1240px;--r-sm:12px;--r-md:18px;--r-lg:24px;--r-xl:32px;
+    --sh-sm:0 2px 6px rgba(15,20,15,.05),0 1px 2px rgba(15,20,15,.04);
+    --sh-md:0 14px 30px -10px rgba(15,30,12,.10),0 8px 18px -6px rgba(15,30,12,.06);
+    --sh-lg:0 30px 70px -20px rgba(15,30,12,.16);
+    --sh-card:0 36px 88px -28px rgba(15,40,12,.22),0 22px 44px -20px rgba(15,40,12,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--fb);line-height:1.6;-webkit-font-smoothing:antialiased}
+  img{display:block;max-width:100%}
+
+  .lab-header{padding:3rem clamp(1rem,4vw,3rem) 1rem;max-width:1240px;margin:0 auto}
+  .lab-header h1{font-family:var(--fd);font-weight:800;font-size:clamp(2rem,4vw,2.6rem);letter-spacing:-.03em;margin-bottom:.4rem}
+  .lab-header p{color:var(--muted);max-width:680px}
+
+  .variant{padding:3rem 0}
+  .variant + .variant{border-top:1px dashed #c8cdc4}
+  .variant-tag{max-width:var(--maxw);margin:0 auto 1rem;padding:0 clamp(1.25rem,5vw,4rem);display:block;font-family:var(--fm);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .variant-tag b{color:var(--ink)}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(1.25rem,5vw,4rem)}
+  .label{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--fm);font-size:.66rem;letter-spacing:.24em;color:var(--lime-ink);text-transform:uppercase;background:var(--lime);padding:.45rem .85rem;border-radius:999px;font-weight:600}
+  .title{font-family:var(--fd);font-weight:800;letter-spacing:-.035em;font-size:clamp(2rem,4.6vw,3.6rem);line-height:1.05;margin:1.2rem 0 1.2rem}
+  .title .lime-mark{position:relative;display:inline-block;color:var(--lime-ink);padding:0 .2em;z-index:1}
+  .title .lime-mark::before{content:'';position:absolute;inset:.05em -.1em;background:var(--lime);border-radius:14px;z-index:-1;transform:rotate(-1deg)}
+  .lede{font-size:1.08rem;color:var(--muted);line-height:1.7;max-width:660px}
+
+  /* ─── VARIANT A — app screenshots ─── */
+  .va-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4rem);align-items:center;margin-top:2.5rem}
+  @media(max-width:900px){.va-grid{grid-template-columns:1fr}}
+  .va-stage{position:relative;min-height:480px;display:flex;align-items:center;justify-content:center;gap:24px}
+  .va-stage img{height:auto;width:auto;max-width:230px;max-height:96%;border-radius:28px;box-shadow:var(--sh-card)}
+  .va-stage img:nth-child(2){margin-top:60px}
+
+  /* ─── VARIANT B — designed club cards w/ cover photo ─── */
+  .vb-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;margin-top:2.5rem}
+  @media(max-width:760px){.vb-grid{grid-template-columns:1fr}}
+  .club2{background:var(--surface);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-md);transition:transform .35s,box-shadow .35s;border:1px solid var(--border)}
+  .club2:hover{transform:translateY(-6px);box-shadow:var(--sh-lg)}
+  .club2-cover{aspect-ratio:16/8;background-size:cover;background-position:center;position:relative}
+  .club2-cover::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(15,20,15,.55))}
+  .club2-badge{position:absolute;top:14px;left:14px;z-index:1;font-family:var(--fd);font-weight:800;font-size:.7rem;padding:.32rem .7rem;border-radius:999px;text-transform:uppercase;letter-spacing:.04em}
+  .club2-badge.open{background:var(--lime);color:var(--lime-ink)}
+  .club2-badge.closed{background:var(--ink);color:var(--lime)}
+  .club2-name{position:absolute;left:16px;bottom:12px;z-index:1;font-family:var(--fd);font-weight:800;font-size:1.35rem;color:#fff;letter-spacing:-.01em}
+  .club2-body{padding:1.2rem 1.4rem 1.4rem}
+  .club2-members{display:flex;align-items:center;gap:.7rem;margin-bottom:1rem}
+  .club2-ava{display:flex}
+  .club2-ava span{width:30px;height:30px;border-radius:50%;border:2px solid var(--surface);margin-left:-8px;background-size:cover;background-position:center}
+  .club2-ava span:first-child{margin-left:0}
+  .club2-members .cnt{font-family:var(--fb);font-size:.85rem;color:var(--muted)}
+  .club2-members .cnt b{color:var(--ink);font-weight:600}
+  .club2-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.5rem;padding-top:1rem;border-top:1px solid var(--border)}
+  .club2-stat .v{font-family:var(--fd);font-weight:800;font-size:1.1rem;color:var(--ink);letter-spacing:-.02em}
+  .club2-stat .v.lime{color:var(--lime-ink);background:var(--lime);display:inline-block;padding:0 .35em;border-radius:6px}
+  .club2-stat .l{font-size:.66rem;color:var(--muted);margin-top:.2rem;text-transform:lowercase}
+</style>
+</head>
+<body>
+
+<header class="lab-header">
+  <h1>«Вступай в Клубы» — 2 варианта иллюстраций</h1>
+  <p>Текст блока одинаковый. Меняется только визуальная часть. Скажи какой вариант берём в основной сайт.</p>
+</header>
+
+<!-- ═══════ VARIANT A ═══════ -->
+<section class="variant">
+  <span class="variant-tag"><b>Вариант A</b> · Скрины приложения (как в остальных блоках)</span>
+  <div class="va-grid wrap">
+    <div>
+      <span class="label">Клубы</span>
+      <h2 class="title">Вступай в Клубы —<br><span class="lime-mark">получай больше</span></h2>
+      <p class="lede">Клубы определяют курсы обмена и запускают общие челленджи. В открытые может вступить любой Атлет, у закрытых Клубов есть разные условия вступления: Грейд, локация или участие в программе тестирования.</p>
+    </div>
+    <div class="va-stage">
+      <img src="art/full_4-2.png.webp" alt="Клуб Moneyrun — баланс и курс">
+      <img src="art/full_5-2.png.webp" alt="Тарифная сетка Клуба">
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ VARIANT B ═══════ -->
+<section class="variant">
+  <span class="variant-tag"><b>Вариант B</b> · Дизайн-карточки Клубов с фото и участниками</span>
+  <div class="wrap">
+    <div style="max-width:820px">
+      <span class="label">Клубы</span>
+      <h2 class="title">Вступай в Клубы —<br><span class="lime-mark">получай больше</span></h2>
+      <p class="lede">Клубы определяют курсы обмена и запускают общие челленджи. В открытые может вступить любой Атлет, у закрытых Клубов есть разные условия вступления: Грейд, локация или участие в программе тестирования.</p>
+    </div>
+    <div class="vb-grid">
+      <article class="club2">
+        <div class="club2-cover" style="background-image:url('https://images.unsplash.com/photo-1486218119243-13883505764c?w=900&q=80&auto=format&fit=crop')">
+          <span class="club2-badge open">Открытый</span>
+          <span class="club2-name">Moneyrun · Москва</span>
+        </div>
+        <div class="club2-body">
+          <div class="club2-members">
+            <div class="club2-ava">
+              <span style="background-image:url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&q=80&auto=format&fit=crop')"></span>
+              <span style="background-image:url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&q=80&auto=format&fit=crop')"></span>
+              <span style="background-image:url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&q=80&auto=format&fit=crop')"></span>
+              <span style="background:var(--lime);color:var(--lime-ink);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-weight:800;font-size:.62rem">+10K</span>
+            </div>
+            <span class="cnt"><b>10 308</b> участников</span>
+          </div>
+          <div class="club2-stats">
+            <div class="club2-stat"><div class="v">3 / нед</div><div class="l">тренировки</div></div>
+            <div class="club2-stat"><div class="v">1 248 км</div><div class="l">за неделю</div></div>
+            <div class="club2-stat"><div class="v lime">4 ₽/XP</div><div class="l">курс</div></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="club2">
+        <div class="club2-cover" style="background-image:url('https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=900&q=80&auto=format&fit=crop')">
+          <span class="club2-badge closed">Закрытый</span>
+          <span class="club2-name">Sub-3 Marathon</span>
+        </div>
+        <div class="club2-body">
+          <div class="club2-members">
+            <div class="club2-ava">
+              <span style="background-image:url('https://images.unsplash.com/photo-1502685104226-ee32379fefbe?w=80&q=80&auto=format&fit=crop')"></span>
+              <span style="background-image:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=80&auto=format&fit=crop')"></span>
+              <span style="background-image:url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&q=80&auto=format&fit=crop')"></span>
+              <span style="background:var(--c-blue);color:var(--c-blue-ink);display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-weight:800;font-size:.62rem">+42</span>
+            </div>
+            <span class="cnt"><b>42</b> участника</span>
+          </div>
+          <div class="club2-stats">
+            <div class="club2-stat"><div class="v">5 / нед</div><div class="l">тренировки</div></div>
+            <div class="club2-stat"><div class="v">по грейду</div><div class="l">вступление</div></div>
+            <div class="club2-stat"><div class="v lime">до 12 ₽/XP</div><div class="l">курс</div></div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

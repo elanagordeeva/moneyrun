@@ -80,7 +80,7 @@
     .legal-wrap{max-width:none;margin:0}
     .legal-back{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--fb);font-size:.9rem;color:var(--muted);text-decoration:none;margin-bottom:1.2rem;transition:color .2s}
     .legal-back:hover{color:var(--lime-deep)}
-    .p-hero{position:relative;overflow:hidden;border-radius:var(--r-lg);background:#11121C;color:#f1f3ee;margin:0 0 2rem;padding:clamp(2.4rem,5vw,4.2rem) clamp(1.5rem,5vw,3rem);isolation:isolate}
+    .p-hero{position:relative;overflow:hidden;border-radius:var(--r-lg);background:#11121C;color:#f1f3ee;margin:0 0 3.4rem;padding:clamp(2.4rem,5vw,4.2rem) clamp(1.5rem,5vw,3rem);min-height:clamp(18.5rem,27vw,23rem);isolation:isolate}
     .p-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(120% 100% at 88% -10%,rgba(189,255,118,.20),transparent 55%);z-index:0}
     .p-hero::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--lime);z-index:1}
     .p-hero > *{position:relative;z-index:2}
@@ -133,7 +133,7 @@
     .p-rules li::before{content:'';position:absolute;left:.9rem;top:1.25rem;width:5px;height:5px;border-radius:50%;background:var(--lime-deep)}
     @media(min-width:1100px){.privacy-doc .privacy-toc{position:sticky;top:92px;max-height:calc(100vh - 112px);overflow:auto}}
     @media(max-width:1099px){.privacy-doc{display:block}.privacy-body{max-width:none}.privacy-toc{margin:0 0 2rem}.privacy-toc ol{columns:2;column-gap:1.8rem}.privacy-toc li{break-inside:avoid}}
-    @media(max-width:680px){.p-summary,.p-data-grid,.p-terms{grid-template-columns:1fr}.privacy-toc ol{columns:1}.p-hero{padding:1.75rem 1.15rem 1.55rem;border-radius:22px}.p-hero-lead{font-size:.9rem;line-height:1.55;margin-bottom:1.05rem}.legal h1{font-size:clamp(1.25rem,6.2vw,1.48rem);line-height:1.05;letter-spacing:-.035em;overflow-wrap:normal;word-break:normal;hyphens:auto}.legal .p-hero .legal-meta{display:block;max-width:100%;font-size:.74rem;line-height:1.45}.legal .p-hero .legal-meta span{display:block;margin-bottom:.14rem}}
+    @media(max-width:680px){.p-summary,.p-data-grid,.p-terms{grid-template-columns:1fr}.privacy-toc ol{columns:1}.p-hero{padding:1.75rem 1.15rem 1.55rem;border-radius:22px;min-height:370px}.p-hero-lead{font-size:.9rem;line-height:1.55;margin-bottom:1.05rem}.legal h1{font-size:clamp(1.25rem,6.2vw,1.48rem);line-height:1.05;letter-spacing:-.035em;overflow-wrap:normal;word-break:normal;hyphens:auto}.legal .p-hero .legal-meta{display:block;max-width:100%;font-size:.74rem;line-height:1.45}.legal .p-hero .legal-meta span{display:block;margin-bottom:.14rem}}
 
     /* footer — тёмная тема (как на странице Правил) */
     footer{padding:4rem 0 2rem;margin-top:3rem;background:#11121C;color:#f1f3ee;border-top:1px solid rgba(255,255,255,.06)}
@@ -262,8 +262,8 @@
 </main>
 
 <footer><div class="foot-inner">
-  <div class="foot-c"><a href="/" class="nav-logo" style="margin-bottom:.4rem"><img class="logo-mark" src="img/logo-hor-black.svg" alt="Moneyrun" height="28"></a><p class="tagline">Социально-благотворительный проект по развитию бегового движения</p><p class="foot-slogan">Run, <span>Earn,</span> Enjoy!</p></div>
-  <div class="foot-c"><span class="label">Связаться</span><a href="https://apps.apple.com/app/id6444129392" target="_blank" rel="noopener">App Store</a><a href="https://play.google.com/store/apps/details?id=tech.aml.moneyrun" target="_blank" rel="noopener">Google Play</a><a href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram · @moneyrun</a></div>
+  <div class="foot-c"><a href="/" class="nav-logo" style="margin-bottom:.4rem"><img class="logo-mark" src="img/logo-hor-black.svg" alt="Moneyrun" height="28"></a><p class="tagline">Социально-благотворительный проект<br>по развитию бегового движения</p><p class="foot-slogan">Run, <span>Earn,</span> Enjoy!</p></div>
+  <div class="foot-c"><span class="label">Связаться</span><a href="https://apps.apple.com/app/id6444129392" target="_blank" rel="noopener">App Store</a><a href="https://play.google.com/store/apps/details?id=tech.aml.moneyrun" target="_blank" rel="noopener">Google Play</a><a href="https://t.me/moneyrun" target="_blank" rel="noopener">Telegram · @moneyrun</a><a href="/contact">Написать нам</a></div>
 </div><div class="foot-bottom"><span>© 2023 — 2026 Moneyrun</span><span><a href="/guide">Правила платформы</a></span></div></footer>
 <script>/* скроллспай: подсветка активного раздела в боковом содержании */
 (function(){

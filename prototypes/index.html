@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Moneyrun — Прототипы редизайна · 4 версии</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0E1117;
+    --bg-2: #161A22;
+    --bg-3: #1E232D;
+    --line: rgba(255,255,255,0.10);
+    --line-strong: rgba(255,255,255,0.20);
+
+    --tx-salat-primary: #C5FF5C;
+    --tx-salat-secondary: rgba(197,255,92,0.16);
+    --tx-sky-primary: #6DCBFF;
+    --tx-sky-secondary: rgba(109,203,255,0.16);
+    --tx-tomato-primary: #FF6A5A;
+    --tx-tomato-secondary: rgba(255,106,90,0.16);
+    --tx-grey-primary: #F4F5F7;
+    --tx-grey-secondary: rgba(244,245,247,0.62);
+    --tx-grey-tertiary: rgba(244,245,247,0.40);
+    --tx-on-primary: #0A0D14;
+
+    --radius: 24px;
+    --radius-pill: 999px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--tx-grey-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .display { font-family: 'Bricolage Grotesque', sans-serif; font-style: italic; font-weight: 800; letter-spacing: -0.025em; line-height: 0.95; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  a { color: inherit; text-decoration: none; }
+  .container { max-width: 1320px; margin: 0 auto; padding: 0 32px; }
+  @media (max-width: 768px) { .container { padding: 0 20px; } }
+
+  /* HEADER */
+  header.head { padding: 56px 0 24px; border-bottom: 1px solid var(--line); }
+  .head-inner { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px; }
+  .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .logo-mark { width: 36px; height: 36px; color: var(--tx-salat-primary); }
+  .brand-text { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: 28px; letter-spacing: -0.02em; }
+  .head h1 { font-size: clamp(40px, 6vw, 80px); margin-bottom: 16px; max-width: 820px; }
+  .head h1 em { color: var(--tx-salat-primary); font-style: italic; }
+  .head p { color: var(--tx-grey-secondary); font-size: 17px; max-width: 620px; }
+  .meta { color: var(--tx-grey-tertiary); font-family: 'JetBrains Mono'; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; }
+  .meta div { padding: 6px 0; }
+  .meta strong { color: var(--tx-salat-primary); font-style: italic; font-family: 'Bricolage Grotesque'; }
+
+  /* BRAND EXTRACT */
+  .brand-section { padding: 56px 0; border-bottom: 1px solid var(--line); }
+  .brand-section-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px; margin-bottom: 32px; }
+  .brand-section h2 { font-size: 32px; }
+  .brand-section .label { color: var(--tx-grey-tertiary); font-family: 'JetBrains Mono'; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; }
+  .brand-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 16px; }
+  @media (max-width: 1080px) { .brand-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 640px) { .brand-grid { grid-template-columns: 1fr; } }
+  .brand-cover-wrap {
+    background: #0a0d14; border-radius: var(--radius); padding: 24px;
+    border: 1px solid var(--line); aspect-ratio: 16 / 10;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .brand-cover-wrap img { max-width: 100%; max-height: 100%; }
+  .tokens { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px; }
+  .tokens h3 { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700; font-size: 20px; margin-bottom: 18px; }
+  .tokens .src { font-family: 'JetBrains Mono'; font-size: 11px; color: var(--tx-grey-tertiary); margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+  .token-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; font-size: 13px; }
+  .token-row .swatch { width: 24px; height: 24px; border-radius: 6px; border: 1px solid var(--line); flex-shrink: 0; }
+  .token-row .key { color: var(--tx-grey-secondary); flex: 1; font-family: 'JetBrains Mono'; font-size: 12px; }
+  .token-row .val { color: var(--tx-grey-primary); font-family: 'JetBrains Mono'; font-size: 12px; }
+  .comp-list { font-family: 'JetBrains Mono'; font-size: 12px; color: var(--tx-grey-secondary); }
+  .comp-list div { padding: 6px 0; border-top: 1px solid var(--line); display: flex; justify-content: space-between; }
+  .comp-list div:first-child { border-top: none; }
+  .comp-list .salat { color: var(--tx-salat-primary); }
+
+  /* OPTIONS */
+  .options { padding: 80px 0; }
+  .options-head { margin-bottom: 56px; max-width: 720px; }
+  .options-head h2 { font-size: clamp(40px, 5vw, 64px); margin-bottom: 16px; }
+  .options-head p { color: var(--tx-grey-secondary); font-size: 17px; }
+  .options-head .switcher-info { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 999px; background: var(--tx-salat-secondary); color: var(--tx-salat-primary); font-family: 'JetBrains Mono'; font-size: 12px; font-weight: 500; margin-top: 20px; }
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  @media (max-width: 980px) { .grid { grid-template-columns: 1fr; } }
+
+  .card { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: transform .3s, border-color .3s; }
+  .card:hover { transform: translateY(-6px); border-color: var(--tx-salat-primary); }
+  .card-preview { aspect-ratio: 16 / 10; border-bottom: 1px solid var(--line); position: relative; overflow: hidden; }
+  .card iframe { width: 200%; height: 200%; transform: scale(0.5); transform-origin: 0 0; border: none; pointer-events: none; background: var(--bg); }
+  .card-body { padding: 32px; flex: 1; display: flex; flex-direction: column; }
+  .card-tag { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; font-family: 'JetBrains Mono'; font-size: 11px; font-weight: 500; width: fit-content; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .card-tag.salat { background: var(--tx-salat-secondary); color: var(--tx-salat-primary); }
+  .card-tag.sky { background: var(--tx-sky-secondary); color: var(--tx-sky-primary); }
+  .card-tag.tomato { background: var(--tx-tomato-secondary); color: var(--tx-tomato-primary); }
+  .card h3 { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 800; font-size: 32px; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .card .subtitle { color: var(--tx-grey-secondary); font-size: 15px; margin-bottom: 20px; }
+  .card-attrs { margin-bottom: 24px; }
+  .card-attr { display: flex; justify-content: space-between; padding: 10px 0; border-top: 1px solid var(--line); font-size: 13px; gap: 16px; }
+  .card-attr:first-of-type { border-top: none; }
+  .card-attr .key { color: var(--tx-grey-tertiary); font-family: 'JetBrains Mono'; font-size: 12px; }
+  .card-attr .val { color: var(--tx-grey-primary); text-align: right; }
+  .card-cta { margin-top: auto; display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; padding: 12px 18px; border-radius: 999px; font-weight: 600; font-size: 13px; transition: transform .15s, background .2s; }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary { background: var(--tx-salat-primary); color: var(--tx-on-primary); flex: 1; justify-content: center; }
+  .btn-ghost { background: transparent; color: var(--tx-grey-primary); border: 1px solid var(--line-strong); }
+
+  /* MESSAGE SHIFT — рамка нового позиционирования */
+  .shift { padding: 80px 0; border-top: 1px solid var(--line); }
+  .shift-head { max-width: 720px; margin-bottom: 48px; }
+  .shift-head h2 { font-size: clamp(40px, 5vw, 64px); margin-bottom: 16px; }
+  .shift-head p { color: var(--tx-grey-secondary); font-size: 17px; }
+  .shift-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 880px) { .shift-grid { grid-template-columns: 1fr; } }
+  .shift-card { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 36px; }
+  .shift-card.before { border-color: rgba(255,106,90,0.3); }
+  .shift-card.after { border-color: rgba(197,255,92,0.3); }
+  .shift-card .tag { display: inline-block; padding: 5px 12px; border-radius: 999px; font-family: 'JetBrains Mono'; font-size: 11px; font-weight: 500; margin-bottom: 18px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .shift-card.before .tag { background: var(--tx-tomato-secondary); color: var(--tx-tomato-primary); }
+  .shift-card.after .tag { background: var(--tx-salat-secondary); color: var(--tx-salat-primary); }
+  .shift-card h3 { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700; font-size: 22px; letter-spacing: -0.01em; margin-bottom: 14px; }
+  .shift-card ul { list-style: none; }
+  .shift-card li { padding: 10px 0; border-top: 1px solid var(--line); font-size: 14px; color: var(--tx-grey-secondary); display: flex; gap: 10px; }
+  .shift-card li:first-child { border-top: none; }
+  .shift-card.before li::before { content: '×'; color: var(--tx-tomato-primary); font-weight: 700; }
+  .shift-card.after li::before { content: '→'; color: var(--tx-salat-primary); font-weight: 700; }
+
+  /* CONTENT MAP */
+  .map-section { padding: 80px 0; border-top: 1px solid var(--line); }
+  .map-head { margin-bottom: 48px; max-width: 720px; }
+  .map-head h2 { font-size: clamp(40px, 5vw, 64px); margin-bottom: 16px; }
+  .map-head p { color: var(--tx-grey-secondary); font-size: 17px; }
+  .map-table { width: 100%; background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .map-row { display: grid; grid-template-columns: 160px repeat(4, 1fr); border-top: 1px solid var(--line); }
+  .map-row:first-child { border-top: none; }
+  .map-row > div { padding: 20px 22px; border-left: 1px solid var(--line); font-size: 13px; }
+  .map-row > div:first-child { border-left: none; color: var(--tx-grey-tertiary); font-family: 'JetBrains Mono'; text-transform: uppercase; letter-spacing: 0.08em; font-size: 11px; font-weight: 500; }
+  .map-row.header > div { background: rgba(255,255,255,0.03); font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700; font-size: 14px; color: var(--tx-grey-primary); text-transform: none; letter-spacing: -0.01em; }
+  .map-row.header > div:first-child { color: var(--tx-grey-primary); }
+  .map-row .salat { color: var(--tx-salat-primary); }
+  .map-row .sky { color: var(--tx-sky-primary); }
+  .map-row .tomato { color: var(--tx-tomato-primary); }
+  @media (max-width: 1100px) {
+    .map-row, .map-row.header { grid-template-columns: 1fr 1fr; }
+    .map-row > div { padding: 14px 16px; }
+    .map-row > div:nth-child(1) { grid-column: 1/-1; background: rgba(255,255,255,0.04); }
+  }
+
+  /* NEXT */
+  .next { padding: 80px 0; border-top: 1px solid var(--line); }
+  .next-head { margin-bottom: 48px; max-width: 720px; }
+  .next-head h2 { font-size: clamp(40px, 5vw, 64px); margin-bottom: 16px; }
+  .next-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 880px) { .next-grid { grid-template-columns: 1fr; } }
+  .next-card { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 32px; }
+  .next-num { font-family: 'JetBrains Mono'; font-size: 12px; color: var(--tx-salat-primary); margin-bottom: 20px; letter-spacing: 0.04em; }
+  .next-card h4 { font-family: 'Bricolage Grotesque'; font-style: italic; font-weight: 700; font-size: 22px; letter-spacing: -0.01em; line-height: 1.1; margin-bottom: 12px; }
+  .next-card p { color: var(--tx-grey-secondary); font-size: 14px; }
+
+  /* FOOTER */
+  footer { padding: 56px 0 40px; border-top: 1px solid var(--line); color: var(--tx-grey-tertiary); font-family: 'JetBrains Mono'; font-size: 12px; }
+  footer .row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+</style>
+</head>
+<body>
+
+<header class="head">
+  <div class="container">
+    <div class="brand">
+      <svg class="logo-mark" viewBox="0 0 60 60" fill="currentColor"><ellipse cx="22" cy="32" rx="11" ry="22" transform="rotate(-12 22 32)"/><ellipse cx="38" cy="32" rx="11" ry="22" transform="rotate(12 38 32)"/></svg>
+      <span class="brand-text">Moneyrun</span>
+    </div>
+    <div class="head-inner">
+      <div>
+        <h1 class="display">Прототипы редизайна <em>moneyrun.tech</em></h1>
+        <p>Четыре направления, построенные на дизайн-системе Moneyrun (через Figma MCP). Каждая версия — рабочий HTML с переключателем сверху, можно открывать, прокручивать, передавать в разработку. Смысл: бег, сообщество, забеги — основа; деньги — приятный бонус.</p>
+      </div>
+      <div class="meta">
+        <div>Версия — <strong>v2.0</strong></div>
+        <div>Дата — <strong>2026-05-26</strong></div>
+        <div>Контент — <strong>RU</strong></div>
+        <div>Источник токенов — <strong>Figma MCP</strong></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ====== BRAND EXTRACT ====== -->
+<section class="brand-section">
+  <div class="container">
+    <div class="brand-section-head">
+      <h2 class="display">Извлечено из библиотеки</h2>
+      <span class="label">Источник: Figma — Moneyrun [Design –> Library]</span>
+    </div>
+    <div class="brand-grid">
+      <div class="brand-cover-wrap">
+        <img src="brand-cover.webp" alt="Moneyrun Design Library cover" />
+      </div>
+      <div class="tokens">
+        <h3>Токены палитры</h3>
+        <div class="src">// Tokens · color · Text-icons</div>
+        <div class="token-row"><span class="swatch" style="background: #C5FF5C;"></span><span class="key">tx-salat primary</span><span class="val">~ #C5FF5C</span></div>
+        <div class="token-row"><span class="swatch" style="background: #6DCBFF;"></span><span class="key">tx-sky primary</span><span class="val">~ #6DCBFF</span></div>
+        <div class="token-row"><span class="swatch" style="background: #FF6A5A;"></span><span class="key">tx-tomato primary</span><span class="val">~ #FF6A5A</span></div>
+        <div class="token-row"><span class="swatch" style="background: #F4F5F7;"></span><span class="key">tx-grey primary</span><span class="val">~ #F4F5F7</span></div>
+        <div class="token-row"><span class="swatch" style="background: rgba(244,245,247,0.62); border: 1px solid var(--line);"></span><span class="key">tx-grey secondary</span><span class="val">opacity 0.62</span></div>
+        <div class="token-row"><span class="swatch" style="background: #0A0D14;"></span><span class="key">tx-on color primary</span><span class="val">~ #0A0D14</span></div>
+        <div class="token-row"><span class="swatch" style="background: #0E1117;"></span><span class="key">surface</span><span class="val">~ #0E1117</span></div>
+        <div class="token-row"><span class="swatch" style="background: #161A22;"></span><span class="key">surface-2</span><span class="val">~ #161A22</span></div>
+        <div style="margin-top: 14px; color: var(--tx-grey-tertiary); font-family: 'JetBrains Mono'; font-size: 11px; line-height: 1.5;">⚠ Точные hex подтверждаются через `get_variable_defs` при выделении ноды в Figma Desktop.</div>
+      </div>
+      <div class="tokens">
+        <h3>Компоненты в библиотеке</h3>
+        <div class="src">// search_design_system · Moneyrun lib</div>
+        <div class="comp-list">
+          <div><span>Logotype/color</span><span class="salat">component</span></div>
+          <div><span>navigation-bar</span><span class="salat">component</span></div>
+          <div><span>Club</span><span class="salat">component_set</span></div>
+          <div><span>WeekSatistic</span><span class="salat">component</span></div>
+          <div><span>card_2_1</span><span class="salat">component</span></div>
+          <div><span>Avatar / AvatarEmpty</span><span class="salat">component_set</span></div>
+          <div><span>Badge</span><span class="salat">component</span></div>
+          <div><span>Device frame / status bar</span><span class="salat">component</span></div>
+          <div><span>Keyboard</span><span class="salat">component</span></div>
+          <div><span>pincode_item</span><span class="salat">component_set</span></div>
+        </div>
+        <div style="margin-top: 14px; color: var(--tx-grey-tertiary); font-family: 'JetBrains Mono'; font-size: 11px; line-height: 1.5;">Опираемся на «Club» и «WeekSatistic» — это уже базовые сущности продукта.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== OPTIONS ====== -->
+<section class="options">
+  <div class="container">
+    <div class="options-head">
+      <h2 class="display">Четыре версии</h2>
+      <p>Один продукт — четыре «двери». Все версии разделяют общий бренд и цветовую систему, но по-разному расставляют акценты под разные аудитории и KPI. Переключатель сверху каждой страницы позволяет ходить между ними без потери контекста.</p>
+      <span class="switcher-info">↑ Переключатель версий — в шапке каждого прототипа</span>
+    </div>
+    <div class="grid">
+
+      <!-- 01 ATLET -->
+      <article class="card">
+        <div class="card-preview"><iframe src="option-1.html" loading="lazy"></iframe></div>
+        <div class="card-body">
+          <span class="card-tag salat">● 01 — Atlet</span>
+          <h3>Begай лучше. С теми, кто рядом.</h3>
+          <p class="subtitle">Для атлетов, которые приходят за результатом: трекинг, темп, недельная нагрузка, личные рекорды. Деньги — небольшой бонус-чип за регулярность.</p>
+          <div class="card-attrs">
+            <div class="card-attr"><span class="key">главное</span><span class="val">метрики и прогресс</span></div>
+            <div class="card-attr"><span class="key">приём</span><span class="val">бенто с WeekStat-графиками</span></div>
+            <div class="card-attr"><span class="key">тон</span><span class="val">спортивный, точный</span></div>
+            <div class="card-attr"><span class="key">подходит</span><span class="val">аналог Garmin / Whoop</span></div>
+            <div class="card-attr"><span class="key">hero</span><span class="val">«Бегай лучше. С теми, кто рядом.»</span></div>
+          </div>
+          <div class="card-cta">
+            <a href="option-1.html" class="btn btn-primary" target="_blank">Открыть прототип →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 02 CLUB -->
+      <article class="card">
+        <div class="card-preview"><iframe src="option-2.html" loading="lazy"></iframe></div>
+        <div class="card-body">
+          <span class="card-tag sky">● 02 — Club</span>
+          <h3>Беговое сообщество, в которое легко войти.</h3>
+          <p class="subtitle">Журнальный layout с фотографией. Карта клубов по городам, истории атлетов, расписание совместных тренировок. Самая тёплая версия.</p>
+          <div class="card-attrs">
+            <div class="card-attr"><span class="key">главное</span><span class="val">люди и клубы</span></div>
+            <div class="card-attr"><span class="key">приём</span><span class="val">фото-герой + magazine grid</span></div>
+            <div class="card-attr"><span class="key">тон</span><span class="val">журнальный, человеческий</span></div>
+            <div class="card-attr"><span class="key">подходит</span><span class="val">рост через комьюнити</span></div>
+            <div class="card-attr"><span class="key">hero</span><span class="val">«Беговое сообщество, в которое легко войти.»</span></div>
+          </div>
+          <div class="card-cta">
+            <a href="option-2.html" class="btn btn-primary" target="_blank">Открыть прототип →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 03 RACE -->
+      <article class="card">
+        <div class="card-preview"><iframe src="option-3.html" loading="lazy"></iframe></div>
+        <div class="card-body">
+          <span class="card-tag tomato">● 03 — Race</span>
+          <h3>От первой пробежки — до первого финиша.</h3>
+          <p class="subtitle">Соревновательная версия: countdown до главного забега, календарь 28 событий, рейтинг бегунов, кубки клубов и тренировочные планы под дистанцию.</p>
+          <div class="card-attrs">
+            <div class="card-attr"><span class="key">главное</span><span class="val">забеги и кубки</span></div>
+            <div class="card-attr"><span class="key">приём</span><span class="val">countdown + leaderboard + bracket</span></div>
+            <div class="card-attr"><span class="key">тон</span><span class="val">соревновательный, энергичный</span></div>
+            <div class="card-attr"><span class="key">подходит</span><span class="val">KPI = регистрация на старты</span></div>
+            <div class="card-attr"><span class="key">hero</span><span class="val">«От первой пробежки — до первого финиша.»</span></div>
+          </div>
+          <div class="card-cta">
+            <a href="option-3.html" class="btn btn-primary" target="_blank">Открыть прототип →</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 04 BONUS -->
+      <article class="card">
+        <div class="card-preview"><iframe src="option-4.html" loading="lazy"></iframe></div>
+        <div class="card-body">
+          <span class="card-tag salat">● 04 — Bonus</span>
+          <h3>Беги ради бега. Деньги — приятный бонус.</h3>
+          <p class="subtitle">Лайм-форвард версия с явной XP→₽ механикой, но в честной рамке: блок «это не основная мотивация», ограничение бонусов сверху, прозрачные правила.</p>
+          <div class="card-attrs">
+            <div class="card-attr"><span class="key">главное</span><span class="val">бонус-механика честно</span></div>
+            <div class="card-attr"><span class="key">приём</span><span class="val">full-bleed lime + framing-блок</span></div>
+            <div class="card-attr"><span class="key">тон</span><span class="val">игривый, дерзкий, прозрачный</span></div>
+            <div class="card-attr"><span class="key">подходит</span><span class="val">аудитория с фокусом на «как зарабатывать»</span></div>
+            <div class="card-attr"><span class="key">hero</span><span class="val">«Беги ради бега. Деньги — приятный бонус.»</span></div>
+          </div>
+          <div class="card-cta">
+            <a href="option-4.html" class="btn btn-primary" target="_blank">Открыть прототип →</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ====== MESSAGE SHIFT ====== -->
+<section class="shift">
+  <div class="container">
+    <div class="shift-head">
+      <h2 class="display">Сдвиг смысла</h2>
+      <p>Главный поворот в этом редизайне: убрать деньги с пьедестала. Moneyrun становится беговым сообществом, в котором бонус-рубли — это приятная компенсация, а не главная причина бежать.</p>
+    </div>
+    <div class="shift-grid">
+      <div class="shift-card before">
+        <span class="tag">× было</span>
+        <h3>moneyrun.tech (текущий сайт)</h3>
+        <ul>
+          <li>Hero: «Empower your life» — про деньги и заработок</li>
+          <li>Главное обещание — заработать на пробежках</li>
+          <li>Шаги: подключи → беги → копи XP → меняй → выводи</li>
+          <li>Сообщество и клубы — упомянуты в конце</li>
+          <li>Забеги — отсутствуют как тема</li>
+        </ul>
+      </div>
+      <div class="shift-card after">
+        <span class="tag">→ стало</span>
+        <h3>Новый посыл</h3>
+        <ul>
+          <li>Hero: про сообщество, темп, забеги, прогресс</li>
+          <li>Главное обещание — бегать лучше, не один</li>
+          <li>Структура: тренируйся → клуб → забеги → (+ бонус)</li>
+          <li>Клубы, города и атлеты — на первом экране</li>
+          <li>Бонус-рубли — отдельный блок с честной рамкой</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== CONTENT MAP ====== -->
+<section class="map-section">
+  <div class="container">
+    <div class="map-head">
+      <h2 class="display">Карта контента</h2>
+      <p>Один и тот же смысл, четыре голоса. Сравните, как звучит каждый блок в четырёх версиях — и выберите тон для основного сайта (или разные тоны для разных лендингов).</p>
+    </div>
+    <div class="map-table">
+      <div class="map-row header">
+        <div>Блок</div>
+        <div>01 — Atlet</div>
+        <div>02 — Club</div>
+        <div>03 — Race</div>
+        <div>04 — Bonus</div>
+      </div>
+      <div class="map-row">
+        <div>Hero-заголовок</div>
+        <div><span class="salat">«Бегай лучше. С теми, кто рядом.»</span></div>
+        <div><span class="sky">«Беговое сообщество, в которое легко войти.»</span></div>
+        <div><span class="tomato">«От первой пробежки — до первого финиша.»</span></div>
+        <div><span class="salat">«Беги ради бега. Деньги — приятный бонус.»</span></div>
+      </div>
+      <div class="map-row">
+        <div>Hero-подзаголовок</div>
+        <div>Тренировки, клубы, забеги в одном приложении. Плюс лёгкий бонус.</div>
+        <div>1 240 клубов в РФ и СНГ. Найди свой в один тап.</div>
+        <div>Календарь забегов, кубки клубов, рейтинги недели.</div>
+        <div>Бонус-механика поверх обычного бегового приложения.</div>
+      </div>
+      <div class="map-row">
+        <div>Главный визуал</div>
+        <div>Phone с WeekStat-графиком</div>
+        <div>Full-bleed фото бегунов + manifesto</div>
+        <div>Featured race + countdown</div>
+        <div>Phone с balance card + lime backdrop</div>
+      </div>
+      <div class="map-row">
+        <div>Ключевой блок</div>
+        <div>Bento метрик (темп, PR, нагрузка)</div>
+        <div>Карта клубов по 8 городам</div>
+        <div>Календарь 28 забегов в grid</div>
+        <div>Loop «Беги → XP → ₽» во full-bleed lime</div>
+      </div>
+      <div class="map-row">
+        <div>Сообщество</div>
+        <div>2 клуба-карточки + ссылка «все»</div>
+        <div>3 истории атлетов + расписание тренировок</div>
+        <div>Кубок клубов с турнирной таблицей</div>
+        <div>Грейды + framing «это не главное»</div>
+      </div>
+      <div class="map-row">
+        <div>Бонус (деньги)</div>
+        <div>Маленький блок «+ бонус» рядом с метриками</div>
+        <div>Скромная карта «+ ещё одна причина»</div>
+        <div>Призовой фонд забегов</div>
+        <div>Главная механика, но с честной рамкой и потолком</div>
+      </div>
+      <div class="map-row">
+        <div>Цветовой акцент</div>
+        <div><span class="salat">salat</span> + <span class="sky">sky</span> (метрики)</div>
+        <div><span class="salat">salat</span> + фотография</div>
+        <div><span class="salat">salat</span> + <span class="tomato">tomato</span> (срочность)</div>
+        <div><span class="salat">salat</span> full-bleed</div>
+      </div>
+      <div class="map-row">
+        <div>Подходит, если</div>
+        <div>Аудитория — серьёзные бегуны</div>
+        <div>KPI — рост сообщества</div>
+        <div>KPI — регистрации на старты</div>
+        <div>Аудитория ищет «как зарабатывать»</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== NEXT ====== -->
+<section class="next">
+  <div class="container">
+    <div class="next-head">
+      <h2 class="display">Что дальше</h2>
+    </div>
+    <div class="next-grid">
+      <div class="next-card">
+        <div class="next-num">01 →</div>
+        <h4>Выбрать версию</h4>
+        <p>Откройте все четыре прототипа через переключатель. Можно выбрать одну как основную, остальные использовать как лендинги под кампании.</p>
+      </div>
+      <div class="next-card">
+        <div class="next-num">02 →</div>
+        <h4>Уточнить токены</h4>
+        <p>Имена переменных уже из вашей библиотеки (tx-salat, tx-sky, tx-tomato). Точные hex подтверждаются через get_variable_defs при выделении в Figma Desktop.</p>
+      </div>
+      <div class="next-card">
+        <div class="next-num">03 →</div>
+        <h4>Превратить в работающий сайт</h4>
+        <p>HTML + CSS уже самодостаточный. Следующий шаг — Next.js / Astro + CMS, либо отдать в разработку как есть. Готов сделать спецификацию по выбранной версии.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container row">
+    <span>© Moneyrun — прототипы редизайна, май 2026 · v2.0</span>
+    <span>HTML / CSS · self-contained · ready to fork</span>
+  </div>
+</footer>
+
+</body>
+</html>
